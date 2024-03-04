@@ -643,8 +643,7 @@
         ...(isElement(element) ? Manipulator.getDataAttributes(element) : {}),
         ...(typeof config === 'object' ? config : {})
       };
-    };
-    
+    }
     _typeCheckConfig(config, configTypes = this.constructor.DefaultType) {
       for (const [property, expectedTypes] of Object.entries(configTypes)) {
         const value = config[property];
@@ -653,7 +652,7 @@
           throw new TypeError(`${this.constructor.NAME.toUpperCase()}: Option "${property}" provided type "${valueType}" but expected type "${expectedTypes}".`);
         }
       }
-    };
+    }
   }
 
   /**
@@ -1988,7 +1987,7 @@
         }
         if (typeof data[config] === 'undefined') {
           throw new TypeError(`No method named "${config}"`);
-        };
+        }
         data[config]();
       });
     }
