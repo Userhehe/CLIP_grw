@@ -156,15 +156,17 @@
 <!-- ======= START LEFTSIDE SECTION ======= -->
 				<div class="col-lg-8">
 					<div class="row">
-<!-- ======= START EWORK CARD ======= -->
-						<div class="col-12">
-							<div class="card recent-sales overflow-auto">
-								<div class="card-body">
-									<h5 class="card-title">전자결재 <span>| E-work</span></h5>
-										</div>
-									</div>
+					<!-- ======= START schedule CARD ======= -->
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">일정관리 <span>| schedule</span></h5>
+							<div class="activity">
+								<div class="activity-item d-flex">
 								</div>
-<!-- ======= END EWORK CARD ======= -->
+							</div>
+						</div>
+					</div>
+<!-- ======= END schedule CARD ======= -->
 <!-- ======= START NOTICE CARD ======= -->
 						<div class="col-12">
 							<div class="card recent-sales overflow-auto">
@@ -179,17 +181,15 @@
 <!-- ======= END LEFTSIDE SECTION ======= -->
 <!-- ======= START RIGHTSIDE SECTION ======= -->
 				<div class="col-lg-4">
-<!-- ======= START schedule CARD ======= -->
-					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title">일정관리 <span>| schedule</span></h5>
-							<div class="activity">
-								<div class="activity-item d-flex">
+<!-- ======= START EWORK CARD ======= -->
+						<div class="col-12">
+							<div class="card recent-sales overflow-auto">
+								<div class="card-body">
+									<h5 class="card-title">전자결재 <span>| E-work</span></h5>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-<!-- ======= END schedule CARD ======= -->
+<!-- ======= END EWORK CARD ======= -->
 <!-- ======= START PROJECT CARD ======= -->
 					<div class="card">
 						<div class="card-body pb-0">
