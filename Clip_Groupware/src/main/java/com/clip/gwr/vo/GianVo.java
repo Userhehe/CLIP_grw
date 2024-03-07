@@ -18,7 +18,6 @@ public class GianVo {
 	private String gian_gubun;
 	private String gian_name;
 	private String gian_modifier;
-	private String gian_delflag;
 	private String gian_regdate;
 	private String gian_html;
 }

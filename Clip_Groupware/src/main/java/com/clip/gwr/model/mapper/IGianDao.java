@@ -13,8 +13,12 @@ public interface IGianDao {
 	//결재양식 추가
 	public int tempateInsert  (GianVo vo);
 	//결재양식 수정
-	public int templateUpdate (GianVo vo);
+	public int templateUpdate (Map<String,Object>map);
 	//결재양식 삭제
-	public int templateDelete ();
+	public int templateDelete(String gian_seq);
+	//결재양식 구분별 검색
+	public List<GianVo> templateGubunSel();
+	//결재양식 이름별 검색
+	public List<GianVo> templateNameSel(String gian_name);
 	
 }
