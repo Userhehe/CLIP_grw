@@ -31,17 +31,27 @@ public class GianDaoImpl implements IGianDao {
 
 	@Override
 	public int tempateInsert(GianVo vo) {
-		return 0;
+		return sqlSession.insert(NS+"tempateInsert",vo);
 	}
 
 	@Override
-	public int templateUpdate(GianVo vo) {
-		return 0;
+	public int templateUpdate(Map<String,Object>map) {
+		return sqlSession.update(NS+"templateUpdate",map);
 	}
 
 	@Override
-	public int templateDelete() {
-		return 0;
+	public int templateDelete(String gian_seq) {
+		return sqlSession.delete(NS+"templateDelete",gian_seq);
+	}
+
+	@Override
+	public List<GianVo> templateGubunSel() {
+		return sqlSession.selectList(NS+"templateGubunSel");
+	}
+
+	@Override
+	public List<GianVo> templateNameSel(String gian_name) {
+		return sqlSession.selectList(NS+"templateNameSel",gian_name);
 	}
 
 }
