@@ -13,11 +13,11 @@
 <body>
 	<main id="main" class="main">
 		<section class="section dashboard">
-			<form action="./gianMod.do?gian_seq=${vo.gian_seq}" method="post">
+			<form action="./gianMod.do<%-- ?gian_seq=${vo.gian_seq} --%>" method="post">
 				<div class="row">
-					기안서 코드:<input type="text" class="form-control" value="${vo.gian_seq}" readonly="readonly"><br>
-					기안서 분류코드:<input type="text" class="form-control" value="${vo.gian_gubun}" readonly="readonly"><br>
-					기안서 내용 :<textarea rows="10" >${vo.gian_html}</textarea><br>
+					기안서 코드:<input type="text" name="gian_seq" class="form-control" value="${vo.gian_seq}" readonly="readonly"><br>
+					기안서 분류코드:<input type="text" name="gian_gubun" class="form-control" value="${vo.gian_gubun}" readonly="readonly"><br>
+					기안서 내용 :<textarea rows="10" name="gian_html" >${vo.gian_html}</textarea><br>
 	 			</div>
 			<button class="btn btn-primary rounded-pill">수정하기</button>
 			 <button class="btn btn-danger rounded-pill" type="button" onclick="location.href='./paytemplate.do'">취소하기</button>
