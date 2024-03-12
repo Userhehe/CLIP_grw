@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>	
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -88,7 +88,7 @@
 		</nav>
 	</header>
 <!-- ======= END HEADER ======= -->
-
+	
 <!-- ======= START SIDEBAR ======= -->
 	<aside id="sidebar" class="sidebar">
 		<ul class="sidebar-nav" id="sidebar-nav">
@@ -150,62 +150,26 @@
 <!-- ======= END schedule-Nav ======= -->
 		</ul>
 	</aside>
-<!-- ======= END SIDEBAR ======= -->
-
-<!-- ======= START MAIN ======= -->
+	
+	<!-- ======= 화면 작업구역 시작 ======= -->
 	<main id="main" class="main">
 		<section class="section dashboard">
 			<div class="row">
-<!-- ======= START LEFTSIDE SECTION ======= -->
-				<div class="col-lg-8">
-					<div class="row">
-<!-- ======= START EWORK CARD ======= -->
-						<div class="col-12">
-							<div class="card recent-sales overflow-auto">
-								<div class="card-body">
-									<h5 class="card-title">전자결재 <span>| E-work</span></h5>
-										</div>
-									</div>
-								</div>
-<!-- ======= END EWORK CARD ======= -->
-<!-- ======= START NOTICE CARD ======= -->
-						<div class="col-12">
-							<div class="card recent-sales overflow-auto">
-								<div class="card-body">
-									<h5 class="card-title">공지사항 <span>| Notice</span></h5>
-								</div>
-							</div>
-						</div>
-<!-- ======= END NOTICE CARD ======= -->
-					</div>
-				</div>
-<!-- ======= END LEFTSIDE SECTION ======= -->
-<!-- ======= START RIGHTSIDE SECTION ======= -->
-				<div class="col-lg-4">
-<!-- ======= START schedule CARD ======= -->
-					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title">일정관리 <span>| schedule</span></h5>
-							<div class="activity">
-								<div class="activity-item d-flex">
-								</div>
-							</div>
-						</div>
-					</div>
-<!-- ======= END schedule CARD ======= -->
-<!-- ======= START PROJECT CARD ======= -->
-					<div class="card">
-						<div class="card-body pb-0">
-							<h5 class="card-title">프로젝트 <span>| Project</span></h5>
-						</div>
-					</div>
-<!-- ======= END PROJECT CARD ======= -->
-				</div>
-<!-- ======= END RIGHTSIDE SECTION ======= -->
+				기안서 코드:<input type="text" class="form-control" value="${vo.gian_seq}" readonly="readonly"><br>
+				기안서 구분 :<input type="text" class="form-control" value="${vo.gian_gubun}" readonly="readonly"><br>
+				작성자 :<input type="text" class="form-control" value="${vo.gian_modifier}" readonly="readonly"><br>
+				등록일 :<input type="text" class="form-control" value="${vo.gian_regdate}" readonly="readonly"><br>
+				기안서 내용 :<textarea rows="10" readonly="readonly">${vo.gian_html}</textarea>
 			</div>
+			<a href="./templateMod.do?gian_seq=${vo.gian_seq}"><button class="btn btn-primary rounded-pill">양식수정</button></a>
+			<a href="./paytemplate.do"><button class="btn btn-danger rounded-pill">목록으로</button></a>
 		</section>
 	</main>
-<!-- ======= END MAIN ======= -->
+	
+	<!-- ======= 화면 작업구역 끝 ======= -->
+	
+	
+<!-- ======= END SIDEBAR ======= -->
 	<a href="#"
 		class="back-to-top d-flex align-items-center justify-content-center"><i
 		class="bi bi-arrow-up-short"></i></a>
