@@ -7,26 +7,26 @@
 		<selectKey keyProperty="photo_seq" resultType="java.lang.Integer" order="BEFORE">
 			SELECT PHOTO_SEQ.NEXTVAL AS PHOTO_SEQ FROM DUAL
 		</selectKey>
-		INSERT INTO CLIP.PHOTOINFO
+		INSERT INTO PHOTOINFO
 			(PHOTO_SEQ, USER_ID)
 		VALUES('PHOTO_' || TO_CHAR(PHOTO_SEQ.NEXTVAL, 'FM000'), #{user_id})
 	</insert>
 	
 	<!-- 사진파일 등록 2 -->
 	<insert id="insertFileFeature" parameterType="java.util.Map">
-		INSERT INTO CLIP.FILE_FEATURE
+		INSERT INTO FILE_FEATURE
 			(FILE_SEQ, FILE_TARGETSEQ, FILE_TARGETOBJ, 
 			FILE_ORIGINNAME, FILE_STORENAME, FILE_SIZE, 
 			FILE_PATH)
 		VALUES('FILEFEATURE_' || TO_CHAR(FILEFEATURE_SEQ.NEXTVAL, 'FM000'),
-			(SELECT PHOTO_SEQ FROM CLIP.PHOTOINFO p WHERE USER_ID = #{user_id}), 
+			(SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id}), 
 			1, #{file_originname}, #{file_storename}, #{file_size}, #{file_path})
 	</insert>
 	
 	<!-- 사진파일 등록 3 -->
 	<update id="updateUserinfoPhoto" parameterType="java.util.Map">
-		UPDATE CLIP.USERINFO
-			SET PHOTO_SEQ=(SELECT PHOTO_SEQ FROM CLIP.PHOTOINFO p WHERE USER_ID = #{user_id})
+		UPDATE USERINFO
+			SET PHOTO_SEQ=(SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id})
 		WHERE USER_ID = #{user_id}
 	</update>
 	
@@ -35,7 +35,7 @@
 		UPDATE FILE_FEATURE
 			SET FILE_ORIGINNAME = #{file_originname}, FILE_STORENAME = #{file_storename}, FILE_SIZE = #{file_size}, 
 		FILE_PATH = #{file_path}
-		WHERE FILE_TARGETSEQ = (SELECT PHOTO_SEQ FROM CLIP.PHOTOINFO p WHERE USER_ID = #{user_id})
+		WHERE FILE_TARGETSEQ = (SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id})
 	</update>
 	
 	<!-- 사진파일 삭제1 -->
