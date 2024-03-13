@@ -7,6 +7,9 @@
 		<typeAlias type="com.clip.gwr.vo.UserVo" alias="UserVo"/>
 		<typeAlias type="com.clip.gwr.vo.UserinfoVo" alias="UserinfoVo"/>
 		<typeAlias type="com.clip.gwr.vo.ApprovalVo" alias="ApprovalVo"/>
+		<typeAlias type="com.clip.gwr.vo.FileVo" alias="FileVo"/>
+		<typeAlias type="com.clip.gwr.vo.PageVo" alias="PageVo"/>
+		<typeAlias type="com.clip.gwr.vo.DailyCheckVo" alias="DailyCheckVo"/>
 	</typeAliases>
 	
 	<mappers>
@@ -14,5 +17,6 @@
 		<mapper resource="sqls/User_Statement.xml"/>
 		<mapper resource="sqls/FileUpload_Statement.xml"/>
 		<mapper resource="sqls/ApprovalStatement.xml"/>
+		<mapper resource="sqls/DailyCheck_Statement.xml"/>
 	</mappers>
 </configuration>
