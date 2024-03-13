@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clip.gwr.model.mapper.ApprovalDaoImpl">
+
+
+	<!-- 전체 결재내역 리스트 조회 -->
+	<select id="getAllApproval" resultType="ApprovalVo">
+       SELECT APP_SEQ, APP_TITLE, APP_CONTENT,
+                GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') APP_CREATEDATE, APP_DRAFT
+        FROM APPROVAL a 
+        WHERE NOT(APP_DRAFT = '임시저장' OR APP_DRAFT = '결재취소') ORDER BY APP_CREATEDATE DESC
+	</select>
+	
+	
+	<!-- 결재 조건별 전체리스트 조회 -->
+	
+	<select id="conditionSearchApproval" resultType="ApprovalVo" parameterType="java.util.Map">
+    SELECT APP_SEQ, APP_TITLE, APP_CONTENT,
+           GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') AS APP_CREATEDATE, APP_DRAFT
+	    FROM 
+	        <if test="name!=null">		
+	            (SELECT PL_SEQ 
+	             FROM PAYMENTLINE P JOIN USERINFO U ON (P.USER_ID = U.USER_ID)
+	             WHERE U.USER_NAME LIKE '%' || #{name} || '%') U 
+	            JOIN APPROVAL A ON U.PL_SEQ = A.PL_SEQ 
+	        </if>
+	        <if test="name == null">
+				APPROVAL
+	        </if>
+	   	 WHERE NOT(APP_DRAFT = '임시저장' OR APP_DRAFT = '결재취소')
+	    <if test="title!=null">
+	        AND APP_TITLE LIKE '%' || #{title} || '%'
+	    </if>
+	    ORDER BY APP_CREATEDATE DESC
+	</select>
+		
+		
+	<!-- onchange 로 조회값 바뀌는 쿼리 -->
+	SELECT APP_SEQ, APP_TITLE, APP_CONTENT,
+    A.GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') AS APP_CREATEDATE, APP_DRAFT
+	FROM APPROVAL a 
+	WHERE APP_DRAFT = '결재대기';
+	
+
+	<!-- 결재내역 단일 상세 조회 -->
+	<select id="getOneApproval" resultType="ApprovalVo" parameterType="java.lang.String">
+		SELECT *
+	        FROM APPROVAL a 
+	        WHERE APP_SEQ = #{appSeq} 
+	</select>	
+	
+	
+	<!-- 날짜 지정에따른 결재 신청 -->
+	<insert id="reqDynamicDateApproval" parameterType="ApprovalVo">
+    INSERT INTO APPROVAL
+        (APP_SEQ, APP_TITLE, APP_CONTENT,
+        GIAN_SEQ, PL_SEQ, APP_STRDATE,
+        APP_ENDDATE)
+    VALUES('APPROVAL_' || TO_CHAR(APPROVAL_SEQ.NEXTVAL, 'FM000'), #{app_Title}, #{app_Content},
+        #{gian_Seq}, #{pl_Seq},
+        <choose>
+            <!-- 만약 시작 날짜와 끝 날짜가 모두 존재하는 경우 -->
+            <when test="app_Strdate != null and app_Enddate != null">
+                TO_CHAR( #{app_Strdate}, 'YYYY/MM/DD HH24:MI:SS'),
+                TO_CHAR( #{app_Enddate}, 'YYYY/MM/DD HH24:MI:SS')
+            </when>
+            <!-- 만약 시작 날짜와 끝 날짜가 모두 존재하지 않는 경우 -->
+            <otherwise>
+                LOCALTIMESTAMP,  
+                LOCALTIMESTAMP
+            </otherwise>
+        </choose>
+    )
+	</insert>
+	
+	
+	
+	
+
+
+</mapper>
