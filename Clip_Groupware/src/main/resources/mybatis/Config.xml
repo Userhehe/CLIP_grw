@@ -3,9 +3,13 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.clip.gwr.vo.GianVo" alias="GianVo"/>
+		<typeAlias type="com.clip.gwr.vo.UserVo" alias="UserVo"/>
+		<typeAlias type="com.clip.gwr.vo.UserinfoVo" alias="UserinfoVo"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="sqls/GianTemplate.xml"/>
+		<mapper resource="sqls/User_Statement.xml"/>
+		<mapper resource="sqls/FileUpload_Statement.xml"/>
 	</mappers>
 </configuration>
