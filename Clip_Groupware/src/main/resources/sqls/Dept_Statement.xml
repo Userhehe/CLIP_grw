@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clip.gwr.model.mapper.DeptDaoImpl">
+
+    <!-- 부서 등록  -->
+	<insert id="insertDept" parameterType="java.util.Map">
+		INSERT INTO CLIP.DEPT
+	        (DEPT_SEQ, DEPT_NAME, DEPT_REGDATE)
+	        VALUES('DEPT_' || TO_CHAR(USER_SEQ.NEXTVAL, 'FM000'), #{dept_name}, SYSTIMESTAMP)
+	</insert>
+	
+   <!-- 부서 수정 -->
+    <insert id="updateDept" parameterType="java.util.Map">
+		UPDATE CLIP.DEPT D
+		SET D.DEPT_NAME = #{dept_name}
+		WHERE D.DEPT_SEQ = #{dept_seq}
+		AND D.DEPT_SEQ IN (
+		SELECT U.DEPT_SEQ
+		FROM CLIP.USERINFO U)
+     </insert>
+     
+     <!-- 부서 삭제  -->
+     <delete id="delDept">
+     DELETE FROM DEPT
+	 WHERE DEPT_SEQ =#{dept_seq}
+     </delete>
+     
+     <!-- 부서 검색 -->
+     <select id="searchDept" resultType="DeptVo">
+     SELECT *
+	 FROM CLIP.DEPT
+	 WHERE DEPT_NAME LIKE '%' || #{dept_name} || '%
+     </select>
+     
+     <!-- 부서 중복 검색 -->
+     <select id="duplicateCheckDept" parameterType="java.lang.Integer">
+     SELECT COUNT(*)
+	 FROM DEPT
+     WHERE DEPT_NAME = #{dept_name}
+     </select>
+</mapper>

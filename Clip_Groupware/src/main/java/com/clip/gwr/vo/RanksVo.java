@@ -1,22 +1,24 @@
 package com.clip.gwr.vo;
 
+import org.springframework.stereotype.Service;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Data
-@ToString
-@Setter
 @Getter
+@Service
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class GianMarkVo {
-
-	private String user_Id;
-	private String gian_Seq;
-	private String gm_Number;
+public class RanksVo {
 	
+	  
+	private String ranks_seq;
+	private String ranks_name;
+	private String ranks_regdate;
+
 }
