@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.clip.gwr.vo.GianVo" alias="GianVo"/>
+		<typeAlias type="com.clip.gwr.vo.UserVo" alias="UserVo"/>
+		<typeAlias type="com.clip.gwr.vo.UserinfoVo" alias="UserinfoVo"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="sqls/GianTemplate.xml"/>
+		<mapper resource="sqls/User_Statement.xml"/>
+		<mapper resource="sqls/FileUpload_Statement.xml"/>
+	</mappers>
+</configuration>
