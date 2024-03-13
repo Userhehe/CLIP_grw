@@ -16,7 +16,7 @@ import lombok.ToString;
 public class GianMarkVo {
 
 	private String user_Id;
-	private String gian_Seq;
+	private String gian_seq;
 	private String gm_Number;
 	
 }

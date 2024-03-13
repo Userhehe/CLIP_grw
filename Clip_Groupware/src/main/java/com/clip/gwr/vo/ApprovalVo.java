@@ -19,10 +19,11 @@ public class ApprovalVo {
 	private String app_Title;
 	private String app_Content;
 	private String gian_Seq;
-	private String pl_Seq;
+	private String app_Payline;
 	private String app_Createdate;
 	private String app_Draft;
 	private String app_Strdate;
 	private String app_Enddate;
 	
+//	private PaylineVo app_Payline;
 }
