@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clip.gwr.model.mapper.FileUploadDaoImpl">
+
+	<!-- 사진파일 등록 1 -->
+	<insert id="insertPhotoinfo" parameterType="java.util.Map">
+		<selectKey keyProperty="photo_seq" resultType="java.lang.Integer" order="BEFORE">
+			SELECT PHOTO_SEQ.NEXTVAL AS PHOTO_SEQ FROM DUAL
+		</selectKey>
+		INSERT INTO PHOTOINFO
+			(PHOTO_SEQ, USER_ID)
+		VALUES('PHOTO_' || TO_CHAR(PHOTO_SEQ.NEXTVAL, 'FM000'), #{user_id})
+	</insert>
+	
+	<!-- 사진파일 등록 2 -->
+	<insert id="insertFileFeature" parameterType="java.util.Map">
+		INSERT INTO FILE_FEATURE
+			(FILE_SEQ, FILE_TARGETSEQ, FILE_TARGETOBJ, 
+			FILE_ORIGINNAME, FILE_STORENAME, FILE_SIZE, 
+			FILE_PATH)
+		VALUES('FILEFEATURE_' || TO_CHAR(FILEFEATURE_SEQ.NEXTVAL, 'FM000'),
+			(SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id}), 
+			1, #{file_originname}, #{file_storename}, #{file_size}, #{file_path})
+	</insert>
+	
+	<!-- 사진파일 등록 3 -->
+	<update id="updateUserinfoPhoto" parameterType="java.util.Map">
+		UPDATE USERINFO
+			SET PHOTO_SEQ=(SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id})
+		WHERE USER_ID = #{user_id}
+	</update>
+	
+	<!-- 사진파일 수정 -->
+	<update id="updatePhotoinfo" parameterType="java.util.Map">
+		UPDATE FILE_FEATURE
+			SET FILE_ORIGINNAME = #{file_originname}, FILE_STORENAME = #{file_storename}, FILE_SIZE = #{file_size}, 
+		FILE_PATH = #{file_path}
+		WHERE FILE_TARGETSEQ = (SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id})
+	</update>
+	
+	<!-- 사진파일 삭제1 -->
+	<delete id="deletePhotoFileinfo" parameterType="java.util.Map">
+		DELETE FROM FILE_FEATURE ff 
+		WHERE FILE_TARGETSEQ = (SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id})
+	</delete>
+	
+	<!-- 사진파일 삭제2 -->
+	<update id="updatePhotoPhotoinfo" parameterType="java.util.Map">
+		UPDATE USERINFO SET PHOTO_SEQ = NULL
+		WHERE USER_ID = #{user_id}
+	</update>
+	
+	<!-- 사진파일 삭제3 -->
+	<delete id="deletePhotoUserinfo" parameterType="java.util.Map">
+		DELETE FROM PHOTOINFO p 
+		WHERE USER_ID = #{user_id}
+	</delete>
+	
+	<!-- 사진파일 조회 -->
+	<select id="selectPhotoinfo" parameterType="java.util.Map" resultType="com.clip.gwr.vo.FileVo">
+		SELECT FILE_TARGETSEQ, FILE_SEQ, FILE_TARGETSEQ, 
+		FILE_TARGETOBJ, FILE_ORIGINNAME, FILE_STORENAME,
+		FILE_SIZE
+			FROM FILE_FEATURE ff
+		WHERE FILE_TARGETSEQ = (SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id})
+	</select>
+	
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clip.gwr.model.mapper.SignsDaoImpl">
+    
+    <!-- 서명 등록 -->
+    <insert id="insertPad" parameterType="java.util.Map">
+      INSERT INTO SIGNS (SIGNS_SEQ, USER_ID, SIGNS_IMAGE, SIGNS_REGDATE)
+       VALUES ('SIGNS_' || TO_CHAR(SIGNS_SEQ.NEXTVAL, 'FM000'), #{user_id}, #{signs_image}, SYSTIMESTAMP)
+    </insert>
+        
+      <!-- 서명 조회 -->
+      <select id="selectPad" parameterType="java.util.Map" resultType="com.clip.gwr.vo.SignsVo">
+        SELECT SIGNS_IMAGE,SIGNS_REGDATE 
+		FROM SIGNS
+		WHERE USER_ID = #{user_id}
+      </select>       
+      
+      <!-- 서명 삭제 -->
+      <delete id="delPad" parameterType="java.util.Map">
+        DELETE  FROM  SIGNS s   
+		WHERE SIGNS_SEQ = #{signs_seq} 
+      </delete>
+</mapper>

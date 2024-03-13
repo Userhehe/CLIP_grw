@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clip.gwr.model.mapper.AccesslogDaoImpl">
+    
+    <!-- 사용자접속로그 등록 -->  
+     <insert id="insertUserLog" parameterType="java.util.Map">
+     <selectKey keyProperty="accesslog_seq" resultType="java.lang.Integer" order="BEFORE">
+			SELECT ACCESSLOG_SEQ.NEXTVAL AS ACCESSLOG_SEQ FROM DUAL
+		</selectKey>
+        INSERT INTO ACCESSLOG
+		(ALOG_SEQ, ALOG_ID, ALOG_IP, ALOG_URL, 
+		ALOG_COMMENT, DAILY_REGDATE)
+		VALUES('ACCESSLOG_' || TO_CHAR(ACCESSLOG_SEQ.NEXTVAL, 'FM000'), 
+		#{alog_id}, #{alog_ip}, #{alog_url}, #{alog_comment}, CURRENT_DATE)
+     </insert> 
+     
+     <!-- 사용자접속로그 조회 -->
+     <select id="selectUserLog" parameterType="java.util.Map" resultType="com.clip.gwr.vo.AccesslogVo">
+      SELECT ALOG_ID, ALOG_IP, ALOG_URL, 
+                ALOG_COMMENT, DAILY_REGDATE
+      FROM ACCESSLOG
+     </select>
+     
+     <!-- 사용자접속로그 검색 -->
+     <select id="searchUserLog" parameterType="java.util.Map" resultType="com.clip.gwr.vo.AccesslogVo">
+	     SELECT ALOG_ID, ALOG_IP, ALOG_URL, 
+	                ALOG_COMMENT, DAILY_REGDATE
+		FROM ACCESSLOG
+		WHERE 1=1
+		<if test="alog_id != null">
+			AND ALOG_ID LIKE '%' || #{alog_id} || '%'
+		</if>
+		<if test="alog_ip != null">
+			AND ALOG_IP LIKE '%' || #{alog_ip} || '%'
+		</if>
+		<if test="alog_url != null">
+			AND ALOG_URL LIKE '%' || #{alog_url} || '%'
+		</if>
+		<if test="alog_comment != null">
+			AND ALOG_COMMENT LIKE '%' || #{alog_comment} || '%'
+		</if>
+		<if test="start_regdate != null and end_regdate != null">
+			AND DAILY_REGDATE BETWEEN TO_DATE(#{start_regdate}, 'YYYY-MM-DD') 
+			AND TO_DATE(#{end_regdate}, 'YYYY-MM-DD')
+		</if>
+     </select>
+</mapper>
