@@ -15,14 +15,14 @@ import lombok.ToString;
 @AllArgsConstructor
 public class PaymentLineVo {
 
-	private String plSeq;
-	private String userId;
-	private String plFirst;
-	private String plSecond;
-	private String plThird;
-	private String plFscheck;
-	private String plSecheck;
-	private String plThcheck;
-	private String plRefer;
+	private String pl_Seq;
+	private String user_Id;
+	private String pl_First;
+	private String pl_Second;
+	private String pl_Third;
+	private String pl_Fscheck;
+	private String pl_Secheck;
+	private String pl_Thcheck;
+	private String pl_Refer;
 	
 }

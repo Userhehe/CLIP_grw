@@ -10,18 +10,19 @@ import lombok.ToString;
 @Data
 @Setter
 @Getter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class ApprovalVo {
 
-	private String appSeq;
-	private String appTitle;
-	private String appContent;
-	private String gianSeq;
-	private String plSeq;
-	private String appCreatedate;
-	private String appDraft;
-	private String appStrdate;
-	private String appEnddate;
+	private String app_Seq;
+	private String app_Title;
+	private String app_Content;
+	private String gian_Seq;
+	private String pl_Seq;
+	private String app_Createdate;
+	private String app_Draft;
+	private String app_Strdate;
+	private String app_Enddate;
+	
 }
