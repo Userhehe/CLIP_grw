@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title></title>
+<title>header</title>
+<script type="text/javascript" src="./js/calendar.js"></script>
 <meta content="" name="description">
 <meta content="" name="keywords">
 <!-- Google Fonts -->
@@ -28,6 +29,8 @@
 <link href="assets/css/style.css" rel="stylesheet">
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="./js/calendar.js"></script>
 </head>
 <body>
 <!-- ======= START HEADER ======= -->
@@ -116,7 +119,7 @@
 					<i class="bx bx-select-multiple"></i><span>전자결재</span><i class="bi bi-chevron-down ms-auto"></i>
 			</a>
 				<ul id="ework-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-					<li><a href="forms-elements.html"> <i class="bi bi-circle"></i><span>결재신청</span></a></li>
+					<li><a href="./payRegister.do"> <i class="bi bi-circle"></i><span>결재신청</span></a></li>
 					<li><a href="forms-layouts.html"> <i class="bi bi-circle"></i><span>결재조회</span></a></li>
 					<li><a href="./paytemplate.do"> <i class="bi bi-circle"></i><span>결재양식서 관리</span></a></li>
 				</ul>
@@ -139,8 +142,8 @@
 					<i class="bi bi-calendar-week"></i><span>일정관리</span><i class="bi bi-chevron-down ms-auto"></i>
 			</a>
 				<ul id="schedule-Nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-					<li><a href="tables-general.html"> <i class="bi bi-circle"></i><span>일정 조회</span></a></li>
-					<li><a href="tables-data.html"> <i class="bi bi-circle"></i><span>회의실 예약</span></a></li>
+					<li><a href="./schedule.do"> <i class="bi bi-circle"></i><span>일정 조회</span></a></li>
+					<li><a href="#" onclick="rsrvtrigger()"> <i class="bi bi-circle"></i><span>회의실 예약</span></a></li>
 					<li><a href="tables-data.html"> <i class="bi bi-circle"></i><span>회의실 예약 수정</span></a></li>
 				</ul>			
 			</li>
