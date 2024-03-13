@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clip.gwr.model.mapper.DeptDaoImpl">
+
+    <!-- 부서 등록  -->
+	<insert id="insertDept" parameterType="java.util.Map">
+		INSERT INTO DEPT
+	        (DEPT_SEQ, DEPT_NAME, DEPT_REGDATE)
+	        VALUES('DEPT_' || TO_CHAR(USER_SEQ.NEXTVAL, 'FM000'), #{dept_name}, SYSTIMESTAMP)
+	</insert>
+	
+   <!-- 부서 수정 -->
+    <update id="updateDept" parameterType="java.util.Map">
+		UPDATE DEPT D
+		SET D.DEPT_NAME = #{dept_name}
+		WHERE D.DEPT_SEQ = #{dept_seq}
+		AND D.DEPT_SEQ IN (
+		SELECT U.DEPT_SEQ
+		FROM USERINFO U)
+     </update>
+     
+     <!-- 부서 삭제  -->
+     <delete id="delDept" parameterType="java.util.Map">
+     DELETE FROM DEPT
+	 WHERE DEPT_SEQ =#{dept_seq}
+     </delete>
+     
+     <!-- 부서 검색 -->
+     <select id="searchDept" parameterType="java.util.Map">
+     SELECT *
+	 FROM DEPT
+	 WHERE 1=1
+	 	<if test="dept_name != null">
+			AND DEPT_NAME LIKE '%' || #{dept_name} || '%'
+		</if>
+		<if test="start_regdate != null and end_regdate != null">
+			AND DEPT_REGDATE BETWEEN TO_DATE(#{start_regdate}, 'YYYY-MM-DD') 
+			AND TO_DATE(#{end_regdate}, 'YYYY-MM-DD')
+		</if>
+     </select>
+     
+     <!-- 부서 중복 검색 -->
+     <select id="duplicateCheckDept" parameterType="java.util.Map">
+     SELECT COUNT(*)
+	 FROM DEPT
+     WHERE DEPT_NAME = #{dept_name}
+     </select>
+</mapper>

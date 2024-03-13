@@ -6,6 +6,10 @@
 		<typeAlias type="com.clip.gwr.vo.UserVo" alias="UserVo"/>
 		<typeAlias type="com.clip.gwr.vo.UserinfoVo" alias="UserinfoVo"/>
 		<typeAlias type="com.clip.gwr.vo.ApprovalVo" alias="ApprovalVo"/>
+		<typeAlias type="com.clip.gwr.vo.DeptVo" alias="DeptVo"/>
+		<typeAlias type="com.clip.gwr.vo.PositionsVo" alias="PositionsVo"/>
+		<typeAlias type="com.clip.gwr.vo.RanksVo" alias="RanksVo"/>
+		<typeAlias type="com.clip.gwr.vo.AccesslogVo" alias="AccesslogVo"/>
 	</typeAliases>
 	
 	<mappers>
@@ -13,5 +17,9 @@
 		<mapper resource="sqls/User_Statement.xml"/>
 		<mapper resource="sqls/FileUpload_Statement.xml"/>
 		<mapper resource="sqls/ApprovalStatement.xml"/>
+		<mapper resource="sqls/Dept_Statement.xml"/>
+		<mapper resource="sqls/Positions_Statement.xml"/>
+		<mapper resource="sqls/Ranks_Statement.xml"/>
+		<mapper resource="sqls/Accesslog_Statement.xml"/>
 	</mappers>
 </configuration>

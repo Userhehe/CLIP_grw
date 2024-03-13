@@ -16,7 +16,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.clip.gwr.model.service.IDeptService;
+import com.clip.gwr.model.service.IPositionsService;
+import com.clip.gwr.model.service.IRanksService;
 import com.clip.gwr.model.service.IUserService;
+import com.clip.gwr.vo.DeptVo;
+import com.clip.gwr.vo.PositionsVo;
+import com.clip.gwr.vo.RanksVo;
 import com.clip.gwr.vo.UserVo;
 import com.clip.gwr.vo.UserinfoVo;
 
@@ -34,7 +40,16 @@ public class userJUnitTest {
 	private SqlSessionTemplate sqlSession;
 	
 	@Autowired
-	private IUserService service;
+	private IUserService usrService;
+	
+	@Autowired
+	private IDeptService dptService;
+	
+	@Autowired
+	private IPositionsService poService;
+	
+	@Autowired
+	private IRanksService ranService;
 	
 	Map<String, Object> map = new HashMap<String, Object>();
 	
@@ -138,7 +153,7 @@ public class userJUnitTest {
 	 */
 //	@Test
 	public void selectUserinfoList() {
-		List<UserinfoVo> lists = service.selectUserinfoList();
+		List<UserinfoVo> lists = usrService.selectUserinfoList();
 		System.out.println(lists);
 		assertNotNull(lists);
 	}
@@ -155,7 +170,7 @@ public class userJUnitTest {
 		map.put("positions_name","팀장");
 		map.put("start_regdate","2024-03-04");
 		map.put("end_regdate","2024-03-04");
-		List<UserinfoVo> lists = service.searchUserinfoList(map);
+		List<UserinfoVo> lists = usrService.searchUserinfoList(map);
 		System.out.println(lists);
 		assertNotNull(lists);
 	}
@@ -166,7 +181,7 @@ public class userJUnitTest {
 //	@Test
 	public void selectUserinfoDetail() {
 		map.put("user_id","USER_001");
-		List<UserinfoVo> lists = service.selectUserinfoDetail(map);
+		List<UserinfoVo> lists = usrService.selectUserinfoDetail(map);
 		System.out.println(lists);
 		assertNotNull(lists);
 	}
@@ -196,11 +211,192 @@ public class userJUnitTest {
 	/**
 	 * 재직증명서 다운로드
 	 */
-	@Test
+	//@Test
 	public void selectJejicDownload() {
 		map.put("user_id","USER_001");
-		List<UserinfoVo> lists = service.selectJejicDownload(map);
+		List<UserinfoVo> lists = usrService.selectJejicDownload(map);
 		System.out.println(lists);
 		assertNotNull(lists);
 	}
+	
+	/**
+	 *  부서 등록
+	 */
+	//@Test
+	public void insertDept() {
+		map.put("dept_name", "구디");
+		int insertDept = sqlSession.insert("com.clip.gwr.model.mapper.DeptDaoImpl.insertDept",map);
+		System.out.println("##insertDept : " + insertDept);
+		assertNotNull(insertDept);
+	}
+	
+	/**
+	 * 부서명 수정 
+	 */
+	//@Test
+	public void updateDept() {
+		map.put("dept_name", "구디수정");
+		map.put("dept_seq", "DEPT_017");
+		int updateDept = sqlSession.update("com.clip.gwr.model.mapper.DeptDaoImpl.updateDept", map);
+		System.out.println("##updateDept : " + updateDept);
+		assertNotNull(updateDept);	
+	}
+	
+	/**
+	 * 부서 삭제 
+	 */
+	//@Test
+	public void delDept() {
+		map.put("dept_seq", "DEPT_017");
+		int delDept = sqlSession.delete("com.clip.gwr.model.mapper.DeptDaoImpl.delDept",map);
+		System.out.println("##delDept : " + delDept);
+		assertNotNull(delDept);
+	}
+	/**
+	 * 부서 검색 
+	 */
+	//@Test
+	public void searchDept() {
+		map.put("dept_name","설계");
+		map.put("start_regdate","2024-03-03");
+		map.put("end_regdate","2024-03-05");
+		List<DeptVo> lists = dptService.searchDept(map);
+		System.out.println(lists);
+		assertNotNull(lists);
+	}
+	/**
+	 * 부서명 중복검사 
+	 */
+	//@Test
+	public void duplicateCheckDept() {
+		map.put("dept_name", "설계");
+		int duplicateCheckDept = sqlSession.selectOne("com.clip.gwr.model.mapper.DeptDaoImpl.duplicateCheckDept",map);
+		System.out.println("##duplicateCheckDept : " + duplicateCheckDept);
+		assertNotNull(duplicateCheckDept);
+	}
+	
+	/**
+	 *  직책 등록 
+	 */
+	//@Test
+	public void insertPositions() {
+		map.put("positions_name", "팀투");
+		int insertPositions = sqlSession.insert("com.clip.gwr.model.mapper.PositionsDaoImpl.insertPositions",map);
+		System.out.println("##insertPositions : " + insertPositions);
+		assertNotNull(insertPositions);
+	}
+	
+	/**
+	 * 직책 수정 
+	 */
+	//@Test
+	public void updatePositions() {
+		map.put("positions_name", "팀삼");
+		map.put("positions_seq", "POSITIONS_003");
+		int updatePositions = sqlSession.update("com.clip.gwr.model.mapper.PositionsDaoImpl.updatePositions", map);
+		System.out.println("##updatePositions : " + updatePositions);
+		assertNotNull(updatePositions);	
+	}
+	/**
+	 * 직책 삭제
+	 */
+	//@Test
+	public void delPosition() {
+		map.put("positions_seq", "POSITIONS_003");
+		int delPosition = sqlSession.delete("com.clip.gwr.model.mapper.PositionsDaoImpl.delPosition",map);
+		System.out.println("##delPosition : " + delPosition);
+		assertNotNull(delPosition);
+	}
+	
+	/**
+	 * 직책 검색
+	 */
+	//@Test
+	public void searchPosition() {
+		map.put("positions_name","팀장");
+		map.put("start_regdate","2024-03-03");
+		map.put("end_regdate","2024-03-05");
+		List<PositionsVo> lists = poService.searchPosition(map);
+		System.out.println(lists);
+		assertNotNull(lists);
+	}
+	
+	/**
+	 * 직책명 중복 검사
+	 */
+	//@Test
+	public void duplicatePosItion() {
+		map.put("positions_name", "팀장");
+		int duplicatePosItion = sqlSession.selectOne("com.clip.gwr.model.mapper.PositionsDaoImpl.duplicatePosItion",map);
+		System.out.println("##duplicatePosItion : " + duplicatePosItion);
+		assertNotNull(duplicatePosItion);
+	}
+	
+	/**
+	 * 직급 등록 
+	 */
+	//@Test
+	public void insertRanks() {
+		map.put("ranks_name", "부하");
+		int insertRanks = sqlSession.insert("com.clip.gwr.model.mapper.RanksDaoImpl.insertRanks",map);
+		System.out.println("##insertRanks : " + insertRanks);
+		assertNotNull(insertRanks);
+	}
+	
+	/**
+	 * 직급 수정 
+	 */
+	//@Test
+	public void updateRanks() {
+		map.put("ranks_name", "쫄따구");
+		map.put("ranks_seq", "RANKS_011");
+		int updateRanks = sqlSession.update("com.clip.gwr.model.mapper.RanksDaoImpl.updateRanks", map);
+		System.out.println("##updateRanks : " + updateRanks);
+		assertNotNull(updateRanks);
+	}
+	
+	/**
+	 * 직급 삭제 
+	 */
+	//@Test
+	public void delRanks() {
+		map.put("ranks_seq", "RANKS_011");
+		int delRanks = sqlSession.delete("com.clip.gwr.model.mapper.RanksDaoImpl.delRanks",map);
+		System.out.println("##delRanks : " + delRanks);
+		assertNotNull(delRanks);
+	}
+	/**
+	 * 직급 검색
+	 */
+	//@Test
+	public void searchRanks() {
+		map.put("ranks_name","대리");
+		map.put("start_regdate","2024-03-03");
+		map.put("end_regdate","2024-03-05");
+		List<RanksVo> lists = ranService.searchRanks(map);
+		System.out.println(lists);
+		assertNotNull(lists);
+	}
+	
+	/**
+	 * 직급명 중복검색
+	 */
+	@Test
+	public void duplicateRanks() {
+		map.put("ranks_name", "대리");
+		int duplicateRanks = sqlSession.selectOne("com.clip.gwr.model.mapper.RanksDaoImpl.duplicateRanks",map);
+		System.out.println("##duplicateRanks : " + duplicateRanks);
+		assertNotNull(duplicateRanks);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
