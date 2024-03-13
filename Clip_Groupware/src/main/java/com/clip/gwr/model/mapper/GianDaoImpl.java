@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.clip.gwr.vo.GianMarkVo;
 import com.clip.gwr.vo.GianVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +31,8 @@ public class GianDaoImpl implements IGianDao {
 	}
 
 	@Override
-	public int tempateInsert(GianVo vo) {
-		return sqlSession.insert(NS+"tempateInsert",vo);
+	public int tempateInsert(Map<String,Object>map) {
+		return sqlSession.insert(NS+"tempateInsert",map);
 	}
 
 	@Override
@@ -52,6 +53,21 @@ public class GianDaoImpl implements IGianDao {
 	@Override
 	public List<GianVo> templateNameSel(String gian_name) {
 		return sqlSession.selectList(NS+"templateNameSel",gian_name);
+	}
+
+	@Override
+	public List<GianVo> mySeletTemplate(String user_Id) {
+		return sqlSession.selectList(NS+"mySeletTemplate",user_Id);
+	}
+
+	@Override
+	public int myInsert(Map<String, Object> map) {
+		return sqlSession.insert(NS+"myInsert");
+	}
+
+	@Override
+	public int myDel(String gian_seq) {
+		return sqlSession.delete(gian_seq);
 	}
 
 }

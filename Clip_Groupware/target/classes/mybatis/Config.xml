@@ -3,6 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.clip.gwr.vo.GianVo" alias="GianVo"/>
+		<typeAlias type="com.clip.gwr.vo.GianMarkVo" alias="GianMarkVo"/>
 		<typeAlias type="com.clip.gwr.vo.UserVo" alias="UserVo"/>
 		<typeAlias type="com.clip.gwr.vo.UserinfoVo" alias="UserinfoVo"/>
 		<typeAlias type="com.clip.gwr.vo.ApprovalVo" alias="ApprovalVo"/>
