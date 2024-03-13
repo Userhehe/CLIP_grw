@@ -3,7 +3,9 @@ package com.test.gwr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
@@ -15,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.clip.gwr.model.service.IGianService;
+import com.clip.gwr.vo.GianMarkVo;
 import com.clip.gwr.vo.GianVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +43,21 @@ public class junitTest {
 		log.info("SqlSessionFactory : {}",factory);
 		assertNotNull(factory);
 		
-		List<GianVo> lists =  service.templateAll();
-		System.out.println(lists);
-		assertNotNull(lists);
+//		List<GianVo> lists =  service.templateAll();
+//		System.out.println(lists);
+//		assertNotNull(lists);
+		
+		List<GianVo> lists2 =service.mySeletTemplate("USER_003");
+		System.out.println(lists2);
+		assertNotNull(lists2);
+		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("gm_Number", "GIANMARK_100");
+//		map.put("user_Id", "USER_003");
+//		map.put("gian_seq", "GIAN_001");
+//		int m = service.myInsert(map);
+//		assertNotNull(m);
+		
 	}
 	
 
