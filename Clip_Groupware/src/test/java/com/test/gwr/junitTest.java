@@ -43,8 +43,6 @@ public class junitTest {
 		List<GianVo> lists =  service.templateAll();
 		System.out.println(lists);
 		assertNotNull(lists);
-		
-		
 	}
 	
 

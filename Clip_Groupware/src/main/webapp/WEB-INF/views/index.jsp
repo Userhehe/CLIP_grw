@@ -25,8 +25,8 @@
 				<input type="text" id="password" class="input-field"
 					placeholder="PASSWORD">
 			</div>
-			<!-- 로그인 버튼 (기능구현시 a tag 삭제 할것!!!!) -->
-			<a href='./main.do'><button id="loginBtn" class="button" >Login</button></a>
+			<!-- 로그인 버튼(기능구현시 A tag 삭제) -->
+			<button id="loginBtn" class="button" ><a href='./main.do'>Log in</a></button>
 			
 			<div class="links">
 				<a href="아이디찾기_URL">아이디 찾기</a>

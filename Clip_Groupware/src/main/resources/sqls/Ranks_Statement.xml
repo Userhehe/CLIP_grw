@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clip.gwr.model.mapper.RanksDaoImpl">
+ 
+	 <!-- 직급등록 -->
+	 <insert id="insertRanks" parameterType="java.util.Map">
+	 INSERT INTO CLIP.RANKS
+	(RANKS_SEQ, RANKS_NAME, RANKS_REGDATE)
+	VALUES('RANKS_' || TO_CHAR(RANKS_SEQ.NEXTVAL, 'FM000'), #{ranks_name}, SYSTIMESTAMP)
+	 </insert>
+	 
+	 <!-- 직급 수정 -->
+	 <insert id="updateRanks" parameterType="java.util.Map">
+	    UPDATE CLIP.RANKS R
+		SET R.RANKS_NAME = #{ranks_name}
+		WHERE R.RANKS_SEQ = #{ranks_seq} 
+		AND R.RANKS_SEQ IN (
+		    SELECT U.RANKS_SEQ
+		    FROM CLIP.USERINFO U)
+	 </insert>
+	 
+	 <!-- 직급 삭제 -->
+	 <delete id="delRanks">
+		 DELETE  FROM  RANKS 
+	     WHERE RANKS_SEQ = #{ranks_seq} 
+	 </delete>
+	 
+	 <!-- 직급 검색 -->
+	 <select id="searchRanks" resultType="RanksVo">
+		 SELECT *
+	     FROM RANKS r 
+	     WHERE RANKS_NAME  LIKE '%' || #{ranks_name} || '%
+	 </select>
+	 
+	 <!-- 직급명 중복 검사 -->
+	 <select id="duplicateRanks" parameterType="java.lang.Integer">
+		  SELECT COUNT(*)
+	      FROM RANKS 
+	      WHERE RANKS_NAME  = #{ranks_name};
+	 </select>
+</mapper>
