@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function rsrvtrigger(){
 	$("#rsrvmodal").modal("show");
-	console.log("모달 오쁜")
+	console.log("모달 오픈")
 	
 };
 
