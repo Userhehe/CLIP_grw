@@ -1,20 +1,18 @@
 package com.clip.gwr.ctrl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IGianService;
 import com.clip.gwr.vo.GianVo;
@@ -29,9 +27,20 @@ public class PayController {
 	private IGianService service;
 
 	@GetMapping(value="/payRegister.do")
-	public String payRegister() {
-		log.info("PayController payRegister 결재신청 페이지");		
+	public String payRegister(Model model) {
+		log.info("PayController payRegister 결재신청 페이지");
+		List<GianVo> lists2 = service.templateAll();
+	    List<GianVo> lists = service.mySeletTemplate("USER_011");
+	    model.addAttribute("lists", lists);
+	    model.addAttribute("lists2", lists2);
 		return "payRegister";
+	}
+	
+	@PostMapping(value="/templateDelete.do")
+	public String gianDelete(@RequestParam("gian_seq") String gian_seq) {
+		log.info("PayController gianDelete POST");
+		int n = service.templateDelete(gian_seq);
+		return "redirect:/paytemplate.do";
 	}
 	
 	@GetMapping(value = "/paytemplate.do")
@@ -90,4 +99,5 @@ public class PayController {
 		return "redirect:/paytemplate.do";
 	}
 
+	
 }

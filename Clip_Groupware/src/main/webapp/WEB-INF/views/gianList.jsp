@@ -26,6 +26,7 @@
 					<input style="width:250px; display: unset;" class="form-control" type="text" placeholder="검색어를 입력해주세요.">								
 					<button class="btn btn-primary rounded-pill">검색</button>
 				</div>
+				<form action="./templateDelete.do" method="post" onsubmit="return chsSubmit()">
 				<table class="table table-striped" style="margin-top: 10px;">
 					<thead>
 						<tr>
@@ -48,6 +49,7 @@
 						</c:forEach>
 					</tbody>
 				</table>
+				</form>
 			</div>
 			<a href="./gianInsert.do"><button class="btn btn-primary rounded-pill">양식추가</button></a>
 			<button class="btn btn-danger rounded-pill" onclick="templateDel()">양식삭제</button>

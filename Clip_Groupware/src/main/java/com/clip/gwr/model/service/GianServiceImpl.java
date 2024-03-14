@@ -74,9 +74,9 @@ public class GianServiceImpl implements IGianService {
 	}
 
 	@Override
-	public int myDel(String gian_seq) {
-		log.info("GianServiceImpl myDel 즐겨찾기 삭제: {}",gian_seq);
-		return dao.myDel(gian_seq);
+	public int myDel(String gian_seq,String user_id) {
+		log.info("GianServiceImpl myDel 즐겨찾기 삭제: {} {}",gian_seq,user_id);
+		return dao.myDel(gian_seq,user_id);
 	}
 
 }
