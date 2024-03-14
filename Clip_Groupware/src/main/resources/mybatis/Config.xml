@@ -16,6 +16,7 @@
 		<typeAlias type="com.clip.gwr.vo.RanksVo" alias="RanksVo"/>
 		<typeAlias type="com.clip.gwr.vo.AccesslogVo" alias="AccesslogVo"/>
 		<typeAlias type="com.clip.gwr.vo.SignsVo" alias="SignsVo"/>
+		<typeAlias type="com.clip.gwr.vo.ScheduleVo" alias="ScheduleVo"/>
 	</typeAliases>
 	
 	<mappers>

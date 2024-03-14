@@ -7,12 +7,9 @@
 <%@ include file="./header.jsp" %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
-
-
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
 <script type="text/javascript" src="./js/calendar.js"></script>
 </head>
@@ -43,9 +40,7 @@
 <main id="main" class="main">
 	<section class="section dashboard">
 		<div class="container">
-			<button type="button" class="btn btn-primary" onclick="rsrvtrigger()">
-			    Open Modal
-			</button>
+			
 			<div id="calendar">	
 			</div>
 		</div>
