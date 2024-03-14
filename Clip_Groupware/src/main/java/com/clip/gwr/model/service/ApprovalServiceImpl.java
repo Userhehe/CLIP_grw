@@ -33,16 +33,25 @@ public class ApprovalServiceImpl implements IApprovalService{
 	
 	@Override
 	public List<ApprovalVo> conditionSearchApproval(Map<String, Object> map) {
-		log.info("결재내역 conditionSearchApproval 조건별 리스트 조회: {}", map);
+		log.info("결재내역 conditionSearchApproval 조건별 검색 리스트 조회: {}", map);
 		return approvalDao.conditionSearchApproval(map);
+	}
+
+	
+	@Override
+	public List<ApprovalVo> optionalApprovalList(Map<String, Object> map) {
+		log.info("결재내역 optionalApprovalList 옵션별 리스트 조회: {}", map);
+		return approvalDao.optionalApprovalList(map);
 	}
 	
 	
 	@Override
 	public int reqDynamicDateApproval(ApprovalVo approvalVo) {
-		log.info("결재 요청 결재상세 : {}",approvalVo);
+		log.info("결재 요청: {}",approvalVo);
 		return approvalDao.reqDynamicDateApproval(approvalVo);
 	}
+
+
 
 
 }

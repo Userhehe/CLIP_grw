@@ -34,6 +34,7 @@
 <link href="assets/img/favicon.png" rel="icon">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!-- <script type="text/javascript" src="./js/calendar.js"></script> -->
+
 </head>
 <body>
 <!-- ======= START HEADER ======= -->
@@ -104,7 +105,7 @@
 					<i class="bi bi-file-earmark-person"></i><span>인사관리</span><i class="bi bi-chevron-down ms-auto"></i>
 				</a>
 					<ul id="humanresource-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-						<li><a href="components-buttons.html"><i class="bi bi-circle"></i><span>인사 정보</span></a></li>
+						<li><a href="./userInfo.do"><i class="bi bi-circle"></i><span>인사 정보</span></a></li>
 						<li><a href="components-badges.html"><i class="bi bi-circle"></i><span>근태관리</span></a></li>
 						<li><a href="components-buttons.html"><i class="bi bi-circle"></i><span>연차관리</span></a></li>
 						<li><a href="components-breadcrumbs.html"><i class="bi bi-circle"></i><span>조직도</span></a></li>
@@ -146,7 +147,7 @@
 			</a>
 				<ul id="schedule-Nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 					<li><a href="./schedule.do"> <i class="bi bi-circle"></i><span>일정 조회</span></a></li>
-					<li><a href="#" onclick="rsrvtrigger()"> <i class="bi bi-circle"></i><span>회의실 예약</span></a></li>
+					<li><a href="./reservation.do"> <i class="bi bi-circle"></i><span>회의실 예약</span></a></li>
 					<li><a href="tables-data.html"> <i class="bi bi-circle"></i><span>회의실 예약 수정</span></a></li>
 				</ul>			
 			</li>
