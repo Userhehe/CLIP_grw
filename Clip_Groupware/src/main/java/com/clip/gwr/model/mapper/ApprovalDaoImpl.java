@@ -35,13 +35,22 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		return sqlSession.selectOne(NS+"getOneApproval", appSeq);
 	}
 
-	//결재 조건 리스트 조회
+	//결재 제목검색 리스트 조회
 	@Override
 	public List<ApprovalVo> conditionSearchApproval(Map<String, Object> map) {
-		log.info("ApprovalDaoImpl getOneApproval 결재내역 단일 상세조회");
+		log.info("ApprovalDaoImpl conditionSearchApproval 결재 제목/작성자 검색 리스트 조회");
 		return sqlSession.selectList(NS+"conditionSearchApproval", map);
 	}
 
+	
+	@Override
+	public List<ApprovalVo> optionalApprovalList(Map<String, Object> map) {
+		log.info("ApprovalDaoImpl optionalApprovalList 결재 옵션 선택 리스트 조회");
+		return sqlSession.selectList(NS+"optionalApprovalList", map);
+	}
+	
+	
+	
 	
 	//기안 결재요청
 	@Override
@@ -49,6 +58,8 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		log.info("ApprovalDaoImpl reqDynamicDateApproval 결재신청");
 		return sqlSession.insert(NS+"reqDynamicDateApproval",approvalVo);
 	}
+
+	
 
 	
 
