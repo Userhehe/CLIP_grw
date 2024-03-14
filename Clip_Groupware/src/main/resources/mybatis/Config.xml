@@ -30,5 +30,6 @@
 		<mapper resource="sqls/Ranks_Statement.xml"/>
 		<mapper resource="sqls/Accesslog_Statement.xml"/>
 		<mapper resource="sqls/Signs_Statement.xml"/>
+		<mapper resource="sqls/Reservation.xml"/>
 	</mappers>
 </configuration>
