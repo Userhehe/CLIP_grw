@@ -47,7 +47,7 @@ public class junitTest {
 //		System.out.println(lists);
 //		assertNotNull(lists);
 		
-		List<GianVo> lists2 =service.mySeletTemplate("USER_003");
+		List<GianVo> lists2 =service.mySeletTemplate("USER_005");
 		System.out.println(lists2);
 		assertNotNull(lists2);
 		
@@ -58,6 +58,8 @@ public class junitTest {
 //		int m = service.myInsert(map);
 //		assertNotNull(m);
 		
+//		int n = service.myDel("GIAN_026", "USER_003");
+//		assertNotNull(n);	
 	}
 	
 

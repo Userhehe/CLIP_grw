@@ -15,8 +15,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class GianMarkVo {
 
-	private String user_Id;
+	private String user_id;
 	private String gian_seq;
-	private String gm_Number;
+	private String gm_number;
 	
 }

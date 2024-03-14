@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.clip.gwr.vo.GianMarkVo;
 import com.clip.gwr.vo.GianVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class GianDaoImpl implements IGianDao {
 
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	private SqlSessionTemplate sqlSession;	
 	private final String NS = "com.clip.gwr.model.mapper.GianDaoImpl.";
 	
 	@Override
@@ -42,7 +41,7 @@ public class GianDaoImpl implements IGianDao {
 
 	@Override
 	public int templateDelete(String gian_seq) {
-		return sqlSession.delete(NS+"templateDelete",gian_seq);
+	    return sqlSession.delete(NS+"templateDelete"); 
 	}
 
 	@Override
@@ -66,8 +65,8 @@ public class GianDaoImpl implements IGianDao {
 	}
 
 	@Override
-	public int myDel(String gian_seq) {
-		return sqlSession.delete(gian_seq);
+	public int myDel(String gian_seq,String user_id) {
+		return sqlSession.delete(gian_seq,user_id);
 	}
 
 }

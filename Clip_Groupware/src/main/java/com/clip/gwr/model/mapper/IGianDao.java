@@ -35,6 +35,6 @@ public interface IGianDao {
 	public int myInsert(Map<String,Object>map);
 
 	//조회 후 즐겨찾기한 기안서 양식 삭제
-	public int myDel(String gian_seq);
+	public int myDel(String gian_seq,String user_id);
 
 }

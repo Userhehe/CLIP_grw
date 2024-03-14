@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>	
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>header</title>
-<script type="text/javascript" src="./js/calendar.js"></script>
+<!-- <script type="text/javascript" src="./js/calendar.js"></script> -->
 <meta content="" name="description">
 <meta content="" name="keywords">
 <!-- Google Fonts -->
@@ -30,7 +33,7 @@
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script type="text/javascript" src="./js/calendar.js"></script>
+<!-- <script type="text/javascript" src="./js/calendar.js"></script> -->
 </head>
 <body>
 <!-- ======= START HEADER ======= -->

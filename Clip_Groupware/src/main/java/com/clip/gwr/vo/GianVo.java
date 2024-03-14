@@ -20,4 +20,6 @@ public class GianVo {
 	private String gian_modifier;
 	private String gian_regdate;
 	private String gian_html;
+	private String user_id;
+	private String gm_seq;
 }

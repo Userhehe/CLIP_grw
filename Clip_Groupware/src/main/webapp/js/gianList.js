@@ -41,7 +41,7 @@ var chsCount = function(){
          cnt++
       }
    }
-   //console.log(cnt);
+  // console.log("====",cnt);
    return cnt;
 }
 
@@ -82,12 +82,11 @@ function del(val){
 	var con = confirm("선택된 글이 삭제됩니다.");
 	if(confirm){
 		var frm = document.forms[0];
-		frm.action="./.do";
+		frm.action="./templateDelete.do";
 		frm.method="post";
 		frm.submit();
 	}else{
 		alert("삭제가 취소되었습니다.");
 	}
 }
-
 
