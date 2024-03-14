@@ -16,6 +16,8 @@
 		<typeAlias type="com.clip.gwr.vo.RanksVo" alias="RanksVo"/>
 		<typeAlias type="com.clip.gwr.vo.AccesslogVo" alias="AccesslogVo"/>
 		<typeAlias type="com.clip.gwr.vo.SignsVo" alias="SignsVo"/>
+		<typeAlias type="com.clip.gwr.vo.ReservationVo" alias="ReservationVo"/>
+		<typeAlias type="com.clip.gwr.vo.MeeTingRoomVo" alias="MeeTingRoomVo"/>
 	</typeAliases>
 	
 	<mappers>
@@ -29,5 +31,6 @@
 		<mapper resource="sqls/Ranks_Statement.xml"/>
 		<mapper resource="sqls/Accesslog_Statement.xml"/>
 		<mapper resource="sqls/Signs_Statement.xml"/>
+		<mapper resource="sqls/Reservation.xml"/>
 	</mappers>
 </configuration>
