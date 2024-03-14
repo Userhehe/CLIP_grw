@@ -12,29 +12,25 @@
 </head>
 <body>
 	<div class="container">
-			<!-- 추가 이미지 -->
-			<img src="assets/img/loginlogo.png" class="additional-image"
-				alt="loginlogo">
-			<form action="./main.do">
-				<!-- 아이디 입력 -->
-				<div class="input-field">
-					<input type="text" id="username" class="input-field"
-						placeholder="ID">
-				</div>
-				<!-- 비밀번호 입력 -->
-				<div class="input-field">
-					<input type="text" id="password" class="input-field"
-						placeholder="PASSWORD">
-				</div>
-				<!-- 로그인 버튼 (기능구현시 a tag 삭제 할것!!!!) -->
-				<button id="loginBtn" class="button" >Login</button></a>
-			</form>
-			
-			<div class="links">
-				<a href="아이디찾기_URL">아이디 찾기</a>
-				<a>|</a>
-				<a href="비밀번호재설정_URL">비밀번호 재설정</a>
+		<!-- 추가 이미지 -->
+		<img src="assets/img/loginlogo.png" class="additional-image" alt="loginlogo">
+		<form action="./login.do" method="post">
+			<!-- 아이디 입력 -->
+			<div class="input-field">
+				<input type="text" id="user_id" name="user_id" class="input-field" placeholder="아이디를 입력해주세요">
 			</div>
+			<!-- 비밀번호 입력 -->
+			<div class="input-field">
+				<input type="password" id="user_password" name="user_password" class="input-field" placeholder="비밀번호를 입력해주세요">
+			</div>
+			<!-- 로그인 버튼 (기능구현시 a tag 삭제 할것!!!!) -->
+			<input type="submit" id="login_btn" class="button" value="Login"/>
+		</form>
+		<div class="links">
+			<a href="아이디찾기_URL">아이디 찾기</a>
+			|&nbsp;
+			<a href="비밀번호재설정_URL">비밀번호 재설정</a>
 		</div>
+	</div>
 </body>
 </html>
