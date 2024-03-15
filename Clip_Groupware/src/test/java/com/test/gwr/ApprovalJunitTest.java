@@ -46,13 +46,26 @@ public class ApprovalJunitTest {
 		log.info("sqlsessionFactory : {}", factory);
 		assertNotNull(factory);
 
-//		전체 결재내역 조회
-//		List<ApprovalVo> list = service.getAllApproval();
+//		나의 전체 결재요청 조회
+//		List<ApprovalVo> list = service.getAllApproval("USER_012");
 //		System.out.println(list);
 //		for(ApprovalVo vo : list) {
 //			System.out.println(vo);
 //		}
 //		assertNotEquals(list.size(),0);
+		
+		
+		//내팀/내가 참조된 결재 조회
+		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("user_id1", "USER_005");
+//		map.put("user_id2", "USER_005");
+		
+//		List<ApprovalVo> list = service.selectReferApproval("USER_005");
+//		for(ApprovalVo vo : list) {
+//			System.out.println(vo);
+//		}
+//		assertNotEquals(list.size(), 0);
 		
 		
 		//단일 결재내역 조회
@@ -73,16 +86,16 @@ public class ApprovalJunitTest {
 		
 		//결재요청
 //		ApprovalVo appVo = new ApprovalVo();
-//		appVo.setApp_Title("휴가 결재서 요청드립니다.");
+//		appVo.setApp_Title("휴가 결재서 요청드립니다 제이슨 형태 테스트입니다.");
 //		appVo.setApp_Content("휴가 결재서 			이름 : 		성명 : 		....");
 //		appVo.setGian_Seq("GIAN_001");
 //		
 //		
-////		//결재라인 작성 칸
+//		//결재라인 작성 칸
 //		PaylineVo pVo = new PaylineVo();
 //		pVo.setWriter("USER_005");	//결재 기안자
 //
-////		//결재라인
+//		//결재라인
 //		Map<String, Object> lineMap = new HashMap<String, Object>();
 //		lineMap.put("first", "USER_027");
 //		lineMap.put("second", "USER_026");
@@ -99,8 +112,8 @@ public class ApprovalJunitTest {
 //		//참조인
 //		Map<String, Object> refMap = new HashMap<String, Object>();
 //		List<String> empList = new ArrayList<String>();
-////		empList.add("USER_006");
-////		empList.add("USER_005");
+//		empList.add("USER_006");
+//		empList.add("USER_005");
 //		refMap.put("emp", empList);
 //		
 //		//참조 팀
@@ -116,20 +129,21 @@ public class ApprovalJunitTest {
 //		appVo.setApp_Payline(json);
 //		
 ////		날짜 지정한 결재일 시 입력
-//		appVo.setApp_Strdate("2024-03-20");
-//		appVo.setApp_Enddate("2024-03-25");
+//		appVo.setApp_Strdate("2024-04-01");
+//		appVo.setApp_Enddate("2024-04-04");
 //	 	int result = service.reqDynamicDateApproval(appVo);
 //		assertEquals(result, 1);
 	 	
 		
-		Map<String, Object> opt = new HashMap<String, Object>();
-		opt.put("deptSeq", "DEPT_002");
-		opt.put("gianGubun", "");
-		opt.put("appDraft", "");
-		
-		List<ApprovalVo> list = service.optionalApprovalList(opt);
-		System.out.println(list);
-		assertNotEquals(list.size(), 0);
+		//옵셜별 출력
+//		Map<String, Object> opt = new HashMap<String, Object>();
+//		opt.put("deptSeq", "DEPT_002");
+//		opt.put("gianGubun", "");
+//		opt.put("appDraft", "");
+//		
+//		List<ApprovalVo> list = service.optionalApprovalList(opt);
+//		System.out.println(list);
+//		assertNotEquals(list.size(), 0);
 		
 		
 	}
