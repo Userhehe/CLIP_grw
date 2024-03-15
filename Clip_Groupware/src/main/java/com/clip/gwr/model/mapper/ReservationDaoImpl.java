@@ -1,6 +1,7 @@
 package com.clip.gwr.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,13 @@ public class ReservationDaoImpl implements IReservationDao{
 	}
 	
 	@Override
-	public List<UserinfoVo> selectAttends() {
+	public List<String> selectPossibleMeRoom(Map<String, Object> map) {
+		log.info("##### 예약가능시간대 조회 selectPossibleMeRoom #####");
+		return sqlSession.selectList(NS+"selectPossibleMeRoom",map);
+	}
+	
+	@Override
+	public List<String> selectAttends() {
 		log.info("##### 참석자 선택을 위한 jsTree selectAttends #####");
 		return sqlSession.selectList(NS+"selectAttends");
 	}

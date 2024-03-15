@@ -20,9 +20,9 @@ public class MemoDaoImpl implements IMemoDao {
 	private final String NS = "com.clip.gwr.model.mapper.MemoDaoImpl.";
 	
 	@Override
-	public List<MemoVo> myScheduleAll() {
+	public List<MemoVo> myScheduleAll(String user_id) {
 		log.info("myScheduleAll 메모 전체조회");
-		return sqlSession.selectList(NS+"myScheduleAll");
+		return sqlSession.selectList(NS+"myScheduleAll",user_id);
 	}
 
 	@Override

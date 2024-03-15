@@ -33,12 +33,24 @@
 			FROM MEETINGROOM
 	</select>
 	
+	<!-- 회의실 가능 시간 -->
+	<select id="selectPossibleMeRoom" parameterType="java.util.Map" resultType="java.lang.String" >
+		SELECT TO_DATE(#{re_start}||' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 AS RE_TIME
+			FROM DUAL
+			CONNECT BY TO_DATE(#{re_start}||' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 &lt; TO_DATE(#{re_start}||' 17:00:00', 'YYYY-MM-DD HH24:MI:SS')
+			MINUS SELECT RE_START
+			FROM RESERVATION
+			WHERE ME_ROOM = #{me_room}
+			AND RE_START BETWEEN TO_DATE(#{re_start}||' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(#{re_start}||' 17:00:00', 'YYYY-MM-DD HH24:MI:SS')
+	</select>
+	
 	<!-- 참석자 jstree -->
-	<select id="selectAttends" resultType="UserinfoVo">
+	<select id="selectAttends" resultType="java.util.Map">
 		SELECT u.USER_ID, u.USER_NAME, d.DEPT_NAME 
 			FROM USERINFO u LEFT JOIN DEPT d 
 			ON u.DEPT_SEQ = d.DEPT_SEQ
 	</select>
+	
 
 
 </mapper>

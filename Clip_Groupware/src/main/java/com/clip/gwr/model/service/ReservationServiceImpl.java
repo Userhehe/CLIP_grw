@@ -1,6 +1,7 @@
 package com.clip.gwr.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.clip.gwr.model.mapper.IReservationDao;
 import com.clip.gwr.vo.MeeTingRoomVo;
 import com.clip.gwr.vo.ReservationVo;
+import com.clip.gwr.vo.UserinfoVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,4 +40,19 @@ public class ReservationServiceImpl implements IReservationService {
 		log.info("ReservationServiceImpl selectMeetingRoom 회의실 목록");
 		return dao.selectMeetingRoom();
 	}
+	
+	//예약가능시간조회
+	@Override
+	public List<String> selectPossibleMeRoom(Map<String, Object> map) {
+		log.info("ReservationServiceImpl selectPossibleMeRoom 선택 날짜 : {}", map);
+		return dao.selectPossibleMeRoom(map);
+	}
+	
+	//참석자 선택 jstree
+	@Override
+	public List<String> selectAttends() {
+		log.info("ReservationServiceImpl selectAttends 참석자 선택 jstree");
+		return dao.selectAttends();
+	}
+	
 }
