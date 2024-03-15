@@ -10,6 +10,9 @@
 <!-- SmartEditor2 라이브러리  -->
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<!-- Drag & Zone 라이브러리 -->
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
 </head>
 <body>
 	<main id="main" class="main">
@@ -21,7 +24,7 @@
                   <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">연차 신청서</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true" >지출 결의서</button>
+                  <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true" >지출 결의서</button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">출장 보고서</button>
@@ -29,7 +32,7 @@
               </ul>
               <div class="tab-content pt-2" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        	 <!--  연차신청서탭 시작 -->
+        	 		<!--  연차신청서탭 시작 -->
         	 <div class="container"><br><br>
         <h2 style="text-align:center;">연차 신청서</h2>
         <form id="annualLeaveForm">
@@ -65,16 +68,45 @@
             </div>
             <div class="form-group">
                 <label for="reason">신청 사유</label>
-                <textarea name="registerWhy" id="smartEditor" style="width: 100%; height: 412px;"></textarea>
+                <textarea name="registerWhy" id="smartEditor" style="width: 100%; height: 412px;"></textarea><br><br><br>
             </div>
-            <button type="submit" class="btn btn-primary rounded-pill">신청하기</button>
+            <div style="text-align: center;">
+            	<button type="submit" class="btn btn-primary rounded-pill">신청하기</button>
+            </div>
 		        </form>
 		    </div>
             <!--  연차신청서탭 끝 -->
-                <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                   <h2 style="text-align:center;">지출 품의서</h2>
+        	 	</div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><br><br>
+                   <h2 style="text-align:center;">지출 결의서</h2>
+                   <form id="payTemplate">
+		            <div class="form-group">
+		                <label for="applicantName">신청자 이름</label>
+		                <input type="text" class="form-control" id="applicantName" name="applicantName" required>
+		            </div>
+		            <div class="form-group">
+		                <label for="department">부서</label>
+		                <input type="text" id="department" class="form-control" name="department" required>
+		            </div>
+		            <div class="form-group">
+		                <label for="position">직책</label>
+		                <input type="text" id="position" class="form-control" name="position" required>
+		            </div>
+		            <div class="form-group">
+		                <label for="position">총 지출금액:</label>
+		                <input type="number" id="spendPay" class="form-control" name="position" required>
+		            </div>
+		            <div class="form-group">
+		                <label for="position">제목 :</label>
+		                <input type="text" id="payTitle" class="form-control" name="position" required>
+		            </div>
+		            <div class="form-group">
+		                <label for="position">지출 증빙자료:</label>
+		                <div class="dropzone" id="fileDropzone">
+						</div>
+		            </div>
                 </div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"><br><br>
 				   <h2 style="text-align:center;">출장 보고서</h2>
                 </div>
               </div>
