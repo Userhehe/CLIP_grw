@@ -1,17 +1,29 @@
 /*달력 초기화*/
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded',function() {
         const calendarEl = document.getElementById('calendar')
         const calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-        })
-        calendar.render()
-      });
-
-function rsrvtrigger(){
-	$("#rsrvmodal").modal("show");
-	console.log("모달 오픈")
+          initialView: 'dayGridMonth',
+          dateClick: function() {
 	
-};
+	
+   		  }
+
+        });
+        calendar.render()
+        
+      });
+      
+
+
+
+
+
+
+//function rsrvtrigger(){
+//	$("#rsrvmodal").modal("show");
+//	console.log("모달 오픈")
+//	
+//};
 
 
 

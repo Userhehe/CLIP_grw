@@ -6,7 +6,7 @@ import com.clip.gwr.vo.MemoVo;
 
 public interface IMemoDao {
 	
-	List<MemoVo> myScheduleAll(); //개인 메모 조회
+	List<MemoVo> myScheduleAll(String user_id); //개인 메모 조회
 	
 	public MemoVo myScheduleDetail(String seq); //개인메모 상세 조회
 	

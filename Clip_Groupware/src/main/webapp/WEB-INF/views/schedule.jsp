@@ -12,38 +12,80 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
 <script type="text/javascript" src="./js/calendar.js"></script>
+<style type="text/css">
+	.row{
+		flex-wrap: nowrap;
+	}
+</style>
 </head>
 <body>
 
- <!-- 예약 modal 창 -->
-    <div class="modal fade" id="rsrvmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+ <!-- modal 추가 -->
+    <div class="modal fade" id="calendarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="taskId" class="col-form-label">일정 내용</label>
+                        <input type="text" class="form-control" id="calendar_content" name="calendar_content">
+                        <label for="taskId" class="col-form-label">시작 날짜</label>
+                        <input type="date" class="form-control" id="calendar_start_date" name="calendar_start_date">
+                        <label for="taskId" class="col-form-label">종료 날짜</label>
+                        <input type="date" class="form-control" id="calendar_end_date" name="calendar_end_date">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" id="addCalendar">추가</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="sprintSettingModalClose">취소</button>
+                </div>
+    
+            </div>
         </div>
-        <div class="modal-body">
-          <!-- 모달 내용 -->
-    		모달이 왜안안ㅇㄴ완완왐ㄴ우ㅠ낭
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
     </div>
-  </div>
+</body>
+
 
 <main id="main" class="main">
 	<section class="section dashboard">
-		<div class="container">
-			
-			<div id="calendar">	
+	<div class="row">
+		<div class="col-lg-2">
+			<div class="card-body" >
+			<h2 class="card-title">조회 목록</h2>
+				<form>
+					<table>
+						<tr>
+							<td>
+								<input type="checkbox"> 전사일정
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox"> 휴가일정
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox"> 회의실 예약
+							</td>
+						</tr>
+					</table>
+				</form>	
 			</div>
-		</div>
+		</div>		
+		
+			<div class="container">
+				<div id="calendar"></div>
+			</div>
+			
+	</div>		
 	</section>
 </main>	
 </body>

@@ -26,14 +26,14 @@ public class ReservationJUnitTest {
 	@Autowired
 	private IReservationService service;
 	
-	//@Test
+	@Test
 	public void myReservationAll() {
 		List<ReservationVo> lists = service.myReservationAll("USER_034");
 		log.info("예약 전체조회 : {}",lists);
 		assertNotNull(lists);
 	}
 	
-	@Test
+	//@Test
 	public void test() {
 		String attendsView = "USER_011,USER_034";
 		
