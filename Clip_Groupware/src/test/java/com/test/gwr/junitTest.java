@@ -43,23 +43,9 @@ public class junitTest {
 		log.info("SqlSessionFactory : {}",factory);
 		assertNotNull(factory);
 		
-//		List<GianVo> lists =  service.templateAll();
-//		System.out.println(lists);
-//		assertNotNull(lists);
-		
-		List<GianVo> lists2 =service.mySeletTemplate("USER_005");
-		System.out.println(lists2);
-		assertNotNull(lists2);
-		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("gm_Number", "GIANMARK_100");
-//		map.put("user_Id", "USER_003");
-//		map.put("gian_seq", "GIAN_001");
-//		int m = service.myInsert(map);
-//		assertNotNull(m);
-		
-//		int n = service.myDel("GIAN_026", "USER_003");
-//		assertNotNull(n);	
+		List<GianVo> lists=service.templateNameSel("휴가");
+		System.out.println(lists);
+		assertNotNull(lists); 
 	}
 	
 
