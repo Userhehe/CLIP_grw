@@ -38,7 +38,8 @@ public class LoginController {
 	    log.info("####pw: " + pw);
 		UserVo login = service.userLogin(map);
 		session.setAttribute("UserVo", login);
-		log.info("#####login : " + login);
+		System.out.println("!!!!!!!!!!!!login : " + login);
+		log.info("####login : " + login);
 		if(session.getAttribute("UserVo") == null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -47,14 +48,15 @@ public class LoginController {
 			out.println("</script>");
 			out.flush();
 			return "login";
-		}else {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script language='javascript'>");
-			out.println("alert('로그인되었습니다')");
-			out.println("</script>");
-			out.flush();
 		}
+//		else {
+//			response.setContentType("text/html; charset=UTF-8");
+//			PrintWriter out = response.getWriter();
+//			out.println("<script language='javascript'>");
+//			out.println("alert('로그인되었습니다')");
+//			out.println("</script>");
+//			out.flush();
+//		}
 		return "main";
 	}
 }

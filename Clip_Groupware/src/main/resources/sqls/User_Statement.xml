@@ -3,7 +3,10 @@
 <mapper namespace="com.clip.gwr.model.mapper.UserDaoImpl">
 	<!-- 로그인 -->
 	<select id="userLogin" parameterType="java.util.Map" resultType="com.clip.gwr.vo.UserVo">
-		SELECT USER_ID, USER_PASSWORD
+		SELECT USER_ID, USER_PASSWORD, USER_NAME, 
+		(SELECT RANKS_NAME FROM RANKS r INNER JOIN USERINFO u ON r.RANKS_SEQ = u.RANKS_SEQ WHERE u.USER_ID = #{user_id}) AS RANKS_NAME,
+		(SELECT DEPT_NAME FROM DEPT d INNER JOIN USERINFO u ON d.DEPT_SEQ = u.DEPT_SEQ WHERE USER_ID = #{user_id}) AS DEPT_NAME,
+		(SELECT POSITIONS_NAME FROM POSITIONS p INNER JOIN USERINFO u ON p.POSITIONS_SEQ = u.POSITIONS_SEQ WHERE USER_ID = #{user_id}) AS POSITIONS_NAME
 			FROM USERINFO u 
 		WHERE USER_ID = #{user_id}
 		AND USER_PASSWORD = #{user_password}
