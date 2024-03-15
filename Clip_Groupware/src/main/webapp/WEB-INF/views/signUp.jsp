@@ -34,10 +34,57 @@
 					<option value="gmail.com">gmail.com</option>
 					<option value="naver.com">naver.com</option>
 					<option value="hanmail.com">hanmail.com</option>
-					<option value="input">직접 입력</option>
+					<option value="input_email">직접 입력</option>
 				</select>
 			</div>
+			
+			<input type="text" maxlength="8" placeholder="생년월일8자리 ex)19980423">
+			
+			<div>
+				<select name="phone_firstnum">
+					<option value="010">010</option>
+					<option value="011">011</option>
+					<option value="input_phone_firstnum">직접 입력</option>
+				</select>
+				-
+				<input type="text" id="phone_secondnum" placeholder="전화번호 앞자리">
+				-
+				<input type="text" id="phone_lastnum" placeholder="전화번호 뒷자리">
+				
+				<input type="text" id="user_address" placeholder="주소">
+				
+				<div>
+					<label for="dept">부서선택</label>
+					<select name="dept">
+						<option value="010"></option>
+						<option value="011">011</option>
+						<option value="input_dept">직접 입력</option>
+					</select>
+					<label for="ranks">직급선택</label>
+					<select name="ranks">
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="input_dept">직접 입력</option>
+					</select>
+					<label for="positions">직책선택</label>
+					<select name="positions">
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="input_dept">직접 입력</option>
+					</select>
+					<label for="positions">관리자여부</label>
+					<select name="positions">
+						<option value="Y">Y</option>
+						<option value="N">N</option>
+					</select>
+					
+				</div>
+			</div>
+			
+			
+			
 			<input type="submit" id="login_btn" class="button mg_top15" value="사원정보 등록"/>
+			
 			
 		</form>
 	</div>

@@ -12,7 +12,6 @@
 </head>
 <body>
 	<div class="container">
-		<!-- 추가 이미지 -->
 		<img src="assets/img/loginlogo.png" class="additional-image" alt="loginlogo">
 		<form action="./login.do" method="post">
 			<!-- 아이디 입력 -->
@@ -23,7 +22,6 @@
 			<div class="input-field">
 				<input type="password" id="user_password" name="user_password" class="input-field" placeholder="비밀번호를 입력해주세요">
 			</div>
-			<!-- 로그인 버튼 (기능구현시 a tag 삭제 할것!!!!) -->
 			<input type="submit" id="login_btn" class="button" value="Login"/>
 		</form>
 		<div class="links">
