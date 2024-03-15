@@ -43,6 +43,14 @@ public class PayController {
 		return "redirect:/paytemplate.do";
 	}
 	
+	@GetMapping(value="/templateReasearch.do")
+	public String templateSelect(Model model,@RequestParam("gian_name")String gian_name) {
+		log.info("PayController templateSelect GET :{}",gian_name);
+		List<GianVo> lists2=service.templateNameSel(gian_name);
+		model.addAttribute("lists2",lists2);
+		return "paytemplate" ;
+	}
+	
 	@GetMapping(value = "/paytemplate.do")
 	public String payTemplate(Model model) {
 		log.info("PayController 기안서 양식관리 페이지");
