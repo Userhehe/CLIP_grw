@@ -21,12 +21,21 @@ public class ApprovalDaoImpl implements IApprovalDao {
 	
 	private final String NS = "com.clip.gwr.model.mapper.ApprovalDaoImpl.";
 	
-	//전체 결재내역 전체 조회
+	//내가 요청한 결재내역 전체 조회
 	@Override
-	public List<ApprovalVo> getAllApproval() {
-		log.info("ApprovalDaoImpl getAllApproval 전체 결재내역 조회");
-		return sqlSession.selectList(NS+"getAllApproval");
+	public List<ApprovalVo> getAllApproval(String app_seq) {
+		log.info("ApprovalDaoImpl getAllApproval 전체 나의결재내역 조회");
+		return sqlSession.selectList(NS+"getAllApproval", app_seq);
 	}
+
+	
+	// 내가/내팀이 참조된 결재내역 전체 조회
+	@Override
+	public List<ApprovalVo> selectReferApproval(String user_id) {
+		log.info("ApprovalDaoImpl selectReferApproval 내팀/내가 참조된 결재리스트 조회");
+		return sqlSession.selectList(NS+"selectReferApproval",user_id);
+	}
+
 
 	//결재내역 단일 상세 조회
 	@Override
@@ -58,6 +67,7 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		log.info("ApprovalDaoImpl reqDynamicDateApproval 결재신청");
 		return sqlSession.insert(NS+"reqDynamicDateApproval",approvalVo);
 	}
+
 
 	
 

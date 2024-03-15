@@ -18,9 +18,9 @@ public class MemoServiceImpl implements IMemoService{
 	private IMemoDao dao;
 
 	@Override
-	public List<MemoVo> myScheduleAll() {
+	public List<MemoVo> myScheduleAll(String user_id) {
 		log.info("myScheduleAll");
-		return dao.myScheduleAll();
+		return dao.myScheduleAll(user_id);
 	}
 
 	@Override
