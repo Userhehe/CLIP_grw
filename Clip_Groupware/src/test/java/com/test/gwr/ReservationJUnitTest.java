@@ -41,6 +41,7 @@ public class ReservationJUnitTest {
 
 	// 예약등록
 	// @Test
+
 	public void test() {
 		String attendsView = "USER_011,USER_034";
 
