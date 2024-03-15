@@ -7,8 +7,11 @@ import com.clip.gwr.vo.ApprovalVo;
 
 public interface IApprovalDao {
 
-	//전체 결재내역 전체 조회
-	public List<ApprovalVo> getAllApproval();
+	//내가 요청한 결재내역 전체 조회
+	public List<ApprovalVo> getAllApproval(String app_seq);
+	
+	// 내가/내팀이 참조된 결재내역 전체 조회
+	public List<ApprovalVo> selectReferApproval(String user_id);
 	
 	//결재내역 단일 상세 조회
 	public ApprovalVo getOneApproval(String appSeq);

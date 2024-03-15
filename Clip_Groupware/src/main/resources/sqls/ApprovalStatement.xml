@@ -3,14 +3,41 @@
 <mapper namespace="com.clip.gwr.model.mapper.ApprovalDaoImpl">
 
 
-	<!-- 전체 결재내역 리스트 조회 -->
-	<select id="getAllApproval" resultType="ApprovalVo">
-       SELECT APP_SEQ, APP_TITLE, APP_CONTENT,
-                GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') APP_CREATEDATE, APP_DRAFT
-        FROM APPROVAL a 
-        WHERE NOT(APP_DRAFT = '임시저장' OR APP_DRAFT = '결재취소') ORDER BY APP_CREATEDATE DESC
+	<!-- 내가 요청한 결재내역 전체 조회 -->
+	<select id="getAllApproval" resultType="ApprovalVo" parameterType="java.lang.String">
+        SELECT A.APP_SEQ, APP_TITLE, APP_CONTENT,
+		GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') APP_CREATEDATE, APP_DRAFT
+		FROM APPROVAL a JOIN (SELECT APP_SEQ 
+					FROM (SELECT APP_SEQ ,JSON_VALUE(APP_PAYLINE, '$.writer') JT
+										FROM APPROVAL)
+					WHERE JT = #{app_seq} ) JS
+		ON(A.APP_SEQ = JS.APP_SEQ)
+		WHERE A.APP_DRAFT != '임시저장'
+		ORDER BY APP_CREATEDATE DESC
 	</select>
 
+
+		<!-- 내가/내팀이 참조된 결재내역 전체 조회-->		
+	<select id="selectReferApproval" resultType="ApprovalVo" parameterType="java.lang.String">  
+	 
+	  SELECT A.APP_SEQ, APP_TITLE, APP_CONTENT,
+		GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') APP_CREATEDATE, APP_DRAFT
+			FROM APPROVAL a ,(
+			SELECT APP_SEQ
+				FROM APPROVAL a ,JSON_TABLE(A.APP_PAYLINE, '$.reference[*]'
+								COLUMNS(
+										EMP VARCHAR2(2000) FORMAT JSON PATH '$.emp',
+										DEPT VARCHAR2(2000) FORMAT JSON PATH '$.team'
+									))
+					WHERE INSTR(EMP, #{user_id} ) !=0
+					OR	INSTR(DEPT, (SELECT DEPT_SEQ 
+									FROM USERINFO u 
+									WHERE USER_ID = #{user_id} )) !=0) JS
+			WHERE A.APP_SEQ = JS.APP_SEQ
+			AND (A.APP_DRAFT IN ('결재완료', '결재대기'))
+			ORDER BY A.APP_CREATEDATE DESC
+	</select>
+	
 
 
 	<!-- 결재내역 단일 상세 조회 -->
@@ -22,7 +49,9 @@
 
 
 
-	<!-- 결재 조건별 전체리스트 조회 -->
+
+
+	<!-- 결재 조건별검색 전체리스트 조회 -->
 
 	<select id="conditionSearchApproval" resultType="ApprovalVo" parameterType="java.util.Map">
     SELECT APP_SEQ, APP_TITLE, APP_CONTENT,
@@ -44,6 +73,25 @@
 
 
 
+	<!-- 임시저장한 결재리스트 조회 -->
+	
+	
+	<select id="getTempApproval" parameterType="java.lang.String" resultType="ApprovalVo">
+		SELECT APP_SEQ, APP_TITLE, APP_CONTENT,
+           		GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') AS APP_CREATEDATE, APP_DRAFT
+		FROM APPROVAL a JOIN (SELECT APP_SEQ
+								FROM (SELECT APP_SEQ ,JSON_VALUE(APP_PAYLINE, '$.writer') JT
+											FROM APPROVAL)
+								WHERE JT = #{user_id} ) JS
+		ON (A.APP_SEQ = JS.APP_SEQ)
+		AND A.APP_DRAFT = '임시저장'
+	</select>
+	
+	
+	
+	
+	
+
  	<!-- onchange 로 조회값 바뀌는 쿼리 -->
 <!--  	<select id="optionalApprovalList"> -->
 <!--  		<if test="dept != null || gubun != null || progress != null"> -->
@@ -54,13 +102,6 @@
  		
 <!--  		</if> -->
 <!--  	</select> -->
-
-
-	<select id="optionalApprovalList" parameterType="java.util.Map" resultType="ApprovalVo">
-	 	
-	 
-	</select>
- 
 
 
 	<!-- 날짜 지정에따른 결재 신청 -->

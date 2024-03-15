@@ -15,15 +15,15 @@ import lombok.ToString;
 @ToString
 public class ApprovalVo {
 
-	private String app_Seq;
-	private String app_Title;
-	private String app_Content;
-	private String gian_Seq;
-	private String app_Payline;
-	private String app_Createdate;
-	private String app_Draft;
-	private String app_Strdate;
-	private String app_Enddate;
+	private String app_seq;
+	private String app_title;
+	private String app_content;
+	private String gian_seq;
+	private String app_payline;
+	private String app_createdate;
+	private String app_draft;
+	private String app_strdate;
+	private String app_enddate;
 	
 //	private PaylineVo app_Payline;
 }

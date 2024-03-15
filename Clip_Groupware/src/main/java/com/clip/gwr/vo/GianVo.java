@@ -22,4 +22,5 @@ public class GianVo {
 	private String gian_html;
 	private String user_id;
 	private String gm_seq;
+	private String gian_delflag;
 }
