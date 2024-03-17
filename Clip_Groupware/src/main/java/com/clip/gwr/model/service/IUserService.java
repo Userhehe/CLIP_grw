@@ -13,7 +13,7 @@ public interface IUserService {
 	 * @param map
 	 * @return
 	 */
-	public UserVo userLogin(Map<String, Object> map);
+	public UserinfoVo userLogin(Map<String, Object> map);
 	
 	/**
 	 * 아이디 찾기

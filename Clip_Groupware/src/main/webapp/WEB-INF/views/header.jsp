@@ -81,7 +81,7 @@
 						<span>개인정보 수정</span></a>
 						</li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item d-flex align-items-center" href="#">
+						<li><a class="dropdown-item d-flex align-items-center" href="./logout.do">
 						<i class="bi bi-box-arrow-right"></i>
 						<span>Log Out</span>
 						</a>

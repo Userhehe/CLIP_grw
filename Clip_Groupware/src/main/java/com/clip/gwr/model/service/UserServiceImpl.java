@@ -22,7 +22,7 @@ public class UserServiceImpl implements IUserService {
 	 * 로그인
 	 */
 	@Override
-	public UserVo userLogin(Map<String, Object> map) {
+	public UserinfoVo userLogin(Map<String, Object> map) {
 		log.info("UserServiceImpl userLogin 로그인");
 		return dao.userLogin(map);
 	}
