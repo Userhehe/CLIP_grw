@@ -81,7 +81,16 @@ public class ApprovalJunitTest {
 //		List<ApprovalVo> list = service.conditionSearchApproval(map);
 //		System.out.println(list);
 //		assertNotEquals(list, 0);
+		
+		
+		//임시저장한 나으 결재내역 리스트 조회
+//		List<ApprovalVo> list = service.getTempApproval("USER_005");
+//		for(ApprovalVo vo : list) {
+//			System.out.println(vo);
+//		}
+//		assertEquals(list.size(), 1);
 //		
+		
 		
 		
 		//결재요청

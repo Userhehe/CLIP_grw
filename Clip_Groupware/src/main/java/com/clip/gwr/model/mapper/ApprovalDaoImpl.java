@@ -23,9 +23,9 @@ public class ApprovalDaoImpl implements IApprovalDao {
 	
 	//내가 요청한 결재내역 전체 조회
 	@Override
-	public List<ApprovalVo> getAllApproval(String app_seq) {
+	public List<ApprovalVo> getAllApproval(String user_id) {
 		log.info("ApprovalDaoImpl getAllApproval 전체 나의결재내역 조회");
-		return sqlSession.selectList(NS+"getAllApproval", app_seq);
+		return sqlSession.selectList(NS+"getAllApproval", user_id);
 	}
 
 	
@@ -44,6 +44,18 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		return sqlSession.selectOne(NS+"getOneApproval", appSeq);
 	}
 
+	
+	@Override
+	//나의 임시 저장한 결재파일 불러오기
+	public List<ApprovalVo> getTempApproval(String user_id) {
+		log.info("ApprovalDaoImpl getTempApproval 임시저장 결재파일들 조회");
+		return sqlSession.selectList(NS+"getTempApproval", user_id);
+	}
+
+
+	
+	
+	
 	//결재 제목검색 리스트 조회
 	@Override
 	public List<ApprovalVo> conditionSearchApproval(Map<String, Object> map) {
@@ -67,6 +79,7 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		log.info("ApprovalDaoImpl reqDynamicDateApproval 결재신청");
 		return sqlSession.insert(NS+"reqDynamicDateApproval",approvalVo);
 	}
+
 
 
 	
