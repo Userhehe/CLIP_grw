@@ -20,9 +20,9 @@ public class ApprovalServiceImpl implements IApprovalService{
 	
 	//내가 요청한 결재내역 전체 조회	
 	@Override
-	public List<ApprovalVo> getAllApproval(String app_seq) {
-		log.info("결재내역 getAllApproval전체조회 {}", app_seq);
-		return approvalDao.getAllApproval(app_seq);
+	public List<ApprovalVo> getAllApproval(String user_id) {
+		log.info("결재내역 getAllApproval전체조회 {}", user_id);
+		return approvalDao.getAllApproval(user_id);
 	}
 	
 	// 내가/내팀이 참조된 결재내역 전체 조회
@@ -47,6 +47,13 @@ public class ApprovalServiceImpl implements IApprovalService{
 		return approvalDao.conditionSearchApproval(map);
 	}
 
+	//임시저장한 결재파일 리스트 가져오기
+	@Override
+	public List<ApprovalVo> getTempApproval(String user_id) {
+		log.info("결재내역 getTempApproval 내 임시저장 결재파일 리스트 가져오기: {}", user_id);
+		return approvalDao.getTempApproval(user_id);
+	}
+	
 	
 	//결재 조건별 선택 리스트 조회
 	@Override
@@ -63,6 +70,8 @@ public class ApprovalServiceImpl implements IApprovalService{
 		log.info("결재 요청: {}",approvalVo);
 		return approvalDao.reqDynamicDateApproval(approvalVo);
 	}
+
+	
 
 
 
