@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +21,10 @@
 			</div>
 			<!-- 비밀번호 입력 -->
 			<div class="input-field">
+				<%-- <input type="password" id="user_password" name="${_csrf.user_password}" class="input-field" placeholder="비밀번호를 입력해주세요" value="${_csrf.token}"> --%>
 				<input type="password" id="user_password" name="user_password" class="input-field" placeholder="비밀번호를 입력해주세요">
 			</div>
+			
 			<input type="submit" id="login_btn" class="button" value="Login"/>
 		</form>
 		<div class="links">

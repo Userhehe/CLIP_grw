@@ -22,9 +22,9 @@
 			</div>
 			<!-- 비밀번호 입력 -->
 			<div>
-				<input type="text" id="user_front_registnum" name="user_password" class="input-field" maxlength="6" placeholder="주민등록번호 앞자리">
+				<input type="text" id="user_start_registnum" name="user_start_registnum" class="input-field" maxlength="6" placeholder="주민등록번호 앞자리">
 				-
-				<input type="password" id="user_password" name="user_password" class="input-field" maxlength="7" placeholder="주민등록번호 뒷자리">
+				<input type="password" id="user_last_registnum" name="user_last_registnum" class="input-field" maxlength="7" placeholder="주민등록번호 뒷자리">
 			</div>
 			<div>
 				<input type="text" id="user_email" name="user_email" class="input-field">
@@ -38,7 +38,7 @@
 				</select>
 			</div>
 			
-			<input type="text" maxlength="8" placeholder="생년월일8자리 ex)19980423">
+			<input type="text" id="user_birthday" name="user_birthday" maxlength="8" placeholder="생년월일8자리 ex)19980423">
 			
 			<div>
 				<select name="phone_firstnum">
@@ -47,35 +47,35 @@
 					<option value="input_phone_firstnum">직접 입력</option>
 				</select>
 				-
-				<input type="text" id="phone_secondnum" placeholder="전화번호 앞자리">
+				<input type="text" id="phone_secondnum" name="phone_secondnum" placeholder="전화번호 앞자리">
 				-
-				<input type="text" id="phone_lastnum" placeholder="전화번호 뒷자리">
+				<input type="text" id="phone_lastnum" name="phone_lastnum" placeholder="전화번호 뒷자리">
 				
-				<input type="text" id="user_address" placeholder="주소">
+				<input type="text" id="user_address" name="user_address" placeholder="주소">
 				
 				<div>
-					<label for="dept">부서선택</label>
-					<select name="dept">
-						<option value="010"></option>
-						<option value="011">011</option>
+					<label for="dept_name">부서선택</label>
+					<select name="dept_name">
+						<option value="">부서선택</option>
+						<option value="설계">설계</option>
 						<option value="input_dept">직접 입력</option>
 					</select>
-					<label for="ranks">직급선택</label>
-					<select name="ranks">
-						<option value="010">010</option>
-						<option value="011">011</option>
+					<label for="ranks_name">직급선택</label>
+					<select name="ranks_name">
+						<option value="">직급선택</option>
+						<option value="대리">대리</option>
 						<option value="input_dept">직접 입력</option>
 					</select>
-					<label for="positions">직책선택</label>
-					<select name="positions">
-						<option value="010">010</option>
-						<option value="011">011</option>
+					<label for="positions_name">직책선택</label>
+					<select name="positions_name">
+						<option value="">직책선택</option>
+						<option value="팀장">팀장</option>
 						<option value="input_dept">직접 입력</option>
 					</select>
-					<label for="positions">관리자여부</label>
-					<select name="positions">
-						<option value="Y">Y</option>
+					<label for="user_auth">관리자여부</label>
+					<select name="user_auth">
 						<option value="N">N</option>
+						<option value="Y">Y</option>
 					</select>
 					
 				</div>

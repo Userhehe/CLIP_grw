@@ -24,7 +24,7 @@ public class UserDaoImpl implements IUserDao {
 	 * 로그인
 	 */
 	@Override
-	public UserVo userLogin(Map<String, Object> map) {
+	public UserinfoVo userLogin(Map<String, Object> map) {
 		log.info("##### 로그인 userLogin #####");
 		return sqlSession.selectOne(NS + "userLogin", map);
 	}
