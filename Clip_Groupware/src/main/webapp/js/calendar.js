@@ -4,10 +4,9 @@ document.addEventListener('DOMContentLoaded',function() {
         const calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
           dateClick: function() {
-	
+		  	
 	
    		  }
-
         });
         calendar.render()
         
