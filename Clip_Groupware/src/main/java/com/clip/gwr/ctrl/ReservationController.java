@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.MeeTingRoomVo;
-
+import com.clip.gwr.vo.UserinfoVo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -45,7 +47,7 @@ public class ReservationController {
 		map.put("me_room", me_room);
 		map.put("re_start", re_start);
 		List<String> possibleMeRooms = service.selectPossibleMeRoom(map);
-		
+		log.info("ReservationController possibleMeRooms 예약가능시간 : {}",possibleMeRooms);
 		List<String> possibleMeRoomTimes = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         for (String possibleMeRoom : possibleMeRooms) {
@@ -58,4 +60,19 @@ public class ReservationController {
 
 		return possibleMeRoomTimes;
 	}
+	
+	@GetMapping(value = "/selectAttendsJstree.do")
+	@ResponseBody
+	public String selectAttendsJstree() {
+		log.info("selectAttendsJstree.do 실행");
+		List<UserinfoVo> lists = service.selectAttendsJstree();
+		log.info("리스트 : {}", lists);
+		Gson gson = new GsonBuilder().create();
+		log.info("지슨 :{}", gson);
+		String result = gson.toJson(lists);
+		log.info("리절트 : {}", result);
+		return result;
+	}
+	
+	
 }
