@@ -53,6 +53,20 @@ public class ApprovalServiceImpl implements IApprovalService{
 		log.info("결재내역 getTempApproval 내 임시저장 결재파일 리스트 가져오기: {}", user_id);
 		return approvalDao.getTempApproval(user_id);
 	}
+
+	//나의 결재승인을 받아야하는 결재 리스트조회
+	@Override
+	public List<ApprovalVo> getMyPaycheck(String user_id) {
+		log.info("결재내역 getMyPaycheck 나의 결재승인을 받아야하는 결재 리스트 가져오기: {}", user_id);
+		return approvalDao.getMyPaycheck(user_id);
+	}
+
+	//나의 결재승인을 받아야하는 미처리 결재 리스트조회
+	@Override
+	public List<ApprovalVo> getMyUnprocessedPaycheck(String user_id) {
+		log.info("결재내역 getMyUnprocessedPaycheck 나의 결재승인을 받아야하는 미처리 결재 리스트 가져오기: {}", user_id);
+		return approvalDao.getMyUnprocessedPaycheck(user_id);
+	}
 	
 	
 	//결재 조건별 선택 리스트 조회
@@ -70,6 +84,15 @@ public class ApprovalServiceImpl implements IApprovalService{
 		log.info("결재 요청: {}",approvalVo);
 		return approvalDao.reqDynamicDateApproval(approvalVo);
 	}
+
+	//기안 결재 임시저장
+	@Override
+	public int saveTempApproval(ApprovalVo approvalVo) {
+		log.info("기안 결재 임시저장: {}",approvalVo);
+		return approvalDao.saveTempApproval(approvalVo);
+	}
+
+	
 
 	
 

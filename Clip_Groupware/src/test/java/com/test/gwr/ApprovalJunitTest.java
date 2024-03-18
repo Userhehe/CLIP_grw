@@ -91,18 +91,29 @@ public class ApprovalJunitTest {
 //		assertEquals(list.size(), 1);
 //		
 		
+		//나의 결재승인을 받아야하는 결재 리스트 조회
+//		List<ApprovalVo> list = service.getMyPaycheck("USER_027");
+		List<ApprovalVo> list = service.getMyUnprocessedPaycheck("USER_027");
+		for(ApprovalVo vo : list) {
+			System.out.println(vo);
+		}
+		assertNotEquals(list.size(), 1);
 		
 		
-		//결재요청
+//		
+//		//결재요청
 //		ApprovalVo appVo = new ApprovalVo();
-//		appVo.setApp_Title("휴가 결재서 요청드립니다 제이슨 형태 테스트입니다.");
-//		appVo.setApp_Content("휴가 결재서 			이름 : 		성명 : 		....");
-//		appVo.setGian_Seq("GIAN_001");
+//		appVo.setApp_title("기안 결재 인서트 쿼리문입니다.");
+//		appVo.setApp_content("휴가 결재서 			이름 : 		성명 : 		....");
+//		appVo.setGian_seq("GIAN_001");
 //		
 //		
 //		//결재라인 작성 칸
 //		PaylineVo pVo = new PaylineVo();
 //		pVo.setWriter("USER_005");	//결재 기안자
+//		
+//		//임시 저장은 위에까지.
+//		
 //
 //		//결재라인
 //		Map<String, Object> lineMap = new HashMap<String, Object>();
@@ -135,14 +146,16 @@ public class ApprovalJunitTest {
 //		Gson gson = new Gson();
 //		String json = gson.toJson(pVo);
 //		System.out.println(json);
-//		appVo.setApp_Payline(json);
-//		
-////		날짜 지정한 결재일 시 입력
-//		appVo.setApp_Strdate("2024-04-01");
-//		appVo.setApp_Enddate("2024-04-04");
+//		appVo.setApp_payline(json);
+////		
+////		//날짜 지정한 결재일 시 입력
+//		appVo.setApp_strdate("2024-04-01");
+//		appVo.setApp_enddate("2024-04-04");
 //	 	int result = service.reqDynamicDateApproval(appVo);
 //		assertEquals(result, 1);
-	 	
+//	 	
+		
+		
 		
 		//옵셜별 출력
 //		Map<String, Object> opt = new HashMap<String, Object>();
