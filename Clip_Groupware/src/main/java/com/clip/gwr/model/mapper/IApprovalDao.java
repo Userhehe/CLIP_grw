@@ -25,11 +25,20 @@ public interface IApprovalDao {
 	//임시저장한 결재파일 리스트 가져오기
 	public List<ApprovalVo> getTempApproval(String user_id);
 	
+	//나의 결재승인을 받아야하는 결재 리스트조회
+	public List<ApprovalVo> getMyPaycheck(String user_id);
+
+	//나의 결재승인을 받아야하는 미처리한 결재 리스트조회
+	public List<ApprovalVo> getMyUnprocessedPaycheck(String user_id);
+	
 	
 	
 	
 	//기안 결재요청
 	public int reqDynamicDateApproval(ApprovalVo approvalVo);
+	
+	//기안 결재 임시저장
+	public int saveTempApproval(ApprovalVo approvalVo);
 	
 	
 	

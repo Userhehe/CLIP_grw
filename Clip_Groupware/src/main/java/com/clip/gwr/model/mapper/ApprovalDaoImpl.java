@@ -52,6 +52,24 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		return sqlSession.selectList(NS+"getTempApproval", user_id);
 	}
 
+	@Override
+	//나의 결재승인을 받아야하는 결재 리스트조회
+	public List<ApprovalVo> getMyPaycheck(String user_id){
+		log.info("ApprovalDaoImpl getMyPaycheck 나의 결재승인을 받아야하는 결재 리스트조회");
+		return sqlSession.selectList(NS+"getMyPaycheck", user_id);
+	}
+	
+
+
+	@Override
+	//나의 결재승인을 받아야하는 미처리한 결재 리스트조회
+	public List<ApprovalVo> getMyUnprocessedPaycheck(String user_id) {
+		log.info("ApprovalDaoImpl getMyUnprocessedPaycheck 나의 결재승인을 받아야하는 미처리한 결재 리스트조회");
+		return sqlSession.selectList(NS+"getMyUnprocessedPaycheck",user_id);
+	}
+
+
+
 
 	
 	
@@ -80,7 +98,13 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		return sqlSession.insert(NS+"reqDynamicDateApproval",approvalVo);
 	}
 
-
+	
+	//기안 결재 임시저장
+	@Override
+	public int saveTempApproval(ApprovalVo approvalVo) {
+		log.info("ApprovalDaoImpl saveTempApproval 결재파일 임시저장");
+		return sqlSession.insert(NS+"saveTempApproval", approvalVo);
+	}
 
 	
 
