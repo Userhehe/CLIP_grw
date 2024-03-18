@@ -11,7 +11,8 @@
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <!-- Drag & Zone 라이브러리 -->
-<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+<link rel="stylesheet"
+	href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
 </head>
 <body>
@@ -35,7 +36,7 @@
         	 		<!--  연차신청서탭 시작 -->
         	 <div class="container"><br><br>
         <h2 style="text-align:center;">연차 신청서</h2>
-        <form id="annualLeaveForm">
+        <form action="./" method="post">
             <div class="form-group">
                 <label for="applicantName">신청자 이름</label>
                 <input type="text" class="form-control" id="applicantName" name="applicantName" required>
@@ -66,10 +67,10 @@
                 <label for="endDate">종료 날짜</label>
                 <input type="date" class="form-control" id="endDate" name="endDate" required>
             </div>
-            <div class="form-group">
-                <label for="reason">신청 사유</label>
-                <textarea name="registerWhy" id="smartEditor" style="width: 100%; height: 412px;"></textarea><br><br><br>
-            </div>
+	            <div class="form-group">
+	                <label for="reason">신청 내용</label>
+	                <textarea name="gian_html" id="smartEditor" style="width: 100%; height: 412px;">${vo.gian_html}</textarea><br><br><br>
+	            </div>
             <div style="text-align: center;">
             	<button type="submit" class="btn btn-primary rounded-pill">신청하기</button>
             </div>
@@ -167,3 +168,4 @@ nhn.husky.EZCreator.createInIFrame({
 	});
 }) */
 </script>
+<script type="text/javascript" src="./js/dragAndDrop.js"></script>
