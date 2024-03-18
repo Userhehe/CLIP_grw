@@ -22,5 +22,5 @@ public interface IReservationDao {
 	public List<String> selectPossibleMeRoom(Map<String, Object> map);
 	
 	//참석자 선택 jstree
-	public List<String> selectAttends();
+	public List<UserinfoVo> selectAttendsJstree();
 }

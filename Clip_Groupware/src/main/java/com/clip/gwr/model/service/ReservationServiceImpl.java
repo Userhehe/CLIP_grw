@@ -50,9 +50,9 @@ public class ReservationServiceImpl implements IReservationService {
 	
 	//참석자 선택 jstree
 	@Override
-	public List<String> selectAttends() {
-		log.info("ReservationServiceImpl selectAttends 참석자 선택 jstree");
-		return dao.selectAttends();
+	public List<UserinfoVo> selectAttendsJstree() {
+		log.info("ReservationServiceImpl selectAttendsJstree 참석자 선택 jstree");
+		return dao.selectAttendsJstree();
 	}
 	
 }
