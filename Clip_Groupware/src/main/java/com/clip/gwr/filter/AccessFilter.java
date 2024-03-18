@@ -11,6 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,5 +39,5 @@ public class AccessFilter implements Filter {
 		chain.doFilter(req, response);
 
 	}
-	
+
 }

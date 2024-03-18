@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class MainController {
-	
+	 
 	@GetMapping(value = "/main.do")
 	public String loginForm() {
 		log.info("MainController main 시작화면");
