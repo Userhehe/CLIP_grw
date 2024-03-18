@@ -32,9 +32,15 @@ public class SignsDaoImpl implements ISignsDao {
 	}
 
 	@Override
-	public List<SignsVo> selectPad(Map<String, Object> map) {
+	public List<SignsVo> selectPad(String userId) {
 		log.info("##### 서명 조회 selectPad #####");
-		return sqlSession.selectList(NS + "selectPad",map);
+		return sqlSession.selectList(NS + "selectPad",userId);
+	}
+
+	@Override
+	public List<SignsVo> AllselectPad() {
+		log.info("##### 서명 전체 조회 AllselectPad #####");
+		return sqlSession.selectList(NS+"AllselectPad");
 	}
 
 }

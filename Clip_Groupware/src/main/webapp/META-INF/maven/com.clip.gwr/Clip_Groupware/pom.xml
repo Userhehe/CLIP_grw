@@ -107,6 +107,12 @@
          <scope>runtime</scope>
      </dependency>
 
+     <!-- GSON -->
+      <dependency>
+	    <groupId>com.google.code.gson</groupId>
+	    <artifactId>gson</artifactId>
+	    <version>2.10.1</version>
+	</dependency>	
 
 	<!-- log4j -->
 	<dependency>

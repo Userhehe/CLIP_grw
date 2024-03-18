@@ -31,9 +31,14 @@ public class SignsServiceImpl implements ISignService {
 	}
 
 	@Override
-	public List<SignsVo> selectPad(Map<String, Object> map) {
-		log.info("SignsServiceImpl selectPad 서명 조회 : {}",map);
-		return dao.selectPad(map);
+	public List<SignsVo> selectPad(String userId) {
+		log.info("SignsServiceImpl selectPad 서명 조회 : {}",userId);
+		return dao.selectPad(userId);
+	}
+
+	@Override
+	public List<SignsVo> AllselectPad() {
+		return dao.AllselectPad();
 	}
 
 }
