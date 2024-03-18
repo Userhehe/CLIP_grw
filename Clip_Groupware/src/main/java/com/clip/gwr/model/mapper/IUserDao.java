@@ -17,7 +17,7 @@ public interface IUserDao {
 	
 	/**
 	 * 아이디 찾기
-	 * @param map
+	 * @param map 
 	 * @return
 	 */
 	public UserVo findUserId(Map<String, Object> map);

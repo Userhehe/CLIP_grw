@@ -11,7 +11,7 @@ public interface IUserService {
 	/**
 	 * 로그인
 	 * @param map
-	 * @return
+	 * @return 
 	 */
 	public UserinfoVo userLogin(String user_id);
 	

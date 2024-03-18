@@ -28,7 +28,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
 	
-	@GetMapping(value = "/loginForm.do")
+	@GetMapping(value = "/loginForm.do") 
 	public String login(String error, String logout, Model model) {
 		log.info("error : {} ", error);
 		log.info("logout : {} ", logout);

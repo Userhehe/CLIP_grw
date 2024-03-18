@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                       
 					    http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 			
-	<display-name>Clip_Groupware</display-name>
+	<display-name>Clip_Groupware</display-name> 
 	<welcome-file-list>
 		<welcome-file>/WEB-INF/views/loginForm.jsp</welcome-file>
 	</welcome-file-list>

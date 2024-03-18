@@ -19,7 +19,7 @@ public class LoginService implements UserDetailsService {
 	private IUserDao dao;
 
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-
+ 
 		// loadUserByUsername(String userId)은 UserDetailsService 인터페이스의 추상메서드로 사용자의 아이디를 입력받아 사용자의 상세정보를 로드 
 		log.info("############################## username : " + userId);
 		log.info("LoginService loadUserByUsername : {}", userId); 

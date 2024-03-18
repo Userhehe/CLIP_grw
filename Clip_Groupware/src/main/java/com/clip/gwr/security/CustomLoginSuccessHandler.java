@@ -26,7 +26,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		authentication.getAuthorities().forEach(authority -> { 
 			roleNames.add(authority.getAuthority()); 
 		}); 
-		log.info("####ROLE NAME : {}", roleNames); 
+		log.info("####ROLE NAME : {}", roleNames);  
 
 		/**
 		 * 사용자 로그인

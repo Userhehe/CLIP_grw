@@ -18,7 +18,7 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private IUserDao dao;
 	
-	/**
+	/** 
 	 * 로그인
 	 */
 	@Override

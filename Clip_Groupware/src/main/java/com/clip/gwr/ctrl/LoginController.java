@@ -30,7 +30,7 @@ public class LoginController {
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
 	
-	@PostMapping(value = "/loginForm.do")
+	@PostMapping(value = "/loginForm.do") 
 	public String loginSession(HttpSession session,
 			HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
 		Map<String, Object> map = new HashMap<String, Object>();

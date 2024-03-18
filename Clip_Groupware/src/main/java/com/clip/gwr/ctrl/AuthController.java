@@ -18,7 +18,7 @@ public class AuthController {
 	@GetMapping(value = "/member.do")
 	public String doMember() {
 		log.info("▶▶▶ AuthController Member◀◀◀");
-		return "member";
+		return "member"; 
 	}
 	
 	@GetMapping(value = "/admin.do")
