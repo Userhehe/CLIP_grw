@@ -29,10 +29,8 @@ public class PayController {
 	@GetMapping(value="/payRegister.do")
 	public String payRegister(Model model) {
 		log.info("PayController payRegister 결재신청 페이지");
-		List<GianVo> lists2 = service.templateAll();
-	    List<GianVo> lists = service.mySeletTemplate("USER_011");
-	    model.addAttribute("lists", lists);
-	    model.addAttribute("lists2", lists2);
+		GianVo vo =service.templateDetail("GIAN_001");
+	    model.addAttribute("vo", vo);
 		return "payRegister";
 	}
 	
