@@ -36,7 +36,7 @@
         	 		<!--  연차신청서탭 시작 -->
         	 <div class="container"><br><br>
         <h2 style="text-align:center;">연차 신청서</h2>
-        <form id="annualLeaveForm">
+        <form action="./" method="post">
             <div class="form-group">
                 <label for="applicantName">신청자 이름</label>
                 <input type="text" class="form-control" id="applicantName" name="applicantName" required>

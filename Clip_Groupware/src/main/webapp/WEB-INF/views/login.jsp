@@ -10,6 +10,7 @@
 <link href="assets/img/favicon.png" rel="icon">
 <!-- Template Main CSS File -->
 <link href="./assets/css/login.css" rel="stylesheet">
+
 </head>
 <body>
 	<div class="container">
