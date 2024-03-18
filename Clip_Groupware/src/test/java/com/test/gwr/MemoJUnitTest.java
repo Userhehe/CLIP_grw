@@ -30,7 +30,7 @@ public class MemoJUnitTest {
 	
 	@Test
 	public void test() {
-		List<MemoVo> lists = service.myScheduleAll("USER_001");
+		List<MemoVo> lists = service.myScheduleAll("USER_005");
 		log.info("메모 전체조회 {}:", lists);
 		assertNotNull(lists);
 		
@@ -39,7 +39,7 @@ public class MemoJUnitTest {
 		assertNotNull(detail);
 		
 		MemoVo insert = new MemoVo();
-		insert.setUser_id("USER_001");
+		insert.setUser_id("USER_005");
 		insert.setPrs_title("어우 집가고싶넹");
 		insert.setPrs_content("프로젝트 잘하고싶다");
 		
@@ -50,9 +50,9 @@ public class MemoJUnitTest {
 		
 		MemoVo update = new MemoVo();
 		update.setPrs_seq("USERSCHEDULE_012");
-		update.setUser_id("USER_001");
+		update.setUser_id("USER_005");
 		update.setPrs_title("제목을 수정한다!");
-	update.setPrs_content("내용을 고친다!");
+		update.setPrs_content("내용을 고친다!");
 		
 		int cnt2 = service.myScheduleUpdate(update);
 		log.info("개인 메모 수정 {} :", update);
