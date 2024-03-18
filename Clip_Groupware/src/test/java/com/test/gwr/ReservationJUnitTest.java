@@ -41,7 +41,6 @@ public class ReservationJUnitTest {
 
 	// 예약등록
 	// @Test
-
 	public void test() {
 		String attendsView = "USER_011,USER_034";
 
@@ -93,7 +92,7 @@ public class ReservationJUnitTest {
 	// 참석자를 위한 jstree
 	@Test
 	public void selectAttends() {
-		List<String> lists = service.selectAttends();
+		List<UserinfoVo> lists = service.selectAttendsJstree();
 		log.info("참석자를 위한 jstree : {}", lists);
 		assertNotNull(lists);
 	}
