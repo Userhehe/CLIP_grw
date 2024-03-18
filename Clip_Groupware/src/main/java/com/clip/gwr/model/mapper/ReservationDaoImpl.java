@@ -47,8 +47,8 @@ public class ReservationDaoImpl implements IReservationDao{
 	}
 	
 	@Override
-	public List<String> selectAttends() {
-		log.info("##### 참석자 선택을 위한 jsTree selectAttends #####");
-		return sqlSession.selectList(NS+"selectAttends");
+	public List<UserinfoVo> selectAttendsJstree() {
+		log.info("##### 참석자 선택을 위한 jsTree selectAttendsJstree #####");
+		return sqlSession.selectList(NS+"selectAttendsJstree");
 	}
 }
