@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -27,8 +28,24 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
 	
+	@GetMapping(value = "/loginForm.do")
+	public String login(String error, String logout, Model model) {
+		log.info("error : {} ", error);
+		log.info("logout : {} ", logout);
+		
+		if(error != null) {
+			model.addAttribute("error", "없는 계정입니다.");
+		}
+		
+		if(logout != null) {
+			model.addAttribute("logout", "로그아웃 되었습니다.");
+		}
+		return "login";
+	}
+	
 	@GetMapping(value = "/signUp.do")
 	public String signUp() {
+		log.info("회원가입 이동");
 		return "signUp";
 	}
 	
@@ -79,4 +96,5 @@ public class UserController {
 		int signUp = service.insertUserinfo(map);
 		return "login";
 	}
+	
 }

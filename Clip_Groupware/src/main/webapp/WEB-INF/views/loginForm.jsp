@@ -9,22 +9,22 @@
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <!-- Template Main CSS File -->
-<link href="./assets/css/login.css" rel="stylesheet">
+<link href="./assets/css/loginForm.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
 		<img src="assets/img/loginlogo.png" class="additional-image" alt="loginlogo">
-		<form action="./login.do" method="post">
-			<!-- 아이디 입력 -->
+		<form action="./loginForm.do" method="post">
 			<div class="input-field">
-				<input type="text" id="user_id" name="user_id" class="input-field" placeholder="아이디를 입력해주세요">
+				<input type="text" id="username" name="username" class="input-field" placeholder="아이디를 입력해주세요" required="required">
 			</div>
-			<!-- 비밀번호 입력 -->
 			<div class="input-field">
-				<%-- <input type="password" id="user_password" name="${_csrf.user_password}" class="input-field" placeholder="비밀번호를 입력해주세요" value="${_csrf.token}"> --%>
-				<input type="password" id="user_password" name="user_password" class="input-field" placeholder="비밀번호를 입력해주세요">
+				<input type="password" id="password" name="password" class="input-field" placeholder="비밀번호를 입력해주세요" required="required">
 			</div>
-			
+			<div>
+				<label for="remember">자동 로그인</label>
+				<input type="checkbox" id="remember" name="remember-me">							
+			</div>
 			<input type="submit" id="login_btn" class="button" value="Login"/>
 		</form>
 		<div class="links">

@@ -38,7 +38,6 @@
 <level value="info"/>
 </logger>
 
-
 <logger name="java.sql.Statement" additivity="false">
 <level value="TRACE"/>
 <appender-ref ref="CONSOLE"/>

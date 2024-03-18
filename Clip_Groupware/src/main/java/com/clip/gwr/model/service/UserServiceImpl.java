@@ -22,9 +22,9 @@ public class UserServiceImpl implements IUserService {
 	 * 로그인
 	 */
 	@Override
-	public UserinfoVo userLogin(Map<String, Object> map) {
+	public UserinfoVo userLogin(String user_id) {
 		log.info("UserServiceImpl userLogin 로그인");
-		return dao.userLogin(map);
+		return dao.userLogin(user_id);
 	}
 
 	/**
@@ -104,9 +104,9 @@ public class UserServiceImpl implements IUserService {
 	 * 사원정보 상세조회
 	 */
 	@Override
-	public List<UserinfoVo> selectUserinfoDetail(Map<String, Object> map) {
+	public List<UserinfoVo> selectUserinfoDetail(String user_id) {
 		log.info("UserServiceImpl selectUserinfoDetail 사원정보 상세조회");
-		return dao.selectUserinfoDetail(map);
+		return dao.selectUserinfoDetail(user_id);
 	}
 	
 	/**

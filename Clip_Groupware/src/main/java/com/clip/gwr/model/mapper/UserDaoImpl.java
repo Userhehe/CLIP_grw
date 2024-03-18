@@ -24,9 +24,9 @@ public class UserDaoImpl implements IUserDao {
 	 * 로그인
 	 */
 	@Override
-	public UserinfoVo userLogin(Map<String, Object> map) {
+	public UserinfoVo userLogin(String user_id) {
 		log.info("##### 로그인 userLogin #####");
-		return sqlSession.selectOne(NS + "userLogin", map);
+		return sqlSession.selectOne(NS + "userLogin", user_id);
 	}
 	
 	/**
@@ -105,9 +105,9 @@ public class UserDaoImpl implements IUserDao {
 	 * 사원정보 상세조회
 	 */
 	@Override
-	public List<UserinfoVo> selectUserinfoDetail(Map<String, Object> map) {
+	public List<UserinfoVo> selectUserinfoDetail(String user_id) {
 		log.info("##### 사원목록 상세조회 selectUserinfoDetail #####");
-		return sqlSession.selectList(NS + "selectUserinfoDetail", map);
+		return sqlSession.selectList(NS + "selectUserinfoDetail", user_id);
 	}
 
 	/**
