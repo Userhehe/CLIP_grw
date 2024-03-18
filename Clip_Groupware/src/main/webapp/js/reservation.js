@@ -27,13 +27,11 @@ $(document).ready(function() {
 
 	//dateTimePicker 시간-------------------------------------------------
 		$("#re_start_time").datetimepicker({
-			format: "m:i",
+			format: "H:00",
 		});
 	//input 태그 클릭시 이벤트 처리
 	$("#re_start_time").datetimepicker({
 		datepicker: false,
-		// 오늘 이후 날짜만 선택 가능
-		minDate: 0,
 	});
 
 	//클릭시 창활성화
@@ -42,8 +40,91 @@ $(document).ready(function() {
 	$("#re_start_time_img").click(function() {
 		$("#re_start_time").datetimepicker('show');
 	});
-});
+	
+	
+	
+	//jstree-----------------------------------
+		
+	//데이터 jstree형식으로 바꿔 줄꺼는 놈 정의
+	function convertData(data) {
+		var jstreeData = [];
+		data.forEach(function(item) {
+			jstreeData.push({
+				"id": item.user_id,
+				"parent": item.dept_seq,
+				"text": item.user_name+" "+item.ranks_name
+			});
+		});
+		jstreeData.push({"id":"DEPT_001","parent":"#","text":"디자인","state":{"opened":false}});
+		jstreeData.push({"id":"DEPT_002","parent":"#","text":"설계","state":{"opened":false}});
+		jstreeData.push({"id":"DEPT_003","parent":"#","text":"공무","state":{"opened":false}});
+		jstreeData.push({"id":"DEPT_004","parent":"#","text":"시공","state":{"opened":false}});
+		jstreeData.push({"id":"DEPT_005","parent":"#","text":"영업","state":{"opened":false}});
+		jstreeData.push({"id":"DEPT_006","parent":"#","text":"관리","state":{"opened":false}});
+		jstreeData.push({"id":"DEPT_007","parent":"#","text":"인사","state":{"opened":false}});
+		
+		return jstreeData;
+	}
+	
+	//데이터 받아오는 아작스 
+	function initializeJSTree() {
+		$.ajax({
+			url: './selectAttendsJstree.do',
+			dataType: 'json',
+			success: function(data) {
+				var jstreeData = convertData(data);
+				$('#selectAttendsJstree').jstree({
+					'core': {
+						'data': jstreeData
+					},//코어 영역끝
 
+					checkbox: {
+						three_state: false
+						
+					},
+					search: {
+						'case_insensitive': true,
+						'show_only_matches': true
+					},
+
+					plugins: ["search", "checkbox"]
+
+				});
+			}//success끝나는 부분
+		});//ajax끝나는 부분
+	}
+	//아작스 실행하는 놈
+	initializeJSTree();
+	
+	// 검색창 글자 입력하면 나오는놈
+	$('#selectAttendsJstree_search').keyup(function() {
+		$('#selectAttendsJstree').jstree(true).show_all();
+		$('#selectAttendsJstree').jstree('search', $(this).val());
+	});
+	
+	//체크박스 선택하고 버튼 누르면 id값 들고 오는 놈
+	$('#attendsCheck').click(function() {
+		var selectedNodes = $('#selectAttendsJstree').jstree('get_selected', true);
+		var selectedNodeIds = selectedNodes.map(function(node) {
+			return node.id;
+		});
+		console.log("선택된 항목 ID: " + selectedNodeIds.join(", "));
+		
+		var inputContainer = document.getElementById("attendsCheckList");
+		var input = document.createElement("input");
+		input.type = "text";
+		input.value = selectedNodeIds.join(", ");
+		input.name= "attendsV";
+		input.setAttribute("readonly", true);
+		inputContainer.appendChild(input);
+	});
+	
+	//jstree-----------------------------------
+	
+	
+	
+});
+// 예약가능시간 조회
 function selectPossibleMeRoomButton() {
 	var me_room = document.getElementById("me_room").value;
 	var re_start = document.getElementById("re_start").value;
@@ -56,13 +137,16 @@ function selectPossibleMeRoomButton() {
 			console.log("반환 값", data);
 			$("#nawarayo").show();
 			
+			
+			data.forEach(function(item) {
+				console.log(item);
+			});
 			$("#re_start_time").datetimepicker({
 				allowTimes: data
 			});
 		}
 	});
 }
-
 
 
 
