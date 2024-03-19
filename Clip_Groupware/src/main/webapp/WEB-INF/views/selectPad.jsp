@@ -8,7 +8,8 @@
 </head>
 <body>
 <div id="container">
-	<img alt="서명" src="${sVoList.getSigns_image()}">
+	<img alt="서명" src="${sVo
+	List.getSigns_image()}">
 </div>
 </body>
 </html>
