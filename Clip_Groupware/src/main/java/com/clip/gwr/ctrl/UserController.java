@@ -53,7 +53,8 @@ public class UserController {
 	public String signUpDone(HttpSession session,
 			HttpServletResponse response, HttpServletRequest request) {
 		
-		String user_password = passwordEncoder.encode("clip1234!");
+		//String user_password = passwordEncoder.encode("clip1234!");
+		String user_password = passwordEncoder.encode("1111");
 		String user_name = request.getParameter("user_name");
 		String user_registnum = request.getParameter("user_start_registnum") + "-"
 								+ request.getParameter("user_last_registnum");
