@@ -20,5 +20,9 @@ public class SignsVo {
 	private String user_id       ;
 	private String signs_image   ;
 	private String signs_regdate ;
+	private String user_name ;
+	private String signs_name;
+	
+	
 	 
 }

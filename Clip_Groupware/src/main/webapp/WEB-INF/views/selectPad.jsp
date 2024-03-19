@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div id="container">
+	<img alt="서명" src="${sVoList.getSigns_image()}">
+</div>
 </body>
 </html>

@@ -31,7 +31,8 @@ public class SignsServiceImpl implements ISignService {
 	}
 
 	@Override
-	public List<SignsVo> selectPad(String userId) {
+//	public List<SignsVo> selectPad(String userId) {
+	public SignsVo selectPad(String userId) {
 		log.info("SignsServiceImpl selectPad 서명 조회 : {}",userId);
 		return dao.selectPad(userId);
 	}

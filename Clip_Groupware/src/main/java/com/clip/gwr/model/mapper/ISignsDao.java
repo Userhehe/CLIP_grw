@@ -14,7 +14,8 @@ public interface ISignsDao {
 	public int delPad(Map<String, Object> map);
 	
 	// 서명 상세 조회 
-	public List<SignsVo> selectPad(String userId);
+	//public List<SignsVo> selectPad(String userId);
+	public SignsVo selectPad(String userId);
 	
 	// 서명 전체 조회 
 	public List<SignsVo> AllselectPad();

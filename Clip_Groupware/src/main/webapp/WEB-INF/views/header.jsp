@@ -107,13 +107,13 @@
 				</a>
 					<ul id="humanresource-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 						<li><a href="./userInfo.do"><i class="bi bi-circle"></i><span>인사 정보</span></a></li>
-						<li><a href="components-badges.html"><i class="bi bi-circle"></i><span>근태관리</span></a></li>
-						<li><a href="components-buttons.html"><i class="bi bi-circle"></i><span>연차관리</span></a></li>
-						<li><a href="components-breadcrumbs.html"><i class="bi bi-circle"></i><span>조직도</span></a></li>
+						<li><a href="./dailyCheck.do"><i class="bi bi-circle"></i><span>근태관리</span></a></li>
+						<li><a href="./annual.do"><i class="bi bi-circle"></i><span>연차관리</span></a></li>
+						<li><a href="./organization.do"><i class="bi bi-circle"></i><span>조직도</span></a></li>
 						<li><a href="./empty.do"><i class="bi bi-circle"></i><span>직급관리</span></a></li>
-						<li><a href="components-accordion.html"><i class="bi bi-circle"></i><span>직책관리</span></a></li>
-						<li><a href="components-accordion.html"><i class="bi bi-circle"></i><span>부서관리</span></a></li>
-						<li><a href="components-buttons.html"><i class="bi bi-circle"></i><span>사용자 접속로그</span></a></li>
+						<li><a href="./position.do"><i class="bi bi-circle"></i><span>직책관리</span></a></li>
+						<li><a href="./department.do"><i class="bi bi-circle"></i><span>부서관리</span></a></li>
+						<li><a href="./access.do"><i class="bi bi-circle"></i><span>사용자 접속로그</span></a></li>
 					</ul>
 				</li>
 <!-- ======= END humanresource-nav ======= -->

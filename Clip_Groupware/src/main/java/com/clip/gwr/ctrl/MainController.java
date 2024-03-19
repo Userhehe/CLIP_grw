@@ -28,6 +28,43 @@ public class MainController {
 		return "empty";
 	}
 	
+	@GetMapping(value = "/annual.do")
+	public String annual() {
+		log.info("MainController annual 화면");
+		return "annual";
+	}
+	
+	@GetMapping(value = "/dailyCheck.do")
+	public String dailyCheck() {
+		log.info("MainController dailyCheck 화면");
+		return "dailyCheck";
+	}
+	
+	@GetMapping(value = "/position.do")
+	public String position() {
+		log.info("MainController position 화면");
+		return "position";
+	}
+	
+	@GetMapping(value = "/organization.do")
+	public String organization() {
+		log.info("MainController organization 화면");
+		return "organization";
+	}
+	
+	@GetMapping(value = "/access.do")
+	public String access() {
+		log.info("MainController access 화면");
+		return "access";
+	}
+	
+	@GetMapping(value = "/department.do")
+	public String department() {
+		log.info("MainController department 화면");
+		return "department";
+	}
+	
+	
 	@GetMapping(value = "/userInfo.do")
 	public String userInfo() {
 		log.info("userInfo 이동");

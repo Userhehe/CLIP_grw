@@ -21,6 +21,7 @@ import com.clip.gwr.vo.SignsVo;
 import com.google.common.util.concurrent.Service;
 import com.google.gson.Gson;
 
+
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -28,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SignsController {
 	
 	@Autowired
-	ISignService service; 
+	private ISignService service; 
 	
 	/**
 	 * 서명 조회
@@ -55,24 +56,38 @@ public class SignsController {
 		log.info("Signature_Upload insertPad");
 		Gson signGson = new Gson();
 		Map<String, String> map = signGson.fromJson(signJson, Map.class);
-		String user_id = map.get("id");
+//		String user_id = map.get("user_id");
+		String user_id = "USER_004";
+		String user_name = "신정원";
+		String signs_name = map.get("title");
 		String signs_image = map.get("data");
 		Map<String, Object> inMap = new HashMap<String, Object>();
 		inMap.put("user_id", user_id);
 		inMap.put("signs_image", signs_image);
+		inMap.put("signs_name", signs_name);
+		inMap.put("user_name", user_name);
 		int cnt = service.insertPad(inMap);
 		System.out.println(cnt);
 	}
 	
 	@GetMapping(value = "/selectPad.do")
 	public String selectPad(HttpServletRequest request, Model model) {
-	    log.info("Signature_Upload selectOneSign.do");
-	    String userId = (String) request.getSession().getAttribute("USER_ID");
-	    List<SignsVo> signsList = service.selectPad(userId);
-	    SignsVo signs = signsList.isEmpty() ? null : signsList.get(0);
-	    model.addAttribute("signs", signs);
+	    log.info("Signature_Upload selectPad.do");
+	    String user_id = request.getParameter("userId");
+	    String signs_seq = request.getParameter("signs_seq");
+	    
+	    log.info("###### signs_seq : " + signs_seq);
+	    
+//	    List<SignsVo> sVoList = service.selectPad(user_id);
+//	    System.out.println(sVoList);
+//	    model.addAttribute("sVoList", sVoList);
+//	    return "selectPad";
+	    SignsVo sVoList = service.selectPad(signs_seq);
+	    System.out.println(sVoList);
+	    model.addAttribute("sVoList", sVoList);
 	    return "selectPad";
 	}
+	
 	 @GetMapping(value = "/deletePad.do")
 	    public String deletePad(@RequestParam("signs_seq") String signs_seq) {
 	        // 서명 삭제를 위한 맵 생성
