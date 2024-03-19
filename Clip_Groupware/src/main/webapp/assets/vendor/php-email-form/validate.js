@@ -17,7 +17,7 @@
       let action = thisForm.getAttribute('action');
       let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
       
-      if( ! action ) {
+      if( ! action ) {https://mail.naver.com/v2/read/-1/1602#
         displayError(thisForm, 'The form action property is not set!');
         return;
       }
