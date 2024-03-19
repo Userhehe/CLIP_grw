@@ -70,10 +70,10 @@ $(function() {
 			return false;
 		}
 		
-		var result = confirm("작성을 완료하시겠습니까?");
+		var result = confirm("수정을 완료하시겠습니까?");
 		
 		if(result){
-			alert("입력이 완료되었습니다.");
+			alert("수정이 완료되었습니다.");
 			$("#noticeWriteForm").submit();
 		}else{
 			return false;
