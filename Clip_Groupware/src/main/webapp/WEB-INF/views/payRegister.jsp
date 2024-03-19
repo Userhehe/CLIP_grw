@@ -7,6 +7,7 @@
 <title>결재 신청</title>
 <%@ include file="./header.jsp" %>
 <script type="text/javascript" src="./js/payTemplateSelect.js"></script>
+
 <!-- SmartEditor2 라이브러리  -->
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -14,6 +15,8 @@
 <link rel="stylesheet"
 	href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+
+<link rel="stylesheet" href="./css/jstree.css" />
 </head>
 <body>
 	<main id="main" class="main">
@@ -36,76 +39,68 @@
         	 		<!--  연차신청서탭 시작 -->
         	 <div class="container"><br><br>
         <h2 style="text-align:center;">연차 신청서</h2>
-        <form action="./" method="post">
-            <div class="form-group">
-                <label for="applicantName">신청자 이름</label>
-                <input type="text" class="form-control" id="applicantName" name="applicantName" required>
+        <form id="insertForm" action="./myPayInsert.do" method="post">
+            <!-- 결재라인 구역 -->
+            <div>
+            	<label for="payLine">결재라인</label>
+            	
+			</div>
             </div>
-            <div class="form-group">
-                <label for="department">부서</label>
-                <input type="text" id="department" class="form-control" name="department" required>
-            </div>
-            <div class="form-group">
-                <label for="position">직위</label>
-                <input type="text" id="position" class="form-control" name="position" required>
-            </div>
-            <div class="form-group">
-                <label for="leaveType">연차 종류</label>
-                <select id="leaveType" class="form-select" name="leaveType" required>
-                    <option value="">선택하세요</option>
-                    <option value="fullDay">연차</option>
-                    <option value="halfDay">반차</option>
-                    <option value="halfhalfDay">반반차</option>
-                    <option value="myLifeDay">경조사</option>
-                </select>
-            </div>
+            <!-- 결재라인 끝 -->            
             <div class="form-group">
                 <label for="startDate">시작 날짜</label>
-                <input type="date" class="form-control" id="startDate" name="startDate" required>
+                <input type="date" class="form-control" id="startDate" name="startDate" >
             </div>
             <div class="form-group">
                 <label for="endDate">종료 날짜</label>
-                <input type="date" class="form-control" id="endDate" name="endDate" required>
+                <input type="date" class="form-control" id="endDate" name="endDate" >
             </div>
 	            <div class="form-group">
 	                <label for="reason">신청 내용</label>
 	                <textarea name="gian_html" id="smartEditor" style="width: 100%; height: 412px;">${vo.gian_html}</textarea><br><br><br>
 	            </div>
             <div style="text-align: center;">
-            	<button type="submit" class="btn btn-primary rounded-pill">신청하기</button>
+            	<button type="submit" class="btn btn-primary rounded-pill">결재요청</button>
+            	<button type="submit" id="tempSave" class="btn btn-secondary rounded-pill">임시저장</button>
             </div>
 		        </form>
 		    </div>
             <!--  연차신청서탭 끝 -->
         	 	</div>
+            <!--  지출결의서탭 시작 -->        	 	
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><br><br>
                    <h2 style="text-align:center;">지출 결의서</h2>
-                   <form id="payTemplate">
+                   <form id="payTemplate" action="./" method="post">
 		            <div class="form-group">
 		                <label for="applicantName">신청자 이름</label>
-		                <input type="text" class="form-control" id="applicantName" name="applicantName" required>
+		                <input type="text" class="form-control" id="applicantName" name="applicantName" >
 		            </div>
 		            <div class="form-group">
 		                <label for="department">부서</label>
-		                <input type="text" id="department" class="form-control" name="department" required>
+		                <input type="text" id="department" class="form-control" name="department" >
 		            </div>
 		            <div class="form-group">
 		                <label for="position">직책</label>
-		                <input type="text" id="position" class="form-control" name="position" required>
+		                <input type="text" id="position" class="form-control" name="position" >
 		            </div>
 		            <div class="form-group">
 		                <label for="position">총 지출금액:</label>
-		                <input type="number" id="spendPay" class="form-control" name="position" required>
+		                <input type="number" id="spendPay" class="form-control" name="position" >
 		            </div>
 		            <div class="form-group">
 		                <label for="position">제목 :</label>
-		                <input type="text" id="payTitle" class="form-control" name="position" required>
+		                <input type="text" id="payTitle" class="form-control" name="position" >
 		            </div>
 		            <div class="form-group">
 		                <label for="position">지출 증빙자료:</label>
 		                <div class="dropzone" id="fileDropzone">
 						</div>
 		            </div>
+		             <div class="form-group">
+		                <label for="position">문서내용 :</label>
+		                <textarea name="gian_html" id="smartEditor" style="width: 100%; height: 412px;">${vo1.gian_html}</textarea>
+		            </div>
+		            </form>
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"><br><br>
 				   <h2 style="text-align:center;">출장 보고서</h2>
@@ -136,6 +131,25 @@ nhn.husky.EZCreator.createInIFrame({
 		bUseModeChanger : false
 	}
 });
+
+document.getElementById('tempSave').addEventListener('click', function() {
+	event.preventDefault(); //폼 이벤트 막아줌
+	var formData = new FormData(document.getElementById('insertForm'));
+    
+    fetch('./tempSave.do', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('임시저장되었습니다.');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('저장 중 오류가 발생했습니다.');
+    });
+});
+
 /* $(function() {
 	$("#savebutton").click(function() {
 		oEditors.getById["smartEditor"].exec("UPDATE_CONTENTS_FIELD", []); 

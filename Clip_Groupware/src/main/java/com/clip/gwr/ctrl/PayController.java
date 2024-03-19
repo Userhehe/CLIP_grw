@@ -1,11 +1,14 @@
 package com.clip.gwr.ctrl;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +33,9 @@ public class PayController {
 	public String payRegister(Model model) {
 		log.info("PayController payRegister 결재신청 페이지");
 		GianVo vo =service.templateDetail("GIAN_001");//연차 seq (GIAN_001)
+		GianVo vo1 =service.templateDetail("GIAN_003");//연차 seq (GIAN_001)
 	    model.addAttribute("vo", vo);
+	    model.addAttribute("vo1", vo1);
 		return "payRegister";
 	}
 	
@@ -39,6 +44,27 @@ public class PayController {
 		log.info("PayController myPaySelect 내 결재조회 페이지");
 		return "myPaySelect";
 	}
+	
+	@PostMapping(value="/myPayInsert.do")
+	public String myPayInsert(HttpServletResponse resp) throws IOException {
+		log.info("PayController myPayInsert 결재작성 post");
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		out.println("<script language='javascript'>");
+		out.println("alert('결재신청이 완료되었습니다.');");
+		out.println("window.location.href='./myPaySelect.do';");
+		out.println("</script>");
+		out.flush();
+		return null;
+	}
+	
+	//임시저장
+	@PostMapping(value = "/tempSave.do")
+	public String tempSave() {
+		log.info("PayController tempSave 임시저장 post");
+		return "redirect:/myPaySelect.do" ; 
+	}
+	
 	
 	@PostMapping(value="/templateDelete.do")
 	public String gianDelete(@RequestParam("gian_seq") String gian_seq) {
@@ -101,13 +127,21 @@ public class PayController {
 	}
 
 	@PostMapping(value = "/gianMod.do")
-	public String gianModify(@RequestParam("gian_seq") String gian_seq, @RequestParam("gian_html") String gianhtml) {
+	public String gianModify(@RequestParam("gian_seq") String gian_seq, @RequestParam("gian_html") String gianhtml,HttpServletResponse resp) throws IOException {
 		log.info("PayController gianModify POST : {}", gianhtml);
 		System.out.println("$$$$$$$$gian_seq:" + gian_seq);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("gian_html", gianhtml);
 		map.put("gian_seq", gian_seq);
 		int n = service.templateUpdate(map);
+		if(n==1) {
+			resp.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = resp.getWriter();
+			out.println("<script language='javascript'>");
+			out.println("window.location.href='./paytemplate.do';");
+			out.println("</script>");
+			out.flush();
+		}
 		return "redirect:/paytemplate.do";
 	}
 
