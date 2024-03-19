@@ -1,6 +1,7 @@
 package com.clip.gwr.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,9 @@ public class MemoDaoImpl implements IMemoDao {
 	}
 
 	@Override
-	public int myScheduleInsert(MemoVo vo) {
+	public int myScheduleInsert(Map<String, Object> map) {
 		log.info("myScheduleInsert 메모 입력");
-		return sqlSession.insert(NS+"myScheduleInsert", vo);
+		return sqlSession.insert(NS+"myScheduleInsert", map);
 	}
 
 	@Override

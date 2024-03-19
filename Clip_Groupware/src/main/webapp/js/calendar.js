@@ -11,25 +11,80 @@ function ajax(){
 			var calendar = new FullCalendar.Calendar(calendarEl, {
           		initialView: 'dayGridMonth',
           		droppable: false, // 날짜부분 드래그 안되게 막음
-          		editable: false,
+          		editable: true,
+          		displayEventTime: false,
           		events: data,	
+          		
+          		eventClick: function(info){
+					var prsseq = info.event.extendedProps.prs_seq;
+					memodetail(prsseq);
+					console.log(prsseq);
+				},
           		dateClick: function(){
-					modal();	
+					memomodal();	
 				}
-			
 			});
 			calendar.render();
 		},
 		error: function(){
-			alert("달력 불러오기실패 ㅎㅎ")
+			alert("달력 불러오기실패")
 		}
 	});
 }	
 
-function modal(){
-	console.log("씨빨 줫같은 모달 불러와짐?");
-	document.getElementById('calendarModal').style.display = 'block';
-	console.log("불러와져야 하는데?");
+function memomodal(){
+	$("#calendarModal").modal("show");
+	
+	$("#addCalendar").on("click",function addmemo(){
+		var title = $(title).val();
+		var content = $(content).val();
+		var start = $(start).val();
+		var end= $(end).val();
+		
+		if(title == ""){
+			alert("제목을 작성해주세요");
+		}else if(content == ""){
+			alert("내용을 작성해주세요");
+		}else if(start == ""||end == ""){
+			alert("날짜를 입력해 주세요");
+		}else if(start > end){
+			alert("시작시간은 종료시간보다 빨라야 합니다.")
+		}else{ 
+			
+			var inmemo = $("#form").serialize();
+			
+		$.ajax({
+			url:"./addmemo.do",
+			data:inmemo,
+			datatype:"json",
+			type:"post",
+			success:function(msg){
+				console.log(msg)
+			}
+			
+
+		})
+			
+		}
+		
+	})
+	
+}
+
+function memodetail(prsseq){
+	console.log(prsseq)
+	$.ajax({
+		type:"get",
+		url:"./memodetail.do",
+		dataTyp: "text", //확인~
+		success: function(data){
+			$("#dttitle").
+			$("#dtcontent").
+			$("#dtstart").
+			$("#dtend")
+		}
+		
+	})
 }
       
 
