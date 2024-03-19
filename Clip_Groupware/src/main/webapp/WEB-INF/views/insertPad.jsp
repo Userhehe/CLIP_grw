@@ -4,9 +4,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+<link rel="stylesheet" href="./css/sign.css">
+<title>서명등록</title>
+<%@ include file="./header.jsp" %>
 </head>
 <body>
-
+<div id="container">
+	<div style="text-align: center;">
+	
+		<canvas id="signpad" width="500" height="400"></canvas><br>
+	     서명 제목 : <input type="text" name="signs_name" id="signs_name" placeholder="서명 제목을 입력하세요"><br>
+		<div>
+			<button class="btn btn-primary rounded-pill" id="save">저장</button>
+			<button class="btn btn-primary rounded-pill" id="clear">새로고침</button>
+			<button class="btn btn-primary rounded-pill" id="back">뒤로가기</button>
+		</div>
+		
+		<script type="text/javascript" src="./js/sign.js"></script> 
+	</div>	
+</div>
 </body>
 </html>
