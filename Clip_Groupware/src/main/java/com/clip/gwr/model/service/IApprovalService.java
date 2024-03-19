@@ -25,6 +25,8 @@ public interface IApprovalService {
 	//나의 결재승인을 받아야하는 미처리한 결재 리스트조회
 	public List<ApprovalVo> getMyUnprocessedPaycheck(String user_id);
 	
+	//	결재 승인/반려에 따른 결재 현황 정보 수정
+	public int checkApprovalLine(ApprovalVo approvalVo);	
 	
 	//결재 제목검색 리스트 조회
 	public List<ApprovalVo> conditionSearchApproval(Map<String, Object> map);
