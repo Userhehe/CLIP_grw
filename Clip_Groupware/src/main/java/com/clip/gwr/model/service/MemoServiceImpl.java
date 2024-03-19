@@ -1,6 +1,7 @@
 package com.clip.gwr.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,9 +31,9 @@ public class MemoServiceImpl implements IMemoService{
 	}
 
 	@Override
-	public int myScheduleInsert(MemoVo vo) {
+	public int myScheduleInsert(Map<String, Object> map) {
 		
-		return dao.myScheduleInsert(vo);
+		return dao.myScheduleInsert(map);
 	}
 
 	@Override
