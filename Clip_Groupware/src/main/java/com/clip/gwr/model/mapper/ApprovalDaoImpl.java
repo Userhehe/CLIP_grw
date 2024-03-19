@@ -68,7 +68,14 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		return sqlSession.selectList(NS+"getMyUnprocessedPaycheck",user_id);
 	}
 
+	
 
+//	결재 승인/반려에 따른 결재 현황 정보 수정
+	@Override
+	public int checkApprovalLine(ApprovalVo approvalVo) {
+		log.info("ApprovalDaoImpl checkApprovalLine 결재의 결재라인과 결재 현황을 결재승인 및 반려에 맞게 변경.");
+		return sqlSession.update(NS+"checkApprovalLine", approvalVo);
+	}
 
 
 	
@@ -105,6 +112,9 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		log.info("ApprovalDaoImpl saveTempApproval 결재파일 임시저장");
 		return sqlSession.insert(NS+"saveTempApproval", approvalVo);
 	}
+
+
+
 
 	
 

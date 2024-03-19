@@ -32,6 +32,8 @@ public interface IApprovalDao {
 	public List<ApprovalVo> getMyUnprocessedPaycheck(String user_id);
 	
 	
+	//	결재 승인/반려에 따른 결재 현황 정보 수정
+	public int checkApprovalLine(ApprovalVo approvalVo);
 	
 	
 	//기안 결재요청

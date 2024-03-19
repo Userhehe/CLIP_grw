@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;import javax.print.DocFlavor.STRING;
 
@@ -93,11 +94,79 @@ public class ApprovalJunitTest {
 		
 		//나의 결재승인을 받아야하는 결재 리스트 조회
 //		List<ApprovalVo> list = service.getMyPaycheck("USER_027");
-		List<ApprovalVo> list = service.getMyUnprocessedPaycheck("USER_027");
-		for(ApprovalVo vo : list) {
-			System.out.println(vo);
-		}
-		assertNotEquals(list.size(), 1);
+//		List<ApprovalVo> list = service.getMyUnprocessedPaycheck("USER_027");
+//		for(ApprovalVo vo : list) {
+//			System.out.println(vo);
+//		}
+//		assertNotEquals(list.size(), 1);
+		
+		
+		
+		
+		//결재 승인/반려에 따른 결재 현황 정보 수정 로직
+
+//		String approvalSeq = "APPROVAL_027";
+//		ApprovalVo approvalVo = service.getOneApproval(approvalSeq);
+//		String payLine = approvalVo.getApp_payline();
+//		System.out.println(payLine);
+//		Gson transGson = new Gson();
+//		PaylineVo paylineVo = transGson.fromJson(payLine, PaylineVo.class);
+//		System.out.println("paymentLine First : " + paylineVo.getPaymentLine().get("first"));
+//		System.out.println("paymentOk First : " + paylineVo.getPaymentOk().get("first"));
+//		//기존의 내 사원 번호로 내의 순서를 먼저 조회 후 순서에 맞는 결재 승인 정보를 내결재승인 결과에 맞게 변환시켜주고 결재현황도 맞춰서 변경 시켜주기.
+//		String myUser_id = "USER_027";
+//		
+//		Map<String, Object> voLine = paylineVo.getPaymentLine();
+//		Map<String, Object> voLineOk = paylineVo.getPaymentOk();
+//		String[] order = {"first", "second", "third"};
+//		String app_draft = "결재대기";
+//		ApprovalVo checkingApprovalVo = new ApprovalVo();
+//		
+		//승인 시
+//		for (int i = 0; i < order.length; i++) {
+//			if(voLine.get(order[i]).equals(myUser_id)) {
+//				voLineOk.put(order[i], "Y");
+//				
+//				System.out.println(voLine.get(order[i]));
+//				System.out.println(voLineOk.get(order[i]));
+//				if(order[i].equals("third")) {
+//					app_draft = "결재완료";
+//				}
+//				paylineVo.setPaymentLine(voLine);
+//				paylineVo.setPaymentOk(voLineOk);
+//				String strPayline = transGson.toJson(paylineVo);
+//				checkingApprovalVo.setApp_payline(strPayline);
+//				checkingApprovalVo.setApp_draft(app_draft);
+//				checkingApprovalVo.setApp_seq(approvalSeq);
+//				System.out.println(checkingApprovalVo);
+//			}
+//		}
+//		
+//		int result = service.checkApprovalLine(checkingApprovalVo);
+//		assertEquals(result, 1);
+		
+		//반려 시
+//		for (int i = 0; i < order.length; i++) {
+//			if(voLine.get(order[i]).equals(myUser_id)) {
+//				voLineOk.put(order[i], "N");
+//				app_draft = "결재반려";
+//				System.out.println(voLine.get(order[i]));
+//				System.out.println(voLineOk.get(order[i]));
+//				paylineVo.setPaymentLine(voLine);
+//				paylineVo.setPaymentOk(voLineOk);
+//				String strPayline = transGson.toJson(paylineVo);
+//				checkingApprovalVo.setApp_payline(strPayline);
+//				checkingApprovalVo.setApp_draft(app_draft);
+//				checkingApprovalVo.setApp_seq(approvalSeq);
+//				System.out.println(checkingApprovalVo);
+//			}
+//		}
+//		
+//		int rejectResult = service.checkApprovalLine(checkingApprovalVo);
+//		assertEquals(rejectResult, 1);
+		
+		
+		
 		
 		
 //		

@@ -68,6 +68,14 @@ public class ApprovalServiceImpl implements IApprovalService{
 		return approvalDao.getMyUnprocessedPaycheck(user_id);
 	}
 	
+	//	결재 승인/반려에 따른 결재 현황 정보 수정
+	@Override
+	public int checkApprovalLine(ApprovalVo approvalVo) {
+		log.info("결재내역 checkApprovalLine 결재 승인/반려시에 따른 결재 현황 정보 수정: {}", approvalVo);
+		return approvalDao.checkApprovalLine(approvalVo);
+	}
+	
+	
 	
 	//결재 조건별 선택 리스트 조회
 	@Override
@@ -91,6 +99,9 @@ public class ApprovalServiceImpl implements IApprovalService{
 		log.info("기안 결재 임시저장: {}",approvalVo);
 		return approvalDao.saveTempApproval(approvalVo);
 	}
+
+
+
 
 	
 
