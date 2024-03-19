@@ -18,13 +18,13 @@
  	</select>
  	
  	<!-- 예약 등록 -->
- 	<insert id="myReservationInsert" parameterType="ReservationVo">
+ 	<insert id="myReservationInsert" parameterType="java.util.Map">
     INSERT INTO RESERVATION(RE_SEQ, USER_ID, RE_TITLE, 
-    						RE_CONTENT, RE_START, RE_END, 
-    						RE_CREATE, ME_ROOM, RE_ATTEND)
-		VALUES('RESERVATION_' || TO_CHAR(RESERVATION_SEQ.NEXTVAL, 'FM000'), #{user_id}, #{re_title}, 
-				#{re_content}, TO_DATE('2024-03-01T15:00:00', 'YYYY-MM-DD"T"HH24:MI:SS'), TO_DATE('2024-03-01T16:00:00', 'YYYY-MM-DD"T"HH24:MI:SS'), 
-				TO_DATE(SYSDATE, 'YYYY-MM-DD"T"HH24:MI:SS'), #{me_room}, #{re_attend})
+                        	RE_CONTENT, RE_START, RE_END, 
+                        	RE_CREATE, ME_ROOM, RE_ATTEND)
+		VALUES('RESERVATION_' || TO_CHAR(RESERVATION_SEQ.NEXTVAL, 'FM000'), 'USER_051', #{re_title}, 
+        		#{re_content}, TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI'),TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI') + INTERVAL '1' HOUR, 
+        		TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI'), #{me_room}, #{re_attend})
 	</insert>
 	
 	<!-- 회의실 리스트 -->

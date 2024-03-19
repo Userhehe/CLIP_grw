@@ -29,9 +29,9 @@ public class ReservationServiceImpl implements IReservationService {
 	
 	//회의실 예약하기
 	@Override
-	public int myReservationInsert(ReservationVo vo) {
-		log.info("ReservationServiceImpl myReservationAll 사용자 아이디 :{}",vo);
-		return dao.myReservationInsert(vo);
+	public int myReservationInsert(Map<String, Object> map) {
+		log.info("ReservationServiceImpl myReservationAll 사용자 아이디 :{}",map);
+		return dao.myReservationInsert(map);
 	}
 	
 	//회의실 목록

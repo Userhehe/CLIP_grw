@@ -1,7 +1,7 @@
 
 $(document).ready(function() {
 
-	//dateTimePicker 날짜
+	//dateTimePicker 날짜-------------------------------------------------
 	$("#re_start").datetimepicker({
 		format: "Y-m-d",
 	});
@@ -43,7 +43,7 @@ $(document).ready(function() {
 	
 	
 	
-	//jstree-----------------------------------
+	//jstree 참석자-----------------------------------
 		
 	//데이터 jstree형식으로 바꿔 줄꺼는 놈 정의
 	function convertData(data) {
@@ -103,25 +103,59 @@ $(document).ready(function() {
 	});
 	
 	//체크박스 선택하고 버튼 누르면 id값 들고 오는 놈
-	$('#attendsCheck').click(function() {
+	$('#addReservation').click(function() {
 		var selectedNodes = $('#selectAttendsJstree').jstree('get_selected', true);
 		var selectedNodeIds = selectedNodes.map(function(node) {
 			return node.id;
 		});
 		console.log("선택된 항목 ID: " + selectedNodeIds.join(", "));
 		
+		var attendV = selectedNodeIds.join(",");
+		var attends = attendV.split(",");
+		var attendsReal = {"Attend": []};
+
+		if (attends !== null) {
+		    for (var i = 0; i < attends.length; i++) {
+		        var attend = attends[i];
+		        attendsReal["Attend"].push({"attend": attend});
+		      
+		    }
+		}
+
+		attendsReal = JSON.stringify(attendsReal);
+		
 		var inputContainer = document.getElementById("attendsCheckList");
 		var input = document.createElement("input");
 		input.type = "text";
-		input.value = selectedNodeIds.join(", ");
-		input.name= "attendsV";
+		input.value = attendsReal;
+		input.name= "re_attend";
 		input.setAttribute("readonly", true);
 		inputContainer.appendChild(input);
 	});
 	
 	//jstree-----------------------------------
 	
-	
+
+	//예약 등록 버튼-----------------------------------
+	$("#addReservation").click(function() {
+	  	var me_room = document.getElementById("me_room").value;
+		var re_start = document.getElementById("re_start").value;
+		var re_title = document.getElementById("re_title").value;
+		var re_content = document.getElementById("re_content").value;
+//		var re_attend = document.getElementById("re_attend").value;
+		
+		datata = $("#reservationForm").serialize();
+		
+		$.ajax({
+			type: "POST",
+			url:"./myReservationInsert.do",
+			data:datata,
+			success:function(data){
+				console.log(data);
+			}
+		});
+		
+	});
 	
 });
 // 예약가능시간 조회
@@ -146,6 +180,15 @@ function selectPossibleMeRoomButton() {
 			});
 		}
 	});
+}
+//예약 일 + 시간 
+function reservationTime(){
+	var day = document.getElementById("re_start").value;
+	var time = document.getElementById("re_start_time").value;
+	
+	console.log("나온나", day, time);
+	document.getElementById("re_start").value = day + " " +time;
+	$("#nawarayo").hide();
 }
 
 

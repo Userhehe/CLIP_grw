@@ -26,6 +26,8 @@ public class ReservationVo {
 	private String me_room    ; //예약할 회의실 번호
 	private String re_attend  ; //회의 참석자 명단
 	private String re_time  ; //더미 테이블 컬럼 : 예약 가능 시간 목록
+	
+	
 
 	
 	

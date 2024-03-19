@@ -3,6 +3,7 @@ package com.clip.gwr.ctrl;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +13,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.MeeTingRoomVo;
+import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -61,6 +65,7 @@ public class ReservationController {
 		return possibleMeRoomTimes;
 	}
 	
+	
 	@GetMapping(value = "/selectAttendsJstree.do")
 	@ResponseBody
 	public String selectAttendsJstree() {
@@ -74,5 +79,15 @@ public class ReservationController {
 		return result;
 	}
 	
+	@PostMapping(value = "/myReservationInsert.do")
+	@ResponseBody
+	public int myReservationInsert(@RequestParam Map<String, Object> map) {
+		log.info("이거이거 : {}",map);
+		int isc = service.myReservationInsert(map);
+		
+		return isc;
+	}
 	
+	
+
 }
