@@ -60,7 +60,7 @@ public class userJUnitTest {
 	public void userLogin() {
 		map.put("user_id","USER_001");
 		map.put("user_password","clip1234!");
-		UserVo userLogin = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.userLogin", map);
+		UserinfoVo userLogin = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.userLogin", map);
 		System.out.println("##userLogin : " + userLogin);
 		assertNotNull(userLogin);
 	}

@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.clip.gwr.model.mapper.FileUploadDaoImpl">
+<mapper namespace="com.clip.gwr.model.mapper.FileDaoImpl">
+
+	<!-- File Upload -->
+	<insert id="insertFile" parameterType="java.util.Map">
+		<selectKey keyProperty="file_seq" resultType="java.lang.Integer" order="BEFORE">
+			SELECT FILEFEATURE_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO FILE_FEATURE
+		(FILE_SEQ , FILE_TARGETSEQ , FILE_TARGETOBJ , FILE_ORINGINNAME, FILE_STORENAME, FILE_SIZE, FILE_FF)
+		VALUES(#{file_seq},#{file_targetseq} ,#{file_targetobj},#{file_oringinname}, #{file_storename}, #{file_size}, #{file_ff,jdbcType=BLOB})
+	</insert>
 
 	<!-- 사진파일 등록 1 -->
 	<insert id="insertPhotoinfo" parameterType="java.util.Map">
@@ -64,5 +74,7 @@
 			FROM FILE_FEATURE ff
 		WHERE FILE_TARGETSEQ = (SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id})
 	</select>
+	
+	
 	
 </mapper>

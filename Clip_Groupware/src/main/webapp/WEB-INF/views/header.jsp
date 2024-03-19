@@ -81,7 +81,7 @@
 						<span>개인정보 수정</span></a>
 						</li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item d-flex align-items-center" href="#">
+						<li><a class="dropdown-item d-flex align-items-center" href="./logout.do">
 						<i class="bi bi-box-arrow-right"></i>
 						<span>Log Out</span>
 						</a>
@@ -124,7 +124,7 @@
 			</a>
 				<ul id="ework-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 					<li><a href="./payRegister.do"> <i class="bi bi-circle"></i><span>결재신청</span></a></li>
-					<li><a href="forms-layouts.html"> <i class="bi bi-circle"></i><span>결재조회</span></a></li>
+					<li><a href="./myPaySelect.do"> <i class="bi bi-circle"></i><span>결재조회</span></a></li>
 					<li><a href="./paytemplate.do"> <i class="bi bi-circle"></i><span>결재양식서 관리</span></a></li>
 				</ul>
 			</li>

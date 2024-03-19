@@ -14,34 +14,34 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class DaoLogAop {
 	
-	@Pointcut("execution(public * com.clip.gwr.model.mapper.*Dao*.*(..))")
-	public void daoPointCut() {}
-	
-	@Before("daoPointCut()")
-	public void before(JoinPoint j) {
-		Logger logger = LoggerFactory.getLogger(j.getTarget()+"");
-		logger.warn("메소드 실행전");
-		Object[] args = j.getArgs();
-		if(args != null) {
-			logger.warn("------------{}-------------",j.getSignature().getName());
-			for(int i=0; i<args.length;i++) {
-				logger.warn("{}번째 args:\t {}",(i+1),String.valueOf(args[i]));
-			}
-			logger.warn("----{}----",j.getSignature().getName());
-		}
-	}
-	
-	@AfterReturning(value="daoPointCut()" ,returning = "returnValue")
-	public void afterReturing(JoinPoint j,Object returnValue) {
-		Logger logger = LoggerFactory.getLogger(j.getTarget()+"");
-		logger.warn("종료: \t{}",j.getSignature().getName());
-	}
-	
-	@AfterThrowing(value="daoPointCut()", throwing = "exception")
-	public void afterThrowing(JoinPoint j,Throwable exception) {
-		Logger logger = LoggerFactory.getLogger(j.getTarget()+"");
-		logger.warn("에러: \t{}",j.getSignature().getName());
-		logger.warn("에러: \t{}",exception.getMessage());
-		
-	}
+//	@Pointcut("execution(public * com.clip.gwr.model.mapper.*Dao*.*(..))")
+//	public void daoPointCut() {}
+//	
+//	@Before("daoPointCut()")
+//	public void before(JoinPoint j) {
+//		Logger logger = LoggerFactory.getLogger(j.getTarget()+"");
+//		logger.warn("메소드 실행전");
+//		Object[] args = j.getArgs();
+//		if(args != null) {
+//			logger.warn("------------{}-------------",j.getSignature().getName());
+//			for(int i=0; i<args.length;i++) {
+//				logger.warn("{}번째 args:\t {}",(i+1),String.valueOf(args[i]));
+//			}
+//			logger.warn("----{}----",j.getSignature().getName());
+//		}
+//	}
+//	
+//	@AfterReturning(value="daoPointCut()" ,returning = "returnValue")
+//	public void afterReturing(JoinPoint j,Object returnValue) {
+//		Logger logger = LoggerFactory.getLogger(j.getTarget()+"");
+//		logger.warn("종료: \t{}",j.getSignature().getName());
+//	}
+//	
+//	@AfterThrowing(value="daoPointCut()", throwing = "exception")
+//	public void afterThrowing(JoinPoint j,Throwable exception) {
+//		Logger logger = LoggerFactory.getLogger(j.getTarget()+"");
+//		logger.warn("에러: \t{}",j.getSignature().getName());
+//		logger.warn("에러: \t{}",exception.getMessage());
+//		
+//	}
 }

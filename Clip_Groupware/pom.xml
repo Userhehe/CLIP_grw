@@ -9,7 +9,8 @@
   	<java-version>17</java-version>
   	<org.springframework-version>5.3.20</org.springframework-version>
   	<org.aspectj-version>1.9.21</org.aspectj-version>
-  	<org.slf4j-version>2.0.4</org.slf4j-version>
+  	<org.slf4j-version>2.0.7</org.slf4j-version>
+  	<org.springsecurity>5.7.1</org.springsecurity>
   </properties>
   <name>Clip_Groupware Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -95,93 +96,130 @@
 	</dependency>
 	<!-- slf4j :  Java 어플리케이션에서 로깅을 위한 간단하고 표준화된 인터페이스를 제공하는 라이브러리입니다. -->
 	<dependency>
-         <groupId>org.slf4j</groupId>
-         <artifactId>slf4j-api</artifactId>
-         <version>${org.slf4j-version}</version>
-      </dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${org.slf4j-version}</version>
+     </dependency>
      <dependency>
          <groupId>org.slf4j</groupId>
          <artifactId>slf4j-log4j12</artifactId>
          <version>${org.slf4j-version}</version>
          <scope>runtime</scope>
      </dependency>
+     <!-- GSON -->
+      <dependency>
+	    <groupId>com.google.code.gson</groupId>
+	    <artifactId>gson</artifactId>
+	    <version>2.10.1</version>
+	</dependency>	
 	<!-- log4j -->
 	<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.mail</groupId>
-					<artifactId>mail</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jdmk</groupId>
-					<artifactId>jmxtools</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.jmx</groupId>
-					<artifactId>jmxri</artifactId>
-				</exclusion>
-			</exclusions>
-			<scope>runtime</scope>
-		</dependency>
-		<!-- spring-test  -->
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-test</artifactId>
-		    <version>${org.springframework-version}</version>
-		</dependency>
-		<!-- sping-context  -->
-	  	<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-context</artifactId>
-		    <version>${org.springframework-version}</version>
-		</dependency>
-		<!-- spring-webmvc   -->
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-webmvc</artifactId>
-		    <version>${org.springframework-version}</version>
-		</dependency>
-		<!-- commons io -->
-		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>2.15.1</version>
-		</dependency>
-		<!--  fileupload -->
-		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-fileupload2-jakarta</artifactId>
-		    <version>2.0.0-M1</version>
-		</dependency>
-		<!--MyBatis를 Spring 프레임워크와 통합하는 모듈의 의존성.-->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>3.0.3</version>
-		</dependency>
-		<!-- JAVA객체를 JSON객체로 변환해주는 라이브러리 -->
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>2.16.1</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.codehaus.jackson</groupId>
-		    <artifactId>jackson-mapper-asl</artifactId>
-		    <version>1.9.13</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-validator</artifactId>
-		    <version>6.0.2.Final</version>
-		</dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.15</version>
+		<exclusions>
+			<exclusion>
+				<groupId>javax.mail</groupId>
+				<artifactId>mail</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>javax.jms</groupId>
+				<artifactId>jms</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>com.sun.jdmk</groupId>
+				<artifactId>jmxtools</artifactId>
+			</exclusion>
+			<exclusion>
+				<groupId>com.sun.jmx</groupId>
+				<artifactId>jmxri</artifactId>
+			</exclusion>
+		</exclusions>
+		<scope>runtime</scope>
+	</dependency>
+	<!-- spring-test  -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-test</artifactId>
+	    <version>${org.springframework-version}</version>
+	</dependency>
+	<!-- sping-context  -->
+  	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-context</artifactId>
+	    <version>${org.springframework-version}</version>
+	</dependency>
+	<!-- spring-webmvc   -->
+	<dependency>
+	    <groupId>org.springframework</groupId>
+	    <artifactId>spring-webmvc</artifactId>
+	    <version>${org.springframework-version}</version>
+	</dependency>
+	<!-- commons io -->
+	<dependency>
+	    <groupId>commons-io</groupId>
+	    <artifactId>commons-io</artifactId>
+	    <version>2.15.1</version>
+	</dependency>
+	<!--  fileupload -->
+	<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.5</version>
+	</dependency>
+	<!--MyBatis를 Spring 프레임워크와 통합하는 모듈의 의존성.-->
+	<dependency>
+		<groupId>org.mybatis</groupId>
+		<artifactId>mybatis-spring</artifactId>
+		<version>3.0.3</version>
+	</dependency>
+	<!-- JAVA객체를 JSON객체로 변환해주는 라이브러리 -->
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>2.16.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.codehaus.jackson</groupId>
+	    <artifactId>jackson-mapper-asl</artifactId>
+	    <version>1.9.13</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-validator</artifactId>
+	    <version>6.0.2.Final</version>
+	</dependency>
+	
+	<!-- Spring Security 사용을 위한 dependency 등록 Start --> 
+	 <!-- 인증 및 액세스 제어 기능이 포함 --> 
+ 	 <dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-core</artifactId>
+	    <version>${org.springsecurity}</version>
+	 </dependency>
+
+	<!-- Servlet 환경에서 URL 액세스 제어를 가능하게 하는 필터 및 관련 웹 Security 인프라가 포함 --> 
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-web</artifactId>
+	    <version>${org.springsecurity}</version>
+ 	</dependency>
+ 
+ 	<!-- XML 또는 JavaConfig를 사용하여 인증, 권한부여 등 설정을 지정하는데 사용 --> 
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-config</artifactId>
+	    <version>${org.springsecurity}</version>
+	</dependency>
+	
+	<!-- jsp에서 taglib를 사용하기 위한 추가 --> 
+	<dependency>
+	    <groupId>org.springframework.security</groupId>
+	    <artifactId>spring-security-taglibs</artifactId>
+	    <version>${org.springsecurity}</version>
+	</dependency>
+	<!-- Security fin -->
+	
   </dependencies>
   <build>
     <finalName>Clip_Groupware</finalName>

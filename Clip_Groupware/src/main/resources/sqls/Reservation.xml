@@ -33,12 +33,26 @@
 			FROM MEETINGROOM
 	</select>
 	
-	<!-- 참석자 jstree -->
-	<select id="selectAttends" resultType="UserinfoVo">
-		SELECT u.USER_ID, u.USER_NAME, d.DEPT_NAME 
-			FROM USERINFO u LEFT JOIN DEPT d 
-			ON u.DEPT_SEQ = d.DEPT_SEQ
+	<!-- 회의실 가능 시간 -->
+	<select id="selectPossibleMeRoom" parameterType="java.util.Map" resultType="java.lang.String" >
+		SELECT TO_DATE(#{re_start}||' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 AS RE_TIME
+			FROM DUAL
+			CONNECT BY TO_DATE(#{re_start}||' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 &lt; TO_DATE(#{re_start}||' 17:00:00', 'YYYY-MM-DD HH24:MI:SS')
+			MINUS SELECT RE_START
+			FROM RESERVATION
+			WHERE ME_ROOM = #{me_room}
+			AND RE_START BETWEEN TO_DATE(#{re_start}||' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(#{re_start}||' 17:00:00', 'YYYY-MM-DD HH24:MI:SS')
 	</select>
+	
+	<!-- 참석자 jstree -->
+	<select id="selectAttendsJstree" resultType="UserinfoVo">
+		SELECT U.USER_ID, U.USER_NAME, U.DEPT_SEQ, R.RANKS_NAME
+		FROM USERINFO U
+		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
+		WHERE USER_STATUS = 'Y' AND U.DEPT_SEQ IS NOT NULL 
+		ORDER BY R.RANKS_SEQ ASC
+	</select>
+	
 
 
 </mapper>

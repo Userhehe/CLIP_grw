@@ -7,7 +7,7 @@
 		<typeAlias type="com.clip.gwr.vo.UserVo" alias="UserVo"/>
 		<typeAlias type="com.clip.gwr.vo.UserinfoVo" alias="UserinfoVo"/>
 		<typeAlias type="com.clip.gwr.vo.ApprovalVo" alias="ApprovalVo"/>
-		
+
 		<typeAlias type="com.clip.gwr.vo.FileVo" alias="FileVo"/>
 		<typeAlias type="com.clip.gwr.vo.PageVo" alias="PageVo"/>
 		<typeAlias type="com.clip.gwr.vo.DailyCheckVo" alias="DailyCheckVo"/>
@@ -17,6 +17,10 @@
 		<typeAlias type="com.clip.gwr.vo.AccesslogVo" alias="AccesslogVo"/>
 		<typeAlias type="com.clip.gwr.vo.SignsVo" alias="SignsVo"/>
 		<typeAlias type="com.clip.gwr.vo.ScheduleVo" alias="ScheduleVo"/>
+		<typeAlias type="com.clip.gwr.vo.ReservationVo" alias="ReservationVo"/>
+		<typeAlias type="com.clip.gwr.vo.MeeTingRoomVo" alias="MeeTingRoomVo"/>
+		
+		<typeAlias type="com.clip.gwr.vo.MemoVo" alias="MemoVo"/> <!-- 03/15 -->
 	</typeAliases>
 	
 	<mappers>
@@ -31,5 +35,6 @@
 		<mapper resource="sqls/Accesslog_Statement.xml"/>
 		<mapper resource="sqls/Signs_Statement.xml"/>
 		<mapper resource="sqls/Reservation.xml"/>
+		<mapper resource="sqls/Memo_Statement.xml"/> <!-- 03/15 -->
 	</mappers>
 </configuration>

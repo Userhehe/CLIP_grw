@@ -29,11 +29,15 @@ public class PayController {
 	@GetMapping(value="/payRegister.do")
 	public String payRegister(Model model) {
 		log.info("PayController payRegister 결재신청 페이지");
-		List<GianVo> lists2 = service.templateAll();
-	    List<GianVo> lists = service.mySeletTemplate("USER_011");
-	    model.addAttribute("lists", lists);
-	    model.addAttribute("lists2", lists2);
+		GianVo vo =service.templateDetail("GIAN_001");//연차 seq (GIAN_001)
+	    model.addAttribute("vo", vo);
 		return "payRegister";
+	}
+	
+	@GetMapping(value="/myPaySelect.do")
+	public String myPaySelect() {
+		log.info("PayController myPaySelect 내 결재조회 페이지");
+		return "myPaySelect";
 	}
 	
 	@PostMapping(value="/templateDelete.do")
@@ -41,6 +45,14 @@ public class PayController {
 		log.info("PayController gianDelete POST");
 		int n = service.templateDelete(gian_seq);
 		return "redirect:/paytemplate.do";
+	}
+	
+	@GetMapping(value="/templateReasearch.do")
+	public String templateSelect(Model model,@RequestParam("gian_name")String gian_name) {
+		log.info("PayController templateSelect GET :{}",gian_name);
+		List<GianVo> lists2=service.templateNameSel(gian_name);
+		model.addAttribute("lists2",lists2);
+		return "paytemplate" ;
 	}
 	
 	@GetMapping(value = "/paytemplate.do")

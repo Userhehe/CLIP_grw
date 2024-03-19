@@ -11,9 +11,9 @@ public interface IUserService {
 	/**
 	 * 로그인
 	 * @param map
-	 * @return
+	 * @return 
 	 */
-	public UserVo userLogin(Map<String, Object> map);
+	public UserinfoVo userLogin(String user_id);
 	
 	/**
 	 * 아이디 찾기
@@ -73,7 +73,7 @@ public interface IUserService {
 	 * 사원정보 상세조회
 	 * @return
 	 */
-	public List<UserinfoVo> selectUserinfoDetail(Map<String, Object> map);
+	public List<UserinfoVo> selectUserinfoDetail(String user_id);
 	
 	/**
 	 * 사원정보 수정
