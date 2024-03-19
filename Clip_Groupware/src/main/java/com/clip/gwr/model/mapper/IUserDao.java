@@ -89,4 +89,11 @@ public interface IUserDao {
 	 */
 	public List<UserinfoVo> selectJejicDownload(Map<String, Object> map);
 	
+	/**
+	 * 사용자 권한 조회
+	 * @param user_id
+	 * @return
+	 */
+	public String selectUserAuth(String user_id);
+	
 }

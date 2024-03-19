@@ -22,6 +22,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		log.info("####login Success"); 
 		List<String> roleNames = new ArrayList<String>(); 
+		System.out.println("####roleNames : " + roleNames);
 
 		authentication.getAuthorities().forEach(authority -> { 
 			roleNames.add(authority.getAuthority()); 
@@ -31,20 +32,20 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		/**
 		 * 사용자 로그인
 		 */
-		if(roleNames.contains("USER")) { 
-			response.sendRedirect("./main.do"); 
+		if(roleNames.contains("U")) { 
+			response.sendRedirect("./main"); 
 			return; 
 		} 
 
 		/**
 		 * 관리자 로그인
 		 */
-		if(roleNames.contains("ADMIN")) { 
-			response.sendRedirect("./adminMain.do"); 
+		if(roleNames.contains("A")) { 
+			response.sendRedirect("./adminMain"); 
 			return; 
 		}
 		
-		response.sendRedirect("./loginForm.do"); 
+		response.sendRedirect("./loginForm.jsp"); 
 	}
 
 }

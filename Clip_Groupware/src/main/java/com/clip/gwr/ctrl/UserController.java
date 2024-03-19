@@ -40,7 +40,7 @@ public class UserController {
 		if(logout != null) {
 			model.addAttribute("logout", "로그아웃 되었습니다.");
 		}
-		return "login";
+		return "loginForm";
 	}
 	
 	@GetMapping(value = "/signUp.do")
@@ -95,7 +95,7 @@ public class UserController {
 		map.put("positions_name", positions_name);
 		map.put("user_auth", user_auth);
 		int signUp = service.insertUserinfo(map);
-		return "login";
+		return "loginForm";
 	}
 	
 }

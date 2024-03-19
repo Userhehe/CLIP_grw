@@ -14,19 +14,18 @@
     <!-- 컴포넌트 스캔을 통해 패키지 내의 빈들을 자동으로 스캔하도록 설정 --> 
     <context:component-scan base-package="com.clip.gwr"/>
 
-    <!-- Spring Security API에서 제공하는 BCryptPasswordEncoder 빈 등록 -->
-    <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-
-    
-    <!-- 접근권한 미만 처리로직 Handler -->
-	<bean id="customAccessDenied" class="com.clip.gwr.security.CustomAccessDeniedHandler"/>
 	
-	<!-- 로그인 성공 시 처리로직 Handler -->
+	<!-- 로그인 성공 시 -->
 	<bean id="customLoginSuccess" class="com.clip.gwr.security.CustomLoginSuccessHandler" />
 	
-	<!-- 로그인 처리 서비스 -->
+    <!-- 암호화 -->
+    <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	
+	<!-- 로그인 처리 -->
     <bean id="loginService" class="com.clip.gwr.security.LoginService" />
 	
+    <!-- 접근권한 미만 처리 -->
+	<bean id="customAccessDenied" class="com.clip.gwr.security.CustomAccessDeniedHandler"/>
 	<!-- url 더블슬레시 허용 -->
 	<!-- <bean id="defaultHttpFirewall" class="org.springframework.security.web.firewall.DefaultHttpFirewall"/>
 	<security:http-firewall ref="defaultHttpFirewall"/> -->
@@ -35,23 +34,14 @@
 	</bean>
 	<security:http-firewall ref="httpFirewall" />
     
-    <!-- Spring Security 설정 -->
     <security:http auto-config="true" use-expressions="true">
-		<!--
-			login-page : 로그인 Custom Page 설정
-			authentication-success-handler-ref : 로그인 성공handler 이동, 처리 로직
-		-->
+    <security:intercept-url pattern="/all.do" access="permitAll"/>
+    <security:intercept-url pattern="/member.do" access="hasAnyRole('U')"/>
+    <security:intercept-url pattern="/admin.do" access="hasAnyRole('A')"/>
 		
-		<security:intercept-url pattern="/loginForm.do" access="permitAll"/>
-		
-		<security:intercept-url pattern="/main.do" access="hasAnyRole('USER','ADMIN','SYSADMIN')"/>
-		
-		<security:intercept-url pattern="/adminMain.do" access="hasAnyRole('ADMIN','SYSADMIN')"/>
-		
-		<security:form-login login-page="/loginForm.do"
-			authentication-success-handler-ref="customLoginSuccess" />
+		<security:form-login login-page="/loginForm" 
+							 authentication-success-handler-ref="customLoginSuccess" />
 			
-		<!-- AccessDeniedHandler 등록 -->
 		<security:access-denied-handler ref="customAccessDenied" />	
 		
 		<!--
@@ -60,28 +50,26 @@
 			logout-success-url : 로그아웃 후 이동 Url
 			invalidate-session : 로그아웃 시 session을 무효화할 지 선택
 		-->
-	    <security:logout logout-url="/logout.do"
+   		<security:logout logout-url="/logout.do"
 						 logout-success-url="/loginForm.jsp" 
 						 invalidate-session="true" />
-			<!-- csrf 사용여부(사이트간 위변조 방지를 위한 처리 - true : 미사용) -->
-			<security:csrf disabled="false" />
-			<!--
-				key : token 생성용 키값
-				token-validity-seconds : token의 유효 시간(100초)
-				remember-me-parameter : 자동로그인
-			-->
-			<security:remember-me key="CLIP"
-								  token-validity-seconds="100" 
-								  remember-me-parameter="remember-me"/>
+		<!-- csrf 사용여부(사이트간 위변조 방지를 위한 처리 - true : 미사용) -->
+		<security:csrf disabled="false" />
+		<!--
+			key : token 생성용 키값
+			token-validity-seconds : token의 유효 시간(100초)
+			remember-me-parameter : 자동로그인
+		-->
+		<security:remember-me key="CLIP"
+							  token-validity-seconds="100" 
+							  remember-me-parameter="remember-me"/>
     </security:http>
     
-	
-	
     <!-- 인증 관리자 설정 -->
     <security:authentication-manager>
         <!-- 사용자 인증을 위한 UserDetailsService 빈 등록 -->
         <security:authentication-provider user-service-ref="loginService">
-            <!-- 비밀번호 암호화 방식 설정 -->
+            <!-- 비밀번호 암호화 -->
             <security:password-encoder ref="bcryptPasswordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>

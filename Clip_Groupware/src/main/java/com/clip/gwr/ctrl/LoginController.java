@@ -33,12 +33,12 @@ public class LoginController {
 	@PostMapping(value = "/loginForm.do") 
 	public String loginSession(HttpSession session,
 			HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
-		Map<String, Object> map = new HashMap<String, Object>();
+		//Map<String, Object> map = new HashMap<String, Object>();
 		
 		String id = request.getParameter("username");
 	    String pw = request.getParameter("password");
 	    log.info("####pw: " + pw);
-		map.put("username",id);
+		//map.put("username",id);
 		//map.put("user_password", pw);
 		UserinfoVo user = service.userLogin(id);
 		

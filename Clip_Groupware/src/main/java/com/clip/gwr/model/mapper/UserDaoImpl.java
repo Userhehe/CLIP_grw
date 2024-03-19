@@ -127,4 +127,13 @@ public class UserDaoImpl implements IUserDao {
 		log.info("##### 재직증명서 다운로드 selectJejicDownload #####");
 		return sqlSession.selectList(NS + "selectJejicDownload", map);
 	}
+
+	/**
+	 * 사용자 권한 조회
+	 */
+	@Override
+	public String selectUserAuth(String user_id) {
+		log.info("##### 사용자 권한 조회 selectUserAuth #####");
+		return sqlSession.selectOne(NS + "selectUserAuth", user_id);
+	}
 }
