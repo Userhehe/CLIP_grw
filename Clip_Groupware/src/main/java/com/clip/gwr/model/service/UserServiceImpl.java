@@ -127,5 +127,14 @@ public class UserServiceImpl implements IUserService {
 		log.info("UserServiceImpl selectJejicDownload 재직증명서 다운로드");
 		return dao.selectJejicDownload(map);
 	}
+
+	/**
+	 * 사용자 권한 조회
+	 */
+	@Override
+	public String selectUserAuth(String user_id) {
+		log.info("UserServiceImpl selectUserAuth 사용자 권한 조회");
+		return dao.selectUserAuth(user_id);
+	}
 	
 }

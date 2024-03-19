@@ -19,21 +19,35 @@ public class LoginService implements UserDetailsService {
 	private IUserDao dao;
 
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
- 
 		// loadUserByUsername(String userId)은 UserDetailsService 인터페이스의 추상메서드로 사용자의 아이디를 입력받아 사용자의 상세정보를 로드 
-		log.info("############################## username : " + userId);
-		log.info("LoginService loadUserByUsername : {}", userId); 
+		log.info("######LoginService loadUserByUsername : {}", userId); 
 
-		log.info("LoginService repository : {}", dao); 
+		log.info("#####LoginService repository : {}", dao); 
 
 		UserinfoVo userInfoVo = dao.userLogin(userId);
 		
 		log.info("#####LoginService userInfoVo : {}", userInfoVo); 
 
 		if(userInfoVo != null) {
-			return new User(userId, userInfoVo.getUser_password(), AuthorityUtils.createAuthorityList(userInfoVo.getUser_auth())); 
+			return new User(userId, userInfoVo.getUser_password(), AuthorityUtils.createAuthorityList(userInfoVo.getUser_auth()));
 		}else { 
 			return null; 
-		} 
+		}
+		
+//		UserinfoVo user = dao.userLogin(userId);
+//        
+//        if (user == null) {
+//            throw new UsernameNotFoundException("User not found with username: " + userId);
+//        }
+//        
+//        return org.springframework.security.core.userdetails.User
+//                .withUsername(user.getUser_id())
+//                .password(user.getUser_password())
+//                .authorities(user.getUser_auth())
+//                .accountExpired(false)
+//                .accountLocked(false)
+//                .credentialsExpired(false)
+//                .disabled(false)
+//                .build();
 	}
 }

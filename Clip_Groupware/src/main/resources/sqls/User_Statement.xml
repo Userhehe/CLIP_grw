@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.gwr.model.mapper.UserDaoImpl">
 	<!-- 로그인 --> 
-	<select id="userLogin" parameterType="String" resultType="com.clip.gwr.vo.UserinfoVo">
+	<select id="userLogin" parameterType="java.lang.String" resultType="com.clip.gwr.vo.UserinfoVo">
 		SELECT USER_ID, USER_PASSWORD, USER_NAME, USER_STATUS,
-		(SELECT RANKS_NAME FROM RANKS r INNER JOIN USERINFO u ON r.RANKS_SEQ = u.RANKS_SEQ WHERE u.USER_ID = #{username}) AS RANKS_NAME,
-		(SELECT DEPT_NAME FROM DEPT d INNER JOIN USERINFO u ON d.DEPT_SEQ = u.DEPT_SEQ WHERE USER_ID = #{username}) AS DEPT_NAME,
-		(SELECT POSITIONS_NAME FROM POSITIONS p INNER JOIN USERINFO u ON p.POSITIONS_SEQ = u.POSITIONS_SEQ WHERE USER_ID = #{username}) AS POSITIONS_NAME
+		(SELECT RANKS_NAME FROM RANKS r INNER JOIN USERINFO u ON r.RANKS_SEQ = u.RANKS_SEQ WHERE u.USER_ID = #{user_id}) AS RANKS_NAME,
+		(SELECT DEPT_NAME FROM DEPT d INNER JOIN USERINFO u ON d.DEPT_SEQ = u.DEPT_SEQ WHERE USER_ID = #{user_id}) AS DEPT_NAME,
+		(SELECT POSITIONS_NAME FROM POSITIONS p INNER JOIN USERINFO u ON p.POSITIONS_SEQ = u.POSITIONS_SEQ WHERE USER_ID = #{user_id}) AS POSITIONS_NAME
 			FROM USERINFO u 
-		WHERE USER_ID = #{username}
+		WHERE USER_ID = #{user_id}
 		AND USER_STATUS = 'Y'
 	</select>
 	
@@ -161,5 +161,12 @@
 			FROM USERINFO u 
 		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
 		WHERE USER_ID = #{user_id}
+	</select>
+	
+	<!-- 사용자 권한조회 -->
+	<select id="selectUserAuth" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT USER_AUTH 
+			FROM USERINFO u 
+			WHERE user_id = #{user_id};
 	</select>
 </mapper>

@@ -10,7 +10,7 @@ public interface IUserService {
 	
 	/**
 	 * 로그인
-	 * @param map
+	 * @param user_id
 	 * @return 
 	 */
 	public UserinfoVo userLogin(String user_id);
@@ -88,4 +88,11 @@ public interface IUserService {
 	 * @return
 	 */
 	public List<UserinfoVo> selectJejicDownload(Map<String, Object> map);
+	
+	/**
+	 * 사용자 권한조회
+	 * @param user_id
+	 * @return
+	 */
+	public String selectUserAuth(String user_id);
 }

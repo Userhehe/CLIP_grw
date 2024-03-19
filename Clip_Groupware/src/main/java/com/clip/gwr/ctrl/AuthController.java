@@ -1,7 +1,11 @@
 package com.clip.gwr.ctrl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.clip.gwr.vo.UserinfoVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,22 +13,25 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AuthController {
 	
-	@GetMapping(value = "/all.do")
+	@GetMapping("/all.do")
 	public String doAll() {
 		log.info("▶▶▶ AuthController All◀◀◀");
-		return "all";
+		return "loginForm";
 	}
 	
-	@GetMapping(value = "/member.do")
+	
+	@GetMapping("/member.do")
+//	@GetMapping("/user/**.do")
 	public String doMember() {
 		log.info("▶▶▶ AuthController Member◀◀◀");
-		return "member"; 
+		return "main"; 
 	}
 	
-	@GetMapping(value = "/admin.do")
+	@GetMapping("/admin.do")
+//	@GetMapping("/admin/**.do")
 	public String doAdmin() {
 		log.info("▶▶▶ AuthController Admin◀◀◀");
-		return "admin";
+		return "adminMain";
 	}
 	
 	
