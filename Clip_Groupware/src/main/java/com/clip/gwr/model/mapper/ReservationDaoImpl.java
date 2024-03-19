@@ -29,9 +29,9 @@ public class ReservationDaoImpl implements IReservationDao{
 	}
 	
 	@Override
-	public int myReservationInsert(ReservationVo vo) {
+	public int myReservationInsert(Map<String, Object> map) {
 		log.info("##### 회의실 예약 myReservationInsert #####");
-		return sqlSession.insert(NS+"myReservationInsert", vo);
+		return sqlSession.insert(NS+"myReservationInsert", map);
 	}
 	
 	@Override

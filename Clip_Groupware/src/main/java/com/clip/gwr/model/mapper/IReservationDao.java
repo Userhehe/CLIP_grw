@@ -13,7 +13,7 @@ public interface IReservationDao {
 	public List<ReservationVo> myReservationAll(String user_id);
 	
 	//예약 등록
-	public int myReservationInsert(ReservationVo vo);
+	public int myReservationInsert(Map<String, Object> map);
 	
 	//회의실 목록
 	public List<MeeTingRoomVo> selectMeetingRoom();

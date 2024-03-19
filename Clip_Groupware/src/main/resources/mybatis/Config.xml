@@ -34,7 +34,7 @@
 		<mapper resource="sqls/Ranks_Statement.xml"/>
 		<mapper resource="sqls/Accesslog_Statement.xml"/>
 		<mapper resource="sqls/Signs_Statement.xml"/>
-		<mapper resource="sqls/Reservation.xml"/>
+		<mapper resource="sqls/Reservation_Statement.xml"/>
 		<mapper resource="sqls/Memo_Statement.xml"/> <!-- 03/15 -->
 	</mappers>
 </configuration>
