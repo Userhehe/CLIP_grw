@@ -44,9 +44,16 @@ public class PositionsServiceImpl implements IPositionsService {
 	}
 
 	@Override
-	public int duplicatePosItion(Map<String, Object>map) {
+	public int duplicatePosition(Map<String, Object>map) {
 		log.info("PositionsServiceImpl duplicatePosItion 직책명 중복검색 :{}",map);
-		return dao.duplicatePosItion(map);
+		return dao.duplicatePosition(map);
 	}
+
+	@Override
+	public List<PositionsVo> positionsAll() {
+		log.info("PositionsServiceImpl positionsAll 직책 전체 조회");
+		return dao.positionsAll();
+	}
+
 
 }
