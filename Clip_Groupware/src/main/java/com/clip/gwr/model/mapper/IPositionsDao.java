@@ -21,8 +21,6 @@ public interface IPositionsDao {
 	public List<PositionsVo> searchPosition(Map<String, Object>map);
 	
 	// 직책 중복검사 
-	public int duplicatePosition(Map<String, Object>map);
-	
-	 //직책 등록 
-     public List<PositionsVo> positionsAll();
+	public int duplicatePosItion(Map<String, Object>map);
+
 }

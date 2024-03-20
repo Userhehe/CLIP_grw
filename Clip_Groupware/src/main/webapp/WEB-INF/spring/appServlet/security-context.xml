@@ -35,11 +35,9 @@
 	<security:http-firewall ref="httpFirewall" />
     
     <security:http auto-config="true" use-expressions="true">
-
 	    <security:intercept-url pattern="/login.do" access="permitAll"/>
 <!-- 	    <security:intercept-url pattern="/member.do" access="hasRole('USER')"/> -->
 <!-- 	    <security:intercept-url pattern="/admin.do" access="hasRole('ADMIN')"/> -->
-
 		
 		<security:form-login login-page="/loginForm.do"  
 							 password-parameter="password"

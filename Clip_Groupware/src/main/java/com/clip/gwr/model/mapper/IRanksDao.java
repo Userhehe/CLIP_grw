@@ -22,8 +22,5 @@ public interface IRanksDao {
 			
 			// 직급 중복검사 
 			public int duplicateRanks(Map<String, Object>map);
-			
-			// 직급 전체 조회 
-			public List<RanksVo> ranksAll();
 
 }
