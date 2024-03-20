@@ -14,12 +14,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ClientVo {
+public class ProjectsVo {
 //
-	private String	cli_id		;
-	private String	cli_name	;
-	private String	cli_contact	;
-	private String	cli_address	;
-	private String	cli_person	;
-	private String	cli_note	;
+	private String prj_id 		;
+	private String cli_id 		;
+	private String prj_name 	;
+	private String prj_sdate	;
+	private String prj_ddate	;
+	private String prj_status	;
+	private String prj_manager	;
 }
