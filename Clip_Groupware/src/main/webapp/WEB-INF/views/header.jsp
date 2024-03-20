@@ -149,7 +149,7 @@
 				<ul id="schedule-Nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 					<li><a href="./schedule.do"> <i class="bi bi-circle"></i><span>일정 조회</span></a></li>
 					<li><a href="./reservation.do"> <i class="bi bi-circle"></i><span>회의실 예약</span></a></li>
-					<li><a href="tables-data.html"> <i class="bi bi-circle"></i><span>회의실 예약 수정</span></a></li>
+					<li><a href="./myReservation.do"> <i class="bi bi-circle"></i><span>회의실 예약 수정</span></a></li>
 				</ul>			
 			</li>
 <!-- ======= END schedule-Nav ======= -->
