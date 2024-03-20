@@ -44,9 +44,15 @@ public class PositionsDaoImpl implements IPositionsDao {
 	}
 
 	@Override
-	public int duplicatePosItion(Map<String, Object>map) {
-		log.info("##### 직책명 중복검사 positions_name #####");
+	public int duplicatePosition(Map<String, Object>map) {
+		log.info("##### 직책명 중복검사 duplicatePosition  #####");
 		return sqlSession.selectOne(NS+"duplicatePosItion",map);
+	}
+
+	@Override
+	public List<PositionsVo> positionsAll() {
+		log.info("##### 직책 전체 조회  positionsAll #####");
+		return sqlSession.selectList(NS+"positionsAll()");
 	}
 
 }

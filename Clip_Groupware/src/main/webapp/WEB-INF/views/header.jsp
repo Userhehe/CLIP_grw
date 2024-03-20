@@ -112,7 +112,7 @@
 						<li><a href="./organization.do"><i class="bi bi-circle"></i><span>조직도</span></a></li>
 						<li><a href="./empty.do"><i class="bi bi-circle"></i><span>직급관리</span></a></li>
 						<li><a href="./position.do"><i class="bi bi-circle"></i><span>직책관리</span></a></li>
-						<li><a href="./department.do"><i class="bi bi-circle"></i><span>부서관리</span></a></li>
+						<li><a href="./deptAll.do"><i class="bi bi-circle"></i><span>부서관리</span></a></li>
 						<li><a href="./access.do"><i class="bi bi-circle"></i><span>사용자 접속로그</span></a></li>
 					</ul>
 				</li>

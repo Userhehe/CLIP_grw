@@ -32,21 +32,27 @@ public class DeptServiceImpl implements IDeptService {
 	}
     //부서 삭제 
 	@Override
-	public int delDept(Map<String, Object> map) {
-		log.info("DeptServiceImpl delDept 부서 삭제 : {}",map);
-		return dao.delDept(map);
+	public int delDept(String dept_seq) {
+		log.info("DeptServiceImpl delDept 부서 삭제 : {}",dept_seq);
+		return dao.delDept(dept_seq);
 	}
     // 부서 검색 
 	@Override
-	public List<DeptVo> searchDept(Map<String, Object> map) {
-		log.info("DeptServiceImpl searchDept 부서 검색 :{}",map);
-		return dao.searchDept(map);
+	public List<DeptVo> searchDept(String dept_name) {
+		log.info("DeptServiceImpl searchDept 부서 검색 :{}",dept_name);
+		return dao.searchDept(dept_name);
 	}
     //부서 중복 검사 
 	@Override
 	public int duplicateCheckDept(Map<String, Object> map) {
 		log.info("DeptServiceImpl duplicateCheckDept 부서 중복 검사 : {} ",map);
 		return dao.duplicateCheckDept(map);
+	}
+	// 부서 전체 조회 
+	@Override
+	public List<DeptVo> deptAll() {
+		log.info("DeptServiceImpl deptAll 부서 전체 조회 ");
+		return dao.deptAll();
 	}
 
 }

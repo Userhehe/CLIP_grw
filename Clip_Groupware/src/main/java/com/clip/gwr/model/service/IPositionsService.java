@@ -21,6 +21,9 @@ public interface IPositionsService {
 		public List<PositionsVo> searchPosition(Map<String, Object>map);
 		
 		// 직책 중복검사 
-		public int duplicatePosItion(Map<String, Object>map);
+		public int duplicatePosition(Map<String, Object>map);
+		
+		//직책 전체 조회 
+	     public List<PositionsVo> positionsAll();
 
 }
