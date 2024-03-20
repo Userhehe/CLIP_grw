@@ -9,84 +9,119 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<link href="./assets/css/signUp.css" rel="stylesheet">
 <%@ include file="./header.jsp" %>
+<link href="./assets/css/signUp.css" rel="stylesheet">
 </head>
 <body>
-	<div class="container">
-		<!-- 추가 이미지 -->
-		<form action="./signUp.do" method="post">
-			<!-- 아이디 입력 -->
-			<div class="mg_top15">
-				<input type="text" id="user_name" name="user_name" class="input-field" placeholder="성명">
-			</div>
-			<!-- 비밀번호 입력 -->
-			<div>
-				<input type="text" id="user_start_registnum" name="user_start_registnum" class="input-field" maxlength="6" placeholder="주민등록번호 앞자리">
-				-
-				<input type="password" id="user_last_registnum" name="user_last_registnum" class="input-field" maxlength="7" placeholder="주민등록번호 뒷자리">
-			</div>
-			<div>
-				<input type="text" id="user_email" name="user_email" class="input-field">
-				@
-				<label for="email"></label>
-				<select name="email">
+	<main id="main" class="main">
+	    <div class="container" style="background-color: #F2F2F2; width: 70vh;">
+	      <div class="card-body w65vh">
+	        <h5 class="card-title font20">회원정보 등록</h5>
+	        <form action="./signUp.do" method="post">
+	          <div class="row mb-3">
+	            <label for="inputText" class="col-sm-2 col-form-label font12">성명</label>
+	            <div class="col-sm-10">
+	              <input type="text" id="user_name" name="user_name" class="form-control" required="required">
+	            </div>
+	          </div>
+	          <div class="row mb-3">
+	            <label for="inputEmail" class="col-sm-2 col-form-label font12">주민등록번호</label>
+	            <div class="col-sm-10">
+	              <input type="text" id="user_start_registnum" name="user_start_registnum" class="form-control w24_7vh ib" placeholder="주민등록번호 앞자리" required="required">
+	              <span class="ib">-</span>
+	              <input type="password" id="user_last_registnum" name="user_last_registnum" class="form-control w24_7vh ib" placeholder="주민등록번호 뒷자리" required="required"> 
+	            </div>
+	          </div>
+	          <div class="row mb-3">
+	          	<label for="inputEmail" class="col-sm-2 col-form-label font12">Email</label>
+	            <div class="col-sm-10">
+	              <input type="text" id="user_email" name="user_email" class="form-control w33_5vh ib" required="required">
+	              <span class="ib">@</span>
+	              <select name="email" class="form-select w15_2vh ib">
 					<option value="gmail.com">gmail.com</option>
 					<option value="naver.com">naver.com</option>
 					<option value="hanmail.com">hanmail.com</option>
 					<option value="input_email">직접 입력</option>
-				</select>
-			</div>
-			
-			<input type="text" id="user_birthday" name="user_birthday" maxlength="8" placeholder="생년월일8자리 ex)19980423">
-			
-			<div>
-				<select name="phone_firstnum">
-					<option value="010">010</option>
-					<option value="011">011</option>
-					<option value="input_phone_firstnum">직접 입력</option>
-				</select>
-				-
-				<input type="text" id="phone_secondnum" name="phone_secondnum" placeholder="전화번호 앞자리">
-				-
-				<input type="text" id="phone_lastnum" name="phone_lastnum" placeholder="전화번호 뒷자리">
-				
-				<input type="text" id="user_address" name="user_address" placeholder="주소">
-				
-				<div>
-					<label for="dept_name">부서선택</label>
-					<select name="dept_name">
-						<option value="">부서선택</option>
+				  </select>
+	            </div>
+	          </div>
+	          <div class="row mb-3">
+	            <label for="user_birthday" class="col-sm-2 col-form-label font12">생년월일</label>
+	            <div class="col-sm-10">
+	              <input type="number" id="user_birthday" name="user_birthday" class="form-control" maxlength="8" placeholder="생년월일8자리 ex)19980423" required="required">
+	            </div>
+	          </div>
+	          
+	          <div class="row mb-3">
+	            <label for="inputEmail" class="col-sm-2 col-form-label font12">연락처</label>
+	            <div class="col-sm-10">
+	            	<select name="phone_firstnum" class="form-select w15vh ib">
+						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="input_phone">직접 입력</option>
+				  	</select>
+				  	<span class="ib">-</span>
+	              	<input type="number" id="phone_secondnum" name="phone_secondnum" class="form-control w16_72vh ib" placeholder="연락처 앞자리" required="required">
+	              	<span class="ib">-</span>
+	              	<input type="number" id="phone_lastnum" name="phone_lastnum" class="form-control w16_72vh ib" placeholder="연락처 뒷자리" required="required">
+	            </div>
+	          </div>
+	          
+	          <div class="row mb-3">
+	            <label for="user_address" class="col-sm-2 col-form-label font12">주소</label>
+	            <div class="col-sm-10">
+	              <input type="text" id="user_address" name="user_address" class="form-control" required="required">
+	            </div>
+	          </div>
+	
+	          <div class="row mb-3">
+	            <label for="dept_name" class="col-sm-2 col-form-label font12">부서선택</label>
+	            <div class="col-sm-10">
+		        	<select name="dept_name" class="form-select">
+		           		<option value="">부서선택</option>
 						<option value="설계">설계</option>
-						<option value="input_dept">직접 입력</option>
-					</select>
-					<label for="ranks_name">직급선택</label>
-					<select name="ranks_name">
-						<option value="">직급선택</option>
+		            </select>
+	            </div>
+	          </div>
+	          <div class="row mb-3">
+	            <label for="ranks_name" class="col-sm-2 col-form-label font12">직급선택</label>
+	            <div class="col-sm-10">
+	            	<select name="ranks_name" class="form-select">
+		                <option value="">직급선택</option>
 						<option value="대리">대리</option>
-						<option value="input_dept">직접 입력</option>
-					</select>
-					<label for="positions_name">직책선택</label>
-					<select name="positions_name">
-						<option value="">직책선택</option>
+	            	</select>
+	            </div>
+	          </div>
+	          
+	          <div class="row mb-3">
+	            <label for="positions_name" class="col-sm-2 col-form-label font12">직책선택</label>
+	            <div class="col-sm-10">
+	            	<select name="positions_name" class="form-select">
+		                <option value="">직책선택</option>
 						<option value="팀장">팀장</option>
-						<option value="input_dept">직접 입력</option>
+	            	</select>
+	            </div>
+	          </div>
+	          
+	          <div class="row mb-3">
+	            <label for="user_auth" class="col-sm-2 col-form-label font12">관리자여부</label>
+	            <div class="col-sm-10">
+	           		<select name="user_auth" class="form-select">
+						<option value="ROLE_USER">N</option>
+						<option value="ROLE_ADMIN">Y</option>
 					</select>
-					<label for="user_auth">관리자여부</label>
-					<select name="user_auth">
-						<option value="N">N</option>
-						<option value="Y">Y</option>
-					</select>
-					
-				</div>
-			</div>
-			
-			
-			
-			<input type="submit" id="login_btn" class="button mg_top15" value="사원정보 등록"/>
-			
-			
-		</form>
-	</div>
+	            </div>
+	          </div>
+	
+			  <br/>
+	          <div class="row mb-3">
+	            <div>
+	              <button type="submit" class="btn btn-warning button">사원정보 등록</button>
+	            </div>
+	          </div>
+	        </form>
+	      </div>
+	    </div>
+    </main>
 </body>
 </html>

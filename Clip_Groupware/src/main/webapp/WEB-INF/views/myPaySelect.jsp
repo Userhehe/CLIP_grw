@@ -11,30 +11,50 @@
 
 	<main id="main">
 		<div class="row">
-		
+
 			<div class="col-xl-3">
-	
-	          <div class="card">
-	            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-	
-	              <img src="" alt="" class="rounded-rectangle">
-	              <h2>내 요청 결재</h2>
-	            </div>
-	          </div>
-	
-	        </div>
-		
-			
-		
-			
-			<div class="col-lg-3 card">
-				<h3>임시저장 결재</h3>
+				<div class="card">
+					<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+						<a href="./myPayList.do" style="color: black; display: inline-block; text-align: center;">
+							<img src="./images/requestPayImg.png" alt="requestPay" style="width: 80%; ">
+							<h2 style="white-space: nowrap;">내 요청 결재</h2>
+						</a>
+					</div>
+				</div>
 			</div>
-			<div class="col-lg-3 card">
-				<h3>내 승인대기 결재</h3>
+
+
+			<div class="col-xl-3">
+				<div class="card">
+					<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+						<a href="./myTempPayList.do" style="color: black; display: inline-block; text-align: center;">
+							<img src="./images/tempPayImg.png" alt="tempPay" style="width: 80%;">
+							<h2 style="white-space: nowrap;">임시저장 결재</h2>
+						</a>
+					</div>
+				</div>
 			</div>
-			<div class="col-lg-3 card">
-				<h3>참조된 결재</h3>
+
+			<div class="col-xl-3">
+				<div class="card">
+					<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+						<a href="./myAcceptPayList.do" style="color: black; display: inline-block; text-align: center;">
+							<img src="./images/stampPayImg.png" alt="stampPay" style="width: 80%;">
+							<h2 style="white-space: nowrap;">내 승인대기 결재</h2>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xl-3">
+				<div class="card">
+					<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+						<a href="./myReferPayList.do" style="color: black; display: inline-block; text-align: center;">
+							<img src="./images/referPayImg.png" alt="referPay" style="width: 80%;">
+							<h2 style="white-space: nowrap;">참조된 결재</h2>
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</main>

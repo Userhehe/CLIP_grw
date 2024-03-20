@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.clip.gwr.model.service.IUserService;
+import com.clip.gwr.model.service.UserServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,12 +25,13 @@ public class UserController {
 	
 	@Autowired
 	private IUserService service;
+//	private UserServiceImpl service;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
 	
 	@GetMapping(value = "/loginForm.do") 
-	public String login(String error, String logout, Model model) {
+	public String loginForm(String error, String logout, Model model) {
 		log.info("error : {} ", error);
 		log.info("logout : {} ", logout);
 		
@@ -46,6 +48,7 @@ public class UserController {
 	@GetMapping(value = "/signUp.do")
 	public String signUp() {
 		log.info("회원가입 이동");
+		
 		return "signUp";
 	}
 	
@@ -58,7 +61,7 @@ public class UserController {
 		String user_name = request.getParameter("user_name");
 		String user_registnum = request.getParameter("user_start_registnum") + "-"
 								+ request.getParameter("user_last_registnum");
-		String user_email = request.getParameter("user_email") + "." + request.getParameter("email");
+		String user_email = request.getParameter("user_email") + "@" + request.getParameter("email");
 		
 		String user_birthday = request.getParameter("user_birthday");
 		String user_phonenum = request.getParameter("phone_firstnum") + "-" 

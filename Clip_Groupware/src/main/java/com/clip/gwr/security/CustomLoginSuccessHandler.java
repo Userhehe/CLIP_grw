@@ -32,20 +32,25 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		/**
 		 * 사용자 로그인
 		 */
+
+//		if(roleNames.contains("ROLE_USER")) {
 		if(roleNames.contains("USER")) { 
-			response.sendRedirect("./main"); 
+			response.sendRedirect("./main.do"); 
+
 			return; 
 		} 
 
 		/**
 		 * 관리자 로그인
 		 */
+
+//		if(roleNames.contains("ROLE_ADMIN")) { 
 		if(roleNames.contains("ADMIN")) { 
-			response.sendRedirect("./adminMain"); 
+			response.sendRedirect("./adminMain.do"); 
+
 			return; 
 		}
-		
-		response.sendRedirect("./loginForm.jsp"); 
+		response.sendRedirect("./main.do"); 
 	}
 
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IMemoService;
+import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.MemoVo;
 import com.clip.gwr.vo.UserinfoVo;
 
@@ -29,6 +30,7 @@ public class ScheduleController {
 	
 	@Autowired
 	private IMemoService memoservice;
+	
 	
 
 	@GetMapping(value = "schedule.do")
@@ -45,12 +47,11 @@ public class ScheduleController {
 		List<MemoVo> lists = memoservice.myScheduleAll(id.getUser_id());
 		System.out.println("MemoVo list : " +lists);
 		JSONArray memolist = new JSONArray();
-		
-		
+
 		for(MemoVo vo : lists) {
 			JSONObject obj = new JSONObject();
 			obj.put("prs_seq", vo.getPrs_seq());
-			obj.put("prs_title",vo.getPrs_title());
+			obj.put("title",vo.getPrs_title());
 			obj.put("prs_content",vo.getPrs_content());
 			obj.put("prs_create",vo.getPrs_create());
 			obj.put("start",vo.getPrs_start());
@@ -66,19 +67,29 @@ public class ScheduleController {
 	@ResponseBody
 	public String addmemo(@RequestParam Map<String, Object> map) {
 		System.out.println(map);
-		map.put("prs_title","title");
-		map.put("prs_content","content");
-		map.put("prs_start","start");
-		map.put("prs_end","end");
+		map.put("title","title");
+		map.put("content","content");
+		map.put("start","start");
+		map.put("end","end");
 
 		memoservice.myScheduleInsert(map);
 		
+		System.out.println( "입력될 메모 내용 :" + map);
 		return null;
 	}
 	
-	@GetMapping(value = "/memodetail.do") //메모 상세조회
-	public String memodetail() {
-		
+	@PostMapping(value = "/memodetail.do") //메모 상세조회
+	@ResponseBody
+	public MemoVo memodetail(String seq) {
+		log.info("ScheduleController memodetail 메모상세조회");
+		log.info("화면에서 넘겨받은 seq값 {} : " , seq);
+		MemoVo vo = memoservice.myScheduleDetail(seq);
+		System.out.println("전달받은 prs_seq의 메모 :" + vo);
+		return vo;
+	}
+	
+	@GetMapping(value = "")
+	public String memomodify() {
 		return null;
 	}
 	

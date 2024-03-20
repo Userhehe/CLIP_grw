@@ -14,6 +14,8 @@
     <!-- 컴포넌트 스캔을 통해 패키지 내의 빈들을 자동으로 스캔하도록 설정 --> 
     <context:component-scan base-package="com.clip.gwr"/>
 
+    <!-- 접근권한 미만 처리 -->
+	<bean id="customAccessDenied" class="com.clip.gwr.security.CustomAccessDeniedHandler"/>
 	
 	<!-- 로그인 성공 시 -->
 	<bean id="customLoginSuccess" class="com.clip.gwr.security.CustomLoginSuccessHandler" />
@@ -24,8 +26,6 @@
 	<!-- 로그인 처리 -->
     <bean id="loginService" class="com.clip.gwr.security.LoginService" />
 	
-    <!-- 접근권한 미만 처리 -->
-	<bean id="customAccessDenied" class="com.clip.gwr.security.CustomAccessDeniedHandler"/>
 	<!-- url 더블슬레시 허용 -->
 	<!-- <bean id="defaultHttpFirewall" class="org.springframework.security.web.firewall.DefaultHttpFirewall"/>
 	<security:http-firewall ref="defaultHttpFirewall"/> -->
@@ -35,12 +35,16 @@
 	<security:http-firewall ref="httpFirewall" />
     
     <security:http auto-config="true" use-expressions="true">
-    <security:intercept-url pattern="/member.do" access="hasAnyRole('USER')"/>
-    <security:intercept-url pattern="/admin.do" access="hasAnyRole('ADMIN')"/>
-    <security:intercept-url pattern="/all.do" access="permitAll"/>
+
+	    <security:intercept-url pattern="/login.do" access="permitAll"/>
+<!-- 	    <security:intercept-url pattern="/member.do" access="hasRole('USER')"/> -->
+<!-- 	    <security:intercept-url pattern="/admin.do" access="hasRole('ADMIN')"/> -->
+
 		
-		<security:form-login login-page="/loginForm" 
-							 authentication-success-handler-ref="customLoginSuccess" />
+		<security:form-login login-page="/loginForm.do"  
+							 password-parameter="password"
+							 username-parameter="username"
+							 authentication-success-handler-ref="customLoginSuccess" /> 
 			
 		<security:access-denied-handler ref="customAccessDenied" />	
 		
@@ -51,7 +55,7 @@
 			invalidate-session : 로그아웃 시 session을 무효화할 지 선택
 		-->
    		<security:logout logout-url="/logout.do"
-						 logout-success-url="/loginForm.jsp" 
+						 logout-success-url="/loginForm.do" 
 						 invalidate-session="true" />
 		<!-- csrf 사용여부(사이트간 위변조 방지를 위한 처리 - true : 미사용) -->
 		<security:csrf disabled="false" />
