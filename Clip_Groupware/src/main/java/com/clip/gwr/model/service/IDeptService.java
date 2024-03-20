@@ -14,12 +14,15 @@ public interface IDeptService {
 	public int updateDept(Map<String, Object>map);
 	
 	// 부서 삭제 
-	public int delDept(Map<String, Object>map);
+	public int delDept(String dept_seq);
 	
 	// 부서 검색 
-	public List<DeptVo> searchDept(Map<String, Object>map);
+	public List<DeptVo> searchDept(String dept_name);
 	
 	// 부서 중복검사 
 	public int duplicateCheckDept(Map<String, Object>map);
+	
+	// 부서 전체조회 
+	public List<DeptVo> deptAll();
 	
 }
