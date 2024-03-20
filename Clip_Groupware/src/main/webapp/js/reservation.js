@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-
+	
 	//dateTimePicker 날짜-------------------------------------------------
 	$("#re_start").datetimepicker({
 		format: "Y-m-d",
@@ -102,8 +102,13 @@ $(document).ready(function() {
 		$('#selectAttendsJstree').jstree('search', $(this).val());
 	});
 	
-	//체크박스 선택하고 버튼 누르면 id값 들고 오는 놈
-	$('#addReservation').click(function() {
+
+	
+	//jstree-----------------------------------
+	
+
+	//예약 등록 버튼-----------------------------------
+	$("#addReservation").click(function() {
 		var selectedNodes = $('#selectAttendsJstree').jstree('get_selected', true);
 		var selectedNodeIds = selectedNodes.map(function(node) {
 			return node.id;
@@ -116,46 +121,74 @@ $(document).ready(function() {
 
 		if (attends !== null) {
 		    for (var i = 0; i < attends.length; i++) {
-		        var attend = attends[i];
-		        attendsReal["Attend"].push({"attend": attend});
+				if(attends[i].includes("USER")){
+			        var attend = attends[i];
+			        attendsReal["Attend"].push({"attend": attend});
+				}
 		      
 		    }
 		}
 
 		attendsReal = JSON.stringify(attendsReal);
 		
-		var inputContainer = document.getElementById("attendsCheckList");
-		var input = document.createElement("input");
-		input.type = "text";
-		input.value = attendsReal;
-		input.name= "re_attend";
-		input.setAttribute("readonly", true);
-		inputContainer.appendChild(input);
-	});
-	
-	//jstree-----------------------------------
-	
-
-	//예약 등록 버튼-----------------------------------
-	$("#addReservation").click(function() {
+		document.getElementById("re_attend").value = attendsReal;
+		
+		
 	  	var me_room = document.getElementById("me_room").value;
 		var re_start = document.getElementById("re_start").value;
+		var re_start_time = document.getElementById("re_start_time").value;
 		var re_title = document.getElementById("re_title").value;
 		var re_content = document.getElementById("re_content").value;
-//		var re_attend = document.getElementById("re_attend").value;
+		var re_attend = document.getElementById("re_attend").value;
 		
-		datata = $("#reservationForm").serialize();
-		
-		$.ajax({
-			type: "POST",
-			url:"./myReservationInsert.do",
-			data:datata,
-			success:function(data){
-				console.log(data);
-			}
-		});
-		
+		if (me_room == null || me_room == "") {
+			alert("회의실을 선택하세요.");
+		} else if (re_start == null || re_start == "") { 
+			alert("예약일을 선택하세요.");
+		} else if (re_start_time == null || re_start_time == "") { 
+			alert("예약시간을 선택하세요.");
+		}  else if (re_title == null || re_title == "") { 
+			alert("회의 주제를 작성해주세요.");
+		} else if (re_content == null || re_content == "") { 
+			alert("회의 내용을 작성해주세요.");
+		} else if (re_attend == null || re_attend == "" ||re_attend == '{"Attend":[{"attend":""}]}') {  
+			alert("회의 참석자를 선택하세요.");
+		}
+		 else {
+			datata = $("#reservationForm").serialize();
+			
+			$.ajax({
+				type: "POST",
+				url:"./myReservationInsert.do",
+				data:datata,
+				success:function(data){
+					if(data!=1){
+						alert("예약 실패");
+						return false;
+					}else{
+						alert("예약 성공");
+						$("#reservationForm")[0].reset();
+						$('#selectAttendsJstree').jstree("deselect_all");
+						$("#selectAttendsJstree").jstree("close_all");
+						$("#reservationModal").modal("hide");
+					}
+				},error: function() {
+						alert("서버 에러");
+					}
+			});		
+		}		
 	});
+	
+	$("#addReservationCancel").click(function() {
+		$("#reservationForm")[0].reset();
+		$('#selectAttendsJstree').jstree("deselect_all");
+		$("#selectAttendsJstree").jstree("close_all");
+		$("#reservationModal").modal("hide");
+	});
+	$('#reservationModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
 	
 });
 // 예약가능시간 조회
@@ -191,6 +224,10 @@ function reservationTime(){
 	$("#nawarayo").hide();
 }
 
+function reservationModal(){
+	console.log("모달나온나");
+	$("#reservationModal").modal("show");
+}
 
 
 
