@@ -136,7 +136,7 @@
 					<i class="bx bx-bar-chart-square"></i><span>프로젝트 관리</span><i class="bi bi-chevron-down ms-auto"></i>
 			</a>
 				<ul id="project-Nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-					<li><a href="./projects.do"> <i class="bi bi-circle"></i><span>프로젝트 조회</span></a></li>
+					<li><a href="./projectsProgress.do"> <i class="bi bi-circle"></i><span>프로젝트 조회</span></a></li>
 					<li><a href="tables-data.html"> <i class="bi bi-circle"></i><span>프로젝트 관리</span></a></li>
 				</ul>
 			</li>

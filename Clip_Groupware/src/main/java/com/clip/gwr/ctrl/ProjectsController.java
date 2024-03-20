@@ -9,8 +9,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProjectsController {
 	
-	@GetMapping(value = "/projects.do")
-	public String projects() {
-		return "projects";
+	@GetMapping(value = "/projectsProgress.do")
+	public String projectsProgress() {
+		return "projectsProgress";
+	}
+	@GetMapping(value = "/projectsPeriod.do")
+	public String projectsPeriod() {
+		return "projectsPeriod";
+	}
+	@GetMapping(value = "/projectClient.do")
+	public String projectClient() {
+		return "projectClient";
 	}
 }
