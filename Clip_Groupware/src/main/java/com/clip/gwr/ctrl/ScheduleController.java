@@ -88,7 +88,7 @@ public class ScheduleController {
 		return vo;
 	}
 	
-	@GetMapping(value = "/")
+	@GetMapping(value = "")
 	public String memomodify() {
 		return null;
 	}
