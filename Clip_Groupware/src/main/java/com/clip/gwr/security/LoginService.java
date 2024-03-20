@@ -31,6 +31,7 @@ public class LoginService implements UserDetailsService {
 		if(userInfoVo != null) {
 			return new User(userId, userInfoVo.getUser_password(), AuthorityUtils.createAuthorityList(userInfoVo.getUser_auth()));
 		}else { 
+			log.info("#### userInfoVo가 널이야 ####");
 			return null; 
 		}
 		
