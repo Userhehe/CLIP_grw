@@ -55,8 +55,8 @@
             </div>
                 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="addCalendar" >추가</button>
-                    <button type="button" class="btn btn-warning" data-dismiss="modal" id="modalclose">취소</button>
+                    <button type="submit" class="btn btn-secondary" id="addCalendar" >추가</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="modalclose()">취소</button>
                 </div>
     
             </div>   
@@ -73,50 +73,52 @@
                 <div class="modal-body">
                <div class="form-group">
                      <form action="./memodetail.do" method="post" id="memoform">
-                     <div class="form-group">
 	                     <label for="title" class="col-form-label">일정 제목</label>
-	                     <div id="dttitle" nam></div>
-	                     <div type="text" class="form-control" id="dttitle" name="title"></div>
+                     <div class="form-group">
+	                     <div class="form-control" id="dttitle" ></div>
                      </div>
 	                 <label for="content" class="col-form-label">일정 내용</label>
-	                 	<textarea class="form-control" rows="5" id="dtcontent" name="content"></textarea>
+	                 	<div class="form-control"  id="dtcontent"></div>
 	                 <label for="startDate" class="col-form-label">시작 날짜</label>
-                     <div class="input-group">
-                        <input type="text" class="form-control" name="start" id="dtstart" readonly="readonly" ondblclick="return false" id="startDate">
-                        <span class="input-group-addon" id="imagebutton"><i class="glyphicon glyphicon-calendar"></i></span>
-                     </div>
+                        <div class="form-control"  id="dtstart"></div>
                      <label for="endDate" class="col-form-label">종료 날짜</label>
-                     <div class="input-group">
-                        <input type="text" class="form-control" name="end" id="dtend" readonly="readonly">
-                        <span class="input-group-addon" id="imagebutton2"><i class="glyphicon glyphicon-calendar"></i></span>
-                     </div>
+                        <div class="form-control"  id="dtend"></div>
                     </form> 
                </div>
             </div>
                 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="addCalendar" >추가</button>
-                    <button type="button" class="btn btn-warning" data-dismiss="modal" id="modalclose" onclick="location.href='.schedule.do'">취소</button>
-                </div>
+	                <div class="btn-group" role="group" aria-label="Basic outlined example">
+		                <button type="button" class="btn btn-secondary">확인</button>
+		                <button type="button" class="btn btn-secondary">수정</button>
+		                <button type="button" class="btn btn-secondary">삭제</button>
+		                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="modalclose()">취소</button>
+	              </div>
+               </div>
     
             </div>   
         </div>   
     </div>
     	
-    	
-    	
-    	
-    	
-
 
 <main id="main" class="main">
 	<section class="section dashboard">
 	<div class="row">
-		<div class="col-lg-2">
+		<div class="col-lg-2" style="background-color: #f2f2f2; height: 300px ">
 			<div class="card-body" >
 			<h2 class="card-title">조회 목록</h2>
 				<form>
 					<table>
+						<tr>
+							<td>
+								<input type="checkbox"> 전체일정
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="checkbox"> 개인일정
+							</td>
+						</tr>
 						<tr>
 							<td>
 								<input type="checkbox"> 전사일정
