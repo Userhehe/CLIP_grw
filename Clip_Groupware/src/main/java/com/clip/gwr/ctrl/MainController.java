@@ -3,6 +3,7 @@ package com.clip.gwr.ctrl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -56,12 +57,6 @@ public class MainController {
 	public String access() {
 		log.info("MainController access 화면");
 		return "access";
-	}
-	
-	@GetMapping(value = "/department.do")
-	public String department() {
-		log.info("MainController department 화면");
-		return "department";
 	}
 	
 	

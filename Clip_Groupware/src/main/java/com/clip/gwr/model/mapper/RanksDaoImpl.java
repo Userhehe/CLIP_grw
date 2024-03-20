@@ -50,4 +50,10 @@ public class RanksDaoImpl implements IRanksDao {
 		return sqlSession.selectOne(NS+"duplicateRanks",map);
 	}
 
+	@Override
+	public List<RanksVo> ranksAll() {
+		log.info("##### 직급 전체 조회  ranksAll() #####");
+		return sqlSession.selectList(NS+"ranksAll()");
+	}
+
 }

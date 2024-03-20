@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.gwr.model.mapper.RanksDaoImpl">
  
+    <!-- 직급 전체 조회 -->
+     <select id="ranksAll" resultType="RanksVo">
+	 SELECT RANKS_SEQ , RANKS_NAME , RANKS_REGDATE   
+	 FROM RANKS  ORDER BY RANKS_SEQ
+	</select>
+ 
 	 <!-- 직급등록 -->
 	 <insert id="insertRanks" parameterType="java.util.Map">
 	 INSERT INTO RANKS
