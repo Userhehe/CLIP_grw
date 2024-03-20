@@ -49,4 +49,10 @@ public class RanksServiceImpl implements IRanksService {
 		return dao.duplicateRanks(map);
 	}
 
+	@Override
+	public List<RanksVo> ranksAll() {
+		log.info("RanksServiceImpl ranksAll() 직급 전체 조회");
+		return dao.ranksAll();
+	}
+
 }
