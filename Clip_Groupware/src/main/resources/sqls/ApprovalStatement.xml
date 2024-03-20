@@ -110,7 +110,7 @@
 	<select id="getOneApproval" resultType="ApprovalVo" parameterType="java.lang.String">
 		SELECT *
 	        FROM APPROVAL a 
-	        WHERE APP_SEQ = #{appSeq} 
+	        WHERE APP_SEQ = #{app_seq} 
 	</select>	
 
 

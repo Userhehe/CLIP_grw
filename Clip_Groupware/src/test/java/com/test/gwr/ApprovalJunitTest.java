@@ -170,59 +170,59 @@ public class ApprovalJunitTest {
 		
 		
 //		
-//		//결재요청
-//		ApprovalVo appVo = new ApprovalVo();
-//		appVo.setApp_title("기안 결재 인서트 쿼리문입니다.");
-//		appVo.setApp_content("휴가 결재서 			이름 : 		성명 : 		....");
-//		appVo.setGian_seq("GIAN_001");
+		//결재요청
+		ApprovalVo appVo = new ApprovalVo();
+		appVo.setApp_title("기안 결재 인서트 쿼리문입니다.");
+		appVo.setApp_content("휴가 결재서 			이름 : 		성명 : 		....");
+		appVo.setGian_seq("GIAN_001");
+		
+		
+		//결재라인 작성 칸
+		PaylineVo pVo = new PaylineVo();
+		pVo.setWriter("USER_049");	//결재 기안자
+		
+		//임시 저장은 위에까지.
+		
+
+		//결재라인
+		Map<String, Object> lineMap = new HashMap<String, Object>();
+		lineMap.put("first", "USER_027");
+		lineMap.put("second", "USER_026");
+		lineMap.put("third", "USER_025");
+		pVo.setPaymentLine(lineMap);
+		
+		//라인별 체크
+		Map<String, Object> cheMap = new HashMap<String, Object>();
+		cheMap.put("first", "N");
+		cheMap.put("second", "N");
+		cheMap.put("third", "N");
+		pVo.setPaymentOk(cheMap);
+		
+		//참조인
+		Map<String, Object> refMap = new HashMap<String, Object>();
+		List<String> empList = new ArrayList<String>();
+		empList.add("USER_006");
+		empList.add("USER_005");
+		refMap.put("emp", empList);
+		
+		//참조 팀
+		List<String> teamList = new ArrayList<String>();
+		teamList.add("DEPT_006");
+		refMap.put("team", teamList);
+		
+		pVo.setReference(refMap);
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(pVo);
+		System.out.println(json);
+		appVo.setApp_payline(json);
 //		
-//		
-//		//결재라인 작성 칸
-//		PaylineVo pVo = new PaylineVo();
-//		pVo.setWriter("USER_005");	//결재 기안자
-//		
-//		//임시 저장은 위에까지.
-//		
-//
-//		//결재라인
-//		Map<String, Object> lineMap = new HashMap<String, Object>();
-//		lineMap.put("first", "USER_027");
-//		lineMap.put("second", "USER_026");
-//		lineMap.put("third", "USER_025");
-//		pVo.setPaymentLine(lineMap);
-//		
-//		//라인별 체크
-//		Map<String, Object> cheMap = new HashMap<String, Object>();
-//		cheMap.put("first", "N");
-//		cheMap.put("second", "N");
-//		cheMap.put("third", "N");
-//		pVo.setPaymentOk(cheMap);
-//		
-//		//참조인
-//		Map<String, Object> refMap = new HashMap<String, Object>();
-//		List<String> empList = new ArrayList<String>();
-//		empList.add("USER_006");
-//		empList.add("USER_005");
-//		refMap.put("emp", empList);
-//		
-//		//참조 팀
-//		List<String> teamList = new ArrayList<String>();
-//		teamList.add("DEPT_006");
-//		refMap.put("team", teamList);
-//		
-//		pVo.setReference(refMap);
-//		
-//		Gson gson = new Gson();
-//		String json = gson.toJson(pVo);
-//		System.out.println(json);
-//		appVo.setApp_payline(json);
-////		
-////		//날짜 지정한 결재일 시 입력
-//		appVo.setApp_strdate("2024-04-01");
-//		appVo.setApp_enddate("2024-04-04");
-//	 	int result = service.reqDynamicDateApproval(appVo);
-//		assertEquals(result, 1);
-//	 	
+//		//날짜 지정한 결재일 시 입력
+		appVo.setApp_strdate("2024-04-01");
+		appVo.setApp_enddate("2024-04-04");
+	 	int result = service.reqDynamicDateApproval(appVo);
+		assertEquals(result, 1);
+	 	
 		
 		
 		
