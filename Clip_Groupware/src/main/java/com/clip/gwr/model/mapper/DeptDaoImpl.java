@@ -33,27 +33,21 @@ public class DeptDaoImpl implements IDeptDao{
 	}
     // 부서 삭제 
 	@Override
-	public int delDept(String dept_seq) {
+	public int delDept(Map<String, Object>map) {
 		log.info("##### 부서삭제 delDept #####");
-		return sqlSession.delete(NS+"delDept",dept_seq);
+		return sqlSession.delete(NS+"delDept",map);
 	}
     //부서 검색 
 	@Override
-	public List<DeptVo> searchDept(String dept_name) {
+	public List<DeptVo> searchDept(Map<String, Object>map) {
 		log.info("##### 부서검색 searchDept #####");
-		return sqlSession.selectList(NS+"searchDept",dept_name);
+		return sqlSession.selectList(NS+"searchDept",map);
 	}
     // 부서 중복 검사 
 	@Override
 	public int duplicateCheckDept(Map<String, Object>map) {
 		log.info("##### 부서 중복검사 duplicateCheckDept #####");
 		return sqlSession.selectOne(NS+"duplicateCheckDept",map);
-	}
-	// 부서 전체 조회  
-	@Override
-	public List<DeptVo> deptAll() {
-		log.info("##### 부서 중복검사 deptAll #####");
-		return sqlSession.selectList(NS+"deptAll");
 	}
 
 }

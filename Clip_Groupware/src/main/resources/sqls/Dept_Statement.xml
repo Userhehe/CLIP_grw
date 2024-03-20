@@ -2,13 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.gwr.model.mapper.DeptDaoImpl">
 
-    <!-- 부서 전체 조회 -->
-    <select id="deptAll" resultType="DeptVo">
-	 SELECT DEPT_SEQ , DEPT_NAME , DEPT_REGDATE   
-	 FROM DEPT  ORDER BY DEPT_SEQ
-	</select>
-	
-
     <!-- 부서 등록  -->
 	<insert id="insertDept" parameterType="java.util.Map">
 		INSERT INTO DEPT
