@@ -21,7 +21,7 @@ public interface IProjectsDao {
 	public int projectsUpdate(Map<String, Object> map);
 	
 	// 프로젝트 삭제
-//	public int projectsDelete(String prj_id);
+//	public int projectsDelete(String prj_id);/
 	
 	// 프로젝트 거래처별 검색
 //	public List<ProjectsVo> projectsClientSel();

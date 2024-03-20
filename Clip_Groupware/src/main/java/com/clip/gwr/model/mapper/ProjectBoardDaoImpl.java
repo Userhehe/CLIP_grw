@@ -85,7 +85,7 @@ public class ProjectBoardDaoImpl implements IProjectBoardDao {
 //			e.printStackTrace();
 //		}
 //		return 0;
-//	}
+//	}/
 
 	@Override
 	public int multideleteBoard(List<String> seqs) {

@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 
 public class ProjectMemVo {
-
+//
 	private String prm_seq	;
 	private String prj_id	;
 	private String user_id	;

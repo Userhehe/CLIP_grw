@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 
 public class ProjectBoardVo {
-
+//
 	private String	pbo_seq		;
 	private String	user_id		;
 	private String	pbo_title	;

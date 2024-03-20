@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.grw.model.mapper.ProjectsDaoImpl">
 
-    <!-- 새로운 프로젝트 추가 -->
+    <!-- 새로운 프로젝트 추가 --><!--  -->
     <insert id="insertProject" parameterType="Project">
         INSERT INTO PROJECTS (PRJ_ID, CLI_ID, PRJ_NAME, PRJ_SDATE, PRJ_DDATE, PRJ_STATUS, PRJ_MANAGER)
         VALUES (#{projectId}, #{clientId}, #{projectName}, #{startDate}, #{dueDate}, #{status}, #{managerId})

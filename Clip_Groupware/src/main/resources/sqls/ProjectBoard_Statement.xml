@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.grw.model.mapper.ProjectBoardDaoImpl">
-    <!-- 프로젝트 게시글 추가 -->
+    <!-- 프로젝트 게시글 추가 --><!--  -->
     <insert id="insertProjectBoard" parameterType="ProjectBoard">
         INSERT INTO PROJECT_BOARD
         (PBO_SEQ, USER_ID, PBO_TITLE, PBO_CONTENT, PBO_DEPTH, PBO_REF, PBO_STEP, PBO_DELFLAG, PBO_REGDATE)

@@ -23,7 +23,7 @@ public interface IProjectBoardDao {
 	public int replyInsert(ProjectBoardVo vo);
 	
 	//답글입력
-//	public int reply(ProjectBoardVo vo);
+//	public int reply(ProjectBoardVo vo);/
 	
 	//글수정   
 	public int modifyBoard(Map<String, Object>map);

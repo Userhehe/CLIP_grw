@@ -47,7 +47,7 @@ public class ProjectsDaoImpl implements IProjectsDao {
 //	@Override
 //	public List<ProjectsVo> projectsClientSel(String cli_name) {
 //		return sqlSession.selectList(NS+"projectsClientSel",cli_name);
-//	}
+//	}/
 
 	@Override
 	public List<ProjectsVo> projectsPeriodSel() {
