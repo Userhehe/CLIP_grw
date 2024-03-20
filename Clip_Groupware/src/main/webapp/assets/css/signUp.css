@@ -20,6 +20,42 @@ body {
 }
 
 
+.font12 {
+	font-size: 12px;
+}
+
+.font20 {
+	font-size: 20px;
+}
+
+.w15vh {
+	width: 15vh;
+}
+
+.w15_2vh {
+	width: 15.2vh;
+}
+
+.w16_72vh {
+	width: 16.72vh;
+}
+
+.w33_5vh {
+	width: 33.5vh;
+}
+
+.w24_7vh {
+	width: 24.7vh;
+}
+
+.w65vh {
+	width: 65vh;
+}
+
+.ib {
+	display: inline-block;
+}
+
 .additional-image {
 	width: 300px;
 	position: relative;
@@ -55,6 +91,32 @@ select {
 	border: none;
 	padding: 10px;
 	cursor: pointer;
+	float: right;
+	font-size: 13px;
+}
+
+.wid100 {
+	width: 100%;
+}
+
+.jus-center {
+	justify-content: center;
+}
+
+.font40 {
+	font-size: 40px;
+}
+
+.wid40 {
+	width: 40%;	
+}
+
+.wid28 {
+	width: 28%;
+}
+
+.txt-center {
+	text-align: center;
 }
 
 /* 버튼 호버 효과 */

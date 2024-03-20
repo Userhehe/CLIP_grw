@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.clip.gwr.model.service.IUserService;
@@ -30,7 +31,7 @@ public class LoginController {
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
 	
-	@PostMapping(value = "/loginForm.do") 
+	@PostMapping(value = "/loginForms.do") 
 	public String loginSession(HttpSession session,
 			HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
 		//Map<String, Object> map = new HashMap<String, Object>();
@@ -101,4 +102,9 @@ public class LoginController {
 //	public String logout() {
 //		return "login";
 //	}
+	
+	@GetMapping(value = "/adminMain.do")
+	public String adminMain() {
+		return "adminMain";
+	}
 }
