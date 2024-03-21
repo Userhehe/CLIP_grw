@@ -22,6 +22,8 @@ public class MainController {
 		return "main";
 	}
 	
+
+	
 	@GetMapping(value = "/empty.do")
 	public String empty() {
 		log.info("MainController empty 빈화면");
@@ -63,7 +65,6 @@ public class MainController {
 //		log.info("MainController department 화면");
 //		return "department";
 //	}
-	
 	
 	@GetMapping(value = "/userInfo.do")
 	public String userInfo() {

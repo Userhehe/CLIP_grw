@@ -51,7 +51,7 @@ public class RanksServiceImpl implements IRanksService {
 
 	@Override
 	public List<RanksVo> ranksAll() {
-		log.info("RanksServiceImpl ranksAll() 직급 전체 조회");
+		log.info("RanksServiceImpl ranksAll 직급 전체 조회");
 		return dao.ranksAll();
 	}
 
