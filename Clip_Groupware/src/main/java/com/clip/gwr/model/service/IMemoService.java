@@ -16,4 +16,6 @@ public interface IMemoService {
 	public int myScheduleUpdate(MemoVo vo); // 개인메모 수정
 	
 	public int myScheduleDelete(MemoVo vo); // 개인 메모 삭제
+	
+	public List<MemoVo> selectScheduleAll(Map<String, Object> map);
 }

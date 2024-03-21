@@ -46,5 +46,8 @@ public class MemoServiceImpl implements IMemoService{
 		return dao.myScheduleDelete(vo);
 	}
 	
-	
+	@Override
+	public List<MemoVo> selectScheduleAll(Map<String, Object> map) {
+		return dao.selectScheduleAll(map);
+	}
 }
