@@ -61,16 +61,5 @@ public class MainController {
 	}
 	
 
-//	@GetMapping(value = "/department.do")
-//	public String department() {
-//		log.info("MainController department 화면");
-//		return "department";
-//	}
-
-	
-	@GetMapping(value = "/userInfo.do")
-	public String userInfo() {
-		log.info("userInfo 이동");
-		return "userInfo";
-	}
+}
 
