@@ -30,7 +30,7 @@
 				</div>
 				<form action="./templateDelete.do" method="post"
 					onsubmit="return chsSubmit()">
-					<table class="table table-striped" style="margin-top: 10px;">
+					<table class="table table-hover" style="margin-top: 10px;">
 						<thead>
 							<tr>
 								<th><input type="checkbox" class="allCheckBox" id="chCheck"

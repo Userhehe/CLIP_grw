@@ -2,13 +2,13 @@ package com.clip.gwr.ctrl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.clip.gwr.model.service.IGianService;
 import com.clip.gwr.vo.GianVo;
+import com.clip.gwr.vo.UserinfoVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,12 +31,31 @@ public class PayController {
 	private IGianService service;
 
 	@GetMapping(value="/payRegister.do")
-	public String payRegister(Model model) {
+	public String payRegister(HttpServletResponse resp,Model model,HttpSession session) throws IOException {
 		log.info("PayController payRegister 결재신청 페이지");
-		GianVo vo =service.templateDetail("GIAN_001");//연차 seq (GIAN_001)
-		GianVo vo1 =service.templateDetail("GIAN_003");//연차 seq (GIAN_001)
-	    model.addAttribute("vo", vo);
+		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
+
+		String user_name = loginUser.getUser_name();
+		String dept_name = loginUser.getDept_name();
+		String ranks_name = loginUser.getRanks_name();
+		System.out.println("로그인한 정보:"+user_name+","+dept_name+","+ranks_name);
+		
+		model.addAttribute("user_name",user_name);
+		model.addAttribute("dept_name",dept_name);
+		model.addAttribute("ranks_name",ranks_name);
+		
+		 String[] templateIds = {"GIAN_001", "GIAN_003", "GIAN_048"};
+		    for (int i = 0; i < templateIds.length; i++) {
+		        GianVo vo = service.templateDetail(templateIds[i]);
+		        model.addAttribute("vo" + i, vo);
+		    }
+		
+		GianVo vo1 =service.templateDetail("GIAN_001");
+		GianVo vo2 =service.templateDetail("GIAN_003");
+		GianVo vo3 =service.templateDetail("GIAN_048");
 	    model.addAttribute("vo1", vo1);
+	    model.addAttribute("vo2", vo2);
+	    model.addAttribute("vo3", vo3);
 		return "payRegister";
 	}
 	
@@ -46,13 +66,14 @@ public class PayController {
 	}
 	
 	@PostMapping(value="/myPayInsert.do")
-	public String myPayInsert(HttpServletResponse resp) throws IOException {
+	public String myPayInsert(HttpSession session,HttpServletResponse resp) throws IOException {
 		log.info("PayController myPayInsert 결재작성 post");
+		
 		resp.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = resp.getWriter();
 		out.println("<script language='javascript'>");
 		out.println("alert('결재신청이 완료되었습니다.');");
-		out.println("window.location.href='./myPaySelect.do';");
+		out.println("window.location.href='./myPayList.do';");
 		out.println("</script>");
 		out.flush();
 		return null;
