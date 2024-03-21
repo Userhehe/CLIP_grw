@@ -24,9 +24,9 @@ public class UserDaoImpl implements IUserDao {
 	 * 로그인
 	 */
 	@Override
-	public UserinfoVo userLogin(String user_id) {
+	public UserinfoVo userLogin(String username) {
 		log.info("##### 로그인 userLogin #####");
-		return sqlSession.selectOne(NS + "userLogin", user_id);
+		return sqlSession.selectOne(NS + "userLogin", username);
 	}
 	
 	/**

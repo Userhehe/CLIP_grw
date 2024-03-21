@@ -98,10 +98,11 @@ public class LoginController {
 //		return "main";
 	}
 
-//	@GetMapping(value = "/logout.do")
-//	public String logout() {
-//		return "login";
-//	}
+	@GetMapping(value = "/logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "login";
+	}
 	
 	@GetMapping(value = "/adminMain.do")
 	public String adminMain() {

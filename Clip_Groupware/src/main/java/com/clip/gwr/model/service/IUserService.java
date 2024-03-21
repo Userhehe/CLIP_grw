@@ -13,7 +13,7 @@ public interface IUserService {
 	 * @param user_id
 	 * @return 
 	 */
-	public UserinfoVo userLogin(String user_id);
+	public UserinfoVo userLogin(String username);
 	
 	/**
 	 * 아이디 찾기
