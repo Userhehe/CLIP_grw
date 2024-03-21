@@ -3,13 +3,13 @@ package com.clip.gwr.ctrl;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +24,7 @@ import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.json.simple.JSONObject;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,12 +38,56 @@ public class ReservationController {
 	// 예약 페이지 이동
 	@GetMapping(value = "/reservation.do")
 	public String reservation(Model model) {
-		List<MeeTingRoomVo> meeTingRoomVo = service.selectMeetingRoom();
+				List<MeeTingRoomVo> meeTingRoomVo = service.selectMeetingRoom();
 		model.addAttribute("meeTingRoomVo", meeTingRoomVo);
 		log.info("ReservationController reservation 회의실 예약화면 이동");
 		return "reservation";
 	}
+	
+	//예약 달력에 전체 조회 하기
+	@GetMapping(value = "/reList.do")
+	@ResponseBody
+	public JSONArray reAllList(HttpSession session) {
+		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
+		log.info("session에서 받은값 :" + id);
+		List<ReservationVo>lists = service.myReservationAll(id.getUser_id());
+		JSONArray reArr = new JSONArray();
+		for(ReservationVo vo : lists) {
+			JSONObject obj = new JSONObject();
+			obj.put("seq",vo.getRe_seq());
+			obj.put("id",vo.getUser_id());
+			obj.put("title",vo.getRe_title());
+			obj.put("content",vo.getRe_content());
+			obj.put("start",vo.getRe_start());
+			obj.put("end",vo.getRe_end());
+			reArr.add(obj);
+		}
+		return reArr;
+	}
+	//예약 상세조회
+	@GetMapping(value = "/reDetail.do")
+	public ReservationVo reDetail() {
+		
+		return null;
+	}
 
+	//예약내용 수정하기
+	@GetMapping(value = "/reModify.do")
+	public ReservationVo reModify() {
+		
+		return null;
+	}
+	
+	//예약 취소하기
+	@GetMapping(value = "/reDel")
+	public String reDel() {
+		
+		return null;
+	}
+	
+	
+
+	
 	// 내 예약 페이지 이동
 	@GetMapping(value = "/myReservation.do")
 	public String myReservation(Model model, HttpSession session) {
@@ -53,6 +98,8 @@ public class ReservationController {
 		return "myReservation";
 	}
 
+	
+	// 예약하기 모달 기능 시작
 	// 예약 가능 시간 확인
 	@ResponseBody
 	@PostMapping(value = "/selectPossibleMeRoom.do")
@@ -84,11 +131,11 @@ public class ReservationController {
 	public String selectAttendsJstree() {
 		log.info("selectAttendsJstree.do 실행");
 		List<UserinfoVo> lists = service.selectAttendsJstree();
-		log.info("리스트 : {}", lists);
+		log.info("lists : {}", lists);
 		Gson gson = new GsonBuilder().create();
-		log.info("지슨 :{}", gson);
+		log.info("gson :{}", gson);
 		String result = gson.toJson(lists);
-		log.info("리절트 : {}", result);
+		log.info("result : {}", result);
 		return result;
 	}
 
@@ -103,5 +150,7 @@ public class ReservationController {
 		log.info("예약 등록 성공 여부 : {}", isc == 1 ? "예약성공" : "예약실패");
 		return isc;
 	}
+	
+	// 예약하기 모달 기능 시작
 
 }

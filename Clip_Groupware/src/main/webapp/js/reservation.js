@@ -229,6 +229,10 @@ function reservationModal(){
 	$("#reservationModal").modal("show");
 }
 
+function redetail(){
+	$("#redetail").modal("show");
+}
+
 
 
 
