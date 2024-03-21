@@ -11,14 +11,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IMemoService;
-import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.MemoVo;
 import com.clip.gwr.vo.UserinfoVo;
 
@@ -38,6 +36,7 @@ public class ScheduleController {
 		log.info("ScheduleController mainscheduel 달력조회");
 		return "schedule";
 	}
+	
 	
 	@GetMapping(value = "/Ajax.do")
 	@ResponseBody
@@ -62,6 +61,7 @@ public class ScheduleController {
 		System.out.println("넘겨줄 데이터"+memolist);
 		return memolist;
 	}
+	
 	
 	@PostMapping(value = "/addmemo.do")  //메모추가
 	@ResponseBody

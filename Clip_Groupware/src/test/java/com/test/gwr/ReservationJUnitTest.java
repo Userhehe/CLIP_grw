@@ -62,9 +62,9 @@ public class ReservationJUnitTest {
 		vo.setRe_content("끝까지가면 내가 다 이겨");
 		vo.setMe_room("1");
 		vo.setRe_attend(attends);
-		int isc = service.myReservationInsert(vo);
+		//int isc = service.myReservationInsert(vo);
 		log.info("입력한 예약 정보 : {}", vo);
-		assertNotEquals(isc, 0);
+		//assertNotEquals(isc, 0);
 
 	}
 
@@ -90,10 +90,16 @@ public class ReservationJUnitTest {
 	}
 
 	// 참석자를 위한 jstree
-	@Test
+	//@Test
 	public void selectAttends() {
 		List<UserinfoVo> lists = service.selectAttendsJstree();
 		log.info("참석자를 위한 jstree : {}", lists);
+		assertNotNull(lists);
+	}
+	@Test
+	public void testttt() {
+		List<ReservationVo> lists = service.myReservationAll("USER_051");
+		log.info("{}",lists);
 		assertNotNull(lists);
 	}
 

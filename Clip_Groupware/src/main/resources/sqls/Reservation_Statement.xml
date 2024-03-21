@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.gwr.model.mapper.ReservationDaoImpl">
+	
 	<!-- 나의 예약 정보 전체 조회 -->
 	<select id="myReservationAll" parameterType="java.lang.String" resultType="ReservationVo">
-	    SELECT DISTINCT RE_SEQ, USER_ID, RE_TITLE, 
-	    		RE_CONTENT, RE_START, RE_END, 
-	    		RE_CREATE, RE_DELFLAG, ME_ROOM, RE_ATTEND 
-	   		FROM RESERVATION,
-	      	JSON_TABLE(RE_ATTEND, '$.Attend[*]'
-	           COLUMNS(
-	                    ATDNS VARCHAR2(2000) PATH '$.attend'
-	               ))
-	   		WHERE RE_DELFLAG = 'N'
-	    	AND (RE_START BETWEEN TO_DATE('2024-03-01', 'YYYY-MM-DD') AND TO_DATE('2024-03-29', 'YYYY-MM-DD')
-	    	OR RE_END BETWEEN TO_DATE('2024-03-01', 'YYYY-MM-DD') AND TO_DATE('2024-03-31', 'YYYY-MM-DD'))
-	    	AND ATDNS = #{user_id} OR USER_ID = #{user_id} 
+		SELECT DISTINCT RE_SEQ, USER_ID, RE_TITLE, 
+		               RE_CONTENT, RE_START, RE_END, 
+		               RE_CREATE, RE_DELFLAG, ME_ROOM, RE_ATTEND 
+		FROM RESERVATION
+		WHERE RE_DELFLAG = 'N'
+		  AND (
+		      RE_START BETWEEN TO_DATE('2024-03-01', 'YYYY-MM-DD') AND TO_DATE('2024-03-29', 'YYYY-MM-DD')
+		      OR RE_END BETWEEN TO_DATE('2024-03-01', 'YYYY-MM-DD') AND TO_DATE('2024-03-31', 'YYYY-MM-DD')
+		  )
+		  AND (
+		      EXISTS (
+		          SELECT 1
+		          FROM JSON_TABLE(
+		              RE_ATTEND,
+		              '$.Attend[*]'
+		              COLUMNS(ATDNS VARCHAR2(2000) PATH '$.attend')
+		          ) jt
+		          WHERE jt.ATDNS = #{user_id}
+		      )
+		      OR USER_ID = #{user_id}
+		  )
  	</select>
  	
  	<!-- 예약 등록 -->
@@ -53,6 +63,28 @@
 		ORDER BY R.RANKS_SEQ ASC
 	</select>
 	
-
-
+	<!-- 예약 상세조회 -->
+	<select id="reDetail" parameterType="java.lang.String" resultType="ReservationVo">
+		SELECT RE_SEQ, USER_ID , RE_TITLE , RE_CONTENT , RE_START , RE_END , RE_CREATE , RE_DELFLAG, ME_ROOM  , RE_ATTEND 
+        FROM RESERVATION  
+        WHERE RE_SEQ= #{re_seq}
+        	AND RE_DELFLAG = 'N'
+	</select>
+	
+	<!-- 예약 내용 수정하기 -->
+	<update id="reModify">
+		UPDATE RESERVATION
+			SET RE_TITLE='수정한예약인데', RE_CONTENT='집에갈랭', RE_START=TO_DATE('2024-02-01T16:00:00', 'YYYY-MM-DD"T"HH24:MI:SS'), RE_END=TO_DATE('2024-02-01T17:00:00', 'YYYY-MM-DD"T"HH24:MI:SS'), RE_CREATE=SYSDATE, ME_ROOM=2, RE_ATTEND='json형태로 하기'
+			WHERE RE_SEQ=#{re_seq}
+	</update>
+	
+	<!-- 예약 취소하기 -->
+	<update id="reDel">
+		UPDATE RESERVATION
+			SET RE_DELFLAG='Y' 
+			WHERE RE_SEQ=#{re_seq}
+	</update>
+	
+	
+	
 </mapper>
