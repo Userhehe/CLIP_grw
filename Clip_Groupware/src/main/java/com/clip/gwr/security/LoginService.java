@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import com.clip.gwr.model.mapper.IUserDao;
 import com.clip.gwr.vo.UserinfoVo;
@@ -13,27 +14,42 @@ import com.clip.gwr.vo.UserinfoVo;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class LoginService implements UserDetailsService {
 	
 	@Autowired
 	private IUserDao dao;
 
-	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-		// loadUserByUsername(String userId)은 UserDetailsService 인터페이스의 추상메서드로 사용자의 아이디를 입력받아 사용자의 상세정보를 로드 
-		log.info("######LoginService loadUserByUsername : {}", userId); 
-
-		log.info("#####LoginService repository : {}", dao); 
-
-		UserinfoVo userInfoVo = dao.userLogin(userId);
-		
-		log.info("#####LoginService userInfoVo : {}", userInfoVo); 
-
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		UserinfoVo userInfoVo = dao.userLogin(username);
 		if(userInfoVo != null) {
-			return new User(userId, userInfoVo.getUser_password(), AuthorityUtils.createAuthorityList(userInfoVo.getUser_auth()));
+			return new User(username, userInfoVo.getUser_password(), AuthorityUtils.createAuthorityList(userInfoVo.getUser_auth()));
 		}else { 
 			log.info("#### userInfoVo가 널이야 ####");
 			return null; 
 		}
+	}
+
+	
+	
+	
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		// loadUserByUsername(String userId)은 UserDetailsService 인터페이스의 추상메서드로 사용자의 아이디를 입력받아 사용자의 상세정보를 로드 
+//		log.info("######LoginService loadUserByUsername : {}", username); 
+//
+//		log.info("#####LoginService repository : {}", dao); 
+//
+//		UserinfoVo userInfoVo = dao.userLogin(username);
+//		
+//		log.info("#####LoginService userInfoVo : {}", userInfoVo); 
+//
+//		if(userInfoVo != null) {
+//			return new User(username, userInfoVo.getUser_password(), AuthorityUtils.createAuthorityList(userInfoVo.getUser_auth()));
+//		}else { 
+//			log.info("#### userInfoVo가 널이야 ####");
+//			return null; 
+//		}
 		
 //		UserinfoVo user = dao.userLogin(userId);
 //        
@@ -50,5 +66,5 @@ public class LoginService implements UserDetailsService {
 //                .credentialsExpired(false)
 //                .disabled(false)
 //                .build();
-	}
+//	}
 }

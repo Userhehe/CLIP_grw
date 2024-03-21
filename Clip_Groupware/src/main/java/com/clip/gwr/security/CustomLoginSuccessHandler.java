@@ -32,8 +32,8 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		/**
 		 * 사용자 로그인
 		 */
-//		if(roleNames.contains("ROLE_USER")) {
-		if(roleNames.contains("USER")) { 
+		if(roleNames.contains("ROLE_USER")) {
+//		if(roleNames.contains("USER")) { 
 			response.sendRedirect("./main.do"); 
 			return; 
 		} 
@@ -41,12 +41,13 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		/**
 		 * 관리자 로그인
 		 */
-//		if(roleNames.contains("ROLE_ADMIN")) { 
-		if(roleNames.contains("ADMIN")) { 
+		if(roleNames.contains("ROLE_ADMIN")) { 
+//		if(roleNames.contains("ADMIN")) { 
 			response.sendRedirect("./adminMain.do"); 
 			return; 
 		}
-		response.sendRedirect("./main.do"); 
+//		response.sendRedirect("./index.jsp");
+		response.sendRedirect("./loginForm.do"); 
 	}
 
 }
