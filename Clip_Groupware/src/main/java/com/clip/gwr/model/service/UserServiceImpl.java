@@ -22,9 +22,9 @@ public class UserServiceImpl implements IUserService {
 	 * 로그인
 	 */
 	@Override
-	public UserinfoVo userLogin(String user_id) {
+	public UserinfoVo userLogin(String username) {
 		log.info("UserServiceImpl userLogin 로그인");
-		return dao.userLogin(user_id);
+		return dao.userLogin(username);
 	}
 
 	/**

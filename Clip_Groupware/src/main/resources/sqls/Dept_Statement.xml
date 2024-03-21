@@ -40,10 +40,6 @@
 	 	<if test="dept_name != null">
 			AND DEPT_NAME LIKE '%' || #{dept_name} || '%'
 		</if>
-		<if test="start_regdate != null and end_regdate != null">
-			AND DEPT_REGDATE BETWEEN TO_DATE(#{start_regdate}, 'YYYY-MM-DD') 
-			AND TO_DATE(#{end_regdate}, 'YYYY-MM-DD')
-		</if>
      </select>
      
      <!-- 부서 중복 검색 -->

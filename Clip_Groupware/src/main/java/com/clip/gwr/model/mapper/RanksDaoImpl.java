@@ -53,7 +53,7 @@ public class RanksDaoImpl implements IRanksDao {
 	@Override
 	public List<RanksVo> ranksAll() {
 		log.info("##### 직급 전체 조회  ranksAll() #####");
-		return sqlSession.selectList(NS+"ranksAll()");
+		return sqlSession.selectList(NS+"ranksAll");
 	}
 
 }
