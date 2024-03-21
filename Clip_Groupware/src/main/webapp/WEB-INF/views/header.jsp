@@ -1,3 +1,4 @@
+<%@page import="com.clip.gwr.vo.UserinfoVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -38,6 +39,10 @@
 </head>
 
 <body>
+<%
+UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
+%>
+
 <!-- ======= START HEADER ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
 		<nav class="header-nav ms-auto">
@@ -126,7 +131,9 @@
 				<ul id="ework-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 					<li><a href="./payRegister.do"> <i class="bi bi-circle"></i><span>결재신청</span></a></li>
 					<li><a href="./myPaySelect.do"> <i class="bi bi-circle"></i><span>결재조회</span></a></li>
-					<li><a href="./paytemplate.do"> <i class="bi bi-circle"></i><span>결재양식서 관리</span></a></li>
+					<c:if test="${loginVo.user_auth == 'ROLE_ADMIN'}">
+						<li><a href="./paytemplate.do"> <i class="bi bi-circle"></i><span>결재양식서 관리</span></a></li>					
+					</c:if>
 				</ul>
 			</li>
 <!-- ======= END ework-nav ======= -->
