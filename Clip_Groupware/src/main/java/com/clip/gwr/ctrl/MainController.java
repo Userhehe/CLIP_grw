@@ -70,4 +70,4 @@ public class MainController {
 		log.info("userInfo 이동");
 		return "userInfo";
 	}
-}
+
