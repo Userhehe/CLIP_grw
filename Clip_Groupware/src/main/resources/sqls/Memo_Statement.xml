@@ -47,6 +47,24 @@
 </delete>
 
 
+<!-- 테스트 용 유니온으로 하는 전사, 개인 일정 조회 -->
+<select id="selectScheduleAll" parameterType="java.util.Map" resultType="MemoVo">
+	SELECT PRS_SEQ , USER_ID, PRS_TITLE, 
+			TO_CHAR(PRS_START, 'YYYY-MM-DD HH24:MI') AS PRS_START, TO_CHAR(PRS_END, 'YYYY-MM-DD HH24:MI') AS PRS_END
+			FROM USER_SCHEDULE
+			WHERE PRS_DELFLAG = 'N' AND USER_ID = #{user_id}
+			AND TO_CHAR(PRS_START, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM')
+			OR TO_CHAR(PRS_END, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM')
+	UNION 
+	SELECT NTC_SEQ, USER_ID, NTC_TITLE, 
+			TO_CHAR(NTC_START, 'YYYY-MM-DD HH24:MI') AS NTC_START, TO_CHAR(NTC_END, 'YYYY-MM-DD HH24:MI') AS NTC_END
+	        FROM NTC_SCHEDULE
+	        WHERE NTC_DELFLAG = 'N'
+	       	AND TO_CHAR(NTC_START, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM')
+			OR TO_CHAR(NTC_END, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM')
+</select>
+
+
 </mapper>
 
 

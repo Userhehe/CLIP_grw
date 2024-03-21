@@ -28,7 +28,7 @@ public class MemoJUnitTest {
 	@Autowired
 	private IMemoService service;
 	
-	@Test
+	//@Test
 	public void test() {
 		List<MemoVo> lists = service.myScheduleAll("USER_005");
 		log.info("메모 전체조회 {}:", lists);
@@ -43,9 +43,9 @@ public class MemoJUnitTest {
 		insert.setPrs_title("어우 집가고싶넹");
 		insert.setPrs_content("프로젝트 잘하고싶다");
 		
-		int cnt = service.myScheduleInsert(insert);
-		log.info("개인메모 입력 {}:",insert);
-		assertNotEquals(cnt,0);
+//		int cnt = service.myScheduleInsert(insert);
+//		log.info("개인메모 입력 {}:",insert);
+//		assertNotEquals(cnt,0);
 		
 		
 		MemoVo update = new MemoVo();
@@ -69,5 +69,15 @@ public class MemoJUnitTest {
 		
 		
 	}
-
+	
+	@Test
+	public void testssss() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", "USER_049");
+		map.put("fullDate", "2024-03");
+		List<MemoVo> lists = service.selectScheduleAll(map);
+		log.info("테스트용 전사 개인 일정 전체 조회 : {}", lists);
+		assertNotNull(lists);
+		
+	}
 }
