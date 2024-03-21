@@ -220,7 +220,7 @@ public class ApprovalJunitTest {
 //		//날짜 지정한 결재일 시 입력
 		appVo.setApp_strdate("2024-04-01");
 		appVo.setApp_enddate("2024-04-04");
-	 	int result = service.reqDynamicDateApproval(appVo);
+	 	int result = service.saveTempApproval(appVo);
 		assertEquals(result, 1);
 	 	
 		

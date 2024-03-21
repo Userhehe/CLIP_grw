@@ -24,27 +24,28 @@
     <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
 	<!-- 로그인 처리 -->
-    <bean id="loginService" class="com.clip.gwr.security.LoginService" />
+<!--     <bean id="loginService" class="com.clip.gwr.security.LoginService" /> -->
 	
 	<!-- url 더블슬레시 허용 -->
 	<!-- <bean id="defaultHttpFirewall" class="org.springframework.security.web.firewall.DefaultHttpFirewall"/>
 	<security:http-firewall ref="defaultHttpFirewall"/> -->
-	<bean id="httpFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall">
-    	<property name="allowUrlEncodedDoubleSlash" value="true"/>
-	</bean>
-	<security:http-firewall ref="httpFirewall" />
+<bean id="httpFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall">
+	<property name="allowUrlEncodedDoubleSlash" value="true"/>
+</bean>
+<security:http-firewall ref="httpFirewall" />
     
     <security:http auto-config="true" use-expressions="true">
-	    <security:intercept-url pattern="/login.do" access="permitAll"/>
+	    <security:intercept-url pattern="/loginForm.do" access="permitAll"/>
 <!-- 	    <security:intercept-url pattern="/member.do" access="hasRole('USER')"/> -->
 <!-- 	    <security:intercept-url pattern="/admin.do" access="hasRole('ADMIN')"/> -->
 		
-		<security:form-login login-page="/loginForm.do"  
+		<!-- <security:form-login login-page="/loginForm.do"
+							 login-processing-url="/loginForms.do"
+							 username-parameter="username"  
 							 password-parameter="password"
-							 username-parameter="username"
-							 authentication-success-handler-ref="customLoginSuccess" /> 
+							 authentication-success-handler-ref="customLoginSuccess" /> -->
 			
-		<security:access-denied-handler ref="customAccessDenied" />	
+		<!-- <security:access-denied-handler ref="customAccessDenied" /> -->
 		
 		<!--
 			logout 처리
@@ -52,9 +53,9 @@
 			logout-success-url : 로그아웃 후 이동 Url
 			invalidate-session : 로그아웃 시 session을 무효화할 지 선택
 		-->
-   		<security:logout logout-url="/logout.do"
-						 logout-success-url="/loginForm.do" 
-						 invalidate-session="true" />
+<!--    		<security:logout logout-url="/logout.do" -->
+<!-- 						 logout-success-url="/loginForm.do"  -->
+<!-- 						 invalidate-session="true" /> -->
 		<!-- csrf 사용여부(사이트간 위변조 방지를 위한 처리 - true : 미사용) -->
 		<security:csrf disabled="false" />
 		<!--
@@ -62,16 +63,16 @@
 			token-validity-seconds : token의 유효 시간(100초)
 			remember-me-parameter : 자동로그인
 		-->
-		<security:remember-me key="CLIP"
-							  token-validity-seconds="100" 
-							  remember-me-parameter="remember-me"/>
+<!-- 		<security:remember-me key="CLIP" -->
+<!-- 							  token-validity-seconds="100"  -->
+<!-- 							  remember-me-parameter="remember-me"/> -->
     </security:http>
     
     <!-- 인증 관리자 설정 -->
     <security:authentication-manager>
-        <!-- 사용자 인증을 위한 UserDetailsService 빈 등록 -->
+<!--         사용자 인증을 위한 UserDetailsService 빈 등록 -->
         <security:authentication-provider user-service-ref="loginService">
-            <!-- 비밀번호 암호화 -->
+<!--             비밀번호 암호화 -->
             <security:password-encoder ref="bcryptPasswordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>
