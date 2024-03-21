@@ -6,7 +6,7 @@
 	<!-- 내가 요청한 결재내역 전체 조회 (세션에서 나의 사원번호 사용)-->
 	<select id="getAllApproval" resultType="ApprovalVo" parameterType="java.lang.String">
         SELECT A.APP_SEQ, APP_TITLE, APP_CONTENT,
-		GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') APP_CREATEDATE, APP_DRAFT
+		GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD') APP_CREATEDATE, APP_DRAFT
 		FROM APPROVAL a JOIN (SELECT APP_SEQ 
 					FROM (SELECT APP_SEQ ,JSON_VALUE(APP_PAYLINE, '$.writer') JT
 										FROM APPROVAL)
@@ -21,7 +21,7 @@
 	<select id="selectReferApproval" resultType="ApprovalVo" parameterType="java.lang.String">  
 	 
 	  SELECT A.APP_SEQ, APP_TITLE, APP_CONTENT,
-		GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') APP_CREATEDATE, APP_DRAFT
+		GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD') APP_CREATEDATE, APP_DRAFT
 			FROM APPROVAL a ,(
 			SELECT APP_SEQ
 				FROM APPROVAL a ,JSON_TABLE(A.APP_PAYLINE, '$.reference[*]'
@@ -34,7 +34,7 @@
 									FROM USERINFO u 
 									WHERE USER_ID = #{user_id} )) !=0) JS
 			WHERE A.APP_SEQ = JS.APP_SEQ
-			AND (A.APP_DRAFT IN ('결재완료', '결재대기'))
+			AND (A.APP_DRAFT IN ('결재완료'))
 			ORDER BY A.APP_CREATEDATE DESC
 	</select>
 	
@@ -42,7 +42,7 @@
 	<!-- 나의 결재승인을 받아야하는 결재 리스트조회 (세션에서 사원번호 사용) -->
 	<select id="getMyPaycheck" resultType="ApprovalVo" parameterType="java.lang.String">
 		SELECT A.APP_SEQ, A.APP_TITLE, A.APP_CONTENT,
-		    A.GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') AS APP_CREATEDATE, A.APP_DRAFT
+		    A.GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
 		FROM 
 		    APPROVAL A
 		JOIN 
@@ -70,7 +70,7 @@
 	<!-- 나의 결재승인을 받아야하는 결재 아직 미처리한 리스트조회 (세션에서 사원번호 사용) -->
 	<select id="getMyUnprocessedPaycheck" resultType="ApprovalVo" parameterType="java.lang.String">
 		SELECT A.APP_SEQ, A.APP_TITLE, A.APP_CONTENT,
-		    A.GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') AS APP_CREATEDATE, A.APP_DRAFT
+		    A.GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
 		FROM 
 		    APPROVAL A
 		JOIN 
@@ -119,7 +119,7 @@
 
 	<select id="conditionSearchApproval" resultType="ApprovalVo" parameterType="java.util.Map">
     SELECT APP_SEQ, APP_TITLE, APP_CONTENT,
-           GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') AS APP_CREATEDATE, APP_DRAFT
+           GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, APP_DRAFT
 	    FROM APPROVAL
 	   	 WHERE 1=1
 	    <if test="title!=null">
@@ -142,14 +142,20 @@
 	
 	
 	<select id="getTempApproval" parameterType="java.lang.String" resultType="ApprovalVo">
-		SELECT a.APP_SEQ, APP_TITLE, APP_CONTENT,
-           		GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') AS APP_CREATEDATE, APP_DRAFT
+	
+		SELECT p.APP_SEQ, p.APP_TITLE, p.APP_CONTENT,
+	       g.GIAN_NAME "GIAN_SEQ", APP_CREATEDATE
+		FROM (SELECT a.APP_SEQ, APP_TITLE, APP_CONTENT,
+	       GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, APP_DRAFT
 		FROM APPROVAL a JOIN (SELECT APP_SEQ
 								FROM (SELECT APP_SEQ ,JSON_VALUE(APP_PAYLINE, '$.writer') JT
 											FROM APPROVAL)
-								WHERE JT = #{user_id} ) JS
+								WHERE JT = #{user_id}) JS
 		ON (A.APP_SEQ = JS.APP_SEQ)
-		AND A.APP_DRAFT = '임시저장'
+		AND A.APP_DRAFT = '임시저장') p ,GIAN g
+		WHERE P.GIAN_SEQ = g.GIAN_SEQ
+	
+	
 	</select>
 	
 	
