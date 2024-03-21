@@ -16,7 +16,8 @@
 				<div class="card">
 					<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 						<a href="./myPayList.do" style="color: black; display: inline-block; text-align: center;">
-							<img src="./images/requestPayImg.png" alt="requestPay" style="width: 80%; ">
+							<img src="./images/requestPayImg.png" alt="requestPay" style="width: 70%; ">
+							<hr/>
 							<h2 style="white-space: nowrap;">내 요청 결재</h2>
 						</a>
 					</div>
@@ -28,7 +29,8 @@
 				<div class="card">
 					<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 						<a href="./myTempPayList.do" style="color: black; display: inline-block; text-align: center;">
-							<img src="./images/tempPayImg.png" alt="tempPay" style="width: 80%;">
+							<img src="./images/tempPayImg.png" alt="tempPay" style="width: 70%;">
+							<hr/>
 							<h2 style="white-space: nowrap;">임시저장 결재</h2>
 						</a>
 					</div>
@@ -39,7 +41,8 @@
 				<div class="card">
 					<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 						<a href="./myAcceptPayList.do" style="color: black; display: inline-block; text-align: center;">
-							<img src="./images/stampPayImg.png" alt="stampPay" style="width: 80%;">
+							<img src="./images/stampPayImg.png" alt="stampPay" style="width: 70%;">
+							<hr/>
 							<h2 style="white-space: nowrap;">내 승인대기 결재</h2>
 						</a>
 					</div>
@@ -50,7 +53,8 @@
 				<div class="card">
 					<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 						<a href="./myReferPayList.do" style="color: black; display: inline-block; text-align: center;">
-							<img src="./images/referPayImg.png" alt="referPay" style="width: 80%;">
+							<img src="./images/referPayImg.png" alt="referPay" style="width: 70%;">
+							<hr/>
 							<h2 style="white-space: nowrap;">참조된 결재</h2>
 						</a>
 					</div>
