@@ -17,5 +17,5 @@ public interface IMemoDao {
 	
 	public int myScheduleDelete(MemoVo vo); // 개인 메모 삭제
 	
-
+	public List<MemoVo> selectScheduleAll(Map<String, Object> map);
 }

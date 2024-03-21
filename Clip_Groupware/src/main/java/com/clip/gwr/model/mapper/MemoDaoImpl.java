@@ -49,5 +49,10 @@ public class MemoDaoImpl implements IMemoDao {
 		log.info("myScheduleDelete 메모 삭제" );
 		return sqlSession.delete(NS+"myScheduleDelete",vo);
 	}
-
+	
+	@Override
+	public List<MemoVo> selectScheduleAll(Map<String, Object> map) {
+		log.info("selectScheduleAll 테스트용 전사 개인 일정 조회" );
+		return sqlSession.selectList(NS+"selectScheduleAll",map);
+	}
 }

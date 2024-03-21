@@ -52,7 +52,7 @@ public class PositionsDaoImpl implements IPositionsDao {
 	@Override
 	public List<PositionsVo> positionsAll() {
 		log.info("##### 직책 전체 조회  positionsAll #####");
-		return sqlSession.selectList(NS+"positionsAll()");
+		return sqlSession.selectList(NS+"positionsAll");
 	}
 
 }

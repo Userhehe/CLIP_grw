@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+a {
+	color: black;
+}
+
+.paging {
+	display: flex;
+    justify-content: center;
+}
+
+.button {
+	width: 126px;
+	height: 36px;
+	box-sizing: border-box;
+	color: white;
+	border: none;
+	padding: 10px;
+	cursor: pointer;
+	float: right;
+	font-size: 13px;
+}
+
+.w15vh {
+	width: 15vh;
+}

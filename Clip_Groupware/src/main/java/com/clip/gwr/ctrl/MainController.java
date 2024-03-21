@@ -22,6 +22,8 @@ public class MainController {
 		return "main";
 	}
 	
+
+	
 	@GetMapping(value = "/empty.do")
 	public String empty() {
 		log.info("MainController empty 빈화면");
@@ -58,16 +60,17 @@ public class MainController {
 		return "access";
 	}
 	
+
 //	@GetMapping(value = "/department.do")
 //	public String department() {
 //		log.info("MainController department 화면");
 //		return "department";
 //	}
-	
+
 	
 	@GetMapping(value = "/userInfo.do")
 	public String userInfo() {
 		log.info("userInfo 이동");
 		return "userInfo";
 	}
-}
+

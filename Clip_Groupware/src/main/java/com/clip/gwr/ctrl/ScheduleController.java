@@ -43,16 +43,17 @@ public class ScheduleController {
 	public JSONArray date(HttpSession session) {
 		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
 		log.info("session에서 받은값 :" + id);
-		List<MemoVo> lists = memoservice.myScheduleAll(id.getUser_id());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", id.getUser_id());
+		map.put("fullDate", "2024-03");
+		List<MemoVo> lists = memoservice.selectScheduleAll(map);
 		System.out.println("MemoVo list : " +lists);
 		JSONArray memolist = new JSONArray();
 
 		for(MemoVo vo : lists) {
 			JSONObject obj = new JSONObject();
-			obj.put("prs_seq", vo.getPrs_seq());
+			obj.put("seq", vo.getPrs_seq());
 			obj.put("title",vo.getPrs_title());
-			obj.put("prs_content",vo.getPrs_content());
-			obj.put("prs_create",vo.getPrs_create());
 			obj.put("start",vo.getPrs_start());
 			obj.put("end",vo.getPrs_end());
 			memolist.add(obj);

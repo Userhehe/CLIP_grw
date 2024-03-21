@@ -21,4 +21,8 @@ public class ProjectsController {
 	public String projectClient() {
 		return "projectClient";
 	}
+	@GetMapping(value = "/projectDetail.do")
+	public String projectDetail() {
+		return "projectDetail";
+	}
 }

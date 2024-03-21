@@ -1,3 +1,5 @@
+
+<%@page import="com.clip.gwr.vo.UserinfoVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -38,6 +40,10 @@
 </head>
 
 <body>
+<%
+UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
+%>
+
 <!-- ======= START HEADER ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
 		<nav class="header-nav ms-auto">
@@ -64,11 +70,11 @@
 				<li class="nav-item dropdown pe-3">
 				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img
 						src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-						<span class="d-none d-md-block dropdown-toggle ps-2">신정원 과장</span>
+						<span class="d-none d-md-block dropdown-toggle ps-2">${loginVo.user_name} ${loginVo.ranks_name}</span>
 				</a>
 					<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 						<li class="dropdown-header">
-							<h6>신정원 과장</h6> <span>디자인팀(팀장)</span>
+							<h6>${loginVo.user_name}</h6> <span> ${loginVo.dept_name}팀 (${loginVo.ranks_name})</span>
 						</li>
 						<li><hr class="dropdown-divider"></li>
 						<li><a class="dropdown-item d-flex align-items-center" href="users-profile.html">
@@ -107,7 +113,7 @@
 				</a>
 					<ul id="humanresource-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 						<li><a href="./userInfo.do"><i class="bi bi-circle"></i><span>인사 정보</span></a></li>
-						<li><a href="./dailyCheck.do"><i class="bi bi-circle"></i><span>근태관리</span></a></li>
+						<li><a href="./selectDailyCheckList.do"><i class="bi bi-circle"></i><span>근태관리</span></a></li>
 						<li><a href="./annual.do"><i class="bi bi-circle"></i><span>연차관리</span></a></li>
 						<li><a href="./organization.do"><i class="bi bi-circle"></i><span>조직도</span></a></li>
 						<li><a href="./empty.do"><i class="bi bi-circle"></i><span>직급관리</span></a></li>
@@ -126,7 +132,9 @@
 				<ul id="ework-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 					<li><a href="./payRegister.do"> <i class="bi bi-circle"></i><span>결재신청</span></a></li>
 					<li><a href="./myPaySelect.do"> <i class="bi bi-circle"></i><span>결재조회</span></a></li>
-					<li><a href="./paytemplate.do"> <i class="bi bi-circle"></i><span>결재양식서 관리</span></a></li>
+					<c:if test="${loginVo.user_auth == 'ROLE_ADMIN'}">
+						<li><a href="./paytemplate.do"> <i class="bi bi-circle"></i><span>결재양식서 관리</span></a></li>					
+					</c:if>
 				</ul>
 			</li>
 <!-- ======= END ework-nav ======= -->
