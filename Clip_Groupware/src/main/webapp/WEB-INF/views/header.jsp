@@ -69,11 +69,11 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 				<li class="nav-item dropdown pe-3">
 				<a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img
 						src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-						<span class="d-none d-md-block dropdown-toggle ps-2">신정원 과장</span>
+						<span class="d-none d-md-block dropdown-toggle ps-2">${loginVo.user_name} ${loginVo.ranks_name}</span>
 				</a>
 					<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 						<li class="dropdown-header">
-							<h6>신정원 과장</h6> <span>디자인팀(팀장)</span>
+							<h6>${loginVo.user_name}</h6> <span> ${loginVo.dept_name}팀 (${loginVo.ranks_name})</span>
 						</li>
 						<li><hr class="dropdown-divider"></li>
 						<li><a class="dropdown-item d-flex align-items-center" href="users-profile.html">
