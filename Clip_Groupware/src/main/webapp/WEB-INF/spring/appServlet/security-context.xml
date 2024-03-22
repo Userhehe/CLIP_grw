@@ -29,7 +29,7 @@
 	<!-- url 더블슬레시 허용 -->
 	<!-- <bean id="defaultHttpFirewall" class="org.springframework.security.web.firewall.DefaultHttpFirewall"/>
 	<security:http-firewall ref="defaultHttpFirewall"/> -->
-<bean id="httpFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall">
+	<bean id="httpFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall">
 	<property name="allowUrlEncodedDoubleSlash" value="true"/>
 </bean>
 <security:http-firewall ref="httpFirewall" />
