@@ -22,29 +22,32 @@
 	src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
 <script type="text/javascript" src="./js/calendar.js"></script>
 <style type="text/css">
-.row {
-	flex-wrap: nowrap;
-}
-	.memo_event {
-        background-color: blue;
+	.row {
+		flex-wrap: nowrap;
+	}
+	
+	/* 일정별 색상 */
+	.memo_event > *{
+     	background-color: #39CEFA;
     }
-    .memo_event > div > div > div > div{
-    	color: white;
+	.nct_event > *{
+     	background-color: orange;
     }
-    .memo_event > div{
-    	color: white;
+    .fc-event-title{
+    	color : white;
     }
     
-    .nct_event {
-        background-color: yellow;
-        color: black;
-    }
-    .nct_event > div > div > div > div{
-    	color: black;
-    }
-    .nct_event > div{
-    	color: black;
-    }
+	/* 요일별 날짜 색상 */
+	.fc-day-sun a {
+	  color: red;
+	}
+	.fc-day-sat a {
+	  color: blue;
+	}
+	.fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
+	  color: black;
+	}
+
 </style>
 </head>
 <body>
@@ -63,17 +66,17 @@
 						<form action="./addmemo.do" method="post" id="memoform">
 							<div class="form-group">
 								<label for="title" class="col-form-label">일정 제목</label> 
-								<input type="text" class="form-control" id="title" name="title">
+								<input type="text" class="form-control" id="title">
 							</div>
 							<label for="content" class="col-form-label">일정 내용</label>
-							<textarea class="form-control" rows="5" id="content" name="content"></textarea>
+							<textarea class="form-control" rows="5" id="content"></textarea>
 							<label for="start" class="col-form-label">시작 날짜</label>
 							<div class="input-group">
-								<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="start" name="start">
+								<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="start">
 							</div>
 							<label for="end" class="col-form-label">종료 날짜</label>
 							<div class="input-group">
-								<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="end" name="end">
+								<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="end">
 							</div>
 						</form>
 					</div>
@@ -180,19 +183,22 @@
 						<form>
 							<table>
 								<tr>
-									<td><input type="checkbox"> 전체일정</td>
+									<td><input type="checkbox" id="showAllEvent" checked> 전체일정</td>
 								</tr>
 								<tr>
 									<td><input type="checkbox" id="showPrs" checked> 개인일정</td>
 								</tr>
 								<tr>
-									<td><input type="checkbox"> 전사일정</td>
+									<td><input type="checkbox" id="showNct" checked> 전사일정</td>
 								</tr>
 								<tr>
 									<td><input type="checkbox"> 휴가일정</td>
 								</tr>
 								<tr>
 									<td><input type="checkbox"> 회의실 예약</td>
+								</tr>
+								<tr style="display: none">
+									<td><input type="text" id="user_auth" value="${loginVo.user_auth}"></td>
 								</tr>
 							</table>
 						</form>
