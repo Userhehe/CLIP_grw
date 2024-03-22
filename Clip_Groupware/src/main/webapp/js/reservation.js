@@ -224,6 +224,13 @@ function reservationTime(){
 	$("#nawarayo").hide();
 }
 
+function redetail(){
+	$("#redetail").on("click",function(){
+		console.log("되니....?")
+		
+	})
+}
+
 function reservationModal(){
 	console.log("모달나온나");
 	$("#reservationModal").modal("show");

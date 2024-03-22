@@ -52,6 +52,9 @@ public class DailyCheckController {
 		    model.addAttribute("positionsList", positionsList);
 	        model.addAttribute("deptList", deptList);
 	        model.addAttribute("ranksList", ranksList);
+	        log.info("$$$$$$$$$$$$$$$$$$"+ranksList);
+	        log.info("$$$$$$$$$$$$$$$$$$"+positionsList);
+	        log.info("$$$$$$$$$$$$$$$$$$"+deptList);
 	        return "dailyCheck";
 	 }
 }

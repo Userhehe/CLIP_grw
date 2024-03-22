@@ -138,48 +138,51 @@ $(document).ready(function() {
 });
 //화면 로드시 걸어주는 이벤트들 끝 ------------------------------------------------
 
-	 
+    
 
 
 // 모달 닫기 설정----------------------------
 function modalclose(){
+
+
 	$("#calendarModal").modal("hide");
 	$("#memodetail").modal("hide");
 	
-}
+
 // 모달 닫기 설정 끝----------------------------
 
 // 상세 모달 설정----------------------------
 function memodetail(seq){ //seq가져와 내용 상세조회 하기
-	console.log(seq)
-	$.ajax({
-		type:"post",
-		url:"./memodetail.do",
-		dataType:"json",
-		data:{seq:seq},
-		
-		success: function(data){
-			console.log( "썩세스", data.prs_seq);
-			$("#memodetail").modal("show");
-			$("#dttitle").text(data.prs_title);
-			$("#dtcontent").text(data.prs_content);
-			$("#dtstart").text(data.prs_start);
-			$("#dtend").text(data.prs_end);
-		},
-		error: function() {
-			alert("서버요청 실패했음....");
-		},
-	});
+   console.log(seq)
+   $.ajax({
+      type:"post",
+      url:"./memodetail.do",
+      dataType:"json",
+      data:{seq:seq},
+      
+      success: function(data){
+         console.log( "썩세스", data.prs_seq);
+         $("#memodetail").modal("show");
+         $("#dttitle").text(data.prs_title);
+         $("#dtcontent").text(data.prs_content);
+         $("#dtstart").text(data.prs_start);
+         $("#dtend").text(data.prs_end);
+      },
+      error: function() {
+         alert("서버요청 실패했음....");
+      },
+   });
 }
 // 상세 모달 설정 끝----------------------------
 
 // 수정 모달 설정----------------------------
 function memoModify(seq){
-	$("#calendarModalUpdate").modal("show");
+   $("#calendarModalUpdate").modal("show");
 }
 // 수정 모달 설정 끝----------------------------
 
 // 등록 모달 설정 ----------------------------
+
 function calendarModal(day){
 	$("#calendarModal").modal("show");
 	$("#start").val(day)
@@ -220,7 +223,7 @@ function calendarModal(day){
 //		})
 //		}
 //	})
+
 }
 }
 // 등록 모달 설정 끝----------------------------
-
