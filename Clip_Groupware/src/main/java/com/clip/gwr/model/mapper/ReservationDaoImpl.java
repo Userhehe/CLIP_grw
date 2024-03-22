@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.clip.gwr.interceptor.LoginCheckInterceptor;
 import com.clip.gwr.vo.MeeTingRoomVo;
 import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
@@ -51,4 +52,30 @@ public class ReservationDaoImpl implements IReservationDao{
 		log.info("##### 참석자 선택을 위한 jsTree selectAttendsJstree #####");
 		return sqlSession.selectList(NS+"selectAttendsJstree");
 	}
+
+	@Override
+	public int reModifyRev(int re_seq) {
+		log.info("##### 예약내용 수정 reModifyRev");
+		return sqlSession.update(NS+"reModify", re_seq);
+	}
+	
+	@Override
+	public int reModifyAtt(String user_id) {
+		log.info("##### 참석자 삭제 reModifyAtt");
+		return sqlSession.delete(NS+"reModifyAtt", user_id );
+	}
+
+	@Override
+	public int reDel(int re_seq) {
+		log.info("##### 예약내용 삭제 reDetail");
+		return sqlSession.update(NS+"reDel",re_seq);
+	}
+
+	@Override
+	public ReservationVo reDetail(int re_seq) {
+		log.info("##### 상세조회한다 reDetail");
+		return sqlSession.selectOne(NS+"reDetail", re_seq);
+	}
+
+	
 }

@@ -23,4 +23,16 @@ public interface IReservationDao {
 	
 	//참석자 선택 jstree
 	public List<UserinfoVo> selectAttendsJstree();
+	
+	//예약 상세조회
+	public ReservationVo reDetail(int re_seq);
+	
+	//예약내용 수정하기
+	public int reModifyRev(int re_seq);
+	
+	//참석자 수정하기
+	public int reModifyAtt(String user_id);
+	
+	//예약 취소하기
+	public int reDel(int re_seq);
 }
