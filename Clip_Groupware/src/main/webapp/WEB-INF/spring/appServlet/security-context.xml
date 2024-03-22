@@ -33,9 +33,11 @@
 	<!-- <bean id="defaultHttpFirewall" class="org.springframework.security.web.firewall.DefaultHttpFirewall"/>
 	<security:http-firewall ref="defaultHttpFirewall"/> -->
 	<bean id="httpFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall">
+
 		<property name="allowUrlEncodedDoubleSlash" value="true"/>
 	</bean>
 	<security:http-firewall ref="httpFirewall" />
+
     
     <security:http auto-config="true" use-expressions="true">
     	<!-- 로그인 계정 하나로 사용 -->

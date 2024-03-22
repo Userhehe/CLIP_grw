@@ -23,7 +23,6 @@
 						name="gian_search">
 						<option value="">구분</option>
 						<option value="gian_name">기안서명</option>
-						<option value="gian_modifier">작성자</option>
 					</select> <input style="width: 250px; display: unset;" id="gian_name"
 						class="form-control" type="text" placeholder="검색어를 입력해주세요.">
 					<button class="btn btn-primary rounded-pill" id="templateSearch">검색</button>
@@ -33,8 +32,6 @@
 					<table class="table table-hover" style="margin-top: 10px;">
 						<thead>
 							<tr>
-								<th><input type="checkbox" class="allCheckBox" id="chCheck"
-									onclick="checkAll(this.checked)"></th>
 								<th>기안서코드</th>
 								<th>기안서명</th>
 								<th>등록일</th>
@@ -45,8 +42,6 @@
 								<c:when test="${not empty lists2}">
 									<c:forEach var="vo" items="${lists2}" varStatus="vs">
 										<tr>
-											<td><input type="checkbox" name="ch" class="ch"
-												value="${lists.gian_seq}"></td>
 											<td>${lists.gian_seq}</td>
 											<td><a href="./gianDetail.do?gian_seq=${vo.gian_seq}">${vo.gian_name}</a></td>
 											<td><fmt:parseDate var="patternDate"
@@ -58,8 +53,6 @@
 								<c:otherwise>
 									<c:forEach var="vo" items="${lists}" varStatus="vs">
 										<tr>
-											<td><input type="checkbox" name="ch" class="ch"
-												value="${vo.gian_seq}"></td>
 											<td>${vo.gian_seq}</td>
 											<td><a href="./gianDetail.do?gian_seq=${vo.gian_seq}">${vo.gian_name}</a></td>
 											<td><fmt:parseDate var="patternDate"
@@ -75,7 +68,6 @@
 			</div>
 			<a href="./gianInsert.do"><button
 					class="btn btn-primary rounded-pill">양식추가</button></a>
-			<button class="btn btn-danger rounded-pill" onclick="templateDel()">양식삭제</button>
 		</section>
 	</main>
 	<script type="text/javascript">

@@ -24,7 +24,8 @@
 				기안서 내용 :<textarea name="gian_html" id="smartEditor" style="width: 100%; height: 412px;">${vo.gian_html}</textarea>	
 			<div style="margin-top:40px;">
 				<a href="./gianModify.do?gian_seq=${vo.gian_seq}"><button class="btn btn-primary rounded-pill">양식수정</button></a>
-				<a href="./paytemplate.do"><button class="btn btn-danger rounded-pill">목록으로</button></a>
+				<a href="./templateDelete.do?gian_seq=${vo.gian_seq}"><button class="btn btn-danger rounded-pill">양식삭제</button></a>
+				<a href="./paytemplate.do"><button class="btn btn-primary rounded-pill">목록으로</button></a>
 			</div>
 		</section>
 	</main>

@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IApprovalService;
 import com.clip.gwr.vo.ApprovalVo;
@@ -32,7 +35,14 @@ public class PayBoardController {
 		model.addAttribute("lists",lists);
 		return "myPayList";
 	}
-	
+	//나의 요청결재 리스트에서 상세페이지로 이동.
+	@PostMapping(value="/myPayList.do")
+	@ResponseBody
+	public ApprovalVo selectMyPayList(@RequestParam("app_seq") String app_seq) {
+		log.info("myPayList selectMyPayList 결재내역 상세보기 : {}",app_seq);
+		ApprovalVo vo =service.getOneApproval(app_seq);
+		return vo;
+	}
 	
 	//임시저장 결재 파일 리스트 창 이동
 	@GetMapping(value = "/myTempPayList.do")

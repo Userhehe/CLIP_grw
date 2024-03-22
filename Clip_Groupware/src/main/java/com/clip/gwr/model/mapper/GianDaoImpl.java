@@ -41,7 +41,7 @@ public class GianDaoImpl implements IGianDao {
 
 	@Override
 	public int templateDelete(String gian_seq) {
-	    return sqlSession.delete(NS+"templateDelete"); 
+	    return sqlSession.delete(NS+"templateDelete",gian_seq); 
 	}
 
 	@Override

@@ -6,6 +6,12 @@
 <meta charset="UTF-8">
 <title>결재 신청</title>
 <%@ include file="./header.jsp"%>
+<style type="text/css">
+.form-control,.form-select{
+	width:15%;
+	display: inline;
+}
+</style>
 <script type="text/javascript" src="./js/payTemplateSelect.js"></script>
 
 <!-- SmartEditor2 라이브러리  -->
@@ -21,11 +27,9 @@
 <link rel="stylesheet" href="./css/jstree.css" />
 </head>
 <body>
-
 	<main id="main" class="main">
 		<section class="section dashboard">
 			<h5 class="card-title">${user_name}님 결재신청하실 기안서를 선택해주세요.</h5>
-
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item" role="presentation">
 					<button class="nav-link active" id="home-tab" data-bs-toggle="tab"
@@ -48,33 +52,36 @@
 				<div class="tab-pane fade show active" id="home" role="tabpanel"
 					aria-labelledby="home-tab">
 					<!--  연차신청서탭 시작 -->
-					<div class="container">
-						<br>
-						<br>
-						<form id="insertForm" action="./myPayInsert.do" method="post">
-							<!-- 결재라인 구역 -->
-							<div>
-								<label for="payLine">결재라인</label>
-
-							</div>
+					<div class="container" >
+					<form id="insertForm" action="./myPayInsert.do" method="post">
 					</div>
-					<!-- 결재라인 끝 -->
-					<div class="form-group">
-						<label for="startDate">시작 날짜</label> <input type="date"
-							class="form-control" id="startDate" name="startDate">
+					<div class="form-group" style="margin-top:20px;">
+					    <label for="vaSel">연차 종류</label> 
+					    <select class="form-select" aria-label="Default select example" id="vaSel" style="width:37%;" onchange="half(this.value)">
+					        <option value="">--사용하실 연차종류를 선택하세요.--</option>
+					        <option value="day">연차</option>
+					        <option value="halfDay">반차</option>
+					        <option value="gongGa">병가/공가</option>
+					        <option value="halfHalfDay">반반차</option>                          
+					    </select>
 					</div>
-					<div class="form-group">
-						<label for="endDate">종료 날짜</label> <input type="date"
-							class="form-control" id="endDate" name="endDate">
+					<div class="form-group" style="margin-top:10px;">
+					    <label for="startDate">기간</label> 
+					    <input type="date" style="margin-left: 30px;" class="form-control" id="startDate" name="startDate">
+					    <input type="time" class="form-control" id="startTime" style="display: none;">
+					    ~
+					    <input type="date" class="form-control" id="endDate" name="endDate">
+					    <input type="time" class="form-control" id="endTime" style="display: none;">
+					    <button type="submit" class="btn btn-primary rounded-pill">결재라인 지정</button>
 					</div>
-					<div class="form-group">
+					<div class="form-group" style="margin-top:10px;">
 						<label for="reason">신청 내용</label>
 						<textarea name="gian_html" id="smartEditor1"
 							style="width: 100%; height: 600px;">${vo1.gian_html}</textarea>
 						<br> <br> <br>
 					</div>
 					<div style="text-align: center;">
-						<button type="submit" class="btn btn-primary rounded-pill">결재요청</button>
+						<button type="submit" class="btn btn-primary rounded-pill">미리보기/결재요청</button>
 						<button type="submit" id="tempSave"
 							class="btn btn-secondary rounded-pill">임시저장</button>
 					</div>
@@ -145,8 +152,7 @@
 						</div>
 						<div style="text-align: center;">
 							<button type="submit" class="btn btn-primary rounded-pill">결재요청</button>
-							<button type="submit" id="tempSave"
-								class="btn btn-secondary rounded-pill">임시저장</button>
+							<button type="submit" id="tempSave" class="btn btn-secondary rounded-pill">임시저장</button>
 						</div>
 					</form>
 				</div>

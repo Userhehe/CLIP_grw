@@ -27,9 +27,9 @@
 						<option value="기타">기타(ETC)</option>
 					</select><br>
 				등록하실 기안서의 이름을 입력해주세요.
-				<input type="text" name="gian_name" id="gian_name" class="form-control"><br>
+				<input type="text" name="gian_name" id="gian_name"s class="form-control"><br>
 				작성자
-				<input type="text" name="gian_modifier" class="form-control" readonly="readonly" value="서종우"><br>
+				<input type="text" name="gian_modifier" class="form-control" readonly="readonly" value="${user_name}(${dept_name}팀)"><br>
 				등록하실 기안서의 내용을 입력해주세요.
 				<!-- SmartEditor2 구역 -->
 				<div class="jsx-2303464893 editor" name="gian_html">

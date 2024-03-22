@@ -39,12 +39,20 @@ h6 {
   margin-top: 60px;
   padding: 20px 30px;
   transition: all 0.3s;
+  background-color: f2f2f2;
+  height: 900px;
 }
 
 @media (max-width: 1199px) {
   #main {
     padding: 20px;
   }
+}
+@font-face {
+    font-family: 'MICEGothic Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
 }
 
 /*--------------------------------------------------------------
