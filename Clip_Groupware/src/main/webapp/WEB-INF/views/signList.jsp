@@ -44,6 +44,8 @@
 	</div>
 	<div>
 		<button class="btn btn-info" type="button" onclick="location.href='./insertPad.do'">서명생성</button>
+		<button class="btn btn-danger" type="button" onclick="location.href='./delPad.do'">서명삭제</button>
+		
  	</div>	 
  </div> 
 
