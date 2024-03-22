@@ -4,37 +4,33 @@
 	
 	<!-- 나의 예약 정보 전체 조회 -->
 	<select id="myReservationAll" parameterType="java.lang.String" resultType="ReservationVo">
-		SELECT DISTINCT RE_SEQ, USER_ID, RE_TITLE, 
-		               RE_CONTENT, RE_START, RE_END, 
-		               RE_CREATE, RE_DELFLAG, ME_ROOM, RE_ATTEND 
-		FROM RESERVATION
-		WHERE RE_DELFLAG = 'N'
-		  AND (
-		      RE_START BETWEEN TO_DATE('2024-03-01', 'YYYY-MM-DD') AND TO_DATE('2024-03-29', 'YYYY-MM-DD')
-		      OR RE_END BETWEEN TO_DATE('2024-03-01', 'YYYY-MM-DD') AND TO_DATE('2024-03-31', 'YYYY-MM-DD')
-		  )
-		  AND (
-		      EXISTS (
-		          SELECT 1
-		          FROM JSON_TABLE(
-		              RE_ATTEND,
-		              '$.Attend[*]'
-		              COLUMNS(ATDNS VARCHAR2(2000) PATH '$.attend')
-		          ) jt
-		          WHERE jt.ATDNS = #{user_id}
-		      )
-		      OR USER_ID = #{user_id}
-		  )
+		SELECT RE_SEQ , USER_ID ,RE_TITLE, RE_CONTENT , RE_START , RE_END , RE_CREATE, ME_ROOM
+		FROM RESERVATION r
+		WHERE  RE_DELFLAG = 'N' AND (
+								      RE_START BETWEEN TO_DATE('2024-03-01', 'YYYY-MM-DD') AND TO_DATE('2024-03-29', 'YYYY-MM-DD')
+								      OR RE_END BETWEEN TO_DATE('2024-03-01', 'YYYY-MM-DD') AND TO_DATE('2024-03-31', 'YYYY-MM-DD')
+								   ) AND USER_ID = #{user_id}
+		ORDER BY RE_SEQ
+ 	</select>
+ 	
+ 	<!-- 내가 참석한 회의 정보 조회 -->
+ 	<select id="myAttReservationAll" parameterType="java.lang.String" resultType="ReservationVo">
+ 		SELECT r.RE_SEQ, r.USER_ID, r.RE_CONTENT, r.RE_START, r.RE_END, r.RE_CREATE, r.ME_ROOM
+			FROM RESERVATION r
+			JOIN ATTENDS a ON r.RE_SEQ = a.RE_SEQ
+			WHERE a.USER_ID = #{user_id}
  	</select>
  	
  	<!-- 예약 등록 -->
  	<insert id="myReservationInsert" parameterType="java.util.Map">
-    INSERT INTO RESERVATION(RE_SEQ, USER_ID, RE_TITLE, 
-                        	RE_CONTENT, RE_START, RE_END, 
-                        	RE_CREATE, ME_ROOM, RE_ATTEND)
-		VALUES('RESERVATION_' || TO_CHAR(RESERVATION_SEQ.NEXTVAL, 'FM000'), #{user_id}, #{re_title}, 
-        		#{re_content}, TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI'),TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI') + INTERVAL '1' HOUR, 
-        		TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI'), #{me_room}, #{re_attend})
+	    INSERT INTO RESERVATION(RE_SEQ, USER_ID, RE_TITLE, 
+	                        	RE_CONTENT, RE_START, RE_END, 
+	                        	RE_CREATE, ME_ROOM)
+			VALUES(RESERVATION_SEQ.NEXTVAL, #{user_id}, #{re_title},
+					#{re_content},
+	        		TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI'),
+	        		TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI') + INTERVAL '1' HOUR, 
+	        		TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI'), 3)
 	</insert>
 	
 	<!-- 회의실 리스트 -->
@@ -64,25 +60,31 @@
 	</select>
 	
 	<!-- 예약 상세조회 -->
-	<select id="reDetail" parameterType="java.lang.String" resultType="ReservationVo">
-		SELECT RE_SEQ, USER_ID , RE_TITLE , RE_CONTENT , RE_START , RE_END , RE_CREATE , RE_DELFLAG, ME_ROOM  , RE_ATTEND 
-        FROM RESERVATION  
-        WHERE RE_SEQ= #{re_seq}
-        	AND RE_DELFLAG = 'N'
+	<select id="reDetail" parameterType="java.lang.Integer" resultType="ReservationVo">
+		SELECT RE_SEQ ,USER_ID , RE_TITLE , RE_CONTENT , RE_START , RE_END, RE_CREATE ,RE_DELFLAG ,ME_ROOM 
+		   	FROM RESERVATION
+		   	WHERE RE_SEQ = #{re_seq}
+		   	AND RE_DELFLAG ='N'
 	</select>
 	
-	<!-- 예약 내용 수정하기 -->
-	<update id="reModify">
+	<!-- 예약테이블 내용 수정하기 -->
+	<update id="reModifyRev">
 		UPDATE RESERVATION
-			SET RE_TITLE='수정한예약인데', RE_CONTENT='집에갈랭', RE_START=TO_DATE('2024-02-01T16:00:00', 'YYYY-MM-DD"T"HH24:MI:SS'), RE_END=TO_DATE('2024-02-01T17:00:00', 'YYYY-MM-DD"T"HH24:MI:SS'), RE_CREATE=SYSDATE, ME_ROOM=2, RE_ATTEND='json형태로 하기'
+			SET RE_TITLE=#{re_title}, RE_CONTENT=#{re_content}, RE_START = TO_DATE({re_start}, 'YYYY-MM-DD"T"HH24:MI:SS'), RE_END = TO_DATE({re_start}, 'YYYY-MM-DD"T"HH24:MI:SS')+ INTERVAL '1' HOUR, RE_CREATE = SYSDATE, ME_ROOM=#{me_room}
 			WHERE RE_SEQ=#{re_seq}
 	</update>
+	
+	<!-- 참석자 명단 수정하기 -->
+	<delete id="reModifyAtt">
+	DELETE FROM ATTENDS a 
+  		WHERE USER_ID = #{user_id}
+	</delete>
 	
 	<!-- 예약 취소하기 -->
 	<update id="reDel">
 		UPDATE RESERVATION
 			SET RE_DELFLAG='Y' 
-			WHERE RE_SEQ=#{re_seq}
+			WHERE RE_SEQ = #{re_seq}
 	</update>
 	
 	

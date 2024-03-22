@@ -39,8 +39,12 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 </style>
 </head>
 <body>
-<!-- rededail 모달 -->
-<div class="modal fade" id="rededail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- 값을 받기위한 hidden -->
+<input type="text" id="user_auth" value="${vo.re_title}" style="display: none">
+
+
+<!-- redetail 모달 -->
+<div class="modal fade" id="redetailmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">       
             <div class="modal-content">
                 <div class="modal-header">
@@ -91,6 +95,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 	<main id="main" class="main">
 		<section class="section dashboard">
 		
+		<!-- 상단 탭구분 -->
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">나의 회의실 예약 현황</button>
@@ -101,6 +106,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
         </ul>
 		
 			<div class="tab-content pt-2" id="myTabContent">
+				<!-- 예약한 회의실 현황 리스트 -->	
 	            <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 	            <div class="row">
 					<div style="margin-left: 560px;">
@@ -127,7 +133,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 										<td>${vo.re_seq}</td>
 										<td>${vo.me_room}</td>
 										<td>
-											<a href="./reDetail.do">${vo.re_title}</a>
+											<a id="redetail" href="./reDetail.do?seq=${vo.re_seq}">${vo.re_title}</a>
 										</td>
 										<td>${vo.re_create}</td>
 									</tr>
@@ -137,7 +143,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 				</div>
 				</div>
 				
-				<!-- 두번째 tab 내용 -->
+				<!-- 내가 참석자에 포함된 예약 리스트 -->
 				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 	            <div class="row">
 					<div style="margin-left: 560px;">
@@ -164,7 +170,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 										<td>${vo.re_seq}</td>
 										<td>${vo.me_room}</td>
 										<td>
-											<a href="./reDetail.do">${vo.re_title}</a>
+											<a>${vo.re_title}</a>
 										</td>
 										<td>${vo.re_create}</td>
 									</tr>
