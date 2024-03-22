@@ -49,18 +49,22 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
 	
+//	@GetMapping(value = "/loginForm.do") 
+//	public String loginForm(String error, String logout, Model model) {
+//		log.info("error : {} ", error);
+//		log.info("logout : {} ", logout);
+//		
+//		if(error != null) {
+//			model.addAttribute("error", "없는 계정입니다.");
+//		}
+//		
+//		if(logout != null) {
+//			model.addAttribute("logout", "로그아웃 되었습니다.");
+//		}
+//		return "loginForm";
+//	}
 	@GetMapping(value = "/loginForm.do") 
-	public String loginForm(String error, String logout, Model model) {
-		log.info("error : {} ", error);
-		log.info("logout : {} ", logout);
-		
-		if(error != null) {
-			model.addAttribute("error", "없는 계정입니다.");
-		}
-		
-		if(logout != null) {
-			model.addAttribute("logout", "로그아웃 되었습니다.");
-		}
+	public String loginForm(Model model) {
 		return "loginForm";
 	}
 	
@@ -142,4 +146,28 @@ public class UserController {
 		return "userInfo";
 	}
 	
+	@GetMapping(value = "/user/main.do")
+	public String userMain() {
+		log.info("#####user/main!!");
+		return "user/main";
+	}
+	
+	@GetMapping(value = "/admin/main.do")
+	public String adminMain() {
+		log.info("#####admin/main!!");
+		return "admin/main";
+	}
+	
+	@GetMapping(value = "/user/signUp.do")
+	public String userSignUp(Model model) {
+		log.info("회원가입 이동");
+		List<DeptVo> deptLists = deptService.deptAll();
+		List<PositionsVo> positionsLists = positService.positionsAll();
+		List<RanksVo> ranksLists = ranksService.ranksAll();
+		
+		model.addAttribute("deptLists", deptLists);
+		model.addAttribute("positionsLists", positionsLists);
+		model.addAttribute("ranksLists", ranksLists);
+		return "/user/signUp";
+	}
 }

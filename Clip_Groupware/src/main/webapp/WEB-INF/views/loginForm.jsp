@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <!DOCTYPE html> 
 <html>
 <head>
@@ -9,17 +8,19 @@
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <!-- Template Main CSS File -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 <link href="./assets/css/loginForm.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
 <script type="text/javascript" src="./js/loginForm.js"></script>
+
 </head>
 <body>
 	<div class="container">
 		<img src="assets/img/loginlogo.png" class="additional-image" alt="loginlogo">
-		<!-- <form action="/Clip_Groupware/login" method="post"> -->
-		<!-- <form action="/Clip_Groupware/login.do" method="post"> -->
 		<!-- <form action="./login" method="post"> -->
 		<form action="./loginForms.do" method="post">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="input-field">
 				<input type="text" id="username" name="username" class="input-field" placeholder="아이디를 입력해주세요" required="required">
 			</div>
@@ -34,16 +35,27 @@
 			</div>
 			
 		</form>
+		<%-- <form action="./login" method="post">
+    		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		    <div class="input-field">
+				<input type="text" id="username" name="username" class="input-field" placeholder="아이디를 입력해주세요" required="required">
+			</div>
+			<div class="input-field">
+				<input type="password" id="password" name="password" class="input-field" placeholder="비밀번호를 입력해주세요" required="required">
+			</div>
+			<input type="submit" id="login_btn" class="button" value="Login"/>
+		</form> --%>
 		<div class="links">
 			<a href="#" onclick="openIdModal()">아이디 찾기</a>
-			<div id="idFindModal" class="modal fade">
+			<!-- <div id="idFindModal" class="modal fade">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<span class="close" onclick="closeIdModal()">&times;</span>
 						<p>아이디 찾기</p>
 					</div>
 				</div>
-			</div>
+			</div> -->
+            
 			|&nbsp;
 			<a href="/editPassword.do">비밀번호 재설정</a>
 		</div>
