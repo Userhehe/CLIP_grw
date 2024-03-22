@@ -98,9 +98,9 @@ public class ReservationJUnitTest {
 	}
 	@Test
 	public void testttt() {
-		List<ReservationVo> lists = service.myReservationAll("USER_051");
-		log.info("{}",lists);
-		assertNotNull(lists);
+		ReservationVo vo = service.reDetail(9);
+		log.info("반환된 값 : {}",vo);
+		assertNotNull(vo);
 	}
 
 }
