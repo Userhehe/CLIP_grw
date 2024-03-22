@@ -3,3 +3,9 @@ function modify(){
   
   
 }
+
+function half(value) {
+    const show = (value === "halfDay" || value ==="halfHalfDay"); 
+    document.getElementById("startTime").style.display = show ? "inline" : "none";
+    document.getElementById("endTime").style.display = show ? "inline" : "none";
+}
