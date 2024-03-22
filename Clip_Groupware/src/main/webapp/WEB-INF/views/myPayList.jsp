@@ -13,196 +13,117 @@
 </head>
 <body>
 	<main id="main" class="main">
-	
 	<div class="card">
 		<div class="card-body">
-<%-- 			<h4 class="card-title"><span style="color: skyblue;">${loginVo.user_name}</span> 의 요청 결재 리스트</h4> --%>
-<!-- 			<form action="post"> -->
-<!-- 				<div class="col-lg-12" > -->
-<!-- 					<div class="row mb-5"> -->
-<!-- 	                  <label class="col-sm-1 col-form-label badge rounded-pill bg-light text-dark" style="text-align: center; font-size: large;">제목</label> -->
-<!-- 	                  <div class="col-sm-4"> -->
-<!-- 	                    <input type="text" class="form-control"> -->
-<!-- 	                  </div> -->
-<!-- 	                  <button type="submit" style="color: white;" class="col-sm-1 btn btn-warning rounded-pill">검색</button> -->
-	                  
-<!-- 	                  <div class="col-sm-6"> -->
-<!-- 	                  	<div class="col-sm-3"> -->
-<!-- 		                    <select class="form-select" aria-label="Default select example"> -->
-<!-- 		                      <option selected="selected" >진행도별 조회</option> -->
-<!-- 		                      <option value="1">결재대기</option> -->
-<!-- 		                      <option value="2">임시저장</option> -->
-<!-- 		                      <option value="3">결재반려</option> -->
-<!-- 		                      <option value="4">결재완료</option> -->
-<!-- 		                    </select> -->
-<!-- 	                    </div> -->
-<!-- 	               	 </div> -->
-	                  
-<!--                   	</div> -->
-<!--                 </div> -->
-                
-                
-<!-- 			</form> -->
-<!-- 			<div class="card-body"> -->
-<!--               <h5 class="card-title">Default Table</h5> -->
-
-<!--               Default Table -->
-<!--               <table class="table"> -->
-<!--                 <thead> -->
-<!--                   <tr> -->
-<!--                     <th scope="col">Num</th> -->
-<!--                     <th scope="col">제목</th> -->
-<!--                     <th scope="col">기안서 양식</th> -->
-<!--                     <th scope="col">작성일자</th> -->
-<!--                     <th scope="col">진행현황</th> -->
-<!--                   </tr> -->
-<!--                 </thead> -->
-<!--                 <tbody> -->
-<!--                   <tr> -->
-<!--                     <th scope="row">1</th> -->
-<!--                     <td>Brandon Jacob</td> -->
-<!--                     <td>Designer</td> -->
-<!--                     <td>28</td> -->
-<!--                     <td>2016-05-25</td> -->
-<!--                   </tr> -->
-<!--                   <tr> -->
-<!--                     <th scope="row">2</th> -->
-<!--                     <td>Bridie Kessler</td> -->
-<!--                     <td>Developer</td> -->
-<!--                     <td>35</td> -->
-<!--                     <td>2014-12-05</td> -->
-<!--                   </tr> -->
-<!--                   <tr> -->
-<!--                     <th scope="row">3</th> -->
-<!--                     <td>Ashleigh Langosh</td> -->
-<!--                     <td>Finance</td> -->
-<!--                     <td>45</td> -->
-<!--                     <td>2011-08-12</td> -->
-<!--                   </tr> -->
-<!--                   <tr> -->
-<!--                     <th scope="row">4</th> -->
-<!--                     <td>Angus Grady</td> -->
-<!--                     <td>HR</td> -->
-<!--                     <td>34</td> -->
-<!--                     <td>2012-06-11</td> -->
-<!--                   </tr> -->
-<!--                   <tr> -->
-<!--                     <th scope="row">5</th> -->
-<!--                     <td>Raheem Lehner</td> -->
-<!--                     <td>Dynamic Division Officer</td> -->
-<!--                     <td>47</td> -->
-<!--                     <td>2011-04-19</td> -->
-<!--                   </tr> -->
-<!--                 </tbody> -->
-<!--               </table> -->
-<!--               End Default Table Example -->
-<!--             </div> -->
-			
-			
-			<div >
-				<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 의 요청 결재 리스트</h4>
-              <!-- Table with stripped rows -->
-              <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns col-sm-12"><div class="datatable-top">
-				    <div class="datatable-dropdown col-sm-6">
-				            <label>
-				                <select class="datatable-selector"><option value="5">5</option><option value="10" selected="">10</option><option value="15">15</option><option value="-1">All</option></select> entries per page
-				            </label>
-				        </div>
-				        
-				    <div class="col-sm-2">
-				    	  <button type="submit" style="color: white;" class="col-sm-6 btn btn-warning rounded-pill">검색</button>
-                    </div>
-				    	  
-				      <div class="datatable-search col-sm-2">
-				            <input class="datatable-input" placeholder="Search..." type="search" title="Search within table">
-				        </div>
-				    	  
-				    <div class="col-sm-2">	  
-				    	<div class="col-sm-10">	  
-		                    <select class="form-select " aria-label="Default select example">
+			<div>
+				<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님 요청 결재리스트</h4>
+				<div style="margin-left: 560px;">
+					<select  style="width: 35%; display: unset;" class="form-select " aria-label="Default select example">
 		                      <option selected="selected" >진행도별 조회</option>
 		                      <option value="1">결재대기</option>
 		                      <option value="2">임시저장</option>
 		                      <option value="3">결재반려</option>
 		                      <option value="4">결재완료</option>
-		                    </select>
-			            </div>        
-		            </div>        
-				        
-				  
+		             </select>
+					<input style="width: 200px; display: unset;" id="gian_name"class="form-control" type="text" placeholder="Search...">
+					<button class="btn btn-warning rounded-pill" id="templateSearch">검색</button>
 				</div>
-				<div class="datatable-container"><table class="table datatable datatable-table">
-				<thead>
-				<tr>
-					<th data-sortable="true" style="width: 9.181636726546905%;" aria-sort="descending" class="datatable-descending">
-						<button class="datatable-sorter">
-						Num
-	                    </button>
-                    </th>
-                    <th data-sortable="true" style="width: 26.813040585495674%;">
-                    	<button class="datatable-sorter">제목</button>
-                   	</th>
-                   	<th data-sortable="true" style="width: 28.542914171656687%;">
-                   		<button class="datatable-sorter">양식 종류</button>
-               		</th>
-               		<th data-format="YYYY/DD/MM" data-sortable="true" data-type="date" style="width: 16.899534264803727%;">
-               			<button class="datatable-sorter">작성일</button>
-             		</th>
-             		<th data-sortable="true" class="red" style="width: 18.562874251497004%;">
-             			<button class="datatable-sorter">결재 현황</button>
-             		</th>
-            	</tr>
-            	</thead>
-            	<tbody><tr data-index="0"><td>1</td><td>
-<%-- 											            		<span name="onModal" value="${lists[0].app_seq}"> --%>
-															<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
-											            		${lists[1].app_title}
-											            	</button>
-<!-- 											            		</span> -->
-											            	</td><td>${lists[1].gian_seq}</td><td>${lists[1].app_createdate}</td><td class="green">${lists[1].app_draft}</td></tr><tr data-index="1"><td>Zachery Morgan</td><td>6730</td><td>Collines-de-l'Outaouais</td><td>2006/04/09</td><td class="green">51%</td></tr><tr data-index="2"><td>Yoko Freeman</td><td>4077</td><td>Lidköping</td><td>2002/27/12</td><td class="green">48%</td></tr><tr data-index="3"><td>Wyatt Riley</td><td>5694</td><td>Cavaion Veronese</td><td>2012/19/02</td><td class="green">67%</td></tr><tr data-index="4"><td>Wyatt Mccarthy</td><td>3547</td><td>Patan</td><td>2014/23/06</td><td class="green">9%</td></tr><tr data-index="5"><td>Willow Gilliam</td><td>3497</td><td>Amqui</td><td>2009/29/11</td><td class="green">30%</td></tr><tr data-index="6"><td>Walker Nixon</td><td>6901</td><td>Metz</td><td>2011/12/11</td><td class="green">41%</td></tr><tr data-index="7"><td>Vivien Dominguez</td><td>5653</td><td>Bargagli</td><td>2001/09/01</td><td class="green">86%</td></tr><tr data-index="8"><td>Vielka Olsen</td><td>3745</td><td>Vrasene</td><td>2016/08/01</td><td class="green">70%</td></tr><tr data-index="9"><td>Ursula Reynolds</td><td>7544</td><td>Southampton</td><td>1999/16/12</td><td class="green">61%</td></tr></tbody></table></div>
-				<div class="datatable-bottom">
-				    <div class="datatable-info">Showing 1 to 10 of 100 entries</div>
-				    <nav class="datatable-pagination"><ul class="datatable-pagination-list"><li class="datatable-pagination-list-item datatable-hidden datatable-disabled"><button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">‹</button></li><li class="datatable-pagination-list-item datatable-active"><button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">1</button></li><li class="datatable-pagination-list-item"><button data-page="2" class="datatable-pagination-list-item-link" aria-label="Page 2">2</button></li><li class="datatable-pagination-list-item"><button data-page="3" class="datatable-pagination-list-item-link" aria-label="Page 3">3</button></li><li class="datatable-pagination-list-item"><button data-page="4" class="datatable-pagination-list-item-link" aria-label="Page 4">4</button></li><li class="datatable-pagination-list-item"><button data-page="5" class="datatable-pagination-list-item-link" aria-label="Page 5">5</button></li><li class="datatable-pagination-list-item"><button data-page="6" class="datatable-pagination-list-item-link" aria-label="Page 6">6</button></li><li class="datatable-pagination-list-item"><button data-page="7" class="datatable-pagination-list-item-link" aria-label="Page 7">7</button></li><li class="datatable-pagination-list-item datatable-ellipsis datatable-disabled"><button class="datatable-pagination-list-item-link">…</button></li><li class="datatable-pagination-list-item"><button data-page="10" class="datatable-pagination-list-item-link" aria-label="Page 10">10</button></li><li class="datatable-pagination-list-item"><button data-page="2" class="datatable-pagination-list-item-link" aria-label="Page 2">›</button></li></ul></nav>
-				</div>
-				</div>
-              <!-- End Table with stripped rows -->
+				<table  class="table table-hover" style="margin-top: 10px;">
+						<thead>
+							<tr>
+								<th>결재코드</th>
+								<th>제목</th>
+								<th>양식 종류</th>
+								<th>작성일</th>
+								<th>결재현황</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="vo" items="${lists}" varStatus="vs">
+								<tr>
+									<td>${vo.app_seq}</td>
+									<td>${vo.app_title}</td>
+									<td>${vo.gian_seq}</td>
+									<td>${vo.app_createdate}</td>
+									<td>${vo.app_draft}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<!-- 페이징 -->
+					<div style="margin-left: 450px;">
+					<nav aria-label="Page navigation example">
+		                <ul class="pagination">
+		                  <li class="page-item">
+		                    <a class="page-link" href="#" aria-label="Previous">
+		                      <span aria-hidden="true">«</span>
+		                    </a>
+		                  </li>
+		                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+		                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+		                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+		                  <li class="page-item">
+		                    <a class="page-link" href="#" aria-label="Next">
+		                      <span aria-hidden="true">»</span>
+		                    </a>
+		                  </li>
+		                </ul>
+		              </nav>
+					</div>
 
-            </div>
-            
-            
-            <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
-            
-            	<div class="modal-dialog modal-xl">
-            	
-            		<div class="modal-content">
-		            	<div class="modal-header">
-			                <h4 class="modal-title">${lists[1].app_title}</h4>
-			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			               
-		                </div>
-		                <div class="modal-body">
-		                	<h5>요청일자 : ${lists[1].app_createdate}</h5>
-		                	<hr>
-	                    	${lists[1].app_content}
-	                    </div>
-	                    <div class="modal-footer">
-	                     <a href="#">PDF 저장<img alt="PDF.img" src="./images/pdfImg.png"></a>
-	                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
-	                      <button type="button" class="btn btn-secondary">결재 수정</button>
-	                      <button type="button" class="btn btn-light">결재 취소</button>
-	                    </div>
-                    </div>
-                    
-            	</div>
-            
-            </div>
-            
-			
+					<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="modalLabel">상세 정보</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									 <p id="modalContent"></p>
+								</div>
+								<div class="modal-footer">
+									  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
+				                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
+				                      <button type="button" class="btn btn-secondary">결재 수정</button>
+				                      <button type="button" class="btn btn-light">결재 취소</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
 		</div>
-	</div>
-	
-	
-	
+	</div>		
 	</main>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			  $("tbody tr").click(function() {
+			    const appSeq = $(this).find('td:first-child').text();
+			    console.log('appseq값:',appSeq);
+			    const requestData = {
+			      app_seq : appSeq
+			    };
+			    console.log('요청데이터:',requestData);
+			    $.ajax({
+			      url: "./myPayList.do?app_seq="+requestData.app_seq,
+			      type: "POST",
+			      contentType: "application/json",
+			      data: JSON.stringify(requestData),
+			      success: function(data) {
+			    	console.log(data);
+			    	$("#modalContent").html("결재요청일자: " + data.app_createdate + "<br>결재내용: " + data.app_content);
+			        var modal = new bootstrap.Modal($("#detailModal"));
+			        modal.show();
+			      },
+			      error: function(error) {
+			        console.log('에러시러요');
+			      }
+			    });
+			  });
+			});
+		</script>
 </body>
 </html>
