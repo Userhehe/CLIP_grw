@@ -7,10 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,16 +66,24 @@ public class ReservationController {
 		}
 		return reArr;
 	}
+	
 	//예약 상세조회
 	@GetMapping(value = "/reDetail.do")
-	public ReservationVo reDetail() {
+	@ResponseBody
+	public ReservationVo reDetail(int seq) {
+		log.info("ReservationController reDetail 상세조회");
+		System.out.println("전달받은 re_seq값:" + seq);
+		ReservationVo vo = service.reDetail(seq);
+	
+		log.info("전달받은 seq의 내용 {}:" , vo);
 		
-		return null;
+		return vo;
 	}
 
 	//예약내용 수정하기
 	@GetMapping(value = "/reModify.do")
 	public ReservationVo reModify() {
+		log.info("ReservationController reModify");
 		
 		return null;
 	}
@@ -81,6 +91,7 @@ public class ReservationController {
 	//예약 취소하기
 	@GetMapping(value = "/reDel")
 	public String reDel() {
+		log.info("ReservationController reDel");
 		
 		return null;
 	}

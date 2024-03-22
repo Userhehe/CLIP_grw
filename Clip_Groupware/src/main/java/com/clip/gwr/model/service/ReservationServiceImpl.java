@@ -55,4 +55,34 @@ public class ReservationServiceImpl implements IReservationService {
 		return dao.selectAttendsJstree();
 	}
 	
+	//
+	@Override
+	public int reModifyRev(int re_seq) {
+		log.info("ReservationServiceImpl reModifyRev 예약내용 수정");		
+		return dao.reModifyRev(re_seq);
+	}
+
+	//참석자 삭제
+	@Override
+	public int reModifyAtt(String user_id) {
+		log.info("ReservationServiceImpl reModifyAtt 참석자 삭제");
+		return dao.reModifyAtt(user_id);
+	}
+	
+	//예약내용 삭제
+	@Override
+	public int reDel(int re_seq) {
+		log.info("ReservationServiceImpl reDel 예약내용 삭제");
+		return dao.reDel(re_seq);
+	}
+	
+	//예약 상세조회
+	@Override
+	public ReservationVo reDetail(int re_seq) {
+		log.info("ReservationServiceImpl reDetail 선택된 seq 상세조회");
+		return dao.reDetail(re_seq);
+	}
+
+	
+	
 }

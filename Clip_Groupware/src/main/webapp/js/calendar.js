@@ -87,82 +87,81 @@ $(document).ready(function() {
 });
 //화면 로드시 걸어주는 이벤트들 끝 ------------------------------------------------
 
-	 
+    
 
 
 // 모달 닫기 설정----------------------------
 function modalclose(){
-	$("#calendarModal").modal("hide");
-	$("#memodetail").modal("hide");
-	initCal();
-	consel.log("모달 닫습니다.")
+   $("#calendarModal").modal("hide");
+   $("#memodetail").modal("hide");
+   initCal();
+   consel.log("모달 닫습니다.")
 }
 // 모달 닫기 설정 끝----------------------------
 
 // 상세 모달 설정----------------------------
 function memodetail(seq){ //seq가져와 내용 상세조회 하기
-	console.log(seq)
-	$.ajax({
-		type:"post",
-		url:"./memodetail.do",
-		dataType:"json",
-		data:{seq:seq},
-		
-		success: function(data){
-			console.log( "썩세스", data.prs_seq);
-			$("#memodetail").modal("show");
-			$("#dttitle").text(data.prs_title);
-			$("#dtcontent").text(data.prs_content);
-			$("#dtstart").text(data.prs_start);
-			$("#dtend").text(data.prs_end);
-		},
-		error: function() {
-			alert("서버요청 실패했음....");
-		},
-	});
+   console.log(seq)
+   $.ajax({
+      type:"post",
+      url:"./memodetail.do",
+      dataType:"json",
+      data:{seq:seq},
+      
+      success: function(data){
+         console.log( "썩세스", data.prs_seq);
+         $("#memodetail").modal("show");
+         $("#dttitle").text(data.prs_title);
+         $("#dtcontent").text(data.prs_content);
+         $("#dtstart").text(data.prs_start);
+         $("#dtend").text(data.prs_end);
+      },
+      error: function() {
+         alert("서버요청 실패했음....");
+      },
+   });
 }
 // 상세 모달 설정 끝----------------------------
 
 // 수정 모달 설정----------------------------
 function memoModify(seq){
-	$("#calendarModalUpdate").modal("show");
+   $("#calendarModalUpdate").modal("show");
 }
 // 수정 모달 설정 끝----------------------------
 
 // 등록 모달 설정 ----------------------------
 function memomodal(){
-	console.log("TLqkf또모달...?")
-	$("#calendarModal").modal("show");
-	
-	$("#addCalendar").on("click",function addmemo(){
-		var title = $(title).val();
-		var content = $(content).val();
-		var start = $(start).val();
-		var end= $(end).val();
-		
-		if(title == ""){
-			alert("제목을 작성해주세요");
-		}else if(content == ""){
-			alert("내용을 작성해주세요");
-		}else if(start == ""||end == ""){
-			alert("날짜를 입력해 주세요");
-		}else if(start > end){
-			alert("시작시간은 종료시간보다 빨라야 합니다.")
-		}else{ 
-			
-			var inmemo = $("#form").serialize();
-			
-		$.ajax({
-			url:"./addmemo.do",
-			data:inmemo,
-			datatype:"json",
-			type:"post",
-			success:function(msg){
-				console.log(msg)  // 작성필요
-			}
-		})
-		}
-	})
+   console.log("TLqkf또모달...?")
+   $("#calendarModal").modal("show");
+   
+   $("#addCalendar").on("click",function addmemo(){
+      var title = $(title).val();
+      var content = $(content).val();
+      var start = $(start).val();
+      var end= $(end).val();
+      
+      if(title == ""){
+         alert("제목을 작성해주세요");
+      }else if(content == ""){
+         alert("내용을 작성해주세요");
+      }else if(start == ""||end == ""){
+         alert("날짜를 입력해 주세요");
+      }else if(start > end){
+         alert("시작시간은 종료시간보다 빨라야 합니다.")
+      }else{ 
+         
+         var inmemo = $("#form").serialize();
+         
+      $.ajax({
+         url:"./addmemo.do",
+         data:inmemo,
+         datatype:"json",
+         type:"post",
+         success:function(msg){
+            console.log(msg)  // 작성필요
+         }
+      })
+      }
+   })
 }
 // 등록 모달 설정 끝----------------------------
-

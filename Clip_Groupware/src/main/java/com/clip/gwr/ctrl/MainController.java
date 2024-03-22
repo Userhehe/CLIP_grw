@@ -67,10 +67,4 @@ public class MainController {
 //		return "department";
 //	}
 
-	
-	@GetMapping(value = "/userInfo.do")
-	public String userInfo() {
-		log.info("userInfo 이동");
-		return "userInfo";
-	}
-
+}
