@@ -14,8 +14,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
-
+public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
@@ -32,9 +31,9 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		/**
 		 * 사용자 로그인
 		 */
-		if(roleNames.contains("ROLE_USER")) {
-//		if(roleNames.contains("USER")) { 
-			response.sendRedirect("./main.do"); 
+		if(roleNames.contains("ROLE_USER")) { 
+			log.info("!!!!!!!!!!!!!/user/main!!!!!!!!! : " + roleNames);
+			response.sendRedirect("./user/main.do"); 
 			return; 
 		} 
 
@@ -42,12 +41,10 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		 * 관리자 로그인
 		 */
 		if(roleNames.contains("ROLE_ADMIN")) { 
-//		if(roleNames.contains("ADMIN")) { 
-			response.sendRedirect("./adminMain.do"); 
+			log.info("!!!!!!!!!!!!!/admin/main!!!!!!!!! : " + roleNames);
+			response.sendRedirect("./admin/main.do"); 
 			return; 
 		}
-//		response.sendRedirect("./index.jsp");
 		response.sendRedirect("./loginForm.do"); 
 	}
-
 }

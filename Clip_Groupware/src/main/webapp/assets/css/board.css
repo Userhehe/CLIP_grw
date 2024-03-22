@@ -24,3 +24,7 @@ a {
 .w15vh {
 	width: 15vh;
 }
+
+.right_button {
+	margin-left: auto;
+}
