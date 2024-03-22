@@ -57,5 +57,5 @@ public class MainController {
 		log.info("MainController access 화면");
 		return "access";
 
-	
+	}	
 }
