@@ -7,7 +7,7 @@ function initCal(){ //달력 렌더링
 		success: function(data){
 			console.log("달력 기능 불러오기")
 			var calendarEl = document.getElementById('recalendar');
-        	console.log(data);
+        	console.log("달력 전체조회" , data)
 			var calendar = new FullCalendar.Calendar(calendarEl, {
 				height:900,
 				headerToolbar: {

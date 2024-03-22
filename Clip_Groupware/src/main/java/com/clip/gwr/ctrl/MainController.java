@@ -21,9 +21,7 @@ public class MainController {
 		log.info("MainController main (post) 로그인 후 메인화면으로 이동");
 		return "main";
 	}
-	
 
-	
 	@GetMapping(value = "/empty.do")
 	public String empty() {
 		log.info("MainController empty 빈화면");
@@ -60,6 +58,15 @@ public class MainController {
 		return "access";
 	}
 	
+
+
+//	@GetMapping(value = "/department.do")
+//	public String department() {
+//		log.info("MainController department 화면");
+//		return "department";
+//	}
+
+
 
 }
 
