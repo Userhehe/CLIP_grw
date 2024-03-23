@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,13 +91,16 @@ public class ReservationJUnitTest {
 	}
 
 	// 참석자를 위한 jstree
-	//@Test
+	@Test
+	
 	public void selectAttends() {
 		List<UserinfoVo> lists = service.selectAttendsJstree();
 		log.info("참석자를 위한 jstree : {}", lists);
 		assertNotNull(lists);
 	}
+	
 	@Test
+	@Ignore
 	public void testttt() {
 		ReservationVo vo = service.reDetail(9);
 		log.info("반환된 값 : {}",vo);
