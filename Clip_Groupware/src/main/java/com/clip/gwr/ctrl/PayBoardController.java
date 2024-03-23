@@ -43,7 +43,6 @@ public class PayBoardController {
 		ApprovalVo vo =service.getOneApproval(app_seq);
 		return vo;
 	}
-	
 	//임시저장 결재 파일 리스트 창 이동
 	@GetMapping(value = "/myTempPayList.do")
 	public String myTempPayList(Model model, HttpSession session) {
@@ -55,6 +54,13 @@ public class PayBoardController {
 		return "myTempPayList";
 	}
 	
+	//임시저장 결재 리스트에서 모달창으로 이동.
+	/*@PostMapping(value="/myTempPayList.do")
+	@ResponseBody
+	public ApprovalVo selectMyTempPayList(@RequestParam("app_seq")String app_seq) {
+		log.info("myTempPayList selectMyTempPayList 나의 임시저장 결재파일 상세 모달창 : {}",app_seq);
+		return null;
+	}*/
 	
 	//내 승인대기 결재 리스트 창 이동
 	@GetMapping(value = "/myAcceptPayList.do")
