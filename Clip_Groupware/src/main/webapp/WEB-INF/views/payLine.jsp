@@ -20,6 +20,15 @@
 
 
 <script type="text/javascript" src="./js/paylineTest.js"></script>
+<style type="text/css">
+.select_payline_area, .select_payline_area{
+	border: solid #ECB53B 2px;
+	border-radius: 5px;
+	padding: 10px; 
+}
+
+
+</style>
 </head>
 <body>
 
@@ -46,19 +55,33 @@
             	
             		<div class="modal-content">
 		            	<div class="modal-header">
-			                <h4 class="modal-title">제목</h4>
+			                <h4 class="modal-title">결재라인 지정</h4>
 			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			               
 		                </div>
-		                <div class="modal-body">
-		                	<h5>요청일자</h5>
+		                <div class="modal-body row">
+			                <div class="col-lg-6">
+			                	<div class="select_payline_area col-lg-12">
+			                		<div id="search_box">
+										<input id="search_input" type="text" placeholder="사원 검색">
+									</div>
+									<hr/>
+									
+			                	</div>
+			                </div>
+			                
+			                <div class="col-lg-6">
+			                	<div class="select_payline_area col-lg-12">
+			                		<div id="search_box">
+									</div>
+			                	</div>
+		                	</div>
+		                	
 		                	<hr>
 	                    </div>
-	                    <div class=>
-	                     <a href="#">PDF 저장<img alt="PDF.img" src="./images/pdfImg.png"></a>
-	                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
-	                      <button type="button" class="btn btn-secondary">결재 수정</button>
-	                      <button type="button" class="btn btn-light">결재 취소</button>
+	                    <div class=modal-footer>
+	                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">결재라인 지정확인</button>
+	                      <button type="button" class="btn btn-secondary">취소</button>
 	                    </div>
                     </div>
                     

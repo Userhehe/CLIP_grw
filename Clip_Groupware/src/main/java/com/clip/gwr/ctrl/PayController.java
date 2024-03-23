@@ -197,15 +197,14 @@ public class PayController {
 	@GetMapping(value = "/getTree.do")
 	@ResponseBody
 	public String getPayLine() {
-		String result = "";
 		log.info("PayController getPayLine 결재라인 지정 페이지...");
 		List<UserinfoVo> list = reservationService.selectAttendsJstree();
 		
 		log.info("모든 사원 가져온 값 : {}",list);
 		Gson gson = new GsonBuilder().create();
-		result = gson.toJson(list);
-		log.info("가져온 사원 리스트를 제이슨 형태로 바꾼 형태 : {}", result);
-		return result;
+		String treeResult = gson.toJson(list);
+		log.info("가져온 사원 리스트를 제이슨 형태로 바꾼 형태 : {}", treeResult);
+		return treeResult;
 	}
 	
 	
