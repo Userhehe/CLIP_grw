@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.gwr.model.mapper.DailyCheckDaoImpl">
-
-	<!-- 출근시간 등록 -->
+     <!-- 출근 등록 -->
 	<insert id="insertDailyCheckIntime" parameterType="java.util.Map">
-		<selectKey keyProperty="dailycheck_seq" resultType="java.lang.Integer" order="BEFORE">
-			SELECT DAILYCHECK_SEQ.NEXTVAL AS DAILYCHECK_SEQ FROM DUAL
-		</selectKey>
-		INSERT INTO DAILYCHECK d  (DAILY_SEQ, USER_ID, DAILY_INTIME, DAILY_REGDATE)
-		VALUES ('DAILYCHECK_' || TO_CHAR(DAILYCHECK_SEQ.NEXTVAL, 'FM000'),
-		#{user_id}, CURRENT_DATE, CURRENT_DATE)
+    <selectKey keyProperty="dailycheck_seq" resultType="java.lang.Integer" order="BEFORE">
+        SELECT DAILYCHECK_SEQ.NEXTVAL AS DAILYCHECK_SEQ FROM DUAL
+    </selectKey>
+    INSERT INTO DAILYCHECK (DAILY_SEQ, USER_ID, DAILY_INTIME, DAILY_REGDATE)
+    VALUES ('DAILYCHECK_' || TO_CHAR(DAILYCHECK_SEQ.NEXTVAL, 'FM000'),
+    #{user_id, jdbcType=VARCHAR}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 	</insert>
+	
+	
 	
 	<!-- 퇴근시간 등록 -->
 	<update id="updateDailyCheckOuttime" parameterType="java.util.Map">
@@ -77,4 +78,26 @@
 		WHERE DAILY_SEQ = #{daily_seq}
 	</update>
 	
+	<select id="selectDailyStatus" resultType="com.clip.gwr.vo.DailyCheckVo">
+    <![CDATA[
+    SELECT
+        USER_ID,
+        CASE
+            WHEN TO_CHAR(DAILY_INTIME, 'HH24:MI:SS') < '09:00:00' AND TO_CHAR(DAILY_OUTTIME, 'HH24:MI:SS') >= '18:00:00' THEN '정상근무'
+            WHEN TO_CHAR(DAILY_INTIME, 'HH24:MI:SS') < '09:00:00' AND TO_CHAR(DAILY_OUTTIME, 'HH24:MI:SS') < '18:00:00' THEN '조퇴'
+            WHEN TO_CHAR(DAILY_INTIME, 'HH24') BETWEEN '12' AND '13' AND TO_CHAR(DAILY_OUTTIME, 'HH24') >= '17' THEN '조퇴'
+            WHEN TO_CHAR(DAILY_INTIME, 'HH24') BETWEEN '12' AND '13' AND TO_CHAR(DAILY_OUTTIME, 'HH24') < '17' THEN '결근'
+            WHEN TO_CHAR(DAILY_INTIME, 'HH24') < '12' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 >= 5 THEN '조퇴'
+            WHEN TO_CHAR(DAILY_INTIME, 'HH24') < '12' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 < 5 THEN '결근'
+            WHEN TO_CHAR(DAILY_INTIME, 'HH24') >= '13' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 >= 4 THEN '지각'
+            WHEN TO_CHAR(DAILY_INTIME, 'HH24') >= '13' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 < 4 THEN '결근'
+            ELSE '결근'
+        END AS DAILY_STATUS 
+    FROM
+        DAILYCHECK d
+    WHERE
+        DAILY_MODIFY = 'N'
+        AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE)
+    ]]>
+	</select>
 </mapper>

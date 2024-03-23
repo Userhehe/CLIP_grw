@@ -10,8 +10,39 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>근태관리</title>
 <%@ include file="./header.jsp"%>
+<link href="./assets/css/dailyCheck.css" rel="stylesheet">
+<script type="text/javascript" src="./js/dailyCheck.js"></script>t
 </head>
 <body>
+ <div class="modal fade" id="dailyCheckModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+
+
+							<div class="form-group">
+								<form action="./myReservationInsert.do" method="post"
+									id="dailyCheckForm">
+
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">수정 사유를 입력하세요.</h5>
+									</div>
+									<div class="modal-body">									
+										<textarea class="form-control mt-2" id="re_content"
+											name="re_content" rows="5" placeholder="수정사유을 입력해주세요."></textarea>
+									</div>
+								</form>
+								<div class="modal-footer">
+									<input class="btn btn-secondary" type="button" value="수정완료"
+										id="addDailyCheck"> <input class="btn btn-secondary"
+										type="button" value="뒤로가기" id="addDailyCheckCancel">
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
 	<main id="main" class="main">
 		<div class="card-body">
 			<h5 class="card-title">근태 정보 조회</h5>
@@ -87,12 +118,15 @@
 							<td>${list.daily_intime}</td>
 							<td>${list.daily_outtime}</td>
 							<td>${list.daily_status}</td>
-							<td>${list.daily_modify} <button onclick="handleButtonClick()">수정</button></td>
+							<td>${list.daily_modify} <button class="open-modal-btn">수정</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
+		<div class="datatable-bottom paging">
+			    <nav class="datatable-pagination"><ul class="datatable-pagination-list"><li class="datatable-pagination-list-item datatable-hidden datatable-disabled"><button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">‹</button></li><li class="datatable-pagination-list-item datatable-active"><button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">1</button></li><li class="datatable-pagination-list-item"><button data-page="2" class="datatable-pagination-list-item-link" aria-label="Page 2">2</button></li><li class="datatable-pagination-list-item"><button data-page="3" class="datatable-pagination-list-item-link" aria-label="Page 3">3</button></li><li class="datatable-pagination-list-item"><button data-page="4" class="datatable-pagination-list-item-link" aria-label="Page 4">4</button></li><li class="datatable-pagination-list-item"><button data-page="5" class="datatable-pagination-list-item-link" aria-label="Page 5">5</button></li><li class="datatable-pagination-list-item"><button data-page="6" class="datatable-pagination-list-item-link" aria-label="Page 6">6</button></li><li class="datatable-pagination-list-item"><button data-page="7" class="datatable-pagination-list-item-link" aria-label="Page 7">7</button></li><li class="datatable-pagination-list-item datatable-ellipsis datatable-disabled"><button class="datatable-pagination-list-item-link">…</button></li><li class="datatable-pagination-list-item"><button data-page="10" class="datatable-pagination-list-item-link" aria-label="Page 10">10</button></li><li class="datatable-pagination-list-item"><button data-page="2" class="datatable-pagination-list-item-link" aria-label="Page 2">›</button></li></ul></nav>
+			</div>
 	</main>
 </body>
 </html>

@@ -87,6 +87,14 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 						<i class="bi bi-gear"></i>
 						<span>개인정보 수정</span></a>
 						</li>
+						<li><a class="dropdown-item d-flex align-items-center" href="insertDailyCheckIntime.do">
+						<i class="bi bi-gear"></i>
+						<span>출근</span></a>
+						</li>
+						<li><a class="dropdown-item d-flex align-items-center" href="updateDailyCheckOuttime.do">
+						<i class="bi bi-gear"></i>
+						<span>퇴근</span></a>
+						</li>
 						<li><hr class="dropdown-divider"></li>
 						<li><a class="dropdown-item d-flex align-items-center" href="./logout.do">
 						<i class="bi bi-box-arrow-right"></i>
