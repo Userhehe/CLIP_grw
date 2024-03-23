@@ -48,4 +48,7 @@ public interface IDailyCheckService {
 	 * @return
 	 */
 	public int updateDailyCheckStatus(Map<String, Object> map);
+	
+	//출퇴근 현황 조회 
+		public String selectDailyStatus(String daily_status); 
 }

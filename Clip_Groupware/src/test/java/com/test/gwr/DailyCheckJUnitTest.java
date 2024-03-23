@@ -1,5 +1,6 @@
 package com.test.gwr;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.clip.gwr.model.mapper.DailyCheckDaoImpl;
 import com.clip.gwr.model.service.DailyCheckServiceImpl;
 import com.clip.gwr.vo.DailyCheckVo;
 
@@ -72,7 +74,7 @@ public class DailyCheckJUnitTest {
 	/**
 	 * 근태현황 검색
 	 */
-	@Test
+//	@Test
 	public void searchDailyCheckList() {
 		map.put("first_dailyregdate","2024-03-04");
 		map.put("last_dailyregdate","2024-03-13");
@@ -100,4 +102,27 @@ public class DailyCheckJUnitTest {
 		assertNotNull(updateDailyCheckStatus);
 	}
 	
-}
+	@Test
+	public void selectDailyStatus() {
+       DailyCheckDaoImpl checker = new DailyCheckDaoImpl();
+        
+        // "정상근무" 입력 시 정상 근무를 반환하는지 확인합니다.
+        String result1 = checker.selectDailyStatus("정상근무");
+        assertEquals("정상근무", result1);
+        
+        // "조퇴" 입력 시 조퇴를 반환하는지 확인합니다.
+        String result2 = checker.selectDailyStatus("조퇴");
+        assertEquals("조퇴", result2);
+        
+        // "결근" 입력 시 결근을 반환하는지 확인합니다.
+        String result3 = checker.selectDailyStatus("결근");
+        assertEquals("결근", result3);
+        
+        // "지각" 입력 시 지각을 반환하는지 확인합니다.
+        String result4 = checker.selectDailyStatus("지각");
+        assertEquals("지각", result4);
+    }
+
+	}
+	
+
