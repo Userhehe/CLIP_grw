@@ -1,5 +1,5 @@
 // 아이디 찾기 모달창 숨기기
-document.addEventListener('DOMContentLoaded', function(){
+/*document.addEventListener('DOMContentLoaded', function(){
 	var modal = document.getElementById("idFindModal");
 	modal.style.display = "none";
 });
@@ -14,4 +14,4 @@ function openIdModal() {
 function closeIdModal() {
 	var modal = document.getElementById("idFindModal");
 	modal.style.display = "none";
-}
+}*/
