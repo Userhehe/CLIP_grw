@@ -12,8 +12,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/jstree.min.js"></script>
-<!-- <link rel="stylesheet" -->
-<!-- 	href="//static.jstree.com/3.3.15/assets/bootstrap/css/bootstrap.min.css" /> -->
+<!-- <link rel="stylesheet"
+	href="//static.jstree.com/3.3.15/assets/bootstrap/css/bootstrap.min.css" /> -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/themes/default/style.min.css" />
 <link rel="stylesheet" href="./css/jstree.css" />
@@ -27,6 +27,25 @@
 	padding: 10px; 
 }
 
+.vakata-context{
+ 	z-index: 1060; 
+}
+
+.delMark{
+	background: url("./images/delEvent.png");
+}
+
+
+/* .jstree-icon{ */
+/* 	background-image : url("./images/payLineTeamClose.png"); */
+/* } */
+
+/* .jstree-anchor{ */
+	
+/* 	width: 24px; */
+/*     height: 24px; */
+/*     line-height: 24px; */
+/* } */
 
 </style>
 </head>
@@ -51,7 +70,7 @@
 		
 		  <div class="modal fade" id="paylinemodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
             
-            	<div class="modal-dialog modal-xl">
+            	<div class="modal-dialog modal-lg">
             	
             		<div class="modal-content">
 		            	<div class="modal-header">
@@ -67,13 +86,13 @@
 									</div>
 									<hr/>
 									
+									<div id="payLine_box"></div>
 			                	</div>
 			                </div>
 			                
 			                <div class="col-lg-6">
 			                	<div class="select_payline_area col-lg-12">
-			                		<div id="search_box">
-									</div>
+			                		<div id="pickLine_box"></div>
 			                	</div>
 		                	</div>
 		                	
@@ -94,4 +113,6 @@
 	</main>
 
 </body>
+
+
 </html>
