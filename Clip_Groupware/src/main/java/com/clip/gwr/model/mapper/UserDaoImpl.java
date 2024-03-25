@@ -33,18 +33,18 @@ public class UserDaoImpl implements IUserDao {
 	 * 아이디찾기
 	 */
 	@Override
-	public UserVo findUserId(Map<String, Object> map) {
+	public UserVo findUserId(String email) {
 		log.info("##### 아이디찾기 findUserId #####");
-		return sqlSession.selectOne(NS + "findUserId", map);
+		return sqlSession.selectOne(NS + "findUserId", email);
 	}
 
 	/**
-	 * 비밀번호 재설정
+	 * 비밀번호 재설정 이메일 찾기
 	 */
 	@Override
-	public int updateUserPassword(Map<String, Object> map) {
-		log.info("##### 비밀번호 재설정 updateUserPassword #####");
-		return sqlSession.update(NS + "updateUserPassword", map);
+	public UserVo findUserEmail(String user_id) {
+		log.info("##### 비밀번호 재설정 이메일 찾기 findUserEmail #####");
+		return sqlSession.selectOne(NS + "findUserEmail", user_id);
 	}
 	
 	/**
@@ -63,6 +63,15 @@ public class UserDaoImpl implements IUserDao {
 	public int comparisonCertNum(Map<String, Object> map) {
 		log.info("##### 인증번호 확인 comparisonCertNum #####");
 		return sqlSession.selectOne(NS + "comparisonCertNum", map);
+	}
+	
+	/**
+	 * 비밀번호 재설정
+	 */
+	@Override
+	public int updateUserPassword(Map<String, Object> map) {
+		log.info("##### 비밀번호 재설정 updateUserPassword #####");
+		return sqlSession.update(NS + "updateUserPassword", map);
 	}
 	
 	/**
@@ -136,4 +145,6 @@ public class UserDaoImpl implements IUserDao {
 		log.info("##### 사용자 권한 조회 selectUserAuth #####");
 		return sqlSession.selectOne(NS + "selectUserAuth", user_id);
 	}
+
+	
 }

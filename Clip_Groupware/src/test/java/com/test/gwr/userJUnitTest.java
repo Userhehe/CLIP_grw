@@ -28,6 +28,7 @@ import com.clip.gwr.vo.UserinfoVo;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="file:src/main/webapp/WEB-INF/spring/**/*.xml")
 @Slf4j
@@ -51,6 +52,9 @@ public class userJUnitTest {
 	@Autowired
 	private IRanksService ranService;
 	
+	@Autowired
+	private RedisUtil redisUtil;
+	
 	Map<String, Object> map = new HashMap<String, Object>();
 	
 	/**
@@ -70,22 +74,21 @@ public class userJUnitTest {
 	 */
 //	@Test
 	public void findUserId() {
-		map.put("user_email", "dongin7777@gmail.com");
-		UserVo findUserId = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.findUserId", map);
+		String email = "dongin7757@gmail.com";
+		UserVo findUserId = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.findUserId", email);
 		System.out.println("##findUserId : " + findUserId.getUser_id());
 		assertNotNull(findUserId);
 	}
 	
 	/**
-	 * 비밀번호 재설정
+	 * 비밀번호 재설정 이메일찾기
 	 */
 //	@Test
-	public void updateUserPassword() {
-		map.put("user_password", "clip12345!");
-		map.put("user_email", "dongin7777@gmail.com");
-		int updateUserPassword = sqlSession.update("com.clip.gwr.model.mapper.UserDaoImpl.updateUserPassword", map);
-		System.out.println("##updateUserPassword : " + updateUserPassword);
-		assertNotNull(updateUserPassword);
+	public void findUserEmail() {
+		String user_id = "USER_057";
+		UserVo findUserEmail = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.findUserEmail", user_id);
+		System.out.println("##findUserEmail : " + findUserEmail.getUser_email());
+		assertNotNull(findUserEmail);
 	}
 	
 	/**
@@ -114,6 +117,18 @@ public class userJUnitTest {
 		int comparisonCertNum = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.comparisonCertNum", map);
 		System.out.println("##comparisonCertNum : " + comparisonCertNum);
 		assertNotNull(comparisonCertNum);
+	}
+	
+	/**
+	 * 비밀번호 재설정
+	 */
+//	@Test
+	public void updateUserPassword() {
+		map.put("user_password", "clip12345!");
+		map.put("user_email", "dongin7777@gmail.com");
+		int updateUserPassword = sqlSession.update("com.clip.gwr.model.mapper.UserDaoImpl.updateUserPassword", map);
+		System.out.println("##updateUserPassword : " + updateUserPassword);
+		assertNotNull(updateUserPassword);
 	}
 	
 	
@@ -381,13 +396,14 @@ public class userJUnitTest {
 	/**
 	 * 직급명 중복검색
 	 */
-	@Test
+//	@Test
 	public void duplicateRanks() {
 		map.put("ranks_name", "대리");
 		int duplicateRanks = sqlSession.selectOne("com.clip.gwr.model.mapper.RanksDaoImpl.duplicateRanks",map);
 		System.out.println("##duplicateRanks : " + duplicateRanks);
 		assertNotNull(duplicateRanks);
 	}
+	
 }
 
 

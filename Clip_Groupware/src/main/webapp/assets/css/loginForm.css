@@ -51,6 +51,14 @@ body {
 	color: white;
 }
 
+.fc_red {
+	color: red;
+}
+
+.font12 {
+	font-size: 12px;
+}
+
 .button {
 	width: 300px;
 	height: 36px;
@@ -62,6 +70,33 @@ body {
 	padding: 10px;
 	cursor: pointer;
 	margin-top: 20px;
+}
+
+.form-group > * {
+    display: inline-block;
+    vertical-align: top; /* 요소를 상단 정렬 */
+}
+
+.form-group input.replace_pw_input[type="text"],
+.form-group input.replace_pw_input[type="number"] {
+    width: 42.7vh; /* 입력 필드의 너비 지정 */
+}
+
+.flex_end {
+	display: flex; 
+	justify-content: flex-end;
+}
+
+.mg_top10 {
+	margin-top: 10px;
+}
+
+.mg_top30 {
+	margin-top: 30px;
+}
+
+.fr {
+	float: right;
 }
 
 /* 버튼 호버 효과 */
@@ -84,3 +119,5 @@ body {
 .links a:hover {
     text-decoration: none; /* 호버 시 밑줄 제거 */
 }
+
+
