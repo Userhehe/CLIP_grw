@@ -1,6 +1,6 @@
 package com.clip.gwr.ctrl;
 
-                 import java.util.HashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -112,7 +112,7 @@ public class UserController {
 		log.info("#### positions_name : " + positions_name);
 		log.info("#### user_auth : " + user_auth);
 		
-		Map<String, Object> map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user_password", user_password);
 		map.put("user_name", user_name);
 		map.put("user_registnum", user_registnum);
