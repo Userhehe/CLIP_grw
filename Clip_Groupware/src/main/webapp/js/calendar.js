@@ -147,7 +147,6 @@ function modalclose(){
 
 	$("#calendarModal").modal("hide");
 	$("#memodetail").modal("hide");
-	
 
 // 모달 닫기 설정 끝----------------------------
 

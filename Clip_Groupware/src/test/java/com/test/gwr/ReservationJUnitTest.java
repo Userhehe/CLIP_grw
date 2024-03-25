@@ -1,13 +1,12 @@
 package com.test.gwr;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.clip.gwr.model.service.IReservationService;
+import com.clip.gwr.vo.ReAttendsVo;
 import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
 
@@ -33,7 +33,8 @@ public class ReservationJUnitTest {
 	private IReservationService service;
 
 	// 일정페이지에서 예약 확인
-	// @Test
+	@Test
+	@Ignore
 	public void myReservationAll() {
 		List<ReservationVo> lists = service.myReservationAll("USER_034");
 		log.info("예약 전체조회 : {}", lists);
@@ -41,7 +42,8 @@ public class ReservationJUnitTest {
 	}
 
 	// 예약등록
-	// @Test
+	@Test
+	@Ignore
 	public void test() {
 		String attendsView = "USER_011,USER_034";
 
@@ -70,7 +72,8 @@ public class ReservationJUnitTest {
 	}
 
 	// 예약가능시간조회
-	// @Test
+	@Test
+	@Ignore
 	public void selectPossibleMeRoom() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("me_room", "1");
@@ -92,7 +95,7 @@ public class ReservationJUnitTest {
 
 	// 참석자를 위한 jstree
 	@Test
-	
+	@Ignore
 	public void selectAttends() {
 		List<UserinfoVo> lists = service.selectAttendsJstree();
 		log.info("참석자를 위한 jstree : {}", lists);
@@ -105,6 +108,30 @@ public class ReservationJUnitTest {
 		ReservationVo vo = service.reDetail(9);
 		log.info("반환된 값 : {}",vo);
 		assertNotNull(vo);
+	}
+	
+	//참석자 명단 작성하기
+	@Test
+	public void reAttList() {
+		List<ReAttendsVo> attlists = service.reAttList(9);
+		int index =0;
+		String attends= "";
+		for(ReAttendsVo att : attlists) {
+			log.info("att: {}",att);
+			attends += att.getUser_name();
+			attends += " ";
+			attends += att.getRanks_name();
+			
+			if(index<attlists.size()-1) {
+				attends +=",";
+			}
+			index++;
+		}
+		
+		log.info("9번 예약 참석자 명단 보기: {}", attends);
+		log.info("9번 예약 참석자 명단 보기: {}", attlists);
+		assertNotNull(attlists);
+		
 	}
 
 }

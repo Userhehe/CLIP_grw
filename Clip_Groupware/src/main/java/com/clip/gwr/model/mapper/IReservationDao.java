@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.clip.gwr.vo.MeeTingRoomVo;
+import com.clip.gwr.vo.ReAttendsVo;
 import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
 
@@ -35,4 +36,7 @@ public interface IReservationDao {
 	
 	//예약 취소하기
 	public int reDel(int re_seq);
+	
+	//참석자 조회
+	public List<ReAttendsVo> reAttList(int seq);
 }

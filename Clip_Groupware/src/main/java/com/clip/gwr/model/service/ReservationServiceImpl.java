@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.clip.gwr.model.mapper.IReservationDao;
 import com.clip.gwr.vo.MeeTingRoomVo;
+import com.clip.gwr.vo.ReAttendsVo;
 import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
 
@@ -81,6 +82,12 @@ public class ReservationServiceImpl implements IReservationService {
 	public ReservationVo reDetail(int re_seq) {
 		log.info("ReservationServiceImpl reDetail 선택된 seq 상세조회");
 		return dao.reDetail(re_seq);
+	}
+
+	@Override
+	public List<ReAttendsVo> reAttList(int seq) {
+		log.info("ReservationServiceImpl reAttList 선택된 예약 참석자 조회");
+		return dao.reAttList(seq);
 	}
 
 	
