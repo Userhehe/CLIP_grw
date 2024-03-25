@@ -35,6 +35,7 @@
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="./js/inAndOutTime.js"></script>
 <!-- <script type="text/javascript" src="./js/calendar.js"></script> -->
 
 </head>
@@ -87,14 +88,20 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 						<i class="bi bi-gear"></i>
 						<span>개인정보 수정</span></a>
 						</li>
-						<li><a class="dropdown-item d-flex align-items-center" href="insertDailyCheckIntime.do">
-						<i class="bi bi-gear"></i>
-						<span>출근</span></a>
-						</li>
-						<li><a class="dropdown-item d-flex align-items-center" href="updateDailyCheckOuttime.do">
-						<i class="bi bi-gear"></i>
-						<span>퇴근</span></a>
-						</li>
+						
+							<li id="checkInButton">
+							    <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);" onclick="handleCheckInButtonClick()">
+							        <i class="bi bi-gear"></i>
+							        <span>출근</span>
+							    </a>
+							</li>
+							<!-- 퇴근 버튼 -->
+							<li id="checkOutButton" style="display: none;">
+							    <a class="dropdown-item d-flex align-items-center" href="updateDailyCheckOuttime.do">
+							        <i class="bi bi-gear"></i>
+							        <span>퇴근</span>
+							    </a>
+							</li>
 						<li><hr class="dropdown-divider"></li>
 						<li><a class="dropdown-item d-flex align-items-center" href="./logout.do">
 						<i class="bi bi-box-arrow-right"></i>
