@@ -36,30 +36,130 @@
 									onclick="location.href='projectClient.do' ">발주처별 프로젝트</button>
 							</li>
 						</ul>
-						<div style="margin-left: auto; margin-right: 30px; height: 40px;">
+						<div style="margin-left: auto; margin-right: 10px; height: 40px;">
 							<ul style="list-style-type: none; padding: 0; display: flex;">
 								<li style="margin-right: 10px;"><input
 									class="form-check-input" type="radio" name="gridRadios"
 									id="gridRadios1" value="option1" checked=""> <label
 									class="form-check-label" for="gridRadios1">진행중</label></li>
-								<li style="margin-right: 25px;"><input class="form-check-input" type="radio"
-									name="gridRadios" id="gridRadios2" value="option2"> <label
+								<li><input
+									class="form-check-input" type="radio" name="gridRadios"
+									id="gridRadios2" value="option2"> <label
 									class="form-check-label" for="gridRadios2">완료</label></li>
-							<li style="width:160px; height: 38px;">
-								<!-- 프로젝트 생성 버튼을 감싸는 새로운 div 추가 -->
-										<button type="button" class="btn btn-warning" style="width:190px; margin-top: 0px;">프로젝트 생성</button>
-							</li>
+								<li>
+								</li>
 							</ul>
-														<!-- 프로젝트 생성 버튼 -->
 						</div>
 					</div>
 				</div>
-				<div>
+					<div class="d-grid gap-2 mt-3">
+						<button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#verticalycentered"
+						style= "margin-top: 0px;">프로젝트 생성</button>
+						</div>
+												<!-- 프로젝트 생성 모달창 시작 -->
+									<div class="modal fade" id="verticalycentered" tabindex="-1"
+										style="display: none;" aria-hidden="true">
+										<div class="modal-dialog modal-lg modal-dialog-centered"
+											style="width: 1200px;">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">새 프로젝트 생성</h5>
+													<button type="button" class="btn-close"
+														data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<div class="card-body">
+														<form>
+															<div class="row mb-3">
+																<label for="inputText" class="col-sm-2 col-form-label">프로젝트
+																	명</label>
+																<div class="col-sm-10">
+																	<input type="text" class="form-control">
+																</div>
+															</div>
+															<div class="row mb-3">
+																<label for="inputEmail" class="col-sm-2 col-form-label">발주처</label>
+																<div class="col-sm-10">
+																	<input type="email" class="form-control">
+																</div>
+															</div>
+															<div class="row mb-3">
+																<label for="inputPassword"
+																	class="col-sm-2 col-form-label">현장명</label>
+																<div class="col-sm-10">
+																	<input type="password" class="form-control">
+																</div>
+															</div>
+															<div class="row mb-3">
+																<label for="inputDate" class="col-sm-2 col-form-label">시작일자</label>
+																<div class="col-sm-10">
+																	<input type="date" class="form-control">
+																</div>
+															</div>
+															<div class="row mb-3">
+																<label for="inputDate" class="col-sm-2 col-form-label">마감기한</label>
+																<div class="col-sm-10">
+																	<input type="date" class="form-control">
+																</div>
+															</div>
+															<div class="row mb-3">
+																<label for="inputPassword"
+																	class="col-sm-2 col-form-label">비고</label>
+																<div class="col-sm-10">
+																	<textarea class="form-control" style="height: 100px"></textarea>
+																</div>
+															</div>
+															<div class="row mb-3">
+																<label for="inputNumber" class="col-sm-2 col-form-label">발주서
+																	첨부</label>
+																<div class="col-sm-10">
+																	<input class="form-control" type="file" id="formFile">
+																</div>
+															</div>
+															<ul class="col-sm-10">
+																<h5>필요 제출목록</h5>
+																<li class="form-check"><input
+																	class="form-check-input" type="checkbox"
+																	id="gridCheck1"> <label
+																	class="form-check-label" for="gridCheck1">
+																		최종이미지 </label></li>
+																<li class="form-check"><input
+																	class="form-check-input" type="checkbox"
+																	id="gridCheck2" checked=""> <label
+																	class="form-check-label" for="gridCheck2"> 견적서
+																</label></li>
+																<li class="form-check"><input
+																	class="form-check-input" type="checkbox"
+																	id="gridCheck2" checked=""> <label
+																	class="form-check-label" for="gridCheck2"> 제안서
+																</label></li>
+																<li class="form-check"><input
+																	class="form-check-input" type="checkbox"
+																	id="gridCheck2" checked=""> <label
+																	class="form-check-label" for="gridCheck2"> 도면 </label>
+																</li>
+
+															</ul>
+														</form>
+														<!-- End General Form Elements -->
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-bs-dismiss="modal">닫기</button>
+													<button type="button" class="btn btn-warning">등록</button>
+												</div>
+											</div>
+										</div>
+									</div> <!-- 프로젝트 생성 모달창 끝 -->
+						
+						
+						
 					<div class="container" style="margin-left: 0px;">
 						<div class="row" style="width: 100%; flex-wrap: nowrap;">
-							<div class="col-md-3">
+							<div class="col-md-3" style="width: 300px;">
 								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; border-radius: 20px;">
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
 									<div>
 										<h5 class="card-title">[서울시청]인지건강 운동시설 디자인제안</h5>
 										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
@@ -71,14 +171,15 @@
 											aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
 									<div style="text-align: right;">
-										<button type="button" class="btn btn-secondary" onclick="location.href='projectDetail.do' "
+										<button type="button" class="btn btn-secondary"
+											onclick="location.href='projectDetail.do' "
 											style="margin-top: 20px; margin-right: 10px;">상세보기</button>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-3" style="width: 300px;">
 								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; border-radius: 20px;">
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
 									<div>
 										<h5 class="card-title">[현대산업개발]고척 아이파크 휴게시설 디자인 공모</h5>
 										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
@@ -95,9 +196,9 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-3" style="width: 300px;">
 								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; border-radius: 20px;">
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
 									<div>
 										<h5 class="card-title">[중구청]광화문광장 휴게시설 디자인 제안</h5>
 										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
@@ -114,9 +215,28 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-3" style="width: 300px;">
 								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; border-radius: 20px;">
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
+									<div>
+										<h5 class="card-title">[금천구청]가산 디지털단지 역사 앞 힐링광장 조성 사업</h5>
+										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
+									</div>
+									<div class="progress mt-3">
+										<div
+											class="progress-bar progress-bar-striped bg-warning progress-bar-animated"
+											role="progressbar" style="width: 85%" aria-valuenow="75"
+											aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<div style="text-align: right;">
+										<button type="button" class="btn btn-secondary"
+											style="margin-top: 20px; margin-right: 10px;">상세보기</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3" style="width: 300px;">
+								<div class="card-body"
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
 									<div>
 										<h5 class="card-title">[금천구청]가산 디지털단지 역사 앞 힐링광장 조성 사업</h5>
 										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
@@ -138,10 +258,10 @@
 						</div>
 						<!-- 여기까지 1번째 행 -->
 						<!-- 아래로 2번째 행, 3번째 행 작성 -->
-						<div class="row">
-							<div class="col-md-3" style="width:324px;">
+						<div class="row" style="width: 100%; flex-wrap: nowrap;">
+							<div class="col-md-3" style="width: 300px;">
 								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; border-radius: 20px;">
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
 									<div>
 										<h5 class="card-title">[양천구청]용왕산 근린공원 등산로 벤치 설치 사업</h5>
 										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
@@ -158,9 +278,9 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3" style="width:324px;">
+							<div class="col-md-3" style="width: 300px;">
 								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; border-radius: 20px;">
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
 									<div>
 										<h5 class="card-title">[롯데건설]광명 9구역 롯데캐슬 시그니처 운동시설 공모</h5>
 										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
@@ -177,11 +297,11 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3" style="width:324px;">
+							<div class="col-md-3" style="width: 300px;">
 								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; border-radius: 20px;">
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
 									<div>
-										<h5 class="card-title">[대우건설]파주 운정 14BL 푸르지오 파크라인 휴게시설 공모</h5>
+										<h5 class="card-title">[대우건설]파주 운정 푸르지오 파크라인 휴게시설 공모</h5>
 										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
 									</div>
 									<div class="progress mt-3">
@@ -196,9 +316,28 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3" style="width:324px;">
+							<div class="col-md-3" style="width: 300px;">
 								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; border-radius: 20px;">
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
+									<div>
+										<h5 class="card-title">[삼성물산]반포 레미안 조경시설 조성 사업</h5>
+										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
+									</div>
+									<div class="progress mt-3">
+										<div
+											class="progress-bar progress-bar-striped bg-warning progress-bar-animated"
+											role="progressbar" style="width: 75%" aria-valuenow="75"
+											aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+									<div style="text-align: right;">
+										<button type="button" class="btn btn-secondary"
+											style="margin-top: 20px; margin-right: 10px;">상세보기</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3" style="width: 300px;">
+								<div class="card-body"
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
 									<div>
 										<h5 class="card-title">[삼성물산]반포 레미안 조경시설 조성 사업</h5>
 										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
@@ -219,9 +358,9 @@
 							<!-- col-md-3 단위로 복사해서 4열까지 만들어줍니다 -->
 						</div>
 						<div class="row">
-							<div class="col-md-3" style="width:324px;">
+							<div class="col-md-3" style="width: 300px;">
 								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; border-radius: 20px;">
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
 									<div>
 										<h5 class="card-title">[gs건설]반포자이 놀이시설 리모델링</h5>
 										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
@@ -238,9 +377,9 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-3" style="width:324px;">
+							<div class="col-md-3" style="width: 300px;">
 								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; border-radius: 20px;">
+									style="margin-top: 30px; background-color: white; height: 230px; width: 280px; border-radius: 20px;">
 									<div>
 										<h5 class="card-title">[서울시청]인지건강 운동시설 디자인제안</h5>
 										<p class="card-text">참여자 : 박경민 부장, 신정원 과장, 신윤상 대리, 김동인 사원</p>
