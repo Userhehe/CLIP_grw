@@ -21,6 +21,7 @@
 		<typeAlias type="com.clip.gwr.vo.MeeTingRoomVo" alias="MeeTingRoomVo"/>
 		<typeAlias type="com.clip.gwr.vo.NtcVo" alias="NtcVo"/> <!-- 03/21 -->
 		<typeAlias type="com.clip.gwr.vo.MemoVo" alias="MemoVo"/> <!-- 03/15 -->
+		<typeAlias type="com.clip.gwr.vo.ProjectsVo" alias="ProjectsVo"/> <!-- 03/25 -->
 		<typeAlias type="com.clip.gwr.vo.ReAttendsVo" alias="ReAttendsVo"/>
 	</typeAliases>
 	
@@ -37,5 +38,7 @@
 		<mapper resource="sqls/Signs_Statement.xml"/>
 		<mapper resource="sqls/Reservation_Statement.xml"/>
 		<mapper resource="sqls/Memo_Statement.xml"/> <!-- 03/15 -->
+		
+		<mapper resource="sqls/Projects_Statement.xml"/> <!-- 03/25 -->
 	</mappers>
 </configuration>
