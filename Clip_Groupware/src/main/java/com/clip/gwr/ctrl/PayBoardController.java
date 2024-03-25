@@ -55,12 +55,22 @@ public class PayBoardController {
 	}
 	
 	//임시저장 결재 리스트에서 모달창으로 이동.
-	/*@PostMapping(value="/myTempPayList.do")
+	@PostMapping(value="/myTempPayList.do")
 	@ResponseBody
 	public ApprovalVo selectMyTempPayList(@RequestParam("app_seq")String app_seq) {
 		log.info("myTempPayList selectMyTempPayList 나의 임시저장 결재파일 상세 모달창 : {}",app_seq);
+		ApprovalVo vo =  service.getOneApproval(app_seq);
+		return vo;
+	}
+	
+	
+	//결재취소 
+	@PostMapping(value = "/cancelPay.do")
+	@ResponseBody
+	public String cancelPay(@RequestParam("app_seq")String app_seq) {
+		log.info("myTempPayList cancelPay 결재취소 : {}",app_seq);
 		return null;
-	}*/
+	}
 	
 	//내 승인대기 결재 리스트 창 이동
 	@GetMapping(value = "/myAcceptPayList.do")
@@ -69,7 +79,9 @@ public class PayBoardController {
 		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 		String user_id = loginUser.getUser_id();
 		List<ApprovalVo> lists = service.getMyPaycheck(user_id);
+		List<ApprovalVo> lists2 =service.getMyUnprocessedPaycheck(user_id);
 		model.addAttribute("lists",lists);
+		model.addAttribute("lists2",lists2);
 		return "myAcceptPayList";
 	}
 	

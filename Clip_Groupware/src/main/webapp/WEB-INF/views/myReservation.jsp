@@ -37,13 +37,64 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 	display: none;
 }
 </style>
+
 </head>
 <body>
 <!-- 값을 받기위한 hidden -->
-<input type="text" id="user_auth" value="${vo.re_title}" style="display: none">
+<%-- <input type="text" id="deRev" value="${vo.re_title}" style="display: none"> --%>
 
 
-<!-- redetail 모달 -->
+<!-- 예약 상세보기 모달 -->
+<div class="modal fade" id="redetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">       
+    	<div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">회의실 예약 상세조회</h5>
+                </div>
+                <div class="modal-body">
+               <div class="form-group">
+                     <div class="form-group">
+	                     <label for="title" class="col-form-label">회의실 번호</label>
+	                     <input type="text" class="form-control" id="deroomNum"  readonly="readonly" >
+                     </div>
+                     <label for="startDate" class="col-form-label">시작 날짜</label>
+                     <div class="input-group">
+                        <input type="text" class="form-control"  id="destart" readonly="readonly">
+                        <span class="input-group-addon" id="imagebutton">
+                        	<i class="glyphicon glyphicon-calendar"></i>
+                        </span>
+                     </div>
+                     <label for="endDate" class="col-form-label">종료 날짜</label>
+                     <div class="input-group">
+                        <input type="text" class="form-control"  id="deend" readonly="readonly">
+                        <span class="input-group-addon" id="imagebutton2">
+                        	<i class="glyphicon glyphicon-calendar"></i>
+                        </span>
+                     </div>
+                     <div class="form-group">
+	                     <label for="title" class="col-form-label">회의 제목</label>
+	                     <input type="text" class="form-control" id="detitle" readonly="readonly">
+                     </div>
+	                 <label for="content" class="col-form-label">일정 내용</label>
+	                 	<textarea class="form-control" rows="5" id="decontent" readonly="readonly"></textarea>
+	                 <div class="form-group">
+	                     <label for="title" class="col-form-label">참석자</label>
+	                     <input type="text" class="form-control" id="deattlist" >
+                     </div>
+               </div>
+            </div>
+            
+             <div class="modal-footer">
+	             <button type="submit" class="btn btn-secondary" > 삭제 </button>
+	             <button type="submit" class="btn btn-secondary" > 수정 </button>
+	             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
+             </div>    
+        </div>            
+    </div>
+</div>
+<!-- 예약 상세보기 모달 끝  -->
+ 
+<!-- 회의실을 예약하는 모달 -->
 <div class="modal fade" id="redetailmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">       
             <div class="modal-content">
@@ -83,15 +134,17 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
             </div>
                 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary" id="addCalendar" >삭제</button>
-                    <button type="submit" class="btn btn-secondary" id="addCalendar" >수정</button>
+                    <button type="submit" class="btn btn-secondary" id="addCalendar" > 삭제 </button>
+                    <button type="submit" class="btn btn-secondary" id="addCalendar" > 수정 </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="modalclose()">취소</button>
                 </div>
     
             </div>   
         </div>   
     </div>
-
+	<!-- 회의실을 예약하는 모달 끝 -->
+	
+	
 	<main id="main" class="main">
 		<section class="section dashboard">
 		
@@ -130,10 +183,10 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 							<tbody id="templateTableBody">
 								<c:forEach var="vo" items="${myReservationList}" varStatus="vs">
 									<tr>
-										<td>${vo.re_seq}</td>
+										<td id="redetailseq">${vo.re_seq}</td>
 										<td>${vo.me_room}</td>
 										<td>
-											<a id="redetail" href="./reDetail.do?seq=${vo.re_seq}">${vo.re_title}</a>
+											<a onclick="redetail()">${vo.re_title}</a>
 										</td>
 										<td>${vo.re_create}</td>
 									</tr>

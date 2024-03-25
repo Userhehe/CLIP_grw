@@ -16,12 +16,13 @@
 <!-- 선택메모 상세조회 -->
 <select id="myScheduleDetail" parameterType="java.lang.String" resultType="MemoVo">
 	SELECT PRS_SEQ, USER_ID, PRS_TITLE, 
-       	   PRS_CONTENT, PRS_START, PRS_END, 
+       	   PRS_CONTENT, TO_CHAR(PRS_START, 'YYYY-MM-DD HH24:MI') AS PRS_START, TO_CHAR(PRS_END, 'YYYY-MM-DD HH24:MI') AS PRS_END, 
            PRS_CREATE, PRS_DELFLAG    
         FROM USER_SCHEDULE
         WHERE PRS_SEQ = #{prs_seq} 
-        AND PRS_DELFLAG = 'N'
 </select>
+
+
 
 <!-- 메모 입력 -->
 <insert id="myScheduleInsert" parameterType="MemoVo" >
@@ -29,22 +30,24 @@
                               PRS_CONTENT, PRS_START, PRS_END, 
                               PRS_CREATE)
         VALUES('USERSCHEDULE_' || TO_CHAR(USERSCHEDULE_SEQ.NEXTVAL, 'FM000'), #{user_id}, #{prs_title}, 
-               #{prs_content}, TO_DATE('2024-01-22T15:30:15', 'YYYY-MM-DD"T"HH24:MI:SS'), TO_DATE('2024-02-01T15:30:15', 'YYYY-MM-DD"T"HH24:MI:SS'), 
-               TO_DATE(SYSDATE, 'YYYY-MM-DD"T"HH24:MI:SS'))
+               #{prs_content}, TO_DATE(#{prs_start}, 'YYYY-MM-DD HH24:MI'), TO_DATE(#{prs_end}, 'YYYY-MM-DD HH24:MI'), 
+               TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI'))
 </insert>
-
-<!-- 개인 메모 수정 -->
-<update id="myScheduleUpdate" parameterType="MemoVo">
-	UPDATE USER_SCHEDULE
-		SET PRS_TITLE=#{prs_title}, PRS_CONTENT=#{prs_content}, PRS_START=TO_DATE('2024-02-24T15:30:15', 'YYYY-MM-DD"T"HH24:MI:SS'), PRS_END=TO_DATE('2024-02-25T15:30:15', 'YYYY-MM-DD"T"HH24:MI:SS'), PRS_CREATE=SYSDATE
-		WHERE PRS_SEQ=#{prs_seq} AND USER_ID = #{user_id}
-</update>
 
 <!-- 개인 메모 삭제 -->
 <delete id="myScheduleDelete" parameterType="java.lang.String">
 	DELETE FROM USER_SCHEDULE
-		WHERE PRS_SEQ=#{prs_seq} AND USER_ID = #{user_id}
+		WHERE PRS_SEQ=#{prs_seq}
 </delete>
+
+<!-- 개인 메모 수정 -->
+<update id="myScheduleUpdate" parameterType="java.util.Map">
+	UPDATE USER_SCHEDULE
+		SET PRS_TITLE=#{prs_title}, PRS_CONTENT=#{prs_content}, PRS_START=TO_DATE(#{prs_start}, 'YYYY-MM-DD HH24:MI'), 
+			PRS_END=TO_DATE(#{prs_end}, 'YYYY-MM-DD HH24:MI'), PRS_CREATE=TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI')
+		WHERE PRS_SEQ=#{prs_seq}
+</update>
+
 
 
 <!-- 테스트 용 유니온으로 하는 전사, 개인 일정 조회 -->
@@ -64,6 +67,14 @@
 			OR TO_CHAR(NTC_END, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM'))
 </select>
 
+<!-- 전사일정 상세조회 -->
+<select id="ntcScheduleDetail" parameterType="java.lang.String" resultType="NtcVo">
+	SELECT NTC_SEQ, USER_ID, NTC_TITLE, 
+                NTC_CONTENT, NTC_START, NTC_END, 
+                NTC_CREATE,NTC_DELFLAG     
+        FROM NTC_SCHEDULE
+        WHERE NTC_SEQ = #{ntc_seq}
+</select>
 
 </mapper>
 

@@ -7,8 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.clip.gwr.interceptor.LoginCheckInterceptor;
 import com.clip.gwr.vo.MeeTingRoomVo;
+import com.clip.gwr.vo.ReAttendsVo;
 import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
 
@@ -73,8 +73,14 @@ public class ReservationDaoImpl implements IReservationDao{
 
 	@Override
 	public ReservationVo reDetail(int re_seq) {
-		log.info("##### 상세조회한다 reDetail");
+		log.info("##### 예약내용 상세조회 reDetail");
 		return sqlSession.selectOne(NS+"reDetail", re_seq);
+	}
+
+	@Override
+	public List<ReAttendsVo> reAttList(int seq) {
+		log.info("##### 참석자 리스트 조회 reAttList");
+		return sqlSession.selectList(NS+"reAttList",seq);
 	}
 
 	

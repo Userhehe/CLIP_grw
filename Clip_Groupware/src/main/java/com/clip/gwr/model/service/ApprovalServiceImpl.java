@@ -100,6 +100,13 @@ public class ApprovalServiceImpl implements IApprovalService{
 		return approvalDao.saveTempApproval(approvalVo);
 	}
 
+	//결재 취소
+	@Override
+	public int cancelApproval(String appSeq) {
+		log.info("결재취소 : {}",appSeq);
+		return approvalDao.cancelApproval(appSeq);
+	}
+
 
 
 

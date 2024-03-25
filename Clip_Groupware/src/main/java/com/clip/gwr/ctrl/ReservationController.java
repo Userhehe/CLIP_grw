@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.MeeTingRoomVo;
+import com.clip.gwr.vo.ReAttendsVo;
 import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.json.simple.JSONObject;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -70,14 +70,36 @@ public class ReservationController {
 	//예약 상세조회
 	@GetMapping(value = "/reDetail.do")
 	@ResponseBody
-	public ReservationVo reDetail(int seq) {
+	public Map<String, Object> reDetail(int seq) {
 		log.info("ReservationController reDetail 상세조회");
 		System.out.println("전달받은 re_seq값:" + seq);
-		ReservationVo vo = service.reDetail(seq);
-	
-		log.info("전달받은 seq의 내용 {}:" , vo);
+		List<ReAttendsVo> attlists = service.reAttList(seq);// 회의실 참석자 리스트
+		log.info("참석자 리스트:{}", attlists);
+		int index=0;
+		String attends ="";
+		for(ReAttendsVo att : attlists) {
+			log.info("att : {}", att);
+			attends += att.getUser_name();
+			attends += " ";
+			attends += att.getRanks_name();
+			
+			if(index < attlists.size()-1) {
+				attends +=",";
+			}
+			index++;
+		}
 		
-		return vo;
+		Map<String, Object> map = new HashMap<>(); //예약한 회의실 내용을 담을 예정
+		ReservationVo vo = service.reDetail(seq);
+		log.info("전달받은 seq의 내용 {}:" , vo);
+		map.put("roomNum", vo.getMe_room());
+		map.put("title", vo.getRe_title());
+		map.put("content", vo.getRe_content());
+		map.put("start", vo.getRe_start());
+		map.put("end", vo.getRe_end());
+		map.put("attends", attends);
+		log.info("선택된 seq의 상세보기 내용: {}", map);
+		return map;
 	}
 
 	//예약내용 수정하기

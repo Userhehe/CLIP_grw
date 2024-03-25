@@ -44,6 +44,10 @@ $(document).ready(function() {
 	
 	
 	//jstree 참석자-----------------------------------
+	
+	//jstree 참석자-----------------------------------
+	
+	
 		
 	//데이터 jstree형식으로 바꿔 줄꺼는 놈 정의
 	function convertData(data) {
@@ -75,7 +79,8 @@ $(document).ready(function() {
 				var jstreeData = convertData(data);
 				$('#selectAttendsJstree').jstree({
 					'core': {
-						'data': jstreeData
+						'data': jstreeData,
+						'check_callback':true
 					},//코어 영역끝
 
 					checkbox: {
@@ -87,7 +92,7 @@ $(document).ready(function() {
 						'show_only_matches': true
 					},
 
-					plugins: ["search", "checkbox"]
+					plugins: ["search", "checkbox","contextmenu"]
 
 				});
 			}//success끝나는 부분
@@ -101,10 +106,12 @@ $(document).ready(function() {
 		$('#selectAttendsJstree').jstree(true).show_all();
 		$('#selectAttendsJstree').jstree('search', $(this).val());
 	});
-	
 
-	
 	//jstree-----------------------------------
+	
+	//참석자 추가버튼----------------------------------
+	
+	//참석자 추가버튼----------------------------------
 	
 
 	//예약 등록 버튼-----------------------------------
@@ -151,7 +158,7 @@ $(document).ready(function() {
 			alert("회의 주제를 작성해주세요.");
 		} else if (re_content == null || re_content == "") { 
 			alert("회의 내용을 작성해주세요.");
-		} else if (re_attend == null || re_attend == "" ||re_attend == '{"Attend":[{"attend":""}]}') {  
+		} else if (re_attend == null || re_attend == "") {  
 			alert("회의 참석자를 선택하세요.");
 		}
 		 else {
@@ -219,25 +226,45 @@ function reservationTime(){
 	var day = document.getElementById("re_start").value;
 	var time = document.getElementById("re_start_time").value;
 	
-	console.log("나온나", day, time);
+	console.log("일, 시", day, time);
 	document.getElementById("re_start").value = day + " " +time;
 	$("#nawarayo").hide();
 }
 
-function redetail(){
-	$("#redetail").on("click",function(){
-		console.log("되니....?")
-		
-	})
-}
 
 function reservationModal(){
-	console.log("모달나온나");
+	console.log("예약 등록 모달");
 	$("#reservationModal").modal("show");
 }
 
 function redetail(){
-	$("#redetail").modal("show");
+	console.log("상세보기 모달 :");
+	val = $("#redetailseq").text();  // text로넣으면 숫자는 그냥 숫자로 날아가는듯?
+	console.log("보낼 seq값 :",val);
+	$.ajax({
+		type:"get",
+		url:"./reDetail.do",
+		data:{seq:val},
+		dataType:"json",
+		success:function(data){
+			console.log("불러오기 성공.");
+			$("#deroomNum").val(data.roomNum);
+			$("#destart").val(data.start);
+			$("#deend").val(data.end);
+			$("#detitle").val(data.title);
+			$("#decontent").val(data.content);
+			$("#deattlist").val(data.attends);
+			$("#redetail").modal("show");
+		},
+		error: function() {
+         alert("서버요청 실패했음....");
+         }
+	})
+}
+
+function redetailclose(){
+	console.log("모달창 닫기")
+	$("#redetail").modal("hide");
 }
 
 
