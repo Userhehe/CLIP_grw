@@ -5,17 +5,20 @@
 
 	<!-- 내가 요청한 결재내역 전체 조회 (세션에서 나의 사원번호 사용)-->
 	<select id="getAllApproval" resultType="ApprovalVo" parameterType="java.lang.String">
-        SELECT A.APP_SEQ, APP_TITLE, APP_CONTENT,
-		GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD') APP_CREATEDATE, APP_DRAFT
-		FROM APPROVAL a JOIN (SELECT APP_SEQ 
-					FROM (SELECT APP_SEQ ,JSON_VALUE(APP_PAYLINE, '$.writer') JT
-										FROM APPROVAL)
-					WHERE JT = #{user_id} ) JS
-		ON(A.APP_SEQ = JS.APP_SEQ)
-		WHERE A.APP_DRAFT != '임시저장'
-		ORDER BY APP_CREATEDATE DESC
+      SELECT p.APP_SEQ , p.APP_TITLE,p.APP_CONTENT,
+		g.GIAN_NAME "GIAN_SEQ" ,APP_CREATEDATE ,APP_DRAFT
+		FROM (SELECT a.APP_SEQ ,APP_TITLE,APP_CONTENT,
+			GIAN_SEQ,TO_CHAR(APP_CREATEDATE,'YYYY/MM/DD')AS APP_CREATEDATE ,APP_DRAFT 
+		FROM APPROVAL a JOIN (SELECT APP_SEQ
+								FROM (SELECT APP_SEQ,JSON_VALUE(APP_PAYLINE, '$.writer')JT 
+											FROM APPROVAL a )
+								WHERE JT = #{user_id} ) JS
+		ON (A.APP_SEQ = JS.APP_SEQ)
+		AND A.APP_DRAFT != '임시저장') p ,GIAN g
+		WHERE P.GIAN_SEQ = g.GIAN_SEQ
+	    ORDER BY p.APP_CREATEDATE DESC
 	</select>
-
+	
 
 		<!-- 내가/내팀이 참조된 결재내역 전체 조회 (세션에서 나의 사원번호 사용)-->		
 	<select id="selectReferApproval" resultType="ApprovalVo" parameterType="java.lang.String">  
@@ -42,11 +45,10 @@
 	<!-- 나의 결재승인을 받아야하는 결재 리스트조회 (세션에서 사원번호 사용) -->
 	<select id="getMyPaycheck" resultType="ApprovalVo" parameterType="java.lang.String">
 		SELECT A.APP_SEQ, A.APP_TITLE, A.APP_CONTENT,
-		    A.GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
-		FROM 
-		    APPROVAL A
-		JOIN 
-		    (SELECT 
+		       g.GIAN_NAME AS GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
+		FROM APPROVAL A
+		JOIN (
+		    SELECT 
 		        APP_SEQ,
 		        JSON_VALUE(APP_PAYLINE, '$.paymentLine.first') AS PAYLINE_1ST,
 		        JSON_VALUE(APP_PAYLINE, '$.paymentLine.second') AS PAYLINE_2ND,
@@ -55,13 +57,13 @@
 		        JSON_VALUE(APP_PAYLINE, '$.paymentOk.second') AS PAYOK_2ND,
 		        JSON_VALUE(APP_PAYLINE, '$.paymentOk.third') AS PAYOK_3RD
 		    FROM 
-		        APPROVAL) JT
-		ON 
-		    A.APP_SEQ = JT.APP_SEQ
+		        APPROVAL
+		) JT ON A.APP_SEQ = JT.APP_SEQ
+		JOIN GIAN g ON A.GIAN_SEQ = g.GIAN_SEQ
 		WHERE 
 		    (JT.PAYLINE_1ST = #{user_id} AND A.APP_DRAFT NOT IN ('임시저장', '결재취소'))
 		    OR (JT.PAYLINE_2ND = #{user_id} AND JT.PAYOK_1ST != 'N' AND A.APP_DRAFT NOT IN ('임시저장', '결재취소'))
-		    OR (JT.PAYLINE_3RD = #{user_id} AND (JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND != 'N') AND A.APP_DRAFT NOT IN ('임시저장', '결재취소'))
+		    OR (JT.PAYLINE_3RD = #{user_id} AND JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND != 'N' AND A.APP_DRAFT NOT IN ('임시저장', '결재취소'))
 		ORDER BY 
 		    A.APP_CREATEDATE DESC
 	</select>
@@ -70,11 +72,10 @@
 	<!-- 나의 결재승인을 받아야하는 결재 아직 미처리한 리스트조회 (세션에서 사원번호 사용) -->
 	<select id="getMyUnprocessedPaycheck" resultType="ApprovalVo" parameterType="java.lang.String">
 		SELECT A.APP_SEQ, A.APP_TITLE, A.APP_CONTENT,
-		    A.GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
-		FROM 
-		    APPROVAL A
-		JOIN 
-		    (SELECT 
+		       g.GIAN_NAME AS GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
+		FROM APPROVAL A
+		JOIN (
+		    SELECT 
 		        APP_SEQ,
 		        JSON_VALUE(APP_PAYLINE, '$.paymentLine.first') AS PAYLINE_1ST,
 		        JSON_VALUE(APP_PAYLINE, '$.paymentLine.second') AS PAYLINE_2ND,
@@ -83,16 +84,46 @@
 		        JSON_VALUE(APP_PAYLINE, '$.paymentOk.second') AS PAYOK_2ND,
 		        JSON_VALUE(APP_PAYLINE, '$.paymentOk.third') AS PAYOK_3RD
 		    FROM 
-		        APPROVAL) JT
-		ON 
-		    A.APP_SEQ = JT.APP_SEQ
+		        APPROVAL
+		) JT ON A.APP_SEQ = JT.APP_SEQ
+		JOIN GIAN g ON A.GIAN_SEQ = g.GIAN_SEQ 	
 		WHERE 
 		    (JT.PAYLINE_1ST = #{user_id} AND JT.PAYOK_1ST = 'N' AND A.APP_DRAFT NOT IN ('임시저장', '결재취소', '결재반려'))
-		    OR (JT.PAYLINE_2ND = #{user_id} AND (JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND = 'N') AND A.APP_DRAFT NOT IN ('임시저장', '결재취소', '결재반려'))
-		    OR (JT.PAYLINE_3RD = #{user_id} AND (JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND != 'N' AND JT.PAYOK_3RD = 'N') AND A.APP_DRAFT NOT IN ('임시저장', '결재취소', '결재반려'))
+		    OR (JT.PAYLINE_2ND = #{user_id} AND JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND = 'N' AND A.APP_DRAFT NOT IN ('임시저장', '결재취소', '결재반려'))
+		    OR (JT.PAYLINE_3RD = #{user_id} AND JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND != 'N' AND JT.PAYOK_3RD = 'N' AND A.APP_DRAFT NOT IN ('임시저장', '결재취소', '결재반려'))
 		ORDER BY 
 		    A.APP_CREATEDATE DESC
 	</select>
+	
+	<!-- 나의 결재승인을 받아야하는 결재 내가 반려한 결재 리스트 조회 -->
+   <select id="getMyRejectPay" resultType="ApprovalVo" parameterType="java.lang.String">
+      SELECT A.APP_SEQ, A.APP_TITLE, A.APP_CONTENT,
+          A.GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
+      FROM 
+          APPROVAL A
+      JOIN 
+          (SELECT 
+              APP_SEQ,
+              JSON_VALUE(APP_PAYLINE, '$.paymentLine.first') AS PAYLINE_1ST,
+              JSON_VALUE(APP_PAYLINE, '$.paymentLine.second') AS PAYLINE_2ND,
+              JSON_VALUE(APP_PAYLINE, '$.paymentLine.third') AS PAYLINE_3RD,
+              JSON_VALUE(APP_PAYLINE, '$.paymentOk.first') AS PAYOK_1ST,
+              JSON_VALUE(APP_PAYLINE, '$.paymentOk.second') AS PAYOK_2ND,
+              JSON_VALUE(APP_PAYLINE, '$.paymentOk.third') AS PAYOK_3RD
+          FROM 
+              APPROVAL) JT
+      ON 
+          A.APP_SEQ = JT.APP_SEQ
+      WHERE 
+          (JT.PAYLINE_1ST = #{user_id} AND JT.PAYOK_1ST = 'N' AND A.APP_DRAFT ='결재반려')
+          OR (JT.PAYLINE_2ND = #{user_id} AND (JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND = 'N') AND A.APP_DRAFT = '결재반려')
+          OR (JT.PAYLINE_3RD = #{user_id} AND (JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND != 'N' AND JT.PAYOK_3RD = 'N') AND A.APP_DRAFT ='결재반려')
+      ORDER BY 
+          A.APP_CREATEDATE DESC
+   </select>
+	
+	
+	
 	
 	
 	<!-- 나의 결재승인을 받아야하는 결재 내가 반려한 결재 리스트 조회 -->
@@ -185,7 +216,7 @@
 		ON (A.APP_SEQ = JS.APP_SEQ)
 		AND A.APP_DRAFT = '임시저장') p ,GIAN g
 		WHERE P.GIAN_SEQ = g.GIAN_SEQ
-	
+	    ORDER BY p.APP_CREATEDATE DESC
 	
 	</select>
 	
@@ -226,7 +257,10 @@
 			#{gian_seq}, '임시저장' , #{app_payline} )
 	</insert>
 	
-
+	<update id="cancelApproval" parameterType="ApprovalVo">
+	UPDATE APPROVAL SET APP_DRAFT ='결재취소'
+                WHERE APP_SEQ = #{app_seq}	
+	</update>
 
 
 

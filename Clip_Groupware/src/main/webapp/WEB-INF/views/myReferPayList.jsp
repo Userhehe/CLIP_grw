@@ -17,11 +17,9 @@
 			<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님의 참조된 결재 리스트</h4>
 		<div style="margin-left: 560px;">
 				<select  style="width: 35%; display: unset;" class="form-select " aria-label="Default select example">
-	                      <option selected="selected" >진행도별 조회</option>
-	                      <option value="1">결재대기</option>
-	                      <option value="2">임시저장</option>
-	                      <option value="3">결재반려</option>
-	                      <option value="4">결재완료</option>
+	                      <option selected="selected" >분류별 조회</option>
+	                      <option value="1">제목</option>
+	                      <option value="2">작성자</option>
 	             </select>
 				<input style="width: 200px; display: unset;" id="gian_name"class="form-control" type="text" placeholder="Search...">
 				<button class="btn btn-warning rounded-pill" id="templateSearch">검색</button>
