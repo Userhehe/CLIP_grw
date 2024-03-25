@@ -8,18 +8,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 <!-- 모달창 사용시 css 충돌때문에 막아둠 -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
 <script type="text/javascript" src="./js/calendar.js"></script>
 <style type="text/css">
 	.row {
@@ -58,12 +53,12 @@
 			<div class="modal-content">
 			
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
+					<h5 class="modal-title">일정을 입력하세요.</h5>
 				</div>
 
 				<div class="modal-body">
 					<div class="form-group">
-						<form action="./addmemo.do" method="post" id="memoform">
+						<form id="addForm">
 							<div class="form-group">
 								<label for="title" class="col-form-label">일정 제목</label> 
 								<input type="text" class="form-control" id="title">
@@ -93,37 +88,33 @@
 	<!--memo modal 추가(등록 모달) -->
 
 	<!--memodetail modal (상세모달) -->
-	<div class="modal fade" id="memodetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="calendarModalDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-			
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">상세메모</h5>
+					<h5 class="modal-title">상세 내용 입니다.</h5>
 				</div>
 				
 				<div class="modal-body">
+					<input type="text" style="display: none" id="dtSeq">
 					<div class="form-group">
-					<label for="title" class="col-form-label">일정 제목</label>
+					<label for="dtTitle" class="col-form-label">일정 제목</label>
 					<div class="form-group">
-						<div class="form-control" id="dttitle"></div>
+						<div class="form-control" id="dtTitle"></div>
 					</div>
-					<label for="content" class="col-form-label">일정 내용</label>
-					<div class="form-control" id="dtcontent"></div>
-					<label for="startDate" class="col-form-label">시작 날짜</label>
-					<div class="form-control" id="dtstart"></div>
-					<label for="endDate" class="col-form-label">종료 날짜</label>
-					<div class="form-control" id="dtend"></div>
+					<label for="dtContent" class="col-form-label">일정 내용</label>
+					<div class="form-control" id="dtContent"></div>
+					<label for="dtStart" class="col-form-label">시작 날짜</label>
+					<div class="form-control" id="dtStart"></div>
+					<label for="dtEnd" class="col-form-label">종료 날짜</label>
+					<div class="form-control" id="dtEnd"></div>
 					</div>
 				</div>
 
 				<div class="modal-footer">
-					<div class="btn-group" role="group"
-						aria-label="Basic outlined example">
-						<button type="button" class="btn btn-secondary">확인</button>
-						<button type="button" class="btn btn-secondary" onclick="memoModify(${vo.seq})">수정</button>
-						<button type="button" class="btn btn-secondary">삭제</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="modalclose()">취소</button>
+					<div class="btn-group" role="group aria-label="Basic outlined example" id="dtButtons">
 					</div>
+					
 				</div>
 
 			</div>
@@ -132,34 +123,38 @@
 	<!--memodetail modal (상세모달) 끝 -->
 
 	<!--memo modal (수정 모달) -->
-	<div class="modal fade" id="calendarModalUpdate" tabindex="-1"
-		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="calendarModalUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
+			
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
+					<h5 class="modal-title">일정을 입력하세요.</h5>
 				</div>
 
 				<div class="modal-body">
 					<div class="form-group">
-						<div class="form-group">
-							<label for="title" class="col-form-label">일정 제목</label> <input type="text" class="form-control" id="title_update" name="title">
-						</div>
-						<label for="content" class="col-form-label">일정 내용</label>
-						<textarea class="form-control" rows="5" id="content_update" name="content"></textarea>
-						<label for="start" class="col-form-label">시작 날짜</label>
-						<div class="input-group">
-							<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="start_update" name="start">
-						</div>
-						<label for="end" class="col-form-label">종료 날짜</label>
-						<div class="input-group">
-							<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="end_update" name="end">
-						</div>
+						<form id="upForm">
+							<input type="text" style="display: none" id="upSeq">
+							<div class="form-group">
+								<label for="upTitle" class="col-form-label">일정 제목</label> 
+								<input type="text" class="form-control" id="upTitle">
+							</div>
+							<label for="upContent" class="col-form-label">일정 내용</label>
+							<textarea class="form-control" rows="5" id="upContent"></textarea>
+							<label for="upStart" class="col-form-label">시작 날짜</label>
+							<div class="input-group">
+								<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="upStart">
+							</div>
+							<label for="upEnd" class="col-form-label">종료 날짜</label>
+							<div class="input-group">
+								<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="upEnd">
+							</div>
+						</form>
 					</div>
 				</div>
 
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-secondary" onclick="memoModify(${vo.seq})">수정</button>
+					<button type="submit" class="btn btn-secondary" id="updateCalendar">수정 완료</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="modalclose()">취소</button>
 				</div>
 
@@ -199,6 +194,9 @@
 								</tr>
 								<tr style="display: none">
 									<td><input type="text" id="user_auth" value="${loginVo.user_auth}"></td>
+								</tr>
+								<tr style="display: none">
+									<td><input type="text" id="user_id" value="${loginVo.user_id}"></td>
 								</tr>
 							</table>
 						</form>
