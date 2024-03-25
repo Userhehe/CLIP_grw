@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.clip.gwr.model.mapper.IMemoDao;
 import com.clip.gwr.vo.MemoVo;
+import com.clip.gwr.vo.NtcVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +27,6 @@ public class MemoServiceImpl implements IMemoService{
 
 	@Override
 	public MemoVo myScheduleDetail(String seq) {
-		
 		return dao.myScheduleDetail(seq);
 	}
 
@@ -37,17 +37,22 @@ public class MemoServiceImpl implements IMemoService{
 	}
 
 	@Override
-	public int myScheduleUpdate(MemoVo vo) {
-		return dao.myScheduleUpdate(vo);
+	public int myScheduleDelete(String seq) {
+		return dao.myScheduleDelete(seq);
 	}
-
+	
 	@Override
-	public int myScheduleDelete(MemoVo vo) {
-		return dao.myScheduleDelete(vo);
+	public int myScheduleUpdate(Map<String, Object> map) {
+		return dao.myScheduleUpdate(map);
 	}
 	
 	@Override
 	public List<MemoVo> selectScheduleAll(Map<String, Object> map) {
 		return dao.selectScheduleAll(map);
+	}
+	
+	@Override
+	public NtcVo ntcScheduleDetail(String seq) {
+		return dao.ntcScheduleDetail(seq);
 	}
 }

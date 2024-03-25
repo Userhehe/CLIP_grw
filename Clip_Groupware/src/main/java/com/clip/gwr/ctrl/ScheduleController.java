@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IMemoService;
 import com.clip.gwr.vo.MemoVo;
+import com.clip.gwr.vo.NtcVo;
 import com.clip.gwr.vo.UserinfoVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -64,34 +64,54 @@ public class ScheduleController {
 	}
 	
 	
-	@PostMapping(value = "/addmemo.do")  //메모추가
+	@PostMapping(value = "/addMemo.do")  //메모추가
 	@ResponseBody
-	public String addmemo(@RequestParam Map<String, Object> map) {
-		System.out.println(map);
-		map.put("title","title");
-		map.put("content","content");
-		map.put("start","start");
-		map.put("end","end");
-
-		memoservice.myScheduleInsert(map);
-		
-		System.out.println( "입력될 메모 내용 :" + map);
-		return null;
+	public int addmemo(@RequestParam Map<String, Object> map, HttpSession session) {
+		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
+		map.put("user_id", id.getUser_id());
+		if(map.get("prs_end")== "") {
+			map.put("prs_end", map.get("prs_start"));//이거 안먹음 손봐줘야 함
+		}
+		log.info("메모 내용 {} : " , map);
+		int isc = memoservice.myScheduleInsert(map);
+		return isc;
 	}
 	
-	@PostMapping(value = "/memodetail.do") //메모 상세조회
+	
+	@PostMapping(value = "/calendarModalDetail.do") //메모 상세조회
 	@ResponseBody
-	public MemoVo memodetail(String seq) {
+	public Object memodetail(String seq) {
 		log.info("ScheduleController memodetail 메모상세조회");
 		log.info("화면에서 넘겨받은 seq값 {} : " , seq);
-		MemoVo vo = memoservice.myScheduleDetail(seq);
-		System.out.println("전달받은 prs_seq의 메모 :" + vo);
-		return vo;
+		MemoVo mVo = new MemoVo();
+		NtcVo nVo = new NtcVo();
+		if(seq.indexOf("USER") == 0) {
+			mVo = memoservice.myScheduleDetail(seq);
+			log.info("전달받은 전사seq의 메모 : {}" , mVo);
+			return mVo;
+		}else {
+			nVo = memoservice.ntcScheduleDetail(seq);
+			log.info("전달받은 전사seq의 메모 : {}" , nVo);
+			return nVo;
+		}
 	}
 	
-	@GetMapping(value = "")
-	public String memomodify() {
-		return null;
+	@PostMapping(value = "/myScheduleDelete.do") //메모 삭제
+	@ResponseBody
+	public int myScheduleDelete(String seq) {
+		int isc = memoservice.myScheduleDelete(seq);
+		return isc;
+	}
+	
+	@PostMapping(value = "/myScheduleUpdate.do") //메모 수정
+	@ResponseBody
+	public int myScheduleUpdate(@RequestParam Map<String, Object> map) {
+		if(map.get("prs_end")== "") {
+			map.put("prs_end", map.get("prs_start"));//이거 안먹음 손봐줘야 함
+		}
+		log.info("메모 내용 {} : " , map);
+		int isc = memoservice.myScheduleUpdate(map);
+		return isc;
 	}
 	
 	
