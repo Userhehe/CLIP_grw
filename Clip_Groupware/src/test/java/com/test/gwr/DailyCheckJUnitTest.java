@@ -74,15 +74,15 @@ public class DailyCheckJUnitTest {
 	/**
 	 * 근태현황 검색
 	 */
-//	@Test
+	@Test
 	public void searchDailyCheckList() {
-		map.put("first_dailyregdate","2024-03-04");
-		map.put("last_dailyregdate","2024-03-13");
-		map.put("positions_name","팀장");
-		map.put("ranks_name","대리");
-		map.put("dept_name","설계");
-		map.put("user_id","USER_");
-		map.put("user_name","김");
+//		map.put("first_dailyregdate","2024-03-03");
+//		map.put("last_dailyregdate","2024-03-25");
+//		map.put("positions_name","팀장");
+//		map.put("ranks_name","대리");
+		map.put("dept_name","디자인");
+//		map.put("user_id","USER_");
+//		map.put("user_name","김");
 		List<DailyCheckVo> lists = service.searchDailyCheckList(map);
 		System.out.println("##lists : " + lists);
 		assertNotNull(lists);
@@ -102,7 +102,7 @@ public class DailyCheckJUnitTest {
 		assertNotNull(updateDailyCheckStatus);
 	}
 	
-	@Test
+//	@Test
 	public void selectDailyStatus() {
        DailyCheckDaoImpl checker = new DailyCheckDaoImpl();
         

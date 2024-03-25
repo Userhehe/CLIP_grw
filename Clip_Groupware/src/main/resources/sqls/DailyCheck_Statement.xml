@@ -13,13 +13,12 @@
 	
 	
 	
-	<!-- 퇴근시간 등록 -->
 	<update id="updateDailyCheckOuttime" parameterType="java.util.Map">
-		UPDATE DAILYCHECK
-		SET DAILY_OUTTIME=CURRENT_DATE, DAILY_REGDATE=CURRENT_DATE
-		WHERE USER_ID = #{user_id} 
-		AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE)
-	</update>
+    UPDATE DAILYCHECK
+    SET DAILY_OUTTIME = #{current_time}, DAILY_REGDATE = CURRENT_DATE
+    WHERE USER_ID = #{user_id, jdbcType=VARCHAR} 
+    AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE)
+</update>
 	
 	<!-- 출퇴근여부 등록 -->
 	
