@@ -10,24 +10,24 @@ public interface IUserService {
 	
 	/**
 	 * 로그인
-	 * @param user_id
+	 * @param username
 	 * @return 
 	 */
 	public UserinfoVo userLogin(String username);
 	
 	/**
 	 * 아이디 찾기
-	 * @param map
+	 * @param email
 	 * @return
 	 */
-	public UserVo findUserId(Map<String, Object> map);
+	public UserVo findUserId(String email);
 	
 	/**
-	 * 비밀번호 재설정
-	 * @param map
+	 * 비밀번호 재설정 이메일 찾기
+	 * @param user_id
 	 * @return
 	 */
-	public int updateUserPassword(Map<String, Object> map);
+	public UserVo findUserEmail(String user_id);
 	
 	/**
 	 * 인증번호 저장
@@ -42,6 +42,13 @@ public interface IUserService {
 	 * @return
 	 */
 	public int comparisonCertNum(Map<String, Object> map);
+	
+	/**
+	 * 비밀번호 재설정
+	 * @param map
+	 * @return
+	 */
+	public int updateUserPassword(Map<String, Object> map);
 	
 	/**
 	 * 사원정보 등록

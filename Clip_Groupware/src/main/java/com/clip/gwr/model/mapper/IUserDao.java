@@ -10,17 +10,24 @@ public interface IUserDao {
 	
 	/**
 	 * 로그인
-	 * @param map
+	 * @param username
 	 * @return
 	 */
 	public UserinfoVo userLogin(String username);
 	
 	/**
 	 * 아이디 찾기
-	 * @param map 
+	 * @param email 
 	 * @return
 	 */
-	public UserVo findUserId(Map<String, Object> map);
+	public UserVo findUserId(String email);
+	
+	/**
+	 * 비밀번호 재설정 이메일 찾기
+	 * @param user_id
+	 * @return
+	 */
+	public UserVo findUserEmail(String user_id);
 	
 	/**
 	 * 인증번호 저장

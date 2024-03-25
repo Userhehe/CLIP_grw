@@ -31,18 +31,18 @@ public class UserServiceImpl implements IUserService {
 	 * 아이디찾기
 	 */
 	@Override
-	public UserVo findUserId(Map<String, Object> map) {
+	public UserVo findUserId(String email) {
 		log.info("UserServiceImpl findUserId 아이디찾기");
-		return dao.findUserId(map);
+		return dao.findUserId(email);
 	}
 	
 	/**
-	 * 비밀번호 재설정
+	 * 비밀번호 재설정 이메일 찾기
 	 */
 	@Override
-	public int updateUserPassword(Map<String, Object> map) {
-		log.info("UserServiceImpl updateUserPassword 비밀번호 재설정");
-		return dao.updateUserPassword(map);
+	public UserVo findUserEmail(String user_id) {
+		log.info("UserServiceImpl findUserId 아이디찾기");
+		return dao.findUserEmail(user_id);
 	}
 	
 	/**
@@ -61,6 +61,15 @@ public class UserServiceImpl implements IUserService {
 	public int comparisonCertNum(Map<String, Object> map) {
 		log.info("UserServiceImpl updateUserPassword 인증번호 확인");
 		return dao.comparisonCertNum(map);
+	}
+	
+	/**
+	 * 비밀번호 재설정
+	 */
+	@Override
+	public int updateUserPassword(Map<String, Object> map) {
+		log.info("UserServiceImpl updateUserPassword 비밀번호 재설정");
+		return dao.updateUserPassword(map);
 	}
 	
 	/**
@@ -136,5 +145,5 @@ public class UserServiceImpl implements IUserService {
 		log.info("UserServiceImpl selectUserAuth 사용자 권한 조회");
 		return dao.selectUserAuth(user_id);
 	}
-	
+
 }

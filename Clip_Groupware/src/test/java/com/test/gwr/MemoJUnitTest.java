@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.clip.gwr.model.service.IMemoService;
 import com.clip.gwr.vo.MemoVo;
+import com.clip.gwr.vo.NtcVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +30,8 @@ public class MemoJUnitTest {
 	@Autowired
 	private IMemoService service;
 	
-	//@Test
+	@Test
+	@Ignore
 	public void test() {
 		List<MemoVo> lists = service.myScheduleAll("USER_005");
 		log.info("메모 전체조회 {}:", lists);
@@ -72,12 +75,17 @@ public class MemoJUnitTest {
 	
 	@Test
 	public void testssss() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("user_id", "USER_049");
-		map.put("fullDate", "2024-03");
-		List<MemoVo> lists = service.selectScheduleAll(map);
-		log.info("테스트용 전사 개인 일정 전체 조회 : {}", lists);
-		assertNotNull(lists);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("user_id", "USER_049");
+//		map.put("fullDate", "2024-03");
+//		List<MemoVo> lists = service.selectScheduleAll(map);
+//		log.info("테스트용 전사 개인 일정 전체 조회 : {}", lists);
+//		assertNotNull(lists);ANSCHEDULE001
+		NtcVo vo = service.ntcScheduleDetail("ANSCHEDULE011");
+		log.info("{}",vo);
+		assertNotNull(vo);
+		
+		
 		
 	}
 }
