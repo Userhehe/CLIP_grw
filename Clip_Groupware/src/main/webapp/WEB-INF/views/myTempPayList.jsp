@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>임시 저장한 결재파일</title>
 <%@ include file="./header.jsp"%>
+<script type="text/javascript" src="./js/myTempPayList.js"></script>
 </head>
 <body>
 	<main id="main" class="main">
@@ -83,7 +84,7 @@
 								  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 			                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
 			                      <button type="button" class="btn btn-secondary">결재 수정</button>
-			                      <button type="button" class="btn btn-light">결재 취소</button>
+			                      <button type="button" onclick="cancel()" class="btn btn-light">결재 취소</button>
 							</div>
 						</div>
 					</div>
@@ -92,30 +93,5 @@
 		</div>
 	</div>
 	</main>
-	<script type="text/javascript">
-	$(document).ready(function(){
-		$("tbody tr").click(function(){
-			const appSeq = $(this).find('td:first-child').text();
-			console.log('appSeq값 : ',appSeq);
-			const requestData = {
-					app_seq : appSeq
-			};
-			$.ajax({
-				url:"./myTempPayList.do?app_seq="+requestData.app_seq,
-				type:"POST",
-				contentType:"application/json",
-				success : function(data){
-					console.log(data);
-					$("#modalContent").html("임시저장한 일자:"+data.app_createdate);
-					var modal = new bootstrap.Modal($("#detailModal"));
-					modal.show();
-				},
-				error:function(error){
-					console.log('에러낫어요ㅜㅜ');
-				}
-			});
-		});
-	});
-	</script>
 </body>
 </html>

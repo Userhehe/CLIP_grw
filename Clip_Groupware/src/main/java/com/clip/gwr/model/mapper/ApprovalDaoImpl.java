@@ -113,6 +113,13 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		return sqlSession.insert(NS+"saveTempApproval", approvalVo);
 	}
 
+	//결재 취소
+	@Override
+	public int cancelApproval(String appSeq) {
+		log.info("ApprovalDaoImpl cancelApproval 결재취소");
+		return sqlSession.update(NS+"cancelApproval",appSeq);
+	}
+
 
 
 

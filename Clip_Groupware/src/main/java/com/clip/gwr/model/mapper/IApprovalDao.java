@@ -42,6 +42,8 @@ public interface IApprovalDao {
 	//기안 결재 임시저장
 	public int saveTempApproval(ApprovalVo approvalVo);
 	
+	//결재 취소
+	public int cancelApproval(String appSeq);
 	
 	
 	
