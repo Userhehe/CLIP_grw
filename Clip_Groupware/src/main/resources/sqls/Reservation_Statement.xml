@@ -67,6 +67,15 @@
 		   	AND RE_DELFLAG ='N'
 	</select>
 	
+	<!-- 회의실별 참석자 명단 조회 -->
+	<select id="reAttList" parameterType="java.lang.Integer" resultType="ReAttendsVo">
+		SELECT u.USER_NAME,r.RANKS_NAME
+			FROM ATTENDS a
+			JOIN USERINFO u ON a.USER_ID=u.USER_ID  
+			JOIN RANKS r ON r.RANKS_SEQ = u.RANKS_SEQ 
+			WHERE RE_SEQ = #{re_seq}
+	</select>
+	
 	<!-- 예약테이블 내용 수정하기 -->
 	<update id="reModifyRev">
 		UPDATE RESERVATION
@@ -86,6 +95,8 @@
 			SET RE_DELFLAG='Y' 
 			WHERE RE_SEQ = #{re_seq}
 	</update>
+	
+	
 	
 	
 	
