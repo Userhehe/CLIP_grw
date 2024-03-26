@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>내 승인대기 결재</title>
 <%@ include file="./header.jsp"%>
+<script type="text/javascript" src="./js/myAcceptPayList.js"></script>
 </head>
 <body>
 	<main id="main" class="main">
@@ -16,13 +17,13 @@
 		<div class="card-body">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">전체 조회</button>
+                  <button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">전체 조회</button>
+                </li>
+                <li class="nav-item"	 role="presentation">
+                  <button class="nav-link" id="tab2" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1">승인할 결재문서조회</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1">승인할 결재문서조회</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">결재취소한 결재조회 </button>
+                  <button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">결재취소한 결재조회 </button>
                 </li>
               </ul>
               <div class="tab-content pt-2" id="myTabContent">
@@ -71,7 +72,29 @@
 			          </nav>
 				</div>
 				<!-- 페이징 끝 -->
+                <!-- 모달 시작 -->
+				<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="modalLabel">상세 정보</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<p id="modalContent"></p>
+								</div>
+								<div class="modal-footer">
+									  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
+				                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
+				                      <button type="button" class="btn btn-secondary">결재 수정</button>					        			 
+				                      <button type="button" class="btn btn-light">결재 취소</button>
+								</div>
+							</div>
+						</div>
+					</div>
                 </div>
+				<!-- 모달 끝 -->
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 					<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님이 승인해야 되는 문서를 조회하였습니다.</h4>
                 	<table  class="table table-hover" style="margin-top: 10px;">
@@ -117,9 +140,32 @@
 			          </nav>
 				</div>
 				<!-- 페이징 끝 -->
+				<!-- 모달 시작 -->
+				<div class="modal fade" id="detailModal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="modalLabel">상세 정보</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									 <p id="modalContent"></p>
+								</div>
+								<div class="modal-footer">
+									  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
+				                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
+				                      	<button type="button" class="btn btn-secondary">결재 수정</button>					        			 
+				                      	<button type="button" class="btn btn-light">결재 취소</button>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+                <!-- 모달 끝 -->
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-					<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님이 승인취소한 문서를 조회하였습니다.</h4>
+					<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님이 승인 보류처리하신 문서를 조회하였습니다.</h4>
                 	<table  class="table table-hover" style="margin-top: 10px;">
 					<thead>
 						<tr>
@@ -131,7 +177,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="vo" items="${lists}" varStatus="vs">
+						<c:forEach var="vo" items="${lists3}" varStatus="vs">
 							<tr>
 								<td>${vo.app_seq}</td>
 								<td>${vo.app_title}</td>
@@ -163,6 +209,27 @@
 			          </nav>
 				</div>
 				<!-- 페이징 끝 -->
+				<!-- 모달 시작 -->
+				<div class="modal fade" id="detailModal3" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="modalLabel">상세 정보</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									 <p id="modalContent"></p>
+								</div>
+								<div class="modal-footer">
+									  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
+				                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+                <!-- 모달 끝 -->
                 </div>
               </div>
 		</div>

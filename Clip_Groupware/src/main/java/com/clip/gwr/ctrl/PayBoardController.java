@@ -80,10 +80,16 @@ public class PayBoardController {
 		String user_id = loginUser.getUser_id();
 		List<ApprovalVo> lists = service.getMyPaycheck(user_id);
 		List<ApprovalVo> lists2 =service.getMyUnprocessedPaycheck(user_id);
+		List<ApprovalVo> lists3=service.getMyRejectPay(user_id);
 		model.addAttribute("lists",lists);
 		model.addAttribute("lists2",lists2);
+		model.addAttribute("lists3",lists3);
 		return "myAcceptPayList";
 	}
+	
+	//결재승인시 현황 정보에 따른 수정
+	
+	
 	
 	@GetMapping(value = "/myReferPayList.do")
 	public String myReferPayList(Model model, HttpSession session) {
