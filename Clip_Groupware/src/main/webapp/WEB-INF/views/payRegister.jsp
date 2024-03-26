@@ -6,11 +6,37 @@
 <meta charset="UTF-8">
 <title>결재 신청</title>
 <%@ include file="./header.jsp"%>
+
+
+
+<script type="text/javascript" src="./js/paylineTest.js"></script>
 <style type="text/css">
 .form-control,.form-select{
 	width:15%;
 	display: inline;
 }
+
+.select_payline_area, .select_payline_area{
+	border: solid #ECB53B 2px;
+	border-radius: 5px;
+	padding: 10px; 
+}
+
+.vakata-context{
+ 	z-index: 1060; 
+}
+
+.bi-file-x-fill{
+	margin-left: 10px;
+}
+
+.btn-warning, .btn-warning:hover{
+	color:#fff;
+}
+
+
+
+
 </style>
 <script type="text/javascript" src="./js/payTemplateSelect.js"></script>
 
@@ -72,7 +98,26 @@
 					    ~
 					    <input type="date" class="form-control" id="endDate" name="endDate">
 					    <input type="time" class="form-control" id="endTime" style="display: none;">
-					    <button type="submit" class="btn btn-primary rounded-pill">결재라인 지정</button>
+					    
+						<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal">
+							결재라인 지정
+		            	</a>
+		            	<div class="selectedPayLine">
+		            		<label class="badge bg-warning" >결재라인</label>
+		            		<table class="table table-bordered" style="display: inline-block; vertical-align: middle;">
+		            			<tr>
+		            				<th>1차 결재자</th>
+		            				<th>2차 결재자</th>
+		            				<th>3차 결재자</th>
+		            			</tr>
+		            			<tr>
+		            				<td></td>
+		            				<td></td>
+		            				<td></td>
+		            			</tr>
+		            		</table>
+		            	</div>					    
+
 					</div>
 					<div class="form-group" style="margin-top:10px;">
 						<label for="reason">신청 내용</label>
@@ -158,9 +203,62 @@
 				</div>
 			</div>
 		</section>
+		
+		<!-- 결재라인 모달 영역 -->
+		<div class="modal fade" id="paylinemodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
+            
+            	<div class="modal-dialog modal-lg">
+            	
+            		<div class="modal-content">
+		            	<div class="modal-header">
+			                <h4 class="modal-title">결재라인 지정</h4>
+			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			               
+		                </div>
+		                <div class="modal-body row">
+			                <div class="col-lg-6">
+			                	<div class="select_payline_area col-lg-12">
+			                		<div id="search_box">
+										<input id="search_input" type="text" placeholder="사원 검색">
+									</div>
+									<hr/>
+									
+									<div id="payLine_box"></div>
+			                	</div>
+			                </div>
+			                
+			                <div class="col-lg-6">
+			                	<div class="select_payline_area col-lg-12">
+			                		<div id="pickLine_box"></div>
+			                	</div>
+		                	</div>
+		                	
+		                	<hr>
+	                    </div>
+	                    <div class=modal-footer>
+	                      <button type="button" class="btn btn-warning" id="applyPayLine">결재라인 지정확인</button>
+	                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
+	                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+	                    </div>
+                    </div>
+                    
+            	</div>
+            
+            </div>
+		
+		
 	</main>
 </body>
 </html>
 <!-- editor.js는  html 젤 아래에 넣어야 충돌이 발생 안됨. -->
 <script type="text/javascript" src="./js/payGian.js"></script> 
 <script type="text/javascript" src="./js/dragAndDrop.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/jstree.min.js"></script>
+<!-- <link rel="stylesheet"
+	href="//static.jstree.com/3.3.15/assets/bootstrap/css/bootstrap.min.css" /> -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/themes/default/style.min.css" />
+<link rel="stylesheet" href="./css/jstree.css" />

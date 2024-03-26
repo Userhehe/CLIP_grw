@@ -1,17 +1,67 @@
 // 페이지가 로드될 때 jstree를 초기화합니다.
-window.onload = function() {
+$(document).ready(function() {
+	
+	
+	// 결재라인 모달에서 선택한 결재라인 화면에 입력하는 함수
+	var payButton = document.getElementById('applyPayLine');
+	payButton.addEventListener("click",
+	function(){
+	
+		//지정된 결재라인 값들을 가져오기.
+		var pickLine_div = document.getElementById('pickLine_box');
+		console.log('pickLine_div : ', pickLine_div);
+		
+		//전체 행 가져오기
+		pick_usersList = pickLine_div.getElementsByClassName('apr_row'); 
+		console.log('pick_usersList[0] : ', pick_usersList[0]);
+		
+		//전체 행의 길이
+		var pick_length = pick_usersList.length;
+		console.log(pick_length);
+		
+		var payseq = ['first','second','third'];
+		
+		let html = `<table class="table table-bordered" style="display: inline-block; vertical-align: middle;"><tr>`; 
+					
+			for(let i = 0; i<pick_length; i++){
+				html += `<th>${i+1}차 결재자</th>`;
+			}
+			
+			html += `</tr><tr>`;
+			for(let i = 0; i<pick_length; i++){
+				var pickUser = pick_usersList[i]; 
+				console.log(pickUser);
+				var user = pickUser.getElementById('chkPosi');
+				var value = user.value;
+				var name = user.name;
+				console.log (value, name);
+				html += `<td name=${payseq[i]} value= ${value}>${name}</td>`;
+			}
+			
+			html += `</tr></table>`;
+	
+			console.log(html);	
+		
+	
+		
+		}
+	)
+	
+	
+	
+	
 	
 	function paymodal(){
 		
 		var jstreeData = [];
 		
-		jstreeData.push({"id":"DEPT_001","parent":"#","text":"디자인","state":{"opened":false}});
-		jstreeData.push({"id":"DEPT_002","parent":"#","text":"설계","state":{"opened":false}});
-		jstreeData.push({"id":"DEPT_003","parent":"#","text":"공무","state":{"opened":false}});
-		jstreeData.push({"id":"DEPT_004","parent":"#","text":"시공","state":{"opened":false}});
-		jstreeData.push({"id":"DEPT_005","parent":"#","text":"영업","state":{"opened":false}});
-		jstreeData.push({"id":"DEPT_006","parent":"#","text":"관리","state":{"opened":false}});
-		jstreeData.push({"id":"DEPT_007","parent":"#","text":"인사","state":{"opened":false}});
+		jstreeData.push({"id":"DEPT_001","parent":"#","text":"디자인","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_002","parent":"#","text":"설계","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_003","parent":"#","text":"공무","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_004","parent":"#","text":"시공","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_005","parent":"#","text":"영업","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_006","parent":"#","text":"관리","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_007","parent":"#","text":"인사","state":{"opened":false},"type":"parent"});
 	
 		
 		$.ajax({
@@ -23,7 +73,8 @@ window.onload = function() {
 							jstreeData.push({
 								"id": node.user_id,
 								"parent": node.dept_seq,
-								"text": node.user_name+" "+node.ranks_name
+								"text": node.user_name+" "+node.ranks_name,
+								"type" : 'leaves'
 							});
 						})
 						console.log(jstreeData);
@@ -44,7 +95,7 @@ window.onload = function() {
 		$('#payLine_box').jstree({
 			
 			//jstree의 사용할 플러그인들.
-			plugins: ['search', 'contextmenu'],
+			plugins: ['search', 'contextmenu','types'],
 			
 			core : {
 				check_callback: true,	//노드들에 콜백을 적용시킬 수 있게 할 것인지 말것인지 설정값 디폴트는 트루다.
@@ -54,6 +105,19 @@ window.onload = function() {
 			search : {
 							'case_insensitive': true,
 							'show_only_matches': true
+			},
+			
+			//노드의 이미지 설정...
+			types : {
+				'default' : {
+					 'icon' : 'jstree-icon jstree-themeicon'
+				},
+				'parent' : {
+					 'icon' : 'bx bxs-group'
+				},
+				'leaves' : {
+					 'icon' : 'bx bxs-user'
+				}
 			},
 			
 			//contextmenu(우클릭?) 플러그인 설정 값
@@ -86,9 +150,12 @@ window.onload = function() {
 								//span 태그 이미지 태그로 바꾸기...
 								//  #apr_chk div에 선택한 노드 추가
 								htmlCode += "<div class='apr_row'><div class='sel_apr'>" + selText 
-								+ "</div><span onclick='del(event)' class='bi bi-file-x-fill'></span><input type='hidden' name='user_id' value='"
+								+ "<span onclick='del(event)' class='bi bi-file-x-fill'></span></div><input type='hidden' name='user_id' value='"
 								+sel+"'><input type='hidden' name='emp_name' value='"+newSelText+"'><input id='chkPosi' type='hidden' name='" 
-								+ selText + "' value='" + $("#payLine_box").jstree().get_node(sel).original.user_id + "'></div>";
+								+ selText + "' value='" + $("#payLine_box").jstree().get_node(sel).original.id + "'></div>";
+								
+								
+								//console.log($("#payLine_box").jstree().get_node(sel));
 	
 								$("#pickLine_box").html(htmlCode);
 	
@@ -194,20 +261,23 @@ window.onload = function() {
 	
 	paymodal();
 	
+	$("#payModalBtn").on("click", openModal);
 	
-	
-};
+});
+
+
 
 
 
 function del(event) {
 	// 클릭된 span의 parent div
-	var parentDiv = event.target.parentNode;
+	var parentDiv = (event.target.parentNode).parentNode;
+	console.log('이벤트 노드의 상위 노드 : ',parentDiv);
 
 
 	//#apr_chk div 탐색
 	var chkDiv = parentDiv.parentNode;
-	console.log(chkDiv)
+	console.log('parentDiv의 상위노드 : ',chkDiv)
 
 	// 삭제
 	parentDiv.remove();
@@ -217,58 +287,92 @@ function del(event) {
 	var chkDiv_len = chkDiv.querySelectorAll('.apr_row').length;
 	console.log("남은 row 개수", chkDiv_len)
 
-
+	//삭제한 선택 라인의 사원의 직급을 파악하는 작업
+	var rankseq = ["사원", "주임", "대리", "과장", "차장", "부장", "이사", "부사장", "사장", "대표이사"];
 
 	if (chkDiv_len !== 0) {
+		
 		//마지막 apr_row 탐색
 		var chkDiv_last = chkDiv.querySelectorAll('.apr_row')[chkDiv_len - 1];
 		
 		//마지막 apr_row의 position_flag
 		var chkDiv_last_p;
-		chkDiv_last_p = chkDiv_last.querySelector("#chkPosi").value;
+		chkDiv_last_p = chkDiv_last.querySelector("#chkPosi").name;
+		console.log('chkDiv_last : ', chkDiv_last);
+		console.log('chkDiv_last_p : ', chkDiv_last_p);
+		
+		//노드의 직급
+		var userRank = chkDiv_last_p.substring(chkDiv_last_p.indexOf(" "),chkDiv_last_p.length).trim();
+		
+		//직급의 순서 번호
+		var rankIndex = rankseq.indexOf(userRank);
+	
+	
 	} else {
 		//chkDiv_len이 0개일때 chkDiv_last값이 -1이 되지 않도록 chkDiv_len이 0일 때(#"apr_chk")에 아무것도 있지 않을 때 chkDiv_last_p를 0으로 만들어줌
-		chkDiv_last_p = 0;
+		rankIndex = 0;
 	}
 	//console.log(chkDiv);
 	//console.log(chkDiv_len);
-	//console.log(chkDiv_last);
-	//console.log(chkDiv_last_p);
 	
-	
-	//sel_apr이라는 클래스를 가진 div 탐색
+	//취소한 노드안의 sel_apr이라는 클래스를 가진 div 탐색
 	var childDiv = parentDiv.querySelector('.sel_apr')
+	
+	console.log(childDiv);
 	
 	//childDiv의 내용 저장
 	var childText = childDiv.textContent
 	
+	
+	
 	//findTreeNodeByText function을 통해 childText와 같은 내용의 node 저장
 	var treeNode = findTreeNodeByText(childText);
 	if (treeNode) {
-		var jstree = $("#jstree").jstree();
+		var jstree = $("#payLine_box").jstree();
 		var allNodes = jstree.get_json(null, { flat: true });
 		
 		//treeNode의 아이디로 hide 됐던 노드 다시 show 해주기
-		$("#jstree").jstree('show_node', treeNode.id);
+		$("#payLine_box").jstree('show_node', treeNode.id);
+		
+		console.log('treeNode.id : ', treeNode.id);
+		
+		
 		
 		//#apr_chk div에 있던 것들이 삭제되면 다시 #jstree에서 직급에 따라 disable된것이 enable 처리
 		for (var i = 0; i < allNodes.length; i++) {
          var iNode = jstree.get_node(allNodes[i]);
-         var iPosition_flag = parseInt(iNode.original.position_flag);
-         if (iPosition_flag >= chkDiv_last_p) {
-            $("#jstree").jstree('enable_node', iNode);
-         }
+         
+         //결재라인 맨 마지막에 있는 녀석의 직급을 파악하고 그놈보다 높거나 같은 직급은 활성화 시키는 로직
+	   	  if(iNode.parents != "#"){
+				//순서 노드의 텍스트
+				var iNodeText = iNode.text; 
+				//텍스트에서 가져온 직급
+				var iNodeRank= iNodeText.substring(iNodeText.indexOf(" "),iNodeText.length).trim();
+				//직급의 순위
+				var iRankIndex = rankseq.indexOf(iNodeRank);
+			
+				  if (iRankIndex >= rankIndex) {
+		            $("#payLine_box").jstree('enable_node', iNode);
+		         }
+			}
+			
       }
+      
+      
 	}
 }
 
+
+
+// jsTree의 삭제할 노드의 원래 트리의 위치를 찾는 함수
 function findTreeNodeByText(text) {
 
-	var jstree = $("#jstree").jstree();
+	var jstree = $("#payLine_box").jstree();
 
 	//null : 첫 번째 매개변수는 가져올 노드의 ID, null을 사용하면 모든 노드를 가지고 오게 됨
 	//flat : 모든 노드가 트리 구조를 유지하면서 하나의 배열에 포함 됨
 	var allNodes = jstree.get_json(null, { flat: true });
+	//원래의 js 트리에서의 가져온 텍스트의 노드 위치를 찾는 과정
 	for (var i = 0; i < allNodes.length; i++) {
 		if (allNodes[i].text === text) {
 			return allNodes[i];
@@ -278,24 +382,27 @@ function findTreeNodeByText(text) {
 	return null;
 }
 
-// 초기화 버튼 기능
+// jsTree의 초기화 버튼 기능
 function clean() {
-	var jstree = $("#jstree").jstree();
-	var allNodes = jstree.get_json(null, { flat: true });
-	$("#apr_chk").html("");
+	var jstree = $("#payLine_box").jstree();
+	var allNodes = jstree.get_json(null, { flat: true });//jstree를 json 형태로 전체데이터를 가져온 것
+	$("#pickLine_box").html("");
 	//모든 노드 표시
-	$("#jstree").jstree('show_all');
+	$("#payLine_box").jstree('show_all');
 	for (var i = 0; i < allNodes.length; i++) {
-		var iNode = $("#jstree").jstree().get_node(allNodes[i]);
+		var iNode = $("#payLine_box").jstree().get_node(allNodes[i]);
 		//모든 노드 enable
-		$("#jstree").jstree('enable_node', iNode);
+		$("#payLine_box").jstree('enable_node', iNode);
 	}
 }
 
 
 
-
-function openModal(){
+//모달 띄우는 함수
+var openModal = function openModal(){
 	console.log("모달 나와라~");
 	$('#paylinemodal').modal('show');
 }
+
+
+
