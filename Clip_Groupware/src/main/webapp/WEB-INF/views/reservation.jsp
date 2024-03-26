@@ -69,7 +69,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 						<div class="modal-content">
 
 							<div class="form-group">
-								<form action="./myReservationInsert.do" method="post" id="reservationForm">
+								<!-- <form action="./myReservationInsert.do" method="post" id="reservationForm"> -->
 									<div class="modal-header">
 										<h5 class="modal-title" id="exampleModalLabel">예약 내용을 입력하세요.</h5>
 									</div>
@@ -101,28 +101,29 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 
 										<input class="form-control mt-2" type="text" id="re_title" name="re_title" placeholder="회의 제목을 입력해주세요.">
 										<textarea class="form-control mt-2" id="re_content"	name="re_content" rows="5" placeholder="회의 내용을 입력해주세요."></textarea>
-										<!-- jstree 사원 선택 -->
-										<input class="form-control mt-2" id="selectAttendsJstree_search" type="text" placeholder="사원 검색 창입니다.">
-											<div id="attadd">
-												<div id="selectAttendsJstree"></div>
-												<div id="attendsCheckList" style="display: none">
-													<input type="text" id="re_attend" name="re_attend">
-												</div>
-												<input type="text" id="addemp" placeholder="참석자를 모두 선택하세요">
-											</div>
-										</div>
-									</div>
-								</form>
+										<!-- </form> -->
+										<input class="btn btn-secondary" type="button" value="예약 추가" id="addReservation"> 
+										<input class="btn btn-secondary" type="button" value="뒤로 가기" id="addReservationCancel" onclick="redetailclose()">
+										</div> <!-- modal body -->
+									</div> <!-- form-group -->
+								
 								
 								<div class="modal-footer">
-									<input class="btn btn-secondary" type="button" value="예약 추가" id="addReservation"> 
-									<input class="btn btn-secondary" type="button" value="뒤로가기" id="addReservationCancel">
+								<!-- jstree 사원 선택 -->
+									<input class="form-control mt-2" id="selectAttendsJstree_search" type="text" placeholder="사원 검색 창입니다.">
+									<div id="attadd">
+										<div id="selectAttendsJstree"></div>
+										<div id="attendsCheckList" style="display: none">
+											<input type="text" id="re_attend" name="re_attend">
+										</div>
+										<input type="text" id="addemp" placeholder="참석자를 선택하세요">
+									</div>
 								</div>
+									<button id="addempbtn">사원 등록</button>
 							</div>
 
 						</div>
 					</div>
-				</div>
 				<!-- 예약 추가 모달 끝 -->	
 		
 	<main id="main" class="main">

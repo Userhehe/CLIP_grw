@@ -82,7 +82,6 @@ public class ReservationController {
 			attends += att.getUser_name();
 			attends += " ";
 			attends += att.getRanks_name();
-			
 			if(index < attlists.size()-1) {
 				attends +=",";
 			}

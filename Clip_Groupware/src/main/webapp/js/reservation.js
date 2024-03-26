@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-	
+		
 	//dateTimePicker 날짜-------------------------------------------------
 	$("#re_start").datetimepicker({
 		format: "Y-m-d",
@@ -42,14 +42,7 @@ $(document).ready(function() {
 	});
 	
 	
-	
-	//jstree 참석자-----------------------------------
-	
-	//jstree 참석자-----------------------------------
-	
-	
-		
-	//데이터 jstree형식으로 바꿔 줄꺼는 놈 정의
+	//데이터 jstree형식으로 바꿔줌
 	function convertData(data) {
 		var jstreeData = [];
 		data.forEach(function(item) {
@@ -70,7 +63,8 @@ $(document).ready(function() {
 		return jstreeData;
 	}
 	
-	//데이터 받아오는 아작스 
+	
+	//jstree 결과가 
 	function initializeJSTree() {
 		$.ajax({
 			url: './selectAttendsJstree.do',
@@ -82,7 +76,6 @@ $(document).ready(function() {
 						'data': jstreeData,
 						'check_callback':true
 					},//코어 영역끝
-
 					checkbox: {
 						three_state: false
 						
@@ -95,11 +88,55 @@ $(document).ready(function() {
 					plugins: ["search", "checkbox","contextmenu"]
 
 				});
+				
+
+				
 			}//success끝나는 부분
 		});//ajax끝나는 부분
 	}
+	
 	//아작스 실행하는 놈
 	initializeJSTree();
+	
+	// 참석자 input태그에 넣기
+
+    
+       $('#selectAttendsJstree').on('select_node.jstree', function (e, data) {
+    if (!data.node.id.includes('DEPT')) {
+        console.log('노드가 선택되었습니다:', data.node.text);
+    }
+		});
+	   
+	   //deselect_node.jstree 이벤트 핸들링
+	   $('#selectAttendsJstree').on('deselect_node.jstree', function (e, data) {
+			if (!data.node.id.includes('DEPT')) {
+	       console.log('노드 선택이 해제되었습니다:', data.node.text);
+			}
+	   });
+
+
+   $("#addempbtn").click(function(){
+    var chkemp = $("#selectAttendsJstree").jstree("get_selected", true);
+    console.log("chkemp :", chkemp)
+    
+	 var chkemps = chkemp.map(function(node){
+	        if (node.id !== "DEPT_001" && 
+	            node.id !== "DEPT_002" && 
+	            node.id !== "DEPT_003" && 
+	            node.id !== "DEPT_004" && 
+	            node.id !== "DEPT_005" && 
+	            node.id !== "DEPT_006" && 
+	            node.id !== "DEPT_007") {
+	            return node.id;
+	        }
+	    }).filter(Boolean);
+	    var chkempsString = chkemp.join(",");
+		console.log("선택된 항목 ID :" + chkemps.join(", "));
+		$("#addemp").val(chkempsString);
+	});
+	
+		
+	
 	
 	// 검색창 글자 입력하면 나오는놈
 	$('#selectAttendsJstree_search').keyup(function() {
@@ -108,96 +145,131 @@ $(document).ready(function() {
 	});
 
 	//jstree-----------------------------------
+ 
+//	//예약 등록 버튼-----------------------------------
+//	$("#addReservation").click(function() {
+//		var selectedNodes = $('#selectAttendsJstree').jstree('get_selected', true);
+//		var selectedNodeIds = selectedNodes.map(function(node) {
+//			return node.id;
+//		});
+//		console.log("선택된 항목 ID: " + selectedNodeIds.join(", "));
+//		
+//		var attendV = selectedNodeIds.join(",");
+//		var attends = attendV.split(",");
+//		var attendsReal = {"Attend": []};
+//
+//		if (attends !== null) {
+//		    for (var i = 0; i < attends.length; i++) {
+//				if(attends[i].includes("USER")){
+//			        var attend = attends[i];
+//			        attendsReal["Attend"].push({"attend": attend});
+//				}
+//		      
+//		    }
+//		}
+//
+//		attendsReal = JSON.stringify(attendsReal);
+//		
+//		document.getElementById("re_attend").value = attendsReal;
+//		
+//		
+//	  	var me_room = document.getElementById("me_room").value;
+//		var re_start = document.getElementById("re_start").value;
+//		var re_start_time = document.getElementById("re_start_time").value;
+//		var re_title = document.getElementById("re_title").value;
+//		var re_content = document.getElementById("re_content").value;
+//		var re_attend = document.getElementById("re_attend").value;
+//		
+//		if (me_room == null || me_room == "") {
+//			alert("회의실을 선택하세요.");
+//		} else if (re_start == null || re_start == "") { 
+//			alert("예약일을 선택하세요.");
+//		} else if (re_start_time == null || re_start_time == "") { 
+//			alert("예약시간을 선택하세요.");
+//		}  else if (re_title == null || re_title == "") { 
+//			alert("회의 주제를 작성해주세요.");
+//		} else if (re_content == null || re_content == "") { 
+//			alert("회의 내용을 작성해주세요.");
+//		} else if (re_attend == null || re_attend == "") {  
+//			alert("회의 참석자를 선택하세요.");
+//		}
+//		 else {
+//			datata = $("#reservationForm").serialize();
+//			
+//			$.ajax({
+//				type: "POST",
+//				url:"./myReservationInsert.do",
+//				data:datata,
+//				success:function(data){
+//					if(data!=1){
+//						alert("예약 실패");
+//						return false;
+//					}else{
+//						alert("예약 성공");
+//						$("#reservationForm")[0].reset();
+//						$('#selectAttendsJstree').jstree("deselect_all");
+//						$("#selectAttendsJstree").jstree("close_all");
+//						$("#reservationModal").modal("hide");
+//					}
+//				},error: function() {
+//						alert("서버 에러");
+//					}
+//			});		
+//		}		
+//	});
 	
-	//참석자 추가버튼----------------------------------
+	//모달 닫기
+//	$("#addReservationCancel").click(function() {
+//		$("#reservationForm")[0].reset();
+//		$('#selectAttendsJstree').jstree("deselect_all");
+//		$("#selectAttendsJstree").jstree("close_all");
+//		$("#reservationModal").modal("hide");
+//	});
 	
-	//참석자 추가버튼----------------------------------
 	
-
-	//예약 등록 버튼-----------------------------------
-	$("#addReservation").click(function() {
-		var selectedNodes = $('#selectAttendsJstree').jstree('get_selected', true);
-		var selectedNodeIds = selectedNodes.map(function(node) {
-			return node.id;
-		});
-		console.log("선택된 항목 ID: " + selectedNodeIds.join(", "));
-		
-		var attendV = selectedNodeIds.join(",");
-		var attends = attendV.split(",");
-		var attendsReal = {"Attend": []};
-
-		if (attends !== null) {
-		    for (var i = 0; i < attends.length; i++) {
-				if(attends[i].includes("USER")){
-			        var attend = attends[i];
-			        attendsReal["Attend"].push({"attend": attend});
-				}
-		      
-		    }
-		}
-
-		attendsReal = JSON.stringify(attendsReal);
-		
-		document.getElementById("re_attend").value = attendsReal;
-		
-		
-	  	var me_room = document.getElementById("me_room").value;
-		var re_start = document.getElementById("re_start").value;
-		var re_start_time = document.getElementById("re_start_time").value;
-		var re_title = document.getElementById("re_title").value;
-		var re_content = document.getElementById("re_content").value;
-		var re_attend = document.getElementById("re_attend").value;
-		
-		if (me_room == null || me_room == "") {
-			alert("회의실을 선택하세요.");
-		} else if (re_start == null || re_start == "") { 
-			alert("예약일을 선택하세요.");
-		} else if (re_start_time == null || re_start_time == "") { 
-			alert("예약시간을 선택하세요.");
-		}  else if (re_title == null || re_title == "") { 
-			alert("회의 주제를 작성해주세요.");
-		} else if (re_content == null || re_content == "") { 
-			alert("회의 내용을 작성해주세요.");
-		} else if (re_attend == null || re_attend == "") {  
-			alert("회의 참석자를 선택하세요.");
-		}
-		 else {
-			datata = $("#reservationForm").serialize();
-			
-			$.ajax({
-				type: "POST",
-				url:"./myReservationInsert.do",
-				data:datata,
-				success:function(data){
-					if(data!=1){
-						alert("예약 실패");
-						return false;
-					}else{
-						alert("예약 성공");
-						$("#reservationForm")[0].reset();
-						$('#selectAttendsJstree').jstree("deselect_all");
-						$("#selectAttendsJstree").jstree("close_all");
-						$("#reservationModal").modal("hide");
-					}
-				},error: function() {
-						alert("서버 에러");
-					}
-			});		
-		}		
+//	//예약등록 모달창 외부클릭 금지
+//	$('#reservationModal').modal({
+//        backdrop: 'static',
+//        keyboard: false
+//    });
+    
+    
+  
+   
+   
+   // 예약 상세보기 화면 모달창 및 값전달
+   $('.re_title').click(function() {
+	var row = $(this).parent();
+	var seq = row.find(".re_seq").text();
+	console.log("seq의 값" + seq)
+	
+		$.ajax({
+		type:"get",
+		url:"./reDetail.do",
+		data:{seq:seq},
+		dataType:"json",
+		success:function(data){
+			console.log("불러오기 성공.");
+			$("#deroomNum").val(data.roomNum);
+			$("#destart").val(data.start);
+			$("#deend").val(data.end);
+			$("#detitle").val(data.title);
+			$("#decontent").val(data.content);
+			$("#deattlist").val(data.attends);
+			$("#redetail").modal("show");
+		},
+		error: function() {
+         alert("서버요청 실패했음....");
+         }
+	})
+	
 	});
-	
-	$("#addReservationCancel").click(function() {
-		$("#reservationForm")[0].reset();
-		$('#selectAttendsJstree').jstree("deselect_all");
-		$("#selectAttendsJstree").jstree("close_all");
-		$("#reservationModal").modal("hide");
-	});
-	$('#reservationModal').modal({
-        backdrop: 'static',
-        keyboard: false
-    });
-	
 });
+
+//------------------------------------
+
+
+
 // 예약가능시간 조회
 function selectPossibleMeRoomButton() {
 	var me_room = document.getElementById("me_room").value;
@@ -237,35 +309,12 @@ function reservationModal(){
 	$("#reservationModal").modal("show");
 }
 
-function redetail(){
-	console.log("상세보기 모달 :");
-	val = $("#redetailseq").text();  // text로넣으면 숫자는 그냥 숫자로 날아가는듯?
-	console.log("보낼 seq값 :",val);
-	$.ajax({
-		type:"get",
-		url:"./reDetail.do",
-		data:{seq:val},
-		dataType:"json",
-		success:function(data){
-			console.log("불러오기 성공.");
-			$("#deroomNum").val(data.roomNum);
-			$("#destart").val(data.start);
-			$("#deend").val(data.end);
-			$("#detitle").val(data.title);
-			$("#decontent").val(data.content);
-			$("#deattlist").val(data.attends);
-			$("#redetail").modal("show");
-		},
-		error: function() {
-         alert("서버요청 실패했음....");
-         }
-	})
-}
-
 function redetailclose(){
 	console.log("모달창 닫기")
 	$("#redetail").modal("hide");
+	$("#reservationModal").modal("hide");
 }
+
 
 
 
