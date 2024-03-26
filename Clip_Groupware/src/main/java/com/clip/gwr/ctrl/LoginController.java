@@ -34,17 +34,13 @@ public class LoginController {
 	@PostMapping(value = "/loginForms.do") 
 	public String loginSession(HttpSession session,
 			HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
-		//Map<String, Object> map = new HashMap<String, Object>();
 		
 		String id = request.getParameter("username");
 	    String pw = request.getParameter("password");
 	    log.info("####pw: " + pw);
-		//map.put("username",id);
-		//map.put("user_password", pw);
 		UserinfoVo user = service.userLogin(id);
 		
-		//session.setAttribute("UserVo", user);
-		System.out.println("!!!!!!!!!!!!login : " + user);
+		System.out.println("####user : " + user);
 		
 		if(user != null) {
 			// DB에서 가져온 사용자의 암호화된 비밀번호
@@ -79,30 +75,13 @@ public class LoginController {
 	        out.flush();
 	        return "loginForm";
 	    }
-		
-//		if(session.getAttribute("UserVo") == null) {
-//			response.setContentType("text/html; charset=UTF-8");
-//			PrintWriter out = response.getWriter();
-//			out.println("<script language='javascript'>");
-//			out.println("alert('존재하는 로그인정보가 없습니다')");
-//			out.println("</script>");
-//			out.flush();
-//			return "login";
-//		}
-//		response.setContentType("text/html; charset=UTF-8");
-//		PrintWriter out = response.getWriter();
-//		out.println("<script language='javascript'>");
-//		out.println("alert('로그인 되었습니다')");
-//		out.println("</script>");
-//		out.flush();
-//		return "main";
 	}
 
-//	@GetMapping(value = "/logout.do")
-//	public String logout(HttpSession session) {
-//		session.invalidate();
-//		return "login";
-//	}
+	@GetMapping(value = "/logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "loginForm";
+	}
 //	
 //	@GetMapping(value = "/adminMain.do")
 //	public String adminMain() {

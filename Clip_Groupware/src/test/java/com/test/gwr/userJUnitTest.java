@@ -52,9 +52,6 @@ public class userJUnitTest {
 	@Autowired
 	private IRanksService ranService;
 	
-	@Autowired
-	private RedisUtil redisUtil;
-	
 	Map<String, Object> map = new HashMap<String, Object>();
 	
 	/**
@@ -178,13 +175,12 @@ public class userJUnitTest {
 	 */
 //	@Test
 	public void searchUserinfoList() {
-		map.put("user_id","USER_0");
 		map.put("user_name","김");
 		map.put("ranks_name","대리");
 		map.put("dept_name","설계");
 		map.put("positions_name","팀장");
 		map.put("start_regdate","2024-03-04");
-		map.put("end_regdate","2024-03-04");
+		map.put("end_regdate","2024-03-25");
 		List<UserinfoVo> lists = usrService.searchUserinfoList(map);
 		System.out.println(lists);
 		assertNotNull(lists);

@@ -20,46 +20,52 @@
 		        <h5 class="card-title">사원 목록</h5>
 		        
 		        <!-- Table with hoverable rows -->
-		        <form class="search-form d-flex align-items-center" method="POST" action="#">
-		        	<div class="row mb-3">
-	                  <label for="inputDate" class="col-sm-2 col-form-label"></label>
-	                  <div class="col-sm-10">
-	                    <input type="date" class="form-control">
-	                  </div>
-	                </div>
-	                ~
-	                <div class="row mb-3">
-	                  <label for="inputDate" class="col-sm-2 col-form-label"></label>
-	                  <div class="col-sm-10">
-	                    <input type="date" class="form-control">
-	                  </div>
-	                </div>
-	                <div class="col-sm-10 w15vh">
-	                  <select class="form-select" aria-label="Default select example">
-	                    <option value="">부서선택</option>
-	                    <c:forEach var="deptLists" items="${deptLists}" varStatus="vs">
-							<option value="${deptLists.dept_name}">${deptLists.dept_name}</option>
-						</c:forEach>
-	                  </select>
-	                </div>
-	                <div class="col-sm-10 w15vh">
-	                  <select class="form-select" aria-label="Default select example">
-	                    <option value="">직급선택</option>
-	                    <c:forEach var="positLists" items="${positionsLists}" varStatus="vs">
-							<option value="${positLists.positions_name}">${positLists.positions_name}</option>
-						</c:forEach>
-	                  </select>
-	                </div>
-	                <div class="col-sm-10 w15vh">
-	                  <select class="form-select" aria-label="Default select example">
-	                    <option value="">직책선택</option>
-	                    <c:forEach var="ranksLists" items="${ranksLists}" varStatus="vs">
-							<option value="${ranksLists.ranks_name}">${ranksLists.ranks_name}</option>
-						</c:forEach>
-	                  </select>
-	                </div>
-		       		<input type="text" name="username" placeholder="이름으로 검색" title="Enter search keyword">
-		        	<button type="submit" onclick="userSearch()" title="Search"><i class="bi bi-search"></i></button>
+		        <form action="./searchUserList.do" id="searchUserList" class="form-inline" method="GET">
+		        	<div id="flex_center" class="row">
+			        	<div class="col-md-2 w140px">
+		                  <!-- <label for="startDate" class="col-sm-2 col-form-label">시작일</label> -->
+		                  <div class="col-sm-10">
+		                    <input type="date" id="startDate" name="startDate" class="form-control w133px">
+		                  </div>
+		                </div>
+		                <div class="col-md-2 w140px">
+		                  <!-- <label for="lastDate" class="col-sm-2 col-form-label">종료일</label> -->
+		                  <div class="col-sm-10">
+		                    <input type="date" id="endDate" name="endDate" class="form-control w133px">
+		                  </div>
+		                </div>
+		                &nbsp;&nbsp;
+		                <div class="col-md-2 pd1px">
+		                  <select id="searchDepts" name="searchDepts" class="form-select" aria-label="Default select example">
+		                    <option value="">부서선택</option>
+		                    <c:forEach var="deptLists" items="${deptLists}" varStatus="vs">
+								<option value="${deptLists.dept_name}">${deptLists.dept_name}</option>
+							</c:forEach>
+		                  </select>
+		                </div>
+		                <div class="col-md-2 pd1px">
+		                  <select id="searchPositions" name="searchPositions" class="form-select" aria-label="Default select example">
+		                    <option value="">직급선택</option>
+		                    <c:forEach var="positLists" items="${positionsLists}" varStatus="vs">
+								<option value="${positLists.positions_name}">${positLists.positions_name}</option>
+							</c:forEach>
+		                  </select>
+		                </div>
+		                <div class="col-md-2 pd1px">
+		                  <select  id="searchRanks" name="searchRanks" class="form-select" aria-label="Default select example">
+		                    <option value="">직책선택</option>
+		                    <c:forEach var="ranksLists" items="${ranksLists}" varStatus="vs">
+								<option value="${ranksLists.ranks_name}">${ranksLists.ranks_name}</option>
+							</c:forEach>
+		                  </select>
+		                </div>
+		                <div class="col-md-2 w140px pd1px">
+		                  <div class="col-sm-10">
+		                    <input type="text" id="searchName" name="searchName" class="form-control w133px" placeholder="이름 입력">
+		                  </div>
+		                </div>
+			       		<button type="submit" id="searchBtn" class="ri-search-line"></button>
+		        	</div>
 		      	</form>
 		        <table class="table table-hover">
 		          <thead>
@@ -82,7 +88,12 @@
 			              <td>${userList.ranks_name}</td>
 			              <td>${userList.positions_name}</td>
 			              <td>${userList.dept_name}</td>
-			              <td>${userList.user_auth}</td>
+			              <c:if test="${userList.user_auth eq 'ROLE_USER'}">
+			              	<td>N</td>
+			              </c:if>
+			              <c:if test="${userList.user_auth eq 'ROLE_ADMIN'}">
+			              	<td>Y</td>
+			              </c:if>
 			              <td>${userList.user_regdate}</td>
 			            </tr>
 		            </c:forEach>

@@ -79,7 +79,7 @@ body {
 
 .form-group input.replace_pw_input[type="text"],
 .form-group input.replace_pw_input[type="number"] {
-    width: 42.7vh; /* 입력 필드의 너비 지정 */
+    width: 403.5px; /* 입력 필드의 너비 지정 */
 }
 
 .flex_end {

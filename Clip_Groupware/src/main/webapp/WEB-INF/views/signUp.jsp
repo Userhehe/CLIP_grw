@@ -18,7 +18,7 @@
 <body>
 	<main id="main" class="main">
 		<div class="container" style="margin: 0;">
-			<div class="card-body w70vh">
+			<div class="card-body w661_5px">
 				<h5 class="card-title font20">회원정보 등록</h5>
 				<div class="fc_red font12">&nbsp;&nbsp;* 값은 필수값입니다</div>
 				<form action="./signUp.do" method="post">
@@ -31,17 +31,17 @@
 					<div class="row mb-3">
 						<label for="inputEmail" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>주민등록번호</label>
 						<div class="col-sm-10">
-							<input type="text" id="user_start_registnum" name="user_start_registnum" class="form-control w26_43vh ib" placeholder="주민등록번호 앞자리" required="required"> 
+							<input type="text" id="user_start_registnum" name="user_start_registnum" class="form-control w249_8px ib" placeholder="주민등록번호 앞자리" required="required"> 
 							<span class="ib">-</span> 
-							<input type="password" id="user_last_registnum" name="user_last_registnum" class="form-control w26_43vh ib" placeholder="주민등록번호 뒷자리" required="required">
+							<input type="password" id="user_last_registnum" name="user_last_registnum" class="form-control w249_8px ib" placeholder="주민등록번호 뒷자리" required="required">
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="inputEmail" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>Email</label>
 						<div class="col-sm-10">
-							<input type="text" id="user_email" name="user_email" class="form-control w36_5vh ib" required="required"> 
+							<input type="text" id="user_email" name="user_email" class="form-control w345px ib" required="required"> 
 							<span class="ib">@</span> 
-							<select name="email" class="form-select w15_2vh ib">
+							<select name="email" class="form-select w143_7px ib">
 								<option value="gmail.com">gmail.com</option>
 								<option value="naver.com">naver.com</option>
 								<option value="hanmail.com">hanmail.com</option>
@@ -59,15 +59,15 @@
 					<div class="row mb-3">
 						<label for="inputEmail" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>연락처</label>
 						<div class="col-sm-10">
-							<select name="phone_firstnum" class="form-select w13vh ib">
+							<select name="phone_firstnum" class="form-select w120px ib">
 								<option value="010">010</option>
 								<option value="011">011</option>
 								<option value="input_phone">직접 입력</option>
 							</select> 
 							<span class="ib">-</span> 
-							<input type="number" id="phone_secondnum" name="phone_secondnum" class="form-control w19_18vh ib" placeholder="연락처 앞자리" required="required"> 
+							<input type="number" id="phone_secondnum" name="phone_secondnum" class="form-control w182_7px ib" placeholder="연락처 앞자리" required="required"> 
 							<span class="ib">-</span> 
-							<input type="number" id="phone_lastnum" name="phone_lastnum" class="form-control w19_18vh ib" placeholder="연락처 뒷자리" required="required">
+							<input type="number" id="phone_lastnum" name="phone_lastnum" class="form-control w182_7px ib" placeholder="연락처 뒷자리" required="required">
 						</div>
 					</div>
 
