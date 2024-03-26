@@ -4,9 +4,39 @@ a {
 	color: black;
 }
 
+#flex_center {
+	align-items: center;
+}
+
+#searchBtn {
+	width: 50px;
+	height: 36px;
+	border-radius: 5px;
+}
+
+#searchBtn:hover {
+	background-color: lightgrey;
+}
+
 .paging {
 	display: flex;
     justify-content: center;
+}
+
+.col-md-2 > label {
+	width: 120px;
+}
+
+.w133px {
+	width: 133px;
+}
+
+.w140px {
+	width: 140px;
+}
+
+.pd1px {
+	padding: 1px;
 }
 
 .button {
@@ -21,10 +51,8 @@ a {
 	font-size: 13px;
 }
 
-.w15vh {
-	width: 15vh;
-}
-
 .right_button {
 	margin-left: auto;
+	margin-right: 20px;
+	margin-bottom: 20px;
 }

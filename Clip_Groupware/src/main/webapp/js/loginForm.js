@@ -62,20 +62,20 @@ $(document).ready(function() {
         
         // 이메일 값을 가져오기
         var email = $('#email').val();
-        console.log('이메일주소는??', email);
+        console.log('이메일주소 : ', email);
 
         $.ajax({
             url: './findId.do',
             method: 'POST',
-            data: { email: email }, // 이메일 값을 데이터로 전달
             dataType: 'html',
+            data: { email:email }, // 이메일 값을 데이터로 전달
             success: function(response) {
-                console.log('아디찾기성공!!!!');
+                console.log('아이디찾기성공');
 		        // alert 창에 메시지 표시
 		        alert(response);
             },
             error: function(xhr, status, error) {
-                console.error('아디찾기요청실패...', status, error);
+                console.error('아이디찾기요청실패', status, error);
             }
         });
     });
@@ -84,21 +84,21 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		var id = $('#id').val();
-		console.log('아이디는????', id);
+		console.log('아이디 : ', id);
 		
 		$.ajax({
 			url: './sendCertNum.do',
 			method: 'POST',
-			data: { id: id },
 			dataType: 'html',
+			data: { id: id },
 			success: function(response) {
-				console.log('인증번호발송성공!!!!');
+				console.log('인증번호발송성공');
 				alert(response);
 			},
 			error: function(xhr, status, error) {
-				console.error('인증번호발송실패...', status, error)
+				console.error('인증번호발송실패', status, error)
 			}
-		})
+		});
 	});
 	
 	$('#comparisonCertNumForm').submit(function(event) {
@@ -106,21 +106,44 @@ $(document).ready(function() {
 		
 		var id = $('#id').val();
 		var certnum = $('#certnum').val();
-		console.log('인증번호값은 ????',certnum);
-		console.log('아이디값은 ????', id);
+		console.log('아이디 : ', id);
+		console.log('인증번호 : ',certnum);
 		
 		$.ajax({
 			url: './comparisonCertNumForm.do',
 			method: 'POST',
-			data: { id: id, certnum: certnum },
 			dataType: 'text',
+			data: { id:id, certnum:certnum },
 			success: function(response) {
-				console.log("인증번호비교!!!!");
+				console.log("인증번호비교완료");
 				alert(response);
 			},
 			error: function(xhr, status, error) {
-				console.error('인증번호비교실패....', status, error)
+				console.error('인증번호비교실패', status, error)
 			}
-		})
+		});
+	});
+	
+	$('#updatePasswordForm').submit(function(event) {
+		event.preventDefault();
+		
+		var id = $('#id').val();
+		var password = $('#replacePassword').val();
+		console.log('아이디 : ',id);
+		console.log('비밀번호 : ', password);
+		$.ajax({
+			url: './updatePasswordForm.do',
+			method: 'POST',
+			data: { id:id, password:password },
+			dataType: 'text',
+			success: function(response) {
+				console.log("비밀번호업데이트");
+				alert(response);
+				location.href='./loginForm.do';
+			},
+			error: function(xhr, status, error) {
+				console.error('비밀번호업데이트실패', status, error)
+			}
+		});
 	});
 });
