@@ -1,7 +1,16 @@
 package com.clip.gwr.ctrl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.clip.gwr.model.service.IProjectsService;
+import com.clip.gwr.model.service.IReservationService;
+import com.clip.gwr.vo.GianVo;
+import com.clip.gwr.vo.ProjectsVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,10 +18,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProjectsController {
 	
+	@Autowired
+	private IProjectsService service;
+	
 	@GetMapping(value = "/projectsProgress.do")
-	public String projectsProgress() {
+	public String projectsProgress(Model model) {
+		log.info("PayController 진행도별 프로젝트 페이지");
+		List<ProjectsVo> lists = service.projectsProgressSel();
+		model.addAttribute("lists", lists);
 		return "projectsProgress";
 	}
+	
 	@GetMapping(value = "/projectsPeriod.do")
 	public String projectsPeriod() {
 		return "projectsPeriod";

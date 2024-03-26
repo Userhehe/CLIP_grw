@@ -16,7 +16,7 @@ import lombok.ToString;
 
 public class ProjectMemVo {
 //
-	private String prm_seq	;
-	private String prj_id	;
-	private String user_id	;
+	private String prm_seq		;
+	private String prj_id		;
+	private String user_name	;
 }
