@@ -67,15 +67,14 @@ public class DailyCheckDaoImpl implements IDailyCheckDao {
 	/**
 	 * 근태현황 수정
 	 */
-	@Override
 	public int updateDailyCheckStatus(Map<String, Object> map) {
-		log.info("##### 근태현황 수정 updateDailyCheckStatus #####");
-		return sqlSession.update(NS + "updateDailyCheckStatus", map);
+	    log.info("##### 근태현황 수정 updateDailyCheckStatus #####");
+	    return sqlSession.update(NS + "updateDailyCheckStatus", map);
 	}
 
 	@Override
 	public String selectDailyStatus(String daily_status) {
-		log.info("##### 출퇴근 현황 조회  updateDailyCheckStatus #####");
+		log.info("##### 출퇴근여부 등록 updateDailyCheckStatus #####");
 		return sqlSession.selectOne(daily_status);
 	}
 

@@ -62,12 +62,10 @@ public class DailyCheckController {
 		List<PositionsVo> positionsList = positionsService.positionsAll();
 		List<DeptVo> deptList = deptService.deptAll();
 		List<RanksVo> ranksList = ranksService.ranksAll();
+		
 		model.addAttribute("positionsList", positionsList);
 		model.addAttribute("deptList", deptList);
 		model.addAttribute("ranksList", ranksList);
-		log.info("$$$$$$$$$$$$$$$$$$" + ranksList);
-		log.info("$$$$$$$$$$$$$$$$$$" + positionsList);
-		log.info("$$$$$$$$$$$$$$$$$$" + deptList);
 		model.addAttribute("lists", lists);
 		return "dailyCheck";
 	}
@@ -85,7 +83,7 @@ public class DailyCheckController {
 	    log.info("#################################clientIp:" + clientIp);
 
 	    // 허용된 IP 주소 목록 설정
-	    List<String> allowedIpAddresses = Arrays.asList("59.6.141.59"); // 여기에 허용된 IP 주소 목록을 추가
+	    List<String> allowedIpAddresses = Arrays.asList("14.36.141.71"); // 여기에 허용된 IP 주소 목록을 추가
 
 	    // 클라이언트의 IP 주소가 허용된 목록에 있는지 확인
 	    if (!allowedIpAddresses.contains(clientIp)) {
@@ -116,63 +114,48 @@ public class DailyCheckController {
 	}
     
 	@GetMapping(value = "/searchDailyCheckList.do")
-	public String searchDailyCheckList(Model model,
-	                                   @RequestParam(defaultValue = "") String startDate,
-	                                   @RequestParam(defaultValue = "") String lastDate,
-	                                   @RequestParam(defaultValue = "") String userName,
-	                                   @RequestParam(defaultValue = "") String positions,
-	                                   @RequestParam(defaultValue = "") String ranks,
-	                                   @RequestParam(defaultValue = "") String dept) {
-		
-		Map<String, Object> map = new HashMap<>();
-		List<DailyCheckVo> lists = service.selectDailyCheckList(map);
-		List<PositionsVo> positionsList = positionsService.positionsAll();
-		List<DeptVo> deptList = deptService.deptAll();
-		List<RanksVo> ranksList = ranksService.ranksAll();
-		model.addAttribute("positionsList", positionsList);
-		model.addAttribute("deptList", deptList);
-		model.addAttribute("ranksList", ranksList);
-		log.info("$$$$$$$$$$$$$$$$$$" + ranksList);
-		log.info("$$$$$$$$$$$$$$$$$$" + positionsList);
-		log.info("$$$$$$$$$$$$$$$$$$" + deptList);
-		model.addAttribute("lists", lists);
-
-	    // 검색 조건을 Map에 담아서 서비스에 전달
-	    Map<String, Object> searchMap = new HashMap<>();
-	    if (!startDate.isEmpty()) {
-	        searchMap.put("first_dailyregdate", startDate);
-	    }
-	    if (!lastDate.isEmpty()) {
-	        searchMap.put("last_dailyregdate", lastDate);
-	    }
-	    if (!userName.isEmpty()) {
-	        searchMap.put("user_name", userName);
-	    }
-	    if (!positions.isEmpty()) {
-	        searchMap.put("positions_name", positions);
-	    }
-	    if (!ranks.isEmpty()) {
-	        searchMap.put("ranks_name", ranks);
-	    }
-	    if (!dept.isEmpty()) {
-	        searchMap.put("dept_name", dept);
-	    }
-
-	    // 서비스를 호출하여 검색 결과를 가져옴
-	    List<DailyCheckVo> searchResult = service.searchDailyCheckList(searchMap);
-
-	    // 검색 결과를 모델에 추가
-	    model.addAttribute("searchResult", searchResult);
+	public String searchDailyCheckList(Model model, HttpServletRequest request) {
+	    Map<String, Object> map = new HashMap<>();
+	    String startDate = request.getParameter("startDate");
+	    String lastDate = request.getParameter("lastDate");
+	    String userName = request.getParameter("userName");
+	    String positions = request.getParameter("positions");
+	    String ranks = request.getParameter("ranks");
+	    String dept = request.getParameter("dept");
 	    
-	    log.info("#############################  searchMap :"+searchMap);
-	    log.info("##########################searchResult :"+searchResult);
-
-	    return "dailyCheckSearchResult"; // 검색 결과를 표시할 JSP 페이지 이름 리턴
+	    map.put("first_dailyregdate", startDate);
+	    map.put("last_dailyregdate", lastDate);
+	    map.put("user_name", userName);
+	    map.put("positions_name", positions);
+	    map.put("ranks_name", ranks);
+	    map.put("dept_name", dept);
+	    
+        try {  
+	    	
+	        List<DailyCheckVo> lists = service.searchDailyCheckList(map);
+	        List<DeptVo> deptLists = deptService.deptAll();
+	        List<PositionsVo> positionsLists = positionsService.positionsAll();
+	        List<RanksVo> ranksLists = ranksService.ranksAll();
+	        
+	        model.addAttribute("deptLists", deptLists);
+	        model.addAttribute("positionsLists", positionsLists);
+	        model.addAttribute("ranksLists", ranksLists);
+	        model.addAttribute("lists", lists);
+	        
+	        log.info("#############  deptLists"+ deptLists);
+		    log.info("############# positionsLists"+ positionsLists);
+		    log.info("############# ranksLists"+ ranksLists);
+		    log.info("############# lists"+ lists);
+		    
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "dailyCheck"; // 에러가 발생한 경우에도 화면을 그대로 유지하도록 변경
+	    }
+	    
+	    return "dailyCheck";
 	}
 
 	
-	
-
 	@GetMapping(value = "/updateDailyCheckOuttime.do")
 	public void updateDailyCheckOuttime(HttpServletRequest request, HttpSession session,HttpServletResponse response) throws IOException {
 	    String apiUrl2 = "https://api64.ipify.org?format=text";
@@ -186,7 +169,7 @@ public class DailyCheckController {
 	    log.info("#################################clientIp:" + clientIp);
 
 	    // 허용된 IP 주소 목록 설정
-	    List<String> allowedIpAddresses = Arrays.asList("59.6.141.59"); // 여기에 허용된 IP 주소 목록을 추가
+	    List<String> allowedIpAddresses = Arrays.asList("14.36.141.71"); // 여기에 허용된 IP 주소 목록을 추가
 
 	    // 클라이언트의 IP 주소가 허용된 목록에 있는지 확인
 	    if (!allowedIpAddresses.contains(clientIp)) {
@@ -221,17 +204,37 @@ public class DailyCheckController {
 	    }
 	}
 	
-	@PostMapping(value = "/Clip_Groupware/updateDailyCheckStatus.do") // 수정된 URL
-	public String updateDailyCheckStatus(@RequestParam("daily_seq") int dailySeq,
-	                                     @RequestParam("re_content") String reasonContent) {
+	@PostMapping("/updateDailyCheckStatus.do")
+	@ResponseBody
+	public String updateDailyCheckStatus(//@RequestParam("daily_seq") String daily_seq,@RequestParam("daily_reasonmodify") 
+	                                     String daily_reasonmodify,
+	                                     String daily_seq) {
+		log.info("daily_reasonmodify  :" + daily_reasonmodify);
+		log.info("daily_seq  :" + daily_seq);
 	    Map<String, Object> map = new HashMap<>();
-	    map.put("daily_seq", dailySeq);
+	    map.put("daily_seq", daily_seq);
 	    map.put("daily_modify", "Y");
-	    map.put("daily_reasonmodify", reasonContent);
-
+	    map.put("daily_reasonmodify", daily_reasonmodify);
+        
+	    log.info("map 확인:{}",map);
 	    service.updateDailyCheckStatus(map);
 
-	    return "redirect:/Clip_Groupware/selectDailyCheckList.do"; // 수정된 URL
+	    // 수정된 내용을 반영한 후 해당 JSP 페이지로 이동
+	    return "dailyCheck"; // 이동할 JSP 페이지의 이름을 반환
+	}
+	
+	@GetMapping(value = "/getDailyStatus.do")
+	@ResponseBody
+	public String getDailyStatus() {
+	    log.info("##### 출퇴근여부 가져오기 #####");
+	    String dailyStatus = "";
+	    try {
+	        dailyStatus = service.selectDailyStatus("selectDailyStatus");
+	        log.info("출퇴근여부: " + dailyStatus);
+	    } catch (Exception e) {
+	        log.error("출퇴근여부를 가져오는 도중 오류 발생: " + e.getMessage());
+	    }
+	    return dailyStatus;
 	}
 }
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.gwr.model.mapper.DailyCheckDaoImpl">
+     
      <!-- 출근 등록 -->
 	<insert id="insertDailyCheckIntime" parameterType="java.util.Map">
     <selectKey keyProperty="dailycheck_seq" resultType="java.lang.Integer" order="BEFORE">
@@ -12,72 +13,16 @@
 	</insert>
 	
 	
-	
+	<!-- 퇴근 -->
 	<update id="updateDailyCheckOuttime" parameterType="java.util.Map">
     UPDATE DAILYCHECK
     SET DAILY_OUTTIME = #{current_time}, DAILY_REGDATE = CURRENT_DATE
     WHERE USER_ID = #{user_id, jdbcType=VARCHAR} 
     AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE)
-</update>
-	
-	<!-- 출퇴근여부 등록 -->
-	
-	<!-- 근태현황 조회 -->
-	<select id="selectDailyCheckList" parameterType="java.util.Map" resultType="com.clip.gwr.vo.DailyCheckVo">
-		SELECT dc.DAILY_SEQ, dc.USER_ID, u.USER_NAME, p.POSITIONS_NAME, 
-                 r.RANKS_NAME, de.DEPT_NAME, dc.DAILY_INTIME, 
-                 dc.DAILY_OUTTIME, dc.DAILY_STATUS, dc.DAILY_MODIFY, 
-                 dc.DAILY_REGDATE 
-        FROM USERINFO u
-        INNER JOIN DAILYCHECK dc ON u.USER_ID = dc.USER_ID
-        INNER JOIN POSITIONS p ON u.POSITIONS_SEQ = p.POSITIONS_SEQ
-        INNER JOIN RANKS r ON u.RANKS_SEQ = r.RANKS_SEQ
-        INNER JOIN DEPT de ON u.DEPT_SEQ = de.DEPT_SEQ
-        ORDER BY dc.DAILY_REGDATE DESC
-	</select>
-	
-	<!-- 근태현황 검색 -->
-	<select id="searchDailyCheckList" parameterType="java.util.Map" resultType="com.clip.gwr.vo.DailyCheckVo">
-		SELECT dc.DAILY_SEQ, dc.USER_ID, u.USER_NAME, p.POSITIONS_NAME,
-                 r.RANKS_NAME, de.DEPT_NAME, dc.DAILY_INTIME, 
-                 dc.DAILY_OUTTIME, dc.DAILY_STATUS, dc.DAILY_MODIFY, 
-                 dc.DAILY_REGDATE 
-        FROM USERINFO u
-        INNER JOIN DAILYCHECK dc ON u.USER_ID = dc.USER_ID
-        INNER JOIN POSITIONS p ON u.POSITIONS_SEQ = p.POSITIONS_SEQ
-        INNER JOIN RANKS r ON u.RANKS_SEQ = r.RANKS_SEQ
-        INNER JOIN DEPT de ON u.DEPT_SEQ = de.DEPT_SEQ
-        WHERE 1=1 
-        <if test='first_dailyregdate != null and last_dailyregdate != null'>
-        	AND dc.DAILY_REGDATE BETWEEN TO_DATE(#{first_dailyregdate}, 'YYYY-MM-DD') AND TO_DATE(#{last_dailyregdate}, 'YYYY-MM-DD')
-        </if>
-        <if test='positions_name != null'>
-        	AND p.POSITIONS_NAME = #{positions_name}
-        </if>
-        <if test='ranks_name != null'>
-        	AND r.RANKS_NAME = #{ranks_name}
-        </if>
-        <if test='dept_name != null'>
-        	AND de.DEPT_NAME = #{dept_name}
-        </if>
-        <if test='user_id != null'>
-        	AND dc.USER_ID LIKE '%' || #{user_id} || '%'
-        </if>
-        <if test='user_name != null'>
-        	AND u.USER_NAME LIKE '%' || #{user_name} || '%'
-        </if>
-        ORDER BY dc.DAILY_REGDATE DESC
-	</select>
-	
-	<!-- 근태현황 수정 -->
-	<update id="updateDailyCheckStatus" parameterType="java.util.Map">
-		UPDATE DAILYCHECK
-		SET 
-		DAILY_MODIFY = #{daily_modify} , DAILY_REASONMODIFY = #{daily_reasonmodify}
-		WHERE DAILY_SEQ = #{daily_seq}
 	</update>
 	
-	<select id="selectDailyStatus" resultType="com.clip.gwr.vo.DailyCheckVo">
+	<!-- 출퇴근여부 등록 -->
+	  <select id="selectDailyStatus" resultType="com.clip.gwr.vo.DailyCheckVo">
     <![CDATA[
     SELECT
         USER_ID,
@@ -99,4 +44,63 @@
         AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE)
     ]]>
 	</select>
+	
+	
+	<!-- 근태현황 조회 -->
+	<select id="selectDailyCheckList"  resultType="com.clip.gwr.vo.DailyCheckVo">
+		SELECT dc.DAILY_SEQ, dc.USER_ID, u.USER_NAME, p.POSITIONS_NAME, 
+                 r.RANKS_NAME, de.DEPT_NAME, dc.DAILY_INTIME, 
+                 dc.DAILY_OUTTIME, dc.DAILY_STATUS, dc.DAILY_MODIFY, 
+                 dc.DAILY_REGDATE,dc.DAILY_REASONMODIFY 
+        FROM USERINFO u
+        INNER JOIN DAILYCHECK dc ON u.USER_ID = dc.USER_ID
+        INNER JOIN POSITIONS p ON u.POSITIONS_SEQ = p.POSITIONS_SEQ
+        INNER JOIN RANKS r ON u.RANKS_SEQ = r.RANKS_SEQ
+        INNER JOIN DEPT de ON u.DEPT_SEQ = de.DEPT_SEQ
+        ORDER BY dc.DAILY_REGDATE DESC
+	</select>
+	
+	<!-- 근태현황 검색 -->
+	<select id="searchDailyCheckList" parameterType="java.util.Map" resultType="com.clip.gwr.vo.DailyCheckVo">
+		SELECT dc.DAILY_SEQ, dc.USER_ID, u.USER_NAME, p.POSITIONS_NAME,
+                 r.RANKS_NAME, de.DEPT_NAME, dc.DAILY_INTIME, 
+                 dc.DAILY_OUTTIME, dc.DAILY_STATUS, dc.DAILY_MODIFY, 
+                 dc.DAILY_REGDATE 
+        FROM USERINFO u
+        INNER JOIN DAILYCHECK dc ON u.USER_ID = dc.USER_ID
+        INNER JOIN POSITIONS p ON u.POSITIONS_SEQ = p.POSITIONS_SEQ
+        INNER JOIN RANKS r ON u.RANKS_SEQ = r.RANKS_SEQ
+        INNER JOIN DEPT de ON u.DEPT_SEQ = de.DEPT_SEQ
+        WHERE 1=1 
+        <if test='first_dailyregdate != null and last_dailyregdate != null and first_dailyregdate !="" and last_dailyregdate !=""'>
+        	AND dc.DAILY_REGDATE BETWEEN TO_DATE(#{first_dailyregdate}, 'YYYY-MM-DD') AND TO_DATE(#{last_dailyregdate}, 'YYYY-MM-DD')
+        </if>
+        <if test='positions_name != null and positions_name != ""'>
+        	AND p.POSITIONS_NAME = #{positions_name}
+        </if>
+        <if test='ranks_name != null and ranks_name !="" '>
+        	AND r.RANKS_NAME = #{ranks_name}
+        </if>
+        <if test='dept_name != null and dept_name !=""  '>
+        	AND de.DEPT_NAME = #{dept_name}
+        </if>
+        <if test='user_id != null and user_id !=""'>
+        	AND dc.USER_ID LIKE '%' || #{user_id} || '%'
+        </if>
+        <if test='user_name != null and user_name !="" '>
+        	AND u.USER_NAME LIKE '%' || #{user_name} || '%'
+        </if>
+        ORDER BY dc.DAILY_REGDATE DESC
+	</select>
+	
+	
+	<!-- 근태현황 수정 -->
+	<update id="updateDailyCheckStatus" parameterType="java.util.Map">
+		UPDATE DAILYCHECK
+		SET 
+		DAILY_MODIFY = #{daily_modify} , DAILY_REASONMODIFY = #{daily_reasonmodify}
+		WHERE DAILY_SEQ = #{daily_seq}
+	</update>
+	
+	
 </mapper>
