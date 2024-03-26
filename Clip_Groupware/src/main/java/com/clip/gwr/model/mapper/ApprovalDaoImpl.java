@@ -72,7 +72,7 @@ public class ApprovalDaoImpl implements IApprovalDao {
 	@Override
 	public List<ApprovalVo> getMyRejectPay(String user_id) {
 		log.info("ApprovalDaoImpl getMyRejectPay 해당 승인자가 반려처리한 결재들을 조회한다.");
-		return sqlSession.selectList(NS+"");
+		return sqlSession.selectList(NS+"getMyRejectPay",user_id);
 	}
 
 

@@ -68,6 +68,13 @@ public class ApprovalServiceImpl implements IApprovalService{
 		return approvalDao.getMyUnprocessedPaycheck(user_id);
 	}
 	
+	//나의 결재승인을 받는데 내가 보류처리한 리스트 조회
+	@Override
+	public List<ApprovalVo> getMyRejectPay(String user_id) {
+		log.info("결재내역 getMyRejectPay 내가 결재보류처리한 리스트 조회 : {}", user_id);
+		return approvalDao.getMyRejectPay(user_id);
+	}
+	
 	//	결재 승인/반려에 따른 결재 현황 정보 수정
 	@Override
 	public int checkApprovalLine(ApprovalVo approvalVo) {
@@ -106,14 +113,5 @@ public class ApprovalServiceImpl implements IApprovalService{
 		log.info("결재취소 : {}",appSeq);
 		return approvalDao.cancelApproval(appSeq);
 	}
-
-
-
-
-	
-
-	
-
-
 
 }

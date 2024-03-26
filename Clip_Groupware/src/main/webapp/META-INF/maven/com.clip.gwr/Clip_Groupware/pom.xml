@@ -189,37 +189,45 @@
 	    <artifactId>hibernate-validator</artifactId>
 	    <version>6.0.2.Final</version>
 	</dependency>
-	
-	<!-- Spring Security 사용을 위한 dependency 등록 Start --> 
+
+	<!-- Spring Security --> 
 	 <!-- 인증 및 액세스 제어 기능이 포함 --> 
  	 <dependency>
 	    <groupId>org.springframework.security</groupId>
 	    <artifactId>spring-security-core</artifactId>
 	    <version>${org.springsecurity}</version>
 	 </dependency>
-
 	<!-- Servlet 환경에서 URL 액세스 제어를 가능하게 하는 필터 및 관련 웹 Security 인프라가 포함 --> 
 	<dependency>
 	    <groupId>org.springframework.security</groupId>
 	    <artifactId>spring-security-web</artifactId>
 	    <version>${org.springsecurity}</version>
  	</dependency>
- 
  	<!-- XML 또는 JavaConfig를 사용하여 인증, 권한부여 등 설정을 지정하는데 사용 --> 
 	<dependency>
 	    <groupId>org.springframework.security</groupId>
 	    <artifactId>spring-security-config</artifactId>
 	    <version>${org.springsecurity}</version>
 	</dependency>
-	
 	<!-- jsp에서 taglib를 사용하기 위한 추가 --> 
 	<dependency>
 	    <groupId>org.springframework.security</groupId>
 	    <artifactId>spring-security-taglibs</artifactId>
 	    <version>${org.springsecurity}</version>
 	</dependency>
-	<!-- Security fin -->
 	
+	<!-- smtp -->
+	<dependency>
+		<groupId>javax.mail</groupId>
+		<artifactId>mail</artifactId>
+		<version>1.4.7</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context-support</artifactId>
+		<version>${org.springframework-version}</version>
+	</dependency>
+
   </dependencies>
   <build>
     <finalName>Clip_Groupware</finalName>
