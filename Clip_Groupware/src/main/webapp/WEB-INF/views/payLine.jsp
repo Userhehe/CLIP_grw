@@ -31,21 +31,11 @@
  	z-index: 1060; 
 }
 
-.delMark{
-	background: url("./images/delEvent.png");
+.bi-file-x-fill{
+	margin-left: 10px;
 }
 
 
-/* .jstree-icon{ */
-/* 	background-image : url("./images/payLineTeamClose.png"); */
-/* } */
-
-/* .jstree-anchor{ */
-	
-/* 	width: 24px; */
-/*     height: 24px; */
-/*     line-height: 24px; */
-/* } */
 
 </style>
 </head>
@@ -55,7 +45,7 @@
 		
 		<div class="card">
 			<div class="card-body">
-				<button class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal" onclick="openModal()">
+				<button id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal" >
 					결재라인 지정
             	</button>
 			</div>
@@ -100,6 +90,7 @@
 	                    </div>
 	                    <div class=modal-footer>
 	                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">결재라인 지정확인</button>
+	                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
 	                      <button type="button" class="btn btn-secondary">취소</button>
 	                    </div>
                     </div>
