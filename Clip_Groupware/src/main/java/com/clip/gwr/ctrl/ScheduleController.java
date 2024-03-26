@@ -28,24 +28,22 @@ public class ScheduleController {
 	
 	@Autowired
 	private IMemoService memoservice;
-	
-	
-
+	//화면 이동
 	@GetMapping(value = "schedule.do")
 	public String mainscheduel() {
 		log.info("ScheduleController mainscheduel 달력조회");
 		return "schedule";
 	}
 	
-	
+	//전체 조회
 	@GetMapping(value = "/Ajax.do")
 	@ResponseBody
-	public JSONArray date(HttpSession session) {
+	public JSONArray date(HttpSession session, String date) {
 		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
-		log.info("session에서 받은값 :" + id);
+		log.info("session에서 받은값 : {}, {}" + id,date);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user_id", id.getUser_id());
-		map.put("fullDate", "2024-03");
+		map.put("fullDate", date);
 		List<MemoVo> lists = memoservice.selectScheduleAll(map);
 		System.out.println("MemoVo list : " +lists);
 		JSONArray memolist = new JSONArray();
@@ -62,23 +60,8 @@ public class ScheduleController {
 		System.out.println("넘겨줄 데이터"+memolist);
 		return memolist;
 	}
-	
-	
-	@PostMapping(value = "/addMemo.do")  //메모추가
-	@ResponseBody
-	public int addmemo(@RequestParam Map<String, Object> map, HttpSession session) {
-		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
-		map.put("user_id", id.getUser_id());
-		if(map.get("prs_end")== "") {
-			map.put("prs_end", map.get("prs_start"));//이거 안먹음 손봐줘야 함
-		}
-		log.info("메모 내용 {} : " , map);
-		int isc = memoservice.myScheduleInsert(map);
-		return isc;
-	}
-	
-	
-	@PostMapping(value = "/calendarModalDetail.do") //메모 상세조회
+	//상세 조회
+	@PostMapping(value = "/calendarModalDetail.do") 
 	@ResponseBody
 	public Object memodetail(String seq) {
 		log.info("ScheduleController memodetail 메모상세조회");
@@ -96,23 +79,78 @@ public class ScheduleController {
 		}
 	}
 	
-	@PostMapping(value = "/myScheduleDelete.do") //메모 삭제
+	
+	//유저 기능
+	//메모 추가
+	@PostMapping(value = "/addMemo.do") 
+	@ResponseBody
+	public int addmemo(@RequestParam Map<String, Object> map, HttpSession session) {
+		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
+		map.put("user_id", id.getUser_id());
+		if(map.get("prs_end")== "") {
+			map.put("prs_end", map.get("prs_start"));
+		}
+		log.info("메모 내용 {} : " , map);
+		int isc = memoservice.myScheduleInsert(map);
+		return isc;
+	}
+	
+	//메모 삭제
+	@PostMapping(value = "/myScheduleDelete.do")
 	@ResponseBody
 	public int myScheduleDelete(String seq) {
 		int isc = memoservice.myScheduleDelete(seq);
 		return isc;
 	}
 	
-	@PostMapping(value = "/myScheduleUpdate.do") //메모 수정
+	//메모 수정
+	@PostMapping(value = "/myScheduleUpdate.do")
 	@ResponseBody
 	public int myScheduleUpdate(@RequestParam Map<String, Object> map) {
 		if(map.get("prs_end")== "") {
-			map.put("prs_end", map.get("prs_start"));//이거 안먹음 손봐줘야 함
+			map.put("prs_end", map.get("prs_start"));
 		}
 		log.info("메모 내용 {} : " , map);
 		int isc = memoservice.myScheduleUpdate(map);
 		return isc;
 	}
 	
+	//유저기능 끝
 	
+	
+	
+	//관리자 기능
+	//전사 추가
+	@PostMapping(value = "/addNtc.do") 
+	@ResponseBody
+	public int addNtc(@RequestParam Map<String, Object> map, HttpSession session) {
+		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
+		map.put("user_id", id.getUser_id());
+		if(map.get("ntc_end")== "") {
+			map.put("ntc_end", map.get("ntc_start"));
+		}
+		log.info("전사 내용 {} : " , map);
+		int isc = memoservice.ntcScheduleInsert(map);
+		return isc;
+	}
+	
+	//전사 삭제
+	@PostMapping(value = "/ntcScheduleDelete.do")
+	@ResponseBody
+	public int ntcScheduleDelete(String seq) {
+		int isc = memoservice.ntcScheduleDelete(seq);
+		return isc;
+	}
+	
+	//전사 수정
+	@PostMapping(value = "/ntcScheduleUpdate.do")
+	@ResponseBody
+	public int ntcScheduleUpdate(@RequestParam Map<String, Object> map) {
+		if(map.get("ntc_end")== "") {
+			map.put("ntc_end", map.get("ntc_start"));
+		}
+		log.info("전사 내용 {} : " , map);
+		int isc = memoservice.ntcScheduleUpdate(map);
+		return isc;
+	}
 }

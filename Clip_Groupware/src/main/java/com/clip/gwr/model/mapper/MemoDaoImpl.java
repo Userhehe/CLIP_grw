@@ -21,12 +21,7 @@ public class MemoDaoImpl implements IMemoDao {
 	
 	private final String NS = "com.clip.gwr.model.mapper.MemoDaoImpl.";
 	
-	@Override
-	public List<MemoVo> myScheduleAll(String user_id) {
-		log.info("myScheduleAll 메모 전체조회");
-		return sqlSession.selectList(NS+"myScheduleAll",user_id);
-	}
-
+	//유저 기능
 	@Override
 	public MemoVo myScheduleDetail(String seq) {
 		log.info("myScheduleDetail 메모 상세조회");
@@ -50,16 +45,38 @@ public class MemoDaoImpl implements IMemoDao {
 		log.info("myScheduleUpdate 메모 수정");
 		return sqlSession.update(NS+"myScheduleUpdate",map);
 	}
-
+	//유저 기능 끝
+	
+	
 	@Override
 	public List<MemoVo> selectScheduleAll(Map<String, Object> map) {
 		log.info("selectScheduleAll 테스트용 전사 개인 일정 조회" );
 		return sqlSession.selectList(NS+"selectScheduleAll",map);
 	}
 	
+	
+	//관리자 기능
 	@Override
 	public NtcVo ntcScheduleDetail(String seq) {
 		log.info("ntcScheduleDetail 전사 상세조회");
 		return sqlSession.selectOne(NS+"ntcScheduleDetail",seq);
+	}
+	
+	@Override
+	public int ntcScheduleInsert(Map<String, Object> map) {
+		log.info("myScheduleInsert 전사 입력");
+		return sqlSession.insert(NS+"ntcScheduleInsert", map);
+	}
+	
+	@Override
+	public int ntcScheduleDelete(String seq) {
+		log.info("myScheduleDelete 전사 삭제" );
+		return sqlSession.update(NS+"ntcScheduleDelete", seq);
+	}
+	
+	@Override
+	public int ntcScheduleUpdate(Map<String, Object> map) {
+		log.info("myScheduleDelete 전사 수정" );
+		return sqlSession.update(NS+"ntcScheduleUpdate", map);
 	}
 }

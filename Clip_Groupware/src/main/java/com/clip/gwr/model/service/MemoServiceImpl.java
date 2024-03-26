@@ -18,13 +18,7 @@ public class MemoServiceImpl implements IMemoService{
 	
 	@Autowired
 	private IMemoDao dao;
-
-	@Override
-	public List<MemoVo> myScheduleAll(String user_id) {
-		log.info("myScheduleAll");
-		return dao.myScheduleAll(user_id);
-	}
-
+	//유저기능
 	@Override
 	public MemoVo myScheduleDetail(String seq) {
 		return dao.myScheduleDetail(seq);
@@ -45,14 +39,33 @@ public class MemoServiceImpl implements IMemoService{
 	public int myScheduleUpdate(Map<String, Object> map) {
 		return dao.myScheduleUpdate(map);
 	}
+	//유저기능 끝
+	
 	
 	@Override
 	public List<MemoVo> selectScheduleAll(Map<String, Object> map) {
 		return dao.selectScheduleAll(map);
 	}
 	
+	
+	//관리자기능
 	@Override
 	public NtcVo ntcScheduleDetail(String seq) {
 		return dao.ntcScheduleDetail(seq);
+	}
+	
+	@Override
+	public int ntcScheduleInsert(Map<String, Object> map) {
+		return dao.ntcScheduleInsert(map);
+	}
+	
+	@Override
+	public int ntcScheduleDelete(String seq) {
+		return dao.ntcScheduleDelete(seq);
+	}
+	
+	@Override
+	public int ntcScheduleUpdate(Map<String, Object> map) {
+		return dao.ntcScheduleUpdate(map);
 	}
 }
