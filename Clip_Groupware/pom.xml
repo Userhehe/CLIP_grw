@@ -235,7 +235,7 @@
 		<version>2.6.0</version>
 	</dependency>
 	<!-- Spring Sesion의 확장기능으로 세션 정보를 Redis를 사용하여 관리하게 해줌  -->
-	<dependency>
+	<dependency> 
 		<groupId>org.springframework.session</groupId>
 		<artifactId>spring-session-data-redis</artifactId>
 		<version>2.6.0</version>

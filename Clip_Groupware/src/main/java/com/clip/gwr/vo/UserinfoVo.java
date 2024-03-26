@@ -1,5 +1,7 @@
 package com.clip.gwr.vo;
 
+import java.io.Serializable;
+
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +16,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserinfoVo {
+public class UserinfoVo implements Serializable {
 	private String user_id;
 	private String user_password;
 	private String user_name;
