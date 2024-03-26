@@ -94,55 +94,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 </div>
 <!-- 예약 상세보기 모달 끝  -->
  
-<!-- 회의실을 예약하는 모달 -->
-<div class="modal fade" id="redetailmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">       
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">회의실 예약 상세조회</h5>
-                </div>
-                
-                <div class="modal-body">
-               <div class="form-group">
-                     <form action="./addmemo.do" method="post" id="memoform">
-                     <div class="form-group">
-	                     <label for="title" class="col-form-label">회의실 번호</label>
-	                     <input type="text" class="form-control" id="title" name="title">
-                     </div>
-                     <label for="startDate" class="col-form-label">시작 날짜</label>
-                     <div class="input-group">
-                        <input type="text" class="form-control" name="start" id="start" readonly="readonly" ondblclick="return false" id="startDate">
-                        <span class="input-group-addon" id="imagebutton"><i class="glyphicon glyphicon-calendar"></i></span>
-                     </div>
-                     <label for="endDate" class="col-form-label">종료 날짜</label>
-                     <div class="input-group">
-                        <input type="text" class="form-control" name="end" id="end" readonly="readonly">
-                        <span class="input-group-addon" id="imagebutton2"><i class="glyphicon glyphicon-calendar"></i></span>
-                     </div>
-                     <div class="form-group">
-	                     <label for="title" class="col-form-label">회의 제목</label>
-	                     <input type="text" class="form-control" id="title" name="title">
-                     </div>
-	                 <label for="content" class="col-form-label">일정 내용</label>
-	                 	<textarea class="form-control" rows="5" id="content" name="content"></textarea>
-	                 <div class="form-group">
-	                     <label for="title" class="col-form-label">참석자</label>
-	                     <input type="text" class="form-control" id="title" name="title">
-                     </div>
-                    </form> 
-               </div>
-            </div>
-                
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary" id="addCalendar" > 삭제 </button>
-                    <button type="submit" class="btn btn-secondary" id="addCalendar" > 수정 </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="modalclose()">취소</button>
-                </div>
-    
-            </div>   
-        </div>   
-    </div>
-	<!-- 회의실을 예약하는 모달 끝 -->
+
 	
 	
 	<main id="main" class="main">
@@ -159,6 +111,8 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
         </ul>
 		
 			<div class="tab-content pt-2" id="myTabContent">
+			
+			
 				<!-- 예약한 회의실 현황 리스트 -->	
 	            <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 	            <div class="row">
@@ -182,12 +136,10 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 							</thead>
 							<tbody id="templateTableBody">
 								<c:forEach var="vo" items="${myReservationList}" varStatus="vs">
-									<tr>
-										<td id="redetailseq">${vo.re_seq}</td>
+									<tr class="re-lists">
+										<td class="re_seq">${vo.re_seq}</td>
 										<td>${vo.me_room}</td>
-										<td>
-											<a onclick="redetail()">${vo.re_title}</a>
-										</td>
+										<td class="re_title">${vo.re_title}</td>
 										<td>${vo.re_create}</td>
 									</tr>
 								</c:forEach>

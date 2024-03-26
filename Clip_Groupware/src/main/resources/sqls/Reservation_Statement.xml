@@ -30,7 +30,8 @@
 					#{re_content},
 	        		TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI'),
 	        		TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI') + INTERVAL '1' HOUR, 
-	        		TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI'), 3)
+	        		TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI'), 
+	        		#{me_room})
 	</insert>
 	
 	<!-- 회의실 리스트 -->
@@ -53,10 +54,10 @@
 	<!-- 참석자 jstree -->
 	<select id="selectAttendsJstree" resultType="UserinfoVo">
 		SELECT U.USER_ID, U.USER_NAME, U.DEPT_SEQ, R.RANKS_NAME
-		FROM USERINFO U
-		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
-		WHERE USER_STATUS = 'Y' AND U.DEPT_SEQ IS NOT NULL 
-		ORDER BY R.RANKS_SEQ ASC
+			FROM USERINFO U
+			INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
+			WHERE USER_STATUS = 'Y' AND U.DEPT_SEQ IS NOT NULL 
+			ORDER BY R.RANKS_SEQ ASC
 	</select>
 	
 	<!-- 예약 상세조회 -->
