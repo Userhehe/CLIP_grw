@@ -21,21 +21,17 @@
 
 
 				<div class="form-group">
-					<form action="/updateDailyCheckStatus.do" method="post"
-						id="dailyCheckForm">
 						<div class="modal-header">
+							<input type="text" id="daily_seq" style="display: none;">
 							<h5 class="modal-title" id="exampleModalLabel">수정 사유를 입력하세요.</h5>
-						</div>
+						</div>						
 						<div class="modal-body">
-							<textarea class="form-control mt-2" id="re_content"
-								name="re_content" rows="5" placeholder="수정사유을 입력해주세요."></textarea>
+							<textarea class="form-control mt-2" id="daily_reasonmodify" name="re_content" rows="5" placeholder="수정사유을 입력해주세요."></textarea>
 						</div>
 						<div class="modal-footer">
-							<input class="btn btn-secondary" type="submit" value="수정완료"
-								id="addDailyCheck"> <input class="btn btn-secondary"
-								type="button" value="뒤로가기" id="addDailyCheckCancel">
+							<input class="btn btn-secondary" type="submit" value="수정완료" id="addDailyCheck"> 
+							<input class="btn btn-secondary" type="button" value="뒤로가기" id="addDailyCheckCancel">
 						</div>
-					</form>
 				</div>
 			</div>
 		</div>
@@ -44,20 +40,18 @@
 		<div class="card-body">
 			<h5 class="card-title">근태 정보 조회</h5>
 			<div class="search-form">
-				<form action="./searchDailyCheckList.do" method="get"
+				<form action="./searchDailyCheckList.do" method="GET"
 					class="form-inline" id="searchForm">
 					<div class="row">
 						<div class="col-md-2">
-							<label for="startDate" class="mr-2">검색 시작일</label> <input
-								type="date" class="form-control" id="startDate" name="startDate">
+							<label for="startDate" class="mr-2">검색 시작일</label> 
+							<input type="date" class="form-control" id="startDate" name="startDate">
 						</div>
 						<div class="col-md-2">
-							<label for="lastDate" class="mr-2">검색 종료일</label> <input
-								type="date" class="form-control" id="lastDate" name="lastDate">
+							<label for="lastDate" class="mr-2">검색 종료일</label> <input type="date" class="form-control" id="lastDate" name="lastDate">
 						</div>
 						<div class="col-md-2">
-							<label for="userName" class="mr-2">이름</label> <input type="text"
-								class="form-control" id="userName" name="userName">
+							<label for="userName" class="mr-2">이름</label> <input type="text" class="form-control" id="userName" name="userName">
 						</div>
 						<div class="col-md-2">
 							<label for="positions" class="mr-2">직책</label> <select
@@ -90,84 +84,48 @@
 					<button type="submit" class="btn btn-primary mt-2"
 						id="searchButton">검색</button>
 				</form>
-				<!-- $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 여기를 기준으로 위 아래가 같이 호환이 안됩니다 혹시 이유 아시는분 ?????? $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ -->
 			</div>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th scope="col">아이디</th>
-						<th scope="col">이름</th>
-						<th scope="col">직책</th>
-						<th scope="col">직급</th>
-						<th scope="col">부서</th>
-						<th scope="col">출근시간</th>
-						<th scope="col">퇴근시간</th>
-						<th scope="col">출퇴근여부</th>
-						<th scope="col">수정여부</th>
-						<th scope="col">수정사유</th>
-					</tr>
-				</thead>
-				<tbody>
-				<tbody>
-					<c:forEach var="list" items="${lists}">
-						<tr>
-							<th scope="row">${list.user_id}</th>
-							<td>${list.user_name}</td>
-							<td>${list.positions_name}</td>
-							<td>${list.ranks_name}</td>
-							<td>${list.dept_name}</td>
-							<td>${list.daily_intime}</td>
-							<td>${list.daily_outtime}</td>
-							<td>${list.daily_status}</td>
-							<td class="daily_modify">${list.daily_modify}</td>
-							<td>
-								<button class="open-modal-btn">수정</button>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+			<table class="table table-hover" id="dailyCheckTable">
+    		<thead>
+        <tr>
+            <th scope="col">번호</th>                
+            <th scope="col">이름</th>
+            <th scope="col">직책</th>
+            <th scope="col">직급</th>
+            <th scope="col">부서</th>
+            <th scope="col">출근시간</th>
+            <th scope="col">퇴근시간</th>
+            <th scope="col">출퇴근여부</th>
+            <th scope="col">수정여부</th>
+            <th scope="col">수정사유</th>
+            <th scope="col">수정내용</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach var="list" items="${lists}">
+            <tr>
+                <td class="daily_seq">${list.daily_seq}</td>             
+                <td>${list.user_name}</td>
+                <td>${list.positions_name}</td>
+                <td>${list.ranks_name}</td>
+                <td>${list.dept_name}</td>
+                <td>${list.daily_intime}</td>
+                <td>${list.daily_outtime}</td>
+                <td>${list.daily_status}</td>
+                <td class="daily_modify">${list.daily_modify}</td>      
+                <td class="daily_reasonmodify">${list.daily_reasonmodify}</td> 
+                <td>
+                    <button class="open-modal-btn">수정</button>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
 		</div>
 		<div class="datatable-bottom paging">
-			<nav class="datatable-pagination">
-				<ul class="datatable-pagination-list">
-					<li
-						class="datatable-pagination-list-item datatable-hidden datatable-disabled"><button
-							data-page="1" class="datatable-pagination-list-item-link"
-							aria-label="Page 1">‹</button></li>
-					<li class="datatable-pagination-list-item datatable-active"><button
-							data-page="1" class="datatable-pagination-list-item-link"
-							aria-label="Page 1">1</button></li>
-					<li class="datatable-pagination-list-item"><button
-							data-page="2" class="datatable-pagination-list-item-link"
-							aria-label="Page 2">2</button></li>
-					<li class="datatable-pagination-list-item"><button
-							data-page="3" class="datatable-pagination-list-item-link"
-							aria-label="Page 3">3</button></li>
-					<li class="datatable-pagination-list-item"><button
-							data-page="4" class="datatable-pagination-list-item-link"
-							aria-label="Page 4">4</button></li>
-					<li class="datatable-pagination-list-item"><button
-							data-page="5" class="datatable-pagination-list-item-link"
-							aria-label="Page 5">5</button></li>
-					<li class="datatable-pagination-list-item"><button
-							data-page="6" class="datatable-pagination-list-item-link"
-							aria-label="Page 6">6</button></li>
-					<li class="datatable-pagination-list-item"><button
-							data-page="7" class="datatable-pagination-list-item-link"
-							aria-label="Page 7">7</button></li>
-					<li
-						class="datatable-pagination-list-item datatable-ellipsis datatable-disabled"><button
-							class="datatable-pagination-list-item-link">…</button></li>
-					<li class="datatable-pagination-list-item"><button
-							data-page="10" class="datatable-pagination-list-item-link"
-							aria-label="Page 10">10</button></li>
-					<li class="datatable-pagination-list-item"><button
-							data-page="2" class="datatable-pagination-list-item-link"
-							aria-label="Page 2">›</button></li>
-				</ul>
-			</nav>
-		</div>
+			    <nav class="datatable-pagination"><ul class="datatable-pagination-list"><li class="datatable-pagination-list-item datatable-hidden datatable-disabled"><button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">‹</button></li><li class="datatable-pagination-list-item datatable-active"><button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">1</button></li><li class="datatable-pagination-list-item"><button data-page="2" class="datatable-pagination-list-item-link" aria-label="Page 2">2</button></li><li class="datatable-pagination-list-item"><button data-page="3" class="datatable-pagination-list-item-link" aria-label="Page 3">3</button></li><li class="datatable-pagination-list-item"><button data-page="4" class="datatable-pagination-list-item-link" aria-label="Page 4">4</button></li><li class="datatable-pagination-list-item"><button data-page="5" class="datatable-pagination-list-item-link" aria-label="Page 5">5</button></li><li class="datatable-pagination-list-item"><button data-page="6" class="datatable-pagination-list-item-link" aria-label="Page 6">6</button></li><li class="datatable-pagination-list-item"><button data-page="7" class="datatable-pagination-list-item-link" aria-label="Page 7">7</button></li><li class="datatable-pagination-list-item datatable-ellipsis datatable-disabled"><button class="datatable-pagination-list-item-link">…</button></li><li class="datatable-pagination-list-item"><button data-page="10" class="datatable-pagination-list-item-link" aria-label="Page 10">10</button></li><li class="datatable-pagination-list-item"><button data-page="2" class="datatable-pagination-list-item-link" aria-label="Page 2">›</button></li></ul></nav>
+			</div>
 	</main>
 </body>
 </html>
