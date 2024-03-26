@@ -12,6 +12,8 @@ $(document).ready(function() {
 			            '17:00', '17:30', '18:00']
     });
     calendar();
+
+	
 });
 //화면 로드시 걸어주는 이벤트들 끝 ------------------------------------------------
 //calendar function ----------------------------
@@ -117,9 +119,28 @@ function calendar(){
 		{
             id: "allEvents",
             events: function(info, successCallback, failureCallback) {
+				var year = info.end.getFullYear();
+				var startMonth = info.start.getMonth() + 1;
+				var endMonth = info.end.getMonth() + 1;
+				var month = "";
+				
+				if (startMonth == 12) {
+				    month = "01";
+				} else if (startMonth == 11) {
+				    month = "12";
+				} else {
+				    // 시작 월과 종료 월의 평균을 계산하고 정수 부분만 가져옵니다.
+				    var avgMonth = Math.floor((startMonth + endMonth) / 2);
+				    // 평균 월을 문자열로 변환하여 month 변수에 할당합니다.
+				    month = avgMonth < 10 ? "0" + avgMonth : avgMonth.toString();
+				}
+				
+				var date = year + "-" + month;
+				
                 $.ajax({
                     type: "get",
                     url: "./Ajax.do",
+                    data : {date:date},
                     dataType: "json",
                     success: function(data) {
                         var events = [];
@@ -178,6 +199,8 @@ function calendarModalDetail(seq){ //seq가져와 내용 상세조회 하기
 				var buttonHTML = '<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="modalclose()">뒤로가기</button>';
 				document.getElementById('dtButtons').innerHTML += buttonHTML;
 			}
+			
+			
 			if("prs_seq" in Scheduledata){
 				$("#calendarModalDetail").modal("show");
 		        $("#dtTitle").text(Scheduledata.prs_title);
@@ -212,6 +235,11 @@ function calendarModal(day){
 		$('#content').attr('name', 'prs_content');
 		$('#start').attr('name', 'prs_start');
 		$('#end').attr('name', 'prs_end');
+	}else{
+		$('#title').attr('name', 'ntc_title');
+		$('#content').attr('name', 'ntc_content');
+		$('#start').attr('name', 'ntc_start');
+		$('#end').attr('name', 'ntc_end');
 	}
 	
 	 $('#addCalendar').off("click").on("click",function(){
@@ -246,6 +274,18 @@ function calendarModal(day){
 					calendar();
 				}
 			});
+		}else{
+			var ntc = $("#addForm").serialize();
+			$.ajax({
+				type:"post",
+				url:"./addNtc.do",
+				data:ntc,
+				success:function(msg){
+					console.log(msg);
+					modalclose();
+					calendar();
+				}
+			});
 		}
 		
 	});
@@ -257,20 +297,37 @@ function calendarModal(day){
 
 // 일정 삭제 기능 ----------------------------
 $(document).on("click", "#myScheduleDelete", function(){
-	console.log("dd");
+	
 	var seq = $('#dtSeq').val();
-	$.ajax({
-		type:"post",
-		url:"./myScheduleDelete.do",
-		dataType:"json",
-	    data:{seq:seq},
-	    success:function(isc){
-			console.log(isc);
-			modalclose();
-			calendar();
-		}
-		
-	});
+	var auth = $("#user_auth").val();
+	
+	if(auth == 'ROLE_USER'){
+		$.ajax({
+			type:"post",
+			url:"./myScheduleDelete.do",
+			dataType:"json",
+		    data:{seq:seq},
+		    success:function(isc){
+				console.log(isc);
+				modalclose();
+				calendar();
+			}
+			
+		});
+	}else{
+		$.ajax({
+			type:"post",
+			url:"./ntcScheduleDelete.do",
+			dataType:"json",
+		    data:{seq:seq},
+		    success:function(isc){
+				console.log(isc);
+				modalclose();
+				calendar();
+			}
+			
+		});
+	}
 });
 
 
@@ -292,6 +349,18 @@ $(document).on("click", "#myScheduleUpdate", function(){
 		$('#upStart').attr('name', 'prs_start');
 		$('#upEnd').attr('name', 'prs_end');
 		$('#upSeq').attr('name', 'prs_seq');
+		
+		$("#upTitle").val($("#dtTitle").text());
+		$("#upContent").val($("#dtContent").text());
+		$("#upStart").val($("#dtStart").text());
+		$("#upEnd").val($("#dtEnd").text());
+		$("#upSeq").val($("#dtSeq").val());
+	}else{
+		$('#upTitle').attr('name', 'ntc_title');
+		$('#upContent').attr('name', 'ntc_content');
+		$('#upStart').attr('name', 'ntc_start');
+		$('#upEnd').attr('name', 'ntc_end');
+		$('#upSeq').attr('name', 'ntc_seq');
 		
 		$("#upTitle").val($("#dtTitle").text());
 		$("#upContent").val($("#dtContent").text());
@@ -326,6 +395,18 @@ $(document).on("click", "#myScheduleUpdate", function(){
 				type:"post",
 				url:"./myScheduleUpdate.do",
 				data:memo,
+				success:function(msg){
+					console.log(msg);
+					modalclose();
+					calendar();
+				}
+			});
+		}else{
+			var ntc = $("#upForm").serialize();
+			$.ajax({
+				type:"post",
+				url:"./ntcScheduleUpdate.do",
+				data:ntc,
 				success:function(msg){
 					console.log(msg);
 					modalclose();
