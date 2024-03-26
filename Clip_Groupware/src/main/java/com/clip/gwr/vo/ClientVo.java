@@ -15,8 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 
 public class ClientVo {
-//
-	private String	cli_id		;
+
 	private String	cli_name	;
 	private String	cli_contact	;
 	private String	cli_address	;

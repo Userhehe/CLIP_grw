@@ -17,7 +17,7 @@ import lombok.ToString;
 public class ProjectsVo {
 
 	private String prj_id 			;
-	private String cli_id 			;
+	private String cli_name 		;
 	private String prj_name 		;
 	private String prj_sdate		;
 	private String prj_ddate		;

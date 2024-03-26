@@ -20,8 +20,8 @@ public class ProjectsDaoImpl implements IProjectsDao {
 	private final String NS = "com.clip.gwr.model.mapper.ProjectsDaoImpl.";
 	
 	@Override
-	public List<ProjectsVo> projectsAll() {
-		return sqlSession.selectList(NS+"projectsAll");
+	public List<ProjectsVo> getProjectsAll() {
+		return sqlSession.selectList(NS+"getProjectsAll");
 	}
 	
 	@Override
@@ -44,13 +44,13 @@ public class ProjectsDaoImpl implements IProjectsDao {
 //		return sqlSession.delete(NS+"projectsDelete",prj_id);
 //	}
 	
-//	@Override
-//	public List<ProjectsVo> projectsClientSel(String cli_name) {
-//		return sqlSession.selectList(NS+"projectsClientSel",cli_name);
-//	}/
+	@Override
+	public List<ProjectsVo> projectsClientSel(String cli_id) {
+		return sqlSession.selectList(NS+"projectsClientSel");
+	}
 
 	@Override
-	public List<ProjectsVo> projectsPeriodSel() {
+	public List<ProjectsVo> projectsPeriodSel(Map<String, Object> map) {
 		return sqlSession.selectList(NS+"projectsPeriodSel");
 	}
 	
@@ -58,5 +58,6 @@ public class ProjectsDaoImpl implements IProjectsDao {
 	public List<ProjectsVo> projectsProgressSel() {
 		return sqlSession.selectList(NS+"projectsProgressSel");
 	}
+
 
 }

@@ -9,7 +9,7 @@ public interface IProjectsDao {
 
 	
 	// 프로젝트 전체 조회
-	public List<ProjectsVo> projectsAll();
+	public List<ProjectsVo> getProjectsAll();
 	
 	// 프로젝트 상세 조회
 	public ProjectsVo projectsDetail(String prj_id);
@@ -24,10 +24,10 @@ public interface IProjectsDao {
 //	public int projectsDelete(String prj_id);/
 	
 	// 프로젝트 거래처별 검색
-//	public List<ProjectsVo> projectsClientSel();
+	public List<ProjectsVo> projectsClientSel(String cli_id);
 	
 	// 프로젝트 기간별 검색
-	public List<ProjectsVo> projectsPeriodSel();
+	public List<ProjectsVo> projectsPeriodSel(Map<String, Object> map);
 	
 	// 프로젝트 진척도별 검색
 	public List<ProjectsVo> projectsProgressSel();

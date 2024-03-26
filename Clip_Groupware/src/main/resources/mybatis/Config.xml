@@ -38,7 +38,6 @@
 		<mapper resource="sqls/Signs_Statement.xml"/>
 		<mapper resource="sqls/Reservation_Statement.xml"/>
 		<mapper resource="sqls/Memo_Statement.xml"/> <!-- 03/15 -->
-		
 		<mapper resource="sqls/Projects_Statement.xml"/> <!-- 03/25 -->
 	</mappers>
 </configuration>
