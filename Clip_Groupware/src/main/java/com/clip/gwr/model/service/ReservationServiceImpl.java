@@ -90,6 +90,17 @@ public class ReservationServiceImpl implements IReservationService {
 		return dao.reAttList(seq);
 	}
 
+	@Override
+	public int cpRev(String user_id) {
+		log.info("ReservationServiceImpl cpRev 최신의 예약내역 조회");
+		return dao.cpRev(user_id);
+	}
+
+	@Override
+	public int attinsert(Map<String, Object> map) {
+		return dao.attinsert(map);
+	}
+
 	
 	
 }
