@@ -30,7 +30,7 @@
 					#{re_content},
 	        		TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI'),
 	        		TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI') + INTERVAL '1' HOUR, 
-	        		TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI'), 
+	        		TO_DATE(SYSDATE, 'YYYY-MM-DD HH24MI'), 
 	        		#{me_room})
 	</insert>
 	
@@ -97,7 +97,28 @@
 			WHERE RE_SEQ = #{re_seq}
 	</update>
 	
+	<!-- 본인의 최신 예약 내역 조회 -->
+	<select id="cpRev" parameterType="java.lang.String"  resultType="java.lang.Integer">
+		SELECT RE_SEQ , RE_TITLE 
+			FROM RESERVATION r 
+			WHERE USER_ID = #{user_id} 
+			AND RE_SEQ = (SELECT MAX(RE_SEQ) FROM RESERVATION)
+	</select>
 	
+	<!-- 회의별 참석자 입력 -->
+	<insert id="attinsert" parameterType="java.util.Map">
+		INSERT INTO ATTENDS (RE_SEQ, USER_ID, RANKS_NAME, USER_NAME)
+			VALUES(
+			#{re_seq},#{user_id}, 
+			(SELECT RANKS_NAME
+					FROM RANKS r 
+					JOIN USERINFO u ON r.RANKS_SEQ =u.RANKS_SEQ 
+					WHERE u.USER_ID = #{user_id} ),
+			(SELECT USER_NAME
+					FROM USERINFO
+					WHERE USER_ID = #{user_id})	
+			)
+	</insert>
 	
 	
 	

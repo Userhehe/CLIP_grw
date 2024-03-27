@@ -64,72 +64,103 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 <body>
 
 			<!-- 예약 추가 모달 -->
-				<div class="modal fade" id="reservationModal" tabindex="-1"	role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="reservationModal" tabindex="-1"	role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="form-group">
+					<form action="./myReservationInsert.do" method="post" id="reservationForm">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">예약 내용을 입력하세요.</h5>
+						</div>
+						<div class="modal-body">
+							<label for="me_room" class="col-form-label">회의실을 선택해주세요.</label> 
+								<select class="form-control" name="me_room" id="me_room">
+									<c:forEach var="vo" items="${meeTingRoomVo}">
+										<option value="${vo.me_room}">${vo.me_room}번회의실</option>
+									</c:forEach>
+								</select> 
+							<label for="re_start" class="col-form-label">예약일을 선택해주세요.</label>
+							<div class="input-group">
+								<span class="input-group-addon"> 
+								<input type="text"	class="form-control" readonly="readonly" ondblclick="return false" id="re_start" name="re_start">
+								</span> 
+								<span class="input-group-btn" style="margin-left: 20px;">
+									<button class="btn btn-secondary" type="button" onclick="selectPossibleMeRoomButton()">예약가능시간 보기</button>
+								</span>
+							</div>
+
+							<div id="nawarayo" style="display: none">
+								<label for="re_start_time" class="col-form-label">예약 시간을 선택해주세요.(종료시간 = 시작시간 + 1시간)</label>
+								<div class="input-group">
+									<span class="input-group-addon"> <input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="re_start_time">
+									</span> <span class="input-group-btn" style="margin-left: 20px;">
+										<input class="btn btn-secondary" type="button" value="예약 시간 선택 완료" onclick="reservationTime()">
+									</span>
+								</div>
+							</div>
+
+							<input class="form-control mt-2" type="text" id="re_title" name="re_title" placeholder="회의 제목을 입력해주세요.">
+							<textarea class="form-control mt-2" id="re_content"	name="re_content" rows="5" placeholder="회의 내용을 입력해주세요."></textarea>
+					</form>
+				</div> 
+			</div> 
+		
+								<div class="modal-footer">
+									<input class="btn btn-secondary" type="button" value="예약 확인" id="addReservation"> 
+									<input class="btn btn-secondary" type="button" value="취소" id="addReservationCancel" onclick="redetailclose()">
+								</div>
+									
+							</div>
+
+						</div>
+					</div> 
+
+				<!-- 예약 추가 모달 끝 -->
+					
+				<!-- 참가인원 설정 모달 -->
+					<div class="modal fade" id="reAttModal" tabindex="-1"	role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 
 							<div class="form-group">
-								<!-- <form action="./myReservationInsert.do" method="post" id="reservationForm"> -->
+							 <div id="hiddenDiv" style="display: none;">
+						        <!-- 값을 저장할 input -->
+						        <input type="text" id="hiddenValue">
+						    </div>
 									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">예약 내용을 입력하세요.</h5>
+										<h5 class="modal-title" id="exampleModalLabel">회의 참석자를 선택 하세요</h5>
 									</div>
 									<div class="modal-body">
-										<label for="me_room" class="col-form-label">회의실
-											선택해주세요.</label> <select class="form-control" name="me_room" id="me_room">
-											<c:forEach var="vo" items="${meeTingRoomVo}">
-												<option value="${vo.me_room}">${vo.me_room}번회의실</option>
-											</c:forEach>
-										</select> <label for="re_start" class="col-form-label">예약일을 선택해주세요.</label>
-										<div class="input-group">
-											<span class="input-group-addon"> 
-											<input type="text"	class="form-control" readonly="readonly" ondblclick="return false" id="re_start" name="re_start">
-											</span> 
-											<span class="input-group-btn" style="margin-left: 20px;">
-												<button class="btn btn-secondary" type="button" onclick="selectPossibleMeRoomButton()">예약가능시간 보기</button>
-											</span>
-										</div>
-
-										<div id="nawarayo" style="display: none">
-											<label for="re_start_time" class="col-form-label">예약 시간을 선택해주세요.(종료시간 = 시작시간 + 1시간)</label>
-											<div class="input-group">
-												<span class="input-group-addon"> <input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="re_start_time">
-												</span> <span class="input-group-btn" style="margin-left: 20px;">
-													<input class="btn btn-secondary" type="button" value="예약 시간 선택 완료" onclick="reservationTime()">
-												</span>
-											</div>
-										</div>
-
-										<input class="form-control mt-2" type="text" id="re_title" name="re_title" placeholder="회의 제목을 입력해주세요.">
-										<textarea class="form-control mt-2" id="re_content"	name="re_content" rows="5" placeholder="회의 내용을 입력해주세요."></textarea>
-										<!-- </form> -->
-										<input class="btn btn-secondary" type="button" value="예약 추가" id="addReservation"> 
-										<input class="btn btn-secondary" type="button" value="뒤로 가기" id="addReservationCancel" onclick="redetailclose()">
-										</div> <!-- modal body -->
-									</div> <!-- form-group -->
-								
+										<input class="form-control mt-2" id="selectAttendsJstree_search" type="text" placeholder="사원 검색 창입니다.">
+				                           <div id="attadd">
+				                              <div id="selectAttendsJstree"></div>
+				                              <div id="attendsCheckList" style="display: none">
+				                                 <input type="text" id="re_attend" name="re_attend">
+				                              </div>
+				                              <input type="text" id="addemp" placeholder="참석자를 선택하세요">
+				                           </div>
+									</div> <!-- modal body -->
+							</div> <!-- form-group -->
 								
 								<div class="modal-footer">
-								<!-- jstree 사원 선택 -->
-									<input class="form-control mt-2" id="selectAttendsJstree_search" type="text" placeholder="사원 검색 창입니다.">
-									<div id="attadd">
-										<div id="selectAttendsJstree"></div>
-										<div id="attendsCheckList" style="display: none">
-											<input type="text" id="re_attend" name="re_attend">
-										</div>
-										<input type="text" id="addemp" placeholder="참석자를 선택하세요">
-									</div>
+									<input class="btn btn-secondary" type="button" value="선택 완료" id="attChoice" > 
+									<input class="btn btn-secondary" type="button" value="취소" id="addReservationCancel" onclick="redetailclose()">
 								</div>
-									<button id="addempbtn">사원 등록</button>
 							</div>
-
 						</div>
 					</div>
-				<!-- 예약 추가 모달 끝 -->	
+				<!-- 참가인원 설정 모달 끝 -->
+				
+				
+				
+				
 		
 	<main id="main" class="main">
 		<div class="container">
 			<div class="row">
 				<button class="btn btn-secondary" id="reservationModalButton" onclick="reservationModal()">예약하기</button>
+				<button class="btn btn-secondary" id="reservationModalButton" onclick="attenddd()">참가자 설정</button>
+				
 				<div class="card-body">
 					<div id="recalendar"></div>
 				</div>
