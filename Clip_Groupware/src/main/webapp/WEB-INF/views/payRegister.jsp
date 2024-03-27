@@ -9,7 +9,7 @@
 
 
 
-<script type="text/javascript" src="./js/paylineTest.js"></script>
+<script type="text/javascript" src="./js/paylineModal.js"></script>
 <style type="text/css">
 .form-control,.form-select{
 	width:15%;
@@ -55,12 +55,17 @@
 <body>
 	<main id="main" class="main">
 		<section class="section dashboard">
+			<div style="display: none">
+				<input type="text" disabled="disabled" name="user_name" value="${loginVo.user_name}">
+				<input type="text" disabled="disabled" name="dept_name" value="${loginVo.dept_name}">
+				<input type="text" disabled="disabled" name="ranks_name" value="${loginVo.ranks_name}">
+			</div>
 			<h5 class="card-title">${user_name}님 결재신청하실 기안서를 선택해주세요.</h5>
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item" role="presentation">
 					<button class="nav-link active" id="home-tab" data-bs-toggle="tab"
 						data-bs-target="#home" type="button" role="tab"
-						aria-controls="home" aria-selected="true">연차 신청서</button>
+						aria-controls="home" aria-selected="true" >연차 신청서</button>
 				</li>
 				<li class="nav-item" role="presentation">
 					<button class="nav-link " id="profile-tab" data-bs-toggle="tab"
@@ -79,16 +84,20 @@
 					aria-labelledby="home-tab">
 					<!--  연차신청서탭 시작 -->
 					<div class="container" >
-					<form id="insertForm" action="./myPayInsert.do" method="post">
-					</div>
+					
 					<div class="form-group" style="margin-top:20px;">
+						<label for="app_title">결재 제목</label>
+						<input type="text" id="app_title" class="form-control" name="app_title" placeholder="제목을 입력하세요." style="width:90%">			
+					</div>
+				
+					<div class="form-group" style="margin-top:10px;">
 					    <label for="vaSel">연차 종류</label> 
 					    <select class="form-select" aria-label="Default select example" id="vaSel" style="width:37%;" onchange="half(this.value)">
 					        <option value="">--사용하실 연차종류를 선택하세요.--</option>
 					        <option value="day">연차</option>
 					        <option value="halfDay">반차</option>
 					        <option value="gongGa">병가/공가</option>
-					        <option value="halfHalfDay">반반차</option>                          
+					        <!-- <option value="halfHalfDay">반반차</option> -->                          
 					    </select>
 					</div>
 					<div class="form-group" style="margin-top:10px;">
@@ -102,27 +111,26 @@
 						<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal">
 							결재라인 지정
 		            	</a>
-		            	<div class="selectedPayLine">
-		            		<label class="badge bg-warning" >결재라인</label>
-		            		<table class="table table-bordered" style="display: inline-block; vertical-align: middle;">
-		            			<tr>
-		            				<th>1차 결재자</th>
-		            				<th>2차 결재자</th>
-		            				<th>3차 결재자</th>
-		            			</tr>
-		            			<tr>
-		            				<td></td>
-		            				<td></td>
-		            				<td></td>
-		            			</tr>
-		            		</table>
-		            	</div>					    
-
+		            	<div id="selectedPayLine">
+		            		
+		            		
+		            	</div>	
+		            	
+		            	<div class="row mb-3" style="margin-top: 10px">
+		                  <label for="vaReason" class="col-sm-1 col-form-label">신청 사유</label>
+		                  <div class="col-sm-11">
+		                    <textarea class="form-control" style="height: 100px; width: 100%" id="vaReason"></textarea>
+		                  </div>
+		                </div>
+		            					 
 					</div>
+					
+					
+					
 					<div class="form-group" style="margin-top:10px;">
-						<label for="reason">신청 내용</label>
+						<label for="reason">결재 양식</label>
 						<textarea name="gian_html" id="smartEditor1"
-							style="width: 100%; height: 600px;">${vo1.gian_html}</textarea>
+							style="width: 100%; height: 600px;" disabled="disabled">${vo1.gian_html}</textarea>
 						<br> <br> <br>
 					</div>
 					<div style="text-align: center;">
@@ -130,14 +138,15 @@
 						<button type="submit" id="tempSave"
 							class="btn btn-secondary rounded-pill">임시저장</button>
 					</div>
-					</form>
 				</div>
 				<!--  연차신청서탭 끝 -->
+				</div>
 			</div>
 			<!--  지출결의서탭 시작 -->
 			<div class="tab-content pt-2" id="myTabContent">
 				<div class="tab-pane fade" id="profile" role="tabpanel"
 					aria-labelledby="profile-tab">
+					<div class="container" >
 					<form id="payTemplate" action="./" method="post">
 						<div class="form-group">
 							<label for="applicantName">신청자 이름</label> <input type="text"
@@ -180,12 +189,15 @@
 								class="btn btn-secondary rounded-pill">임시저장</button>
 						</div>
 					</form>
+					
+					</div>	
 				</div>
 			</div>
 			<!-- 출장 보고서 탭 시작 -->
 			<div class="tab-content pt-2" id="myTabContent">
 				<div class="tab-pane fade" id="contact" role="tabpanel"
 					aria-labelledby="contact-tab">
+					<div class="container" >
 					<form>
 						<div class="form-group">
 							<label for="position">문서내용 :</label>
@@ -200,6 +212,7 @@
 							<button type="submit" id="tempSave" class="btn btn-secondary rounded-pill">임시저장</button>
 						</div>
 					</form>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -228,8 +241,11 @@
 			                </div>
 			                
 			                <div class="col-lg-6">
-			                	<div class="select_payline_area col-lg-12">
-			                		<div id="pickLine_box"></div>
+			                	<div class="select_payline_area col-lg-12" style="height: 100%">
+			                		<div id="pickLine_box">
+			                		<h4>지정된 결재인</h4>
+			                		<hr/>
+			                		</div>
 			                	</div>
 		                	</div>
 		                	
@@ -245,7 +261,40 @@
             	</div>
             
             </div>
-		
+            
+            
+            
+            
+            <!-- 결재 신청 미리보기 -->
+			<div class="modal fade" id="reqPayment" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
+            
+            	<div class="modal-dialog modal-lg">
+            	
+            		<div class="modal-content">
+            		<form>
+		            	<div class="modal-header">
+			                <h4 class="modal-title" id="app"></h4>
+			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			               
+		                </div>
+		                <div class="modal-body row" id="gian_preview">
+			               
+			               
+		                	<hr>
+	                    </div>
+	                    <div class=modal-footer>
+	                      <button type="submit" class="btn btn-warning" >결재요청</button>
+	                      <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</a>
+	                    </div>
+	                    
+	                    </form>
+	                    
+                    </div>
+                    
+            	</div>
+            
+            </div>
+			
 		
 	</main>
 </body>
