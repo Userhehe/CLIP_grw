@@ -30,4 +30,10 @@ public class DailyCheckVo {
 	private String ranks_name;
 	private String dept_seq;
 	private String dept_name;
-}
+	
+	
+
+	}
+
+
+

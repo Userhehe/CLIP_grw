@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserinfoVo implements Serializable {
+public class UserinfoVo  {
 	private String user_id;
 	private String user_password;
 	private String user_name;
