@@ -1,6 +1,33 @@
 
 $(document).ready(function() {
 		
+	var selempval=[];
+	
+	$("#attChoice").on("click", function() {
+	var attends = "";
+	for(var i = 0; i<selempval.length; i++){
+		attends += selempval[i];
+		if(i < selempval.length-1){
+			attends +=",";
+		}
+	}
+	
+	var seq =  $('#hiddenValue').val();
+    console.log("넘어가라:", attends, seq);
+    $.ajax({
+        url: "./attinsert.do",
+        type: "POST",
+        data: { id: attends, seq: seq },
+        dataType: "json",
+        success: function(data) {
+            alert("참석자가 등록되었습니다.");
+        },
+        error: function() {
+            alert("서버 에러");
+        }
+    	});
+	});
+    
 	//dateTimePicker 날짜-------------------------------------------------
 	$("#re_start").datetimepicker({
 		format: "Y-m-d",
@@ -88,66 +115,136 @@ $(document).ready(function() {
 					plugins: ["search", "checkbox","contextmenu"]
 
 				});
-				
-
-				
-			}//success끝나는 부분
-		});//ajax끝나는 부분
+			}/*success 끝*/
+		});/*ajax 끝*/
 	}
-	
 	//아작스 실행하는 놈
 	initializeJSTree();
 	
-	// 참석자 input태그에 넣기
 
-    
-       $('#selectAttendsJstree').on('select_node.jstree', function (e, data) {
-    if (!data.node.id.includes('DEPT')) {
-        console.log('노드가 선택되었습니다:', data.node.text);
-    }
+	
+
+
+function insertAddAtt(){	
+	$("#reAttModal").modal("show");
+	//console.log("seq의 값",$("#hiddenValue").val());	
+	
+	// 참석자 input태그에 넣기------------
+		//select_node.jstree 이벤트 핸들링
+		var txtarea = $("#addemp"); //선택한 사원의 정보가 보이는곳
+		var selemptxt=[]; //jsp에 보이는 값
+//		var selempval=[]; //db에 전달될 값
+		var seq=$("#hiddenValue").val();
+		
+		$('#selectAttendsJstree').on('select_node.jstree', function(e, data) {
+		    if (!data.node.id.includes('DEPT')) { // 부서의 정보가 전달되는 것을 방지
+		        var selemp = data.node.text; // 화면에 보일 사원정보
+		        var selempid = data.node.id; // 컨트롤러로 보낼 사원정보
+		        selemptxt.push(selemp);
+		        selempval.push(selempid);
+		        
+		       console.log("선택한 사원정보:",selemp);
+		       console.log("선택한 사원정보 배열:",selemptxt);
+		       console.log("선택한 사원id 배열:",selempval);
+		
+		        txtarea.val(selemptxt.join("\n"));
+		    }
 		});
-	   
-	   //deselect_node.jstree 이벤트 핸들링
-	   $('#selectAttendsJstree').on('deselect_node.jstree', function (e, data) {
-			if (!data.node.id.includes('DEPT')) {
-	       console.log('노드 선택이 해제되었습니다:', data.node.text);
-			}
-	   });
+		
+		// deselect_node.jstree 이벤트 핸들링
+		$('#selectAttendsJstree').on('deselect_node.jstree', function(e, data) {
+		    if (!data.node.id.includes('DEPT')) { // 부서의 정보가 전달되는 것을 방지
+		        var deselemp = data.node.text;
+		        var deselempid = data.node.id;
+				selemptxt = selemptxt.filter(emp => emp !== deselemp);
+				selempval = selempval.filter(emp => emp !== deselempid);
+				
+			   console.log("선택취소한 사원정보:",deselemp);
+		       console.log("선택한 사원정보 배열:",selemptxt);
+		       console.log("선택한 사원id 배열:",selempval);
+		       
+				 txtarea.val(selemptxt.join("\n"));
+		    }
+		    
+	});	
+}
+		    
+//		    
+//		$("#attChoice").on("click", function() {
+//			console.log("넘어가라:",selempval,seq);
+//		    $.ajax({
+//		        url: "./attinsert.do",
+//		        type: "POST",
+//		        data: { id: selempval, seq: seq },
+//		        dataType: "json",
+//		        success: function(data) {
+//		            alert("참석자가 등록되었습니다.");
+//		        },
+//		        error: function() {
+//		            alert("서버 에러");
+//		        }
+//		    });
+//		});
 
 
-   $("#addempbtn").click(function(){
-    var chkemp = $("#selectAttendsJstree").jstree("get_selected", true);
-    console.log("chkemp :", chkemp)
-    
-	 var chkemps = chkemp.map(function(node){
-	        if (node.id !== "DEPT_001" && 
-	            node.id !== "DEPT_002" && 
-	            node.id !== "DEPT_003" && 
-	            node.id !== "DEPT_004" && 
-	            node.id !== "DEPT_005" && 
-	            node.id !== "DEPT_006" && 
-	            node.id !== "DEPT_007") {
-	            return node.id;
-	        }
-	    }).filter(Boolean);
-	    var chkempsString = chkemp.join(",");
-		console.log("선택된 항목 ID :" + chkemps.join(", "));
-		$("#addemp").val(chkempsString);
-	});
+//$(document).ready(function() {
+//	
+//    $("#attChoice").on("click", function() {
+//	console.log("되라 좀")
+//        console.log("넘어가라:", selempval, seq);
+//        $.ajax({
+//            url: "./attinsert.do",
+//            type: "POST",
+//            data: { id: selempval, seq: seq },
+//            dataType: "json",
+//            success: function(data) {
+//                alert("참석자가 등록되었습니다.");
+//            },
+//            error: function() {
+//                alert("서버 에러");
+//            }
+//        });
+//    });
+//});
+
+
+
+//   $("#addempbtn").click(function(){
+//    var chkemp = $("#selectAttendsJstree").jstree("get_selected", true);
+//    console.log("chkemp :", chkemp)
+//    
+//	 var chkemps = chkemp.map(function(node){
+//	        if (node.id !== "DEPT_001" && 
+//	            node.id !== "DEPT_002" && 
+//	            node.id !== "DEPT_003" && 
+//	            node.id !== "DEPT_004" && 
+//	            node.id !== "DEPT_005" && 
+//	            node.id !== "DEPT_006" && 
+//	            node.id !== "DEPT_007") {
+//	            return node.id;
+//	        }
+//	        
+//	    }).filter(Boolean);
+//	    var chkempsString = chkemp.join(",");
+//		console.log("선택된 항목 ID :" + chkemps.join(", "));
+//		$("#addemp").val(chkempsString);
+//	});
 	
 		
 	
 	
 	// 검색창 글자 입력하면 나오는놈
 	$('#selectAttendsJstree_search').keyup(function() {
-		$('#selectAttendsJstree').jstree(true).show_all();
-		$('#selectAttendsJstree').jstree('search', $(this).val());
+	$('#selectAttendsJstree').jstree(true).show_all();
+	$('#selectAttendsJstree').jstree('search', $(this).val());
 	});
+	
 
 	//jstree-----------------------------------
  
+ 
 //	//예약 등록 버튼-----------------------------------
-//	$("#addReservation").click(function() {
+	$("#addReservation").click(function() {
 //		var selectedNodes = $('#selectAttendsJstree').jstree('get_selected', true);
 //		var selectedNodeIds = selectedNodes.map(function(node) {
 //			return node.id;
@@ -171,52 +268,59 @@ $(document).ready(function() {
 //		attendsReal = JSON.stringify(attendsReal);
 //		
 //		document.getElementById("re_attend").value = attendsReal;
-//		
-//		
-//	  	var me_room = document.getElementById("me_room").value;
-//		var re_start = document.getElementById("re_start").value;
-//		var re_start_time = document.getElementById("re_start_time").value;
-//		var re_title = document.getElementById("re_title").value;
-//		var re_content = document.getElementById("re_content").value;
-//		var re_attend = document.getElementById("re_attend").value;
-//		
-//		if (me_room == null || me_room == "") {
-//			alert("회의실을 선택하세요.");
-//		} else if (re_start == null || re_start == "") { 
-//			alert("예약일을 선택하세요.");
-//		} else if (re_start_time == null || re_start_time == "") { 
-//			alert("예약시간을 선택하세요.");
-//		}  else if (re_title == null || re_title == "") { 
-//			alert("회의 주제를 작성해주세요.");
-//		} else if (re_content == null || re_content == "") { 
-//			alert("회의 내용을 작성해주세요.");
-//		} else if (re_attend == null || re_attend == "") {  
-//			alert("회의 참석자를 선택하세요.");
-//		}
-//		 else {
-//			datata = $("#reservationForm").serialize();
-//			
-//			$.ajax({
-//				type: "POST",
-//				url:"./myReservationInsert.do",
-//				data:datata,
-//				success:function(data){
-//					if(data!=1){
-//						alert("예약 실패");
-//						return false;
-//					}else{
-//						alert("예약 성공");
-//						$("#reservationForm")[0].reset();
-//						$('#selectAttendsJstree').jstree("deselect_all");
-//						$("#selectAttendsJstree").jstree("close_all");
-//						$("#reservationModal").modal("hide");
-//					}
-//				},error: function() {
-//						alert("서버 에러");
-//					}
-//			});		
-//		}		
-//	});
+	
+	  	var me_room = document.getElementById("me_room").value;
+		var re_start = document.getElementById("re_start").value;
+		var re_start_time = document.getElementById("re_start_time").value;
+		var re_title = document.getElementById("re_title").value;
+		var re_content = document.getElementById("re_content").value;
+		
+		if (me_room == null || me_room == "") {
+			alert("회의실을 선택하세요.");
+		} else if (re_start == null || re_start == "") { 
+			alert("예약일을 선택하세요.");
+		} else if (re_start_time == null || re_start_time == "") { 
+			alert("예약시간을 선택하세요.");
+		}  else if (re_title == null || re_title == "") { 
+			alert("회의 주제를 작성해주세요.");
+		} else if (re_content == null || re_content == "") { 
+			alert("회의 내용을 작성해주세요.");
+		} else {
+			datata = $("#reservationForm").serialize();
+			
+			$.ajax({
+				type: "POST",
+				url:"./myReservationInsert.do",
+				data:datata,
+				success:function(data){
+					console.log("data값", data);
+					if(data==0){
+						alert("예약 실패");
+						return false;
+					}else{
+				alert("예약 되었습니다.");
+				$("#reservationForm")[0].reset();
+				$("#hiddenValue").val(data);
+//				$("#selectAttendsJstree").jstree("deselect_all");
+//				$("#selectAttendsJstree").jstree("close_all");
+				
+				var result = confirm("회의 참가인원을 선택하시겠습니까?")
+				if(result){
+					$("#reservationModal").modal("hide");
+					insertAddAtt()
+					
+				}else{
+					$("#reservationModal").modal("hide");
+					alert("참가인원을 정하지 않고 예약되었습니다.")
+				}
+					}
+					
+				},error: function() {
+						alert("서버 에러");
+					}
+			});		
+		}		
+	});
 	
 	//모달 닫기
 //	$("#addReservationCancel").click(function() {
@@ -313,8 +417,13 @@ function redetailclose(){
 	console.log("모달창 닫기")
 	$("#redetail").modal("hide");
 	$("#reservationModal").modal("hide");
+	$("#reAttModal").modal("hide");
 }
 
+function attenddd(){
+	$("#reAttModal").modal("show");
+	
+}
 
 
 

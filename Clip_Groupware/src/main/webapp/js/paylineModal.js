@@ -9,41 +9,56 @@ $(document).ready(function() {
 	
 		//지정된 결재라인 값들을 가져오기.
 		var pickLine_div = document.getElementById('pickLine_box');
-		console.log('pickLine_div : ', pickLine_div);
+//		console.log('pickLine_div : ', pickLine_div);
 		
 		//전체 행 가져오기
 		pick_usersList = pickLine_div.getElementsByClassName('apr_row'); 
-		console.log('pick_usersList[0] : ', pick_usersList[0]);
+//		console.log('pick_usersList[0] : ', pick_usersList[0]);
 		
 		//전체 행의 길이
 		var pick_length = pick_usersList.length;
-		console.log(pick_length);
+//		console.log(pick_length);
 		
 		var payseq = ['first','second','third'];
 		
-		let html = `<table class="table table-bordered" style="display: inline-block; vertical-align: middle;"><tr>`; 
-					
-			for(let i = 0; i<pick_length; i++){
-				html += `<th>${i+1}차 결재자</th>`;
-			}
-			
-			html += `</tr><tr>`;
-			for(let i = 0; i<pick_length; i++){
-				var pickUser = pick_usersList[i]; 
-				console.log(pickUser);
-				var user = pickUser.getElementById('chkPosi');
-				var value = user.value;
-				var name = user.name;
-				console.log (value, name);
-				html += `<td name=${payseq[i]} value= ${value}>${name}</td>`;
-			}
-			
-			html += `</tr></table>`;
-	
-			console.log(html);	
+		if(pick_length <= 3 && pick_length > 0){
+			let html = `<label class="badge bg-warning" >결재라인</label>
+						<br/>
+						<table class="table table-bordered" style="display: inline-block; vertical-align: middle;">
+						<tr>`; 
+						
+				for(let i = 0; i<pick_length; i++){
+					html += `<th>${i+1}차 결재자</th>`;
+				}
+				
+				html += `</tr><tr>`;
+				for(let i = 0; i<pick_length; i++){
+					var pickUser = pick_usersList[i].querySelector('#chkPosi'); 
+	//				console.log('pickUser : ', pickUser);
+					var value = pickUser.getAttribute('value');
+					var name = pickUser.getAttribute('name');
+	//				console.log (value, name);
+					html += `<td name=${payseq[i]} value= ${value}>${name}</td>`;
+				}
+				
+				html += `</tr></table>`;
 		
-	
-		
+				//완성된 table
+	//			console.log(html);	
+				
+				console.log(document.getElementById('selectedPayLine').innerHTML);
+				
+				document.getElementById('selectedPayLine').innerHTML = html;
+			} 
+			if(pick_length>3){
+				alert('결재인은 3명까지 지정할 수 있습니다!');
+				return;
+			}
+			if(pick_length <= 0){
+				document.getElementById('selectedPayLine').innerHTML = '';
+			}
+
+			$('#paylinemodal').modal('hide');
 		}
 	)
 	
@@ -127,6 +142,7 @@ $(document).ready(function() {
 						put: {
 							label: "결재자 추가",
 							action: function() {	//클릭시 이벤트
+							
 								// 선택된 노드의 id 가져옴
 								var sel = $("#payLine_box").jstree('get_selected');
 	
@@ -386,7 +402,7 @@ function findTreeNodeByText(text) {
 function clean() {
 	var jstree = $("#payLine_box").jstree();
 	var allNodes = jstree.get_json(null, { flat: true });//jstree를 json 형태로 전체데이터를 가져온 것
-	$("#pickLine_box").html("");
+	$("#pickLine_box").html("<h4>지정된 결재인</h4><hr/>");
 	//모든 노드 표시
 	$("#payLine_box").jstree('show_all');
 	for (var i = 0; i < allNodes.length; i++) {
@@ -402,6 +418,7 @@ function clean() {
 var openModal = function openModal(){
 	console.log("모달 나와라~");
 	$('#paylinemodal').modal('show');
+	
 }
 
 

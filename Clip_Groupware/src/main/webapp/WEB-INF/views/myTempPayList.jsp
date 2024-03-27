@@ -83,8 +83,8 @@
 							<div class="modal-footer">
 								  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 			                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
-			                      <button type="button" class="btn btn-secondary">결재 수정</button>
-			                      <button type="button" onclick="cancel()" class="btn btn-light">결재 취소</button>
+			                      <button type="button" class="btn btn-primary">결재 작성</button>
+			                      <button type="button" id="tempDel" data-appseq="" class="btn btn-warning">삭제</button>
 							</div>
 						</div>
 					</div>

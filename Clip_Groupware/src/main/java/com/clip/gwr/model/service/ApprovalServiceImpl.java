@@ -113,5 +113,12 @@ public class ApprovalServiceImpl implements IApprovalService{
 		log.info("결재취소 : {}",appSeq);
 		return approvalDao.cancelApproval(appSeq);
 	}
+	
+	//임시저장된 결재 삭제
+	@Override
+	public int tempDelete(String appSeq) {
+		log.info("결제삭제 : {}",appSeq);
+		return approvalDao.tempDelete(appSeq);
+	}
 
 }

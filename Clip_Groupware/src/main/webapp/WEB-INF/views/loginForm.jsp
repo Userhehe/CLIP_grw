@@ -31,11 +31,11 @@
 					  	<div class="form-group">
 							<input type="text" class="form-control" id="email" name="email" placeholder="가입하신 이메일주소를 입력해주세요" required="required">
 						</div>
-						<div class="fc_red font12">&nbsp;&nbsp;* 발송버튼을 누르면 가입하신 이메일 주소로 아이디값이 발송됩니다.</div>
+						<div class="fc_blue font12">&nbsp;&nbsp;* 발송버튼을 누르면 가입하신 이메일 주소로 아이디값이 발송됩니다.</div>
 		        	</div>
 	            	<div class="modal-footer">
 		            	<button type="button" class="btn btn-secondary" onclick="closeIdModal()" data-bs-dismiss="modal">닫기</button>
-			            <button type="submit" class="btn btn-primary">발송</button>
+			            <button type="submit" class="btn btn-primary orange_bg">발송</button>
 		        	</div>
 		        </div>
 	    	</div>
@@ -51,22 +51,25 @@
              		<button type="button" class="btn-close" onclick="closePwModal()" data-bs-dismiss="modal" aria-label="Close"></button>
         		</div>
         		<div class="modal-body">
-        			<form action="" id="sendCertNumForm" method="post">
+        			<form action="" id="sendCertnumForm" method="post">
 						<div class="form-group">
 							<input type="text" class="form-control replace_pw_input" id="id" name="id" placeholder="가입하신 아이디를 입력해주세요" required="required">
-							<button type="submit" class="btn btn-primary">발송</button>
+							<button type="submit" id="sendCertnumBtn" class="btn btn-primary orange_bg">발송</button>
 						</div>
-						<div class="fc_red font12">&nbsp;&nbsp;* 발송버튼을 누르면 입력하신 해당 아이디의 이메일주소로 인증번호가 발송됩니다.</div>
+						<div class="fc_blue font12">&nbsp;&nbsp;* 발송버튼을 누르면 입력하신 해당 아이디의 이메일주소로 인증번호가 발송됩니다.</div>
 					</form>
 
-					<form action="" id="comparisonCertNumForm" method="post">			        
+					<form action="" id="checkCertnumForm" method="post">			        
 				        <div class="mg_top10">
-				        	<div id="timer" class="flex_end" name="timer">인증번호 입력시간 : 5:00</div>
+				        	<div class="flex_end">
+					        	<div>인증번호 입력시간 : &nbsp;</div>
+					        	<div id="timer" class="flex_end" name="timer">03:00</div>
+				        	</div>
 							<div class="form-group">
 								<input type="number" class="form-control replace_pw_input" id="certnum" name="certnum" placeholder="인증번호를 입력해주세요" required="required">
-								<button type="submit" class="btn btn-primary">확인</button>
+								<button type="submit" id="checkCertnumBtn" class="btn btn-primary orange_bg">확인</button>
 							</div>
-							<div class="fc_red font12">&nbsp;&nbsp;* 가입하신 이메일 주소로 발송된 인증번호를 입력해주세요.</div>
+							<div class="fc_blue font12">&nbsp;&nbsp;* 가입하신 이메일 주소로 발송된 인증번호를 입력해주세요.</div>
 				        </div>
 			        </form>
 			        
@@ -75,13 +78,14 @@
 							<div class="form-group">
 								<input type="password" class="form-control replace_pw_input mg_top30" id="replacePassword" name="replacePassword" placeholder="새로운 비밀번호를 입력해주세요" required="required">
 								<input type="password" class="form-control replace_pw_input mg_top10" id="checkPassword" name="checkPassword" placeholder="비밀번호를 한번 더 입력해주세요" required="required">
-								<div class="fc_red font12">&nbsp;&nbsp;* 비밀번호는 영문&숫자를 포함한 8~16자리로 이루어져야합니다.</div>
-								<button type="submit" class="btn btn-primary flex_end fr">비밀번호 재설정</button>
+								<div class="fc_blue font12">&nbsp;&nbsp;* 비밀번호는 영문&숫자를 포함한 8~16자리로 이루어져야합니다.</div>
+								<button type="submit" id="replacePasswordBtn" class="btn btn-primary flex_end fr orange_bg">비밀번호 재설정</button>
 							</div>
 				        </div>
 			        </form>
            		</div>
 	        	<div class="modal-footer">
+        			<button type="submit" class="btn btn-secondary white_bg" onclick="certnumRequest()" data-bs-dismiss="modal">인증번호재요청</button>
 	            	<button type="button" class="btn btn-secondary" onclick="closePwModal()" data-bs-dismiss="modal">Close</button>
 	        	</div>
         	</div>

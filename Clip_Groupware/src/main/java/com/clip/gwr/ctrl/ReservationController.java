@@ -25,6 +25,7 @@ import com.clip.gwr.vo.MeeTingRoomVo;
 import com.clip.gwr.vo.ReAttendsVo;
 import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
+import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -96,7 +97,6 @@ public class ReservationController {
 		map.put("content", vo.getRe_content());
 		map.put("start", vo.getRe_start());
 		map.put("end", vo.getRe_end());
-		map.put("attends", attends);
 		log.info("선택된 seq의 상세보기 내용: {}", map);
 		return map;
 	}
@@ -156,6 +156,7 @@ public class ReservationController {
 
 		return possibleMeRoomTimes;
 	}
+	
 
 	// jstree
 	@GetMapping(value = "/selectAttendsJstree.do")
@@ -170,17 +171,51 @@ public class ReservationController {
 		log.info("result : {}", result);
 		return result;
 	}
-
+	
+	//예약등록하기
 	@PostMapping(value = "/myReservationInsert.do")
 	@ResponseBody
-	public int myReservationInsert(@RequestParam Map<String, Object> map, HttpSession session) {
+	public int myReservationInsert(@RequestParam Map<String, Object> map, 
+												 HttpSession session) {
 		UserinfoVo id = (UserinfoVo) session.getAttribute("loginVo");
 		log.info("등록할 예약자 정보 : {}", id);
 		map.put("user_id", id.getUser_id());
 		log.info("등록할 예약 정보 : {}", map);
 		int isc = service.myReservationInsert(map);
-		log.info("예약 등록 성공 여부 : {}", isc == 1 ? "예약성공" : "예약실패");
-		return isc;
+		
+		int seq = service.cpRev(id.getUser_id());
+		log.info("예약 등록 성공 여부 : {}", isc == 0 ? "예약실패" : "예약성공");
+		log.info("최신 예약 seq : {}", seq);
+		
+		if(isc !=0) {
+			return seq;
+		}else {
+			return isc;
+		}
+		
+		
+	}
+	
+	//참석자 등록하기
+	@PostMapping(value = "/attinsert.do")
+	@ResponseBody
+	public String attinsert(String id, int seq) {
+		log.info("ReservationController attinsert");
+		log.info("배열 : {}",id);
+		log.info("최신시퀀스:{}",seq);
+		
+		int cnt =0;
+		String[] ids = id.split(",");
+		for(String att: ids) {
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("user_id", att);
+			map.put("re_seq", seq);
+			service.attinsert(map);
+			cnt++;
+		}
+		System.out.println("총"+cnt+"명이 입력됨");
+		return "myReservation";
 	}
 	
 	// 예약하기 모달 기능 시작

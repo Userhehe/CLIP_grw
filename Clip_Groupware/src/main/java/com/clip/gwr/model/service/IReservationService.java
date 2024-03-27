@@ -40,4 +40,10 @@ public interface IReservationService {
 	//참석자 조회
 	public List<ReAttendsVo> reAttList(int seq);
 	
+	//최신 예약내역 조회
+	public int cpRev(String user_id);
+	
+	//참석자 입력
+	public int attinsert(Map<String, Object> map);
+	
 }
