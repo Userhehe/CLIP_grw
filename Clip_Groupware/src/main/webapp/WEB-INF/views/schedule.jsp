@@ -28,6 +28,14 @@
 	.nct_event > *{
      	background-color: orange;
     }
+    .reser_event > *{
+     	background-color: green;
+    }
+    .annual_event > *{
+     	background-color: red;
+    }
+    
+    
     .fc-event-title{
     	color : white;
     }
@@ -187,10 +195,10 @@
 									<td><input type="checkbox" id="showNct" checked> 전사일정</td>
 								</tr>
 								<tr>
-									<td><input type="checkbox"> 휴가일정</td>
+									<td><input type="checkbox" id="showRe" checked> 회의실 예약</td>
 								</tr>
 								<tr>
-									<td><input type="checkbox"> 회의실 예약</td>
+									<td><input type="checkbox" id="showAn" checked> 휴가일정</td>
 								</tr>
 								<tr style="display: none">
 									<td><input type="text" id="user_auth" value="${loginVo.user_auth}"></td>
