@@ -96,12 +96,15 @@ public class DailyCheckController {
 	    log.info("####################### user_id :" + userId);
 	    log.info("################# loginVo :" + loginVo);
 
+	    
 	    Map<String, Object> insertMap = new HashMap<>();
 	    insertMap.put("user_id", userId); // 맵에 사용자 ID 추가
+	    log.info("%%%%%%%%%%%********************** insertMap"+insertMap);
+	    
 
 	    try {
 	        int insertRows = service.insertDailyCheckIntime(insertMap);
-
+             log.info("%%%%%%%%%%%%$$$$$$$$$$$$$$$$$$$$$ insertRows"+insertRows);
 	        if (insertRows > 0) {
 	            response.sendRedirect("./main.do");
 	        } else {

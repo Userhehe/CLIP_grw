@@ -25,23 +25,28 @@
 	  <select id="selectDailyStatus" resultType="com.clip.gwr.vo.DailyCheckVo">
     <![CDATA[
     SELECT
-        USER_ID,
-        CASE
-            WHEN TO_CHAR(DAILY_INTIME, 'HH24:MI:SS') < '09:00:00' AND TO_CHAR(DAILY_OUTTIME, 'HH24:MI:SS') >= '18:00:00' THEN '정상근무'
-            WHEN TO_CHAR(DAILY_INTIME, 'HH24:MI:SS') < '09:00:00' AND TO_CHAR(DAILY_OUTTIME, 'HH24:MI:SS') < '18:00:00' THEN '조퇴'
-            WHEN TO_CHAR(DAILY_INTIME, 'HH24') BETWEEN '12' AND '13' AND TO_CHAR(DAILY_OUTTIME, 'HH24') >= '17' THEN '조퇴'
-            WHEN TO_CHAR(DAILY_INTIME, 'HH24') BETWEEN '12' AND '13' AND TO_CHAR(DAILY_OUTTIME, 'HH24') < '17' THEN '결근'
-            WHEN TO_CHAR(DAILY_INTIME, 'HH24') < '12' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 >= 5 THEN '조퇴'
-            WHEN TO_CHAR(DAILY_INTIME, 'HH24') < '12' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 < 5 THEN '결근'
-            WHEN TO_CHAR(DAILY_INTIME, 'HH24') >= '13' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 >= 4 THEN '지각'
-            WHEN TO_CHAR(DAILY_INTIME, 'HH24') >= '13' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 < 4 THEN '결근'
-            ELSE '결근'
-        END AS DAILY_STATUS 
-    FROM
-        DAILYCHECK d
-    WHERE
-        DAILY_MODIFY = 'N'
-        AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE)
+    USER_ID,
+    CASE
+        -- 출근시간이 오전 9시 이전이고 퇴근시간이 오후 6시 이후인 경우
+        WHEN TO_CHAR(DAILY_INTIME, 'HH24:MI:SS') < '09:30:00' AND TO_CHAR(DAILY_OUTTIME, 'HH24:MI:SS') >= '17:00:00' THEN '정상근무'   
+        -- 출근시간이 12시에서 13시 사이일 때 퇴근시간이 16시 이후인 경우
+        WHEN TO_CHAR(DAILY_INTIME, 'HH24') BETWEEN '12' AND '13' AND TO_CHAR(DAILY_OUTTIME, 'HH24') >= '16' THEN '조퇴'
+        -- 출근시간이 12시에서 13시 사이일 때 퇴근시간이 16시 이전인 경우
+        WHEN TO_CHAR(DAILY_INTIME, 'HH24') BETWEEN '12' AND '13' AND TO_CHAR(DAILY_OUTTIME, 'HH24') < '16' THEN '결근'
+        -- 출근시간이 12시 이전이면서 출근시간으로부터 퇴근시간이 5시간 이후인 경우
+        WHEN TO_CHAR(DAILY_INTIME, 'HH24') < '12' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 >= 5 THEN '조퇴'
+        -- 출근시간이 12시 이전이면서 출근시간으로부터 퇴근시간이 5시간 이전인 경우
+        WHEN TO_CHAR(DAILY_INTIME, 'HH24') < '12' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 < 5 THEN '결근'
+        -- 출근시간이 13시 이후이면서 출근시간으로부터 퇴근시간이 4시간 이후인 경우
+        WHEN TO_CHAR(DAILY_INTIME, 'HH24') >= '13' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 >= 4 THEN '지각'
+        -- 출근시간이 13시 이후이면서 출근시간으로부터 퇴근시간이 4시간 이전인 경우
+        WHEN TO_CHAR(DAILY_INTIME, 'HH24') >= '13' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 < 4 THEN '결근'
+        -- 출근시간 또는 퇴근시간 또는 출근시간 퇴근시간이 둘다 없는 경우
+        ELSE '결근'
+    END AS DAILY_STATUS 
+	FROM DAILYCHECK d
+	WHERE  DAILY_MODIFY = 'N'
+            AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE);
     ]]>
 	</select>
 	
