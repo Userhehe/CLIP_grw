@@ -3,31 +3,46 @@
 <mapper namespace="com.clip.gwr.model.mapper.ProjectsDaoImpl">
 
 
-    <!-- 프로젝트 전체조회 -->
-    <select id="getProjectsAll" resultType="ProjectsVo">
-        SELECT PRJ_ID, CLI_NAME, PRJ_NAME, PRJ_SDATE, PRJ_DDATE, PRJ_STATUS, PRJ_MANAGER, PRJ_PROGRESS
-			FROM PROJECTS
-    </select>
-    
-    <select id="projectsProgressSel" resultType="ProjectsVo">
-    	SELECT PRJ_ID, CLI_NAME, PRJ_NAME, PRJ_SDATE, PRJ_DDATE, PRJ_STATUS, PRJ_MANAGER, PRJ_PROGRESS
-			FROM PROJECTS
-				WHERE PRJ_STATUS = '진행중'
-    </select>
-    
-    <select id="projectsClientSel" resultType="ProjectsVo">
-    	SELECT PRJ_ID, CLI_NAME, PRJ_NAME, PRJ_SDATE, PRJ_DDATE, PRJ_STATUS, PRJ_MANAGER, PRJ_PROGRESS
-			FROM PROJECTS
-				WHERE CLI_NAME = #{'cli_name'}
-    </select>
-    
-    <!-- 프로젝트 기간별조회 -->
-    <select id="projectsPeriodSel" resultType="ProjectsVo">
-    	SELECT PRJ_ID, CLI_NAME, PRJ_NAME, PRJ_SDATE, PRJ_DDATE, PRJ_STATUS, PRJ_MANAGER, PRJ_PROGRESS
-    		FROM PROJECTS
-    			WHERE PRJ_SDATE = #{'prj_sdate'}
-    </select>
-    
+	<!-- 프로젝트 전체조회 -->
+	<select id="getProjectsAll" resultType="ProjectsVo">
+		SELECT CLI_NAME,
+		PRJ_NAME, PRJ_PROGRESS
+		FROM PROJECTS p ;
+	</select>
+
+	<select id="projectsProgressSel" resultType="ProjectsVo">
+		SELECT CLI_NAME,
+		PRJ_NAME, PRJ_PROGRESS, PRJ_STATUS, PRJ_SDATE, PRJ_DDATE
+		FROM PROJECTS p
+		WHERE PRJ_STATUS = '진행중'
+	</select>
+	
+	<select id="projectsProgressDone" resultType="ProjectsVo">
+		SELECT CLI_NAME,
+		PRJ_NAME, PRJ_PROGRESS, PRJ_STATUS, PRJ_SDATE, PRJ_DDATE
+		FROM PROJECTS p
+		WHERE PRJ_STATUS = '완료'
+	</select>
+
+	<select id="projectsClientSel" resultType="ProjectsVo">
+		SELECT PRJ_ID,
+		CLI_NAME, PRJ_NAME, PRJ_SDATE, PRJ_DDATE, PRJ_STATUS,
+		PRJ_MANAGER,
+		PRJ_PROGRESS
+		FROM PROJECTS
+		WHERE CLI_NAME = #{'cli_name'}
+	</select>
+
+	<!-- 프로젝트 기간별조회 -->
+	<select id="projectsPeriodSel" resultType="ProjectsVo">
+		SELECT PRJ_ID,
+		CLI_NAME, PRJ_NAME, PRJ_SDATE, PRJ_DDATE, PRJ_STATUS,
+		PRJ_MANAGER,
+		PRJ_PROGRESS
+		FROM PROJECTS
+		WHERE PRJ_SDATE = #{'prj_sdate'}
+	</select>
+
 
 </mapper>
 

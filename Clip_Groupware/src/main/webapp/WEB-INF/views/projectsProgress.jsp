@@ -12,7 +12,7 @@
 <%@ include file="./header.jsp"%>
 </head>
 <body>
-	<main id="main" class="main">
+	<main id="main" class="main" style="background-color: f2f2f2;">
 		<section class="section dashboard">
 			<div>
 				<div style="border-bottom: .5px solid #2F3438;">
@@ -147,30 +147,33 @@
 				</div>
 				<!-- 프로젝트 생성 모달창 끝 -->
 
+				<div></div>
 
-
-<div class="container" style="margin-left: 0px;">
-    <div class="row" style="width: 100%; flex-wrap: nowrap;">
-        <c:forEach var="projects" items="${lists}" varStatus="vs">
-            <div class="col-md-4" style="width: 300px;">
-                <div class="card-body" style="margin-top: 30px; background-color: white; height: 330px; width: 280px; border-radius: 20px;">
-                    <div>
-                        <h5 class="card-title"><span style="font-weight: bold;">[${projects.cli_name}]</span> ${projects.prj_name}</h5>
-                        <p class="card-text">참여자:
-                            <c:forEach var="member" items="${projects.prj_mem}" varStatus="memberStatus">
-                                ${prj_mem.USR_NAME}
-                                <c:if test="${!memberStatus.last}">, </c:if>
-                            </c:forEach>
-                        </p>
-                    </div>
-                    <div style="text-align: right;">
-                        <button type="button" class="btn btn-secondary" onclick="location.href='projectDetail.do?project_id=${project.PRJ_ID}'" style="margin-top: 20px; margin-right: 10px;">상세보기</button>
-                    </div>
-                </div>
-            </div>
-        </c:forEach>
-    </div>
-</div>
+				<div class="container" style="margin-left: 5px;">
+					<div class="row" style="width: 119%; flex-wrap: wrap;">
+						<c:forEach var="projects" items="${lists}" varStatus="vs">
+							<div class="col-md-4" style="width: 20%; flex: 0 0 20%;">
+								<div class="card-body"
+									style="margin-top: 30px; background-color: white; height: 230px; width: 100%; border-radius: 20px;">
+									<div>
+										<div class="card-title">
+											<span style="font-weight: bold; font-size: 17px;">[${projects.cli_name}]</span><br>
+											<div style="margin-top: 5px;">${projects.prj_name}</div>
+										</div>
+									</div>
+									<div>
+										<h5>참여자 : </h5>
+									</div>
+									<div style="text-align: right; margin-top: 20px;">
+										<button type="button" class="btn btn-secondary"
+											onclick="location.href='projectDetail.do?project_id=${project.PRJ_ID}'"
+											style="margin-right: 15px;">상세보기</button>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				</div>
 
 
 			</div>
