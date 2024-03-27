@@ -5,7 +5,15 @@ function modify(){
 }
 
 function half(value) {
-    const show = (value === "halfDay" || value ==="halfHalfDay"); 
+    const show = (value === "halfDay"); 
     document.getElementById("startTime").style.display = show ? "inline" : "none";
     document.getElementById("endTime").style.display = show ? "inline" : "none";
+    
+    var htmlOpt = document.getElementsByClassName('approval_va_opt')
+	console.log(htmlOpt); 
+	
+	console.log($("tbody>tr>.approval_va_opt"));
+	
+	
 }
+

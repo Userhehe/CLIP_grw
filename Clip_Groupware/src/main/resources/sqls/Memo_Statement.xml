@@ -19,7 +19,7 @@
                               PRS_CREATE)
         VALUES('USERSCHEDULE_' || TO_CHAR(USERSCHEDULE_SEQ.NEXTVAL, 'FM000'), #{user_id}, #{prs_title}, 
                #{prs_content}, TO_DATE(#{prs_start}, 'YYYY-MM-DD HH24:MI'), TO_DATE(#{prs_end}, 'YYYY-MM-DD HH24:MI'), 
-               TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI'))
+               TO_DATE(SYSDATE, 'YY-MM-DD HH24:MI'))
 </insert>
 
 <!-- 메모 삭제 -->
@@ -32,17 +32,19 @@
 <update id="myScheduleUpdate" parameterType="java.util.Map">
 	UPDATE USER_SCHEDULE
 		SET PRS_TITLE=#{prs_title}, PRS_CONTENT=#{prs_content}, PRS_START=TO_DATE(#{prs_start}, 'YYYY-MM-DD HH24:MI'), 
-			PRS_END=TO_DATE(#{prs_end}, 'YYYY-MM-DD HH24:MI'), PRS_CREATE=TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI')
+			PRS_END=TO_DATE(#{prs_end}, 'YYYY-MM-DD HH24:MI'), PRS_CREATE=TO_DATE(SYSDATE, 'YY-MM-DD HH24:MI')
 		WHERE PRS_SEQ=#{prs_seq}
 </update>
 <!-- 유저 일정 끝 -->
 
 
 
-<!-- 테스트 용 유니온으로 하는 전사, 개인 일정 조회 -->
+<!-- 전사, 개인, 예약, 휴가 일정 조회 -->
 <select id="selectScheduleAll" parameterType="java.util.Map" resultType="MemoVo">
+SELECT * FROM (
 	SELECT PRS_SEQ , USER_ID, PRS_TITLE, 
 			TO_CHAR(PRS_START, 'YYYY-MM-DD HH24:MI') AS PRS_START, TO_CHAR(PRS_END, 'YYYY-MM-DD HH24:MI') AS PRS_END
+			,1 AS TYPE
 			FROM USER_SCHEDULE
 			WHERE PRS_DELFLAG = 'N' AND USER_ID = #{user_id}
 			AND (TO_CHAR(PRS_START, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM')
@@ -50,10 +52,34 @@
 	UNION 
 	SELECT NTC_SEQ, USER_ID, NTC_TITLE, 
 			TO_CHAR(NTC_START, 'YYYY-MM-DD HH24:MI') AS NTC_START, TO_CHAR(NTC_END, 'YYYY-MM-DD HH24:MI') AS NTC_END
+			,2 AS TYPE
 	        FROM NTC_SCHEDULE
 	        WHERE NTC_DELFLAG = 'N'
 	       	AND (TO_CHAR(NTC_START, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM')
 			OR TO_CHAR(NTC_END, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM'))
+	UNION
+	SELECT ('RESERVATION_'||r.RE_SEQ) AS RE_SEQ , r.USER_ID ,r.RE_TITLE, 
+			TO_CHAR(r.RE_START, 'YYYY-MM-DD HH24:MI') AS RE_START , TO_CHAR(r.RE_END, 'YYYY-MM-DD HH24:MI') AS RE_END
+			,3 AS TYPE
+			FROM RESERVATION r LEFT JOIN ATTENDS a
+			ON r.RE_SEQ = a.RE_SEQ
+			WHERE (r.USER_ID = #{user_id} OR a.USER_ID = #{user_id})
+			AND (TO_CHAR(r.RE_START, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM')
+			OR TO_CHAR(r.RE_END, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM'))
+	UNION
+	SELECT a.ANNUSE_SEQ, a.USER_ID, (u.USER_NAME||'님의 휴가') AS AN_TITLE,
+			TO_CHAR(a.ANNUSE_STARTDATE, 'YYYY-MM-DD HH24:MI') AS ANNUSE_STARTDATE, TO_CHAR(a.ANNUSE_ENDDATE, 'YYYY-MM-DD HH24:MI') AS ANNUSE_ENDDATE
+			,4 AS TYPE
+			FROM ANNUAL_USE a INNER JOIN USERINFO u 
+			ON a.USER_ID = u.USER_ID 
+			WHERE  a.USER_ID = #{user_id}
+			AND (TO_CHAR(a.ANNUSE_STARTDATE, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM')
+			OR TO_CHAR(a.ANNUSE_ENDDATE, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM'))
+	) WHERE TYPE IN(
+		<foreach collection="type" item="type1" separator=",">
+		#{type1}
+		</foreach>
+		)
 </select>
 
 
@@ -76,7 +102,7 @@
                               NTC_CREATE)
         VALUES('NTCSCHEDULE_' || TO_CHAR(ANSCHEDULE_SEQ.NEXTVAL, 'FM000'), #{user_id}, #{ntc_title}, 
                #{ntc_content}, TO_DATE(#{ntc_start}, 'YYYY-MM-DD HH24:MI'), TO_DATE(#{ntc_end}, 'YYYY-MM-DD HH24:MI'), 
-               TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI'))
+               TO_DATE(SYSDATE, 'YY-MM-DD HH24:MI'))
 </insert>
 
 <!-- 전사 삭제 -->
@@ -90,7 +116,7 @@
 <update id="ntcScheduleUpdate" parameterType="java.util.Map">
 	UPDATE NTC_SCHEDULE
 		SET NTC_TITLE=#{ntc_title}, NTC_CONTENT=#{ntc_content}, NTC_START=TO_DATE(#{ntc_start}, 'YYYY-MM-DD HH24:MI'), 
-			NTC_END=TO_DATE(#{ntc_end}, 'YYYY-MM-DD HH24:MI'), NTC_CREATE=TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI')
+			NTC_END=TO_DATE(#{ntc_end}, 'YYYY-MM-DD HH24:MI'), NTC_CREATE=TO_DATE(SYSDATE, 'YY-MM-DD HH24:MI')
 		WHERE NTC_SEQ=#{ntc_seq}
 </update>
 </mapper>

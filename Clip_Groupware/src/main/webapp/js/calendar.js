@@ -1,6 +1,31 @@
 ////화면 로드시 걸어주는 이벤트들 ------------------------------------------------
 
 $(document).ready(function() {
+    $('#showAllEvent, #showPrs, #showNct, #showRe, #showAn').change(function() {
+		calendar();
+    });
+    $('#showPrs, #showNct, #showRe, #showAn').change(function() {
+			        if ($('#showPrs').prop('checked') && $('#showNct').prop('checked') &&
+			         	$('#showRe').prop('checked') && $('#showAn').prop('checked')) {
+				
+			            $('#showAllEvent').prop('checked', true);
+			        } else {
+						$('#showAllEvent').prop('checked', false);
+							}
+			    });
+			    
+				$('#showAllEvent').change(function() {
+                    var isChecked = $(this).prop('checked');
+                    if (!isChecked) {//숨기기
+						$('#showPrs, #showNct, #showRe, #showAn').prop('checked', false);
+                    } else {//표시
+						$('#showPrs, #showNct, #showRe, #showAn').prop('checked', true);
+                    }
+                });
+	
+	
+	
+	
     $.datetimepicker.setLocale('ko');
     $("#start, #end, #upStart, #upEnd").datetimepicker({
         disabledWeekDays: [0, 6],
@@ -61,6 +86,10 @@ function calendar(){
         },
         eventClick: function(info) {
 //            info.el.style.backgroundColor = 'orange';
+			if(info.el.classList.contains('annual_event')||info.el.classList.contains('koHol')){
+				return false;
+			}
+
             var seq = info.event.extendedProps.seq;
             calendarModalDetail(seq);
         },
@@ -68,44 +97,6 @@ function calendar(){
 				$('.koHol').click(function(event) {
 			        event.preventDefault();
 			    });
-	
-				$('#showPrs, #showNct').change(function() {
-			        if ($('#showPrs').prop('checked') && $('#showNct').prop('checked')) {
-			            $('#showAllEvent').prop('checked', true); 
-			        } else {
-								$('#showAllEvent').prop('checked', false);
-							}
-			    });
-			    
-				$('#showAllEvent').change(function() {
-                    var isChecked = $(this).prop('checked');
-                    if (!isChecked) {
-						$('#showPrs, #showNct').prop('checked', false);
-                      	$('.memo_event, .nct_event').hide();
-                    } else {
-						$('#showPrs, #showNct').prop('checked', true);
-						$('.memo_event, .nct_event').show();
-                    }
-                });
-                
-                $('#showPrs').change(function() {
-                    var isChecked = $(this).prop('checked');
-                    if (!isChecked) {
-                        $('.memo_event').hide();
-                    } else {
-                        $('.memo_event').show();
-                    }
-                });
-                
-                $('#showNct').change(function() {
-                    var isChecked = $(this).prop('checked');
-                    if (!isChecked) {
-                        $('.nct_event').hide();
-                    } else {
-                        $('.nct_event').show();
-                    }
-                });
-                
         },
         eventSources: [
 		{
@@ -129,9 +120,7 @@ function calendar(){
 				} else if (startMonth == 11) {
 				    month = "12";
 				} else {
-				    // 시작 월과 종료 월의 평균을 계산하고 정수 부분만 가져옵니다.
 				    var avgMonth = Math.floor((startMonth + endMonth) / 2);
-				    // 평균 월을 문자열로 변환하여 month 변수에 할당합니다.
 				    month = avgMonth < 10 ? "0" + avgMonth : avgMonth.toString();
 				}
 				
@@ -150,7 +139,10 @@ function calendar(){
                                 start: event.start,
                                 end: event.end,
                                 seq: event.seq,
-                                className: event.seq.includes('USERSCHEDULE') ? 'memo_event' : 'nct_event'
+                                className: event.seq.includes('USERSCHEDULE') ?
+                                			'memo_event' : event.seq.includes('NTCSCHEDULE') ?
+                                			'nct_event' : event.seq.includes('RESERVATION') ? 
+                                			'reser_event':'annual_event'
                             };
                             events.push(fcEvent);
                         });
@@ -189,7 +181,7 @@ function calendarModalDetail(seq){ //seq가져와 내용 상세조회 하기
 	    dataType:"json",
 	    data:{seq:seq},
 		success:function(Scheduledata){
-			if($('#user_id').val()==Scheduledata.user_id){
+			if($('#user_id').val()==Scheduledata.user_id&&!"re_seq" in Scheduledata){
 				var buttonHTML = 
 				'<button type="button" class="btn btn-secondary" id="myScheduleUpdate">수정</button>' +
                 '<button type="button" class="btn btn-secondary" id="myScheduleDelete">삭제</button>' +
@@ -215,6 +207,13 @@ function calendarModalDetail(seq){ //seq가져와 내용 상세조회 하기
 		        $("#dtStart").text(Scheduledata.ntc_start);
 		        $("#dtEnd").text(Scheduledata.ntc_end);
 		        $("#dtSeq").val(Scheduledata.ntc_seq);
+			}else if("re_seq" in Scheduledata){
+				$("#calendarModalDetail").modal("show");
+		        $("#dtTitle").text(Scheduledata.re_title);
+		        $("#dtContent").text(Scheduledata.re_content+" 회의실 : "+Scheduledata.me_room+"번 회의실 참석자 : "+ Scheduledata.re_attend);
+		        $("#dtStart").text(Scheduledata.re_start);
+		        $("#dtEnd").text(Scheduledata.re_end);
+		        $("#dtSeq").val(Scheduledata.re_seq);
 			}
 		}
 		

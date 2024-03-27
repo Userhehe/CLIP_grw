@@ -83,5 +83,17 @@ public class ReservationDaoImpl implements IReservationDao{
 		return sqlSession.selectList(NS+"reAttList",seq);
 	}
 
+	@Override
+	public int cpRev(String user_id) {
+		log.info("##### 최신예약내역 가져오기 cpRev");
+		return sqlSession.selectOne(NS+"cpRev",user_id);
+	}
+
+	@Override
+	public int attinsert(Map<String, Object> map) {
+		log.info("##### 회의 참석자 입력하기 attinsert");
+		return sqlSession.insert(NS+"attinsert",map);
+	}
+
 	
 }

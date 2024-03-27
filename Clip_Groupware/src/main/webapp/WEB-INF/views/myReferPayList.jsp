@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>내가 참조된 결재 리스트</title>
 <%@ include file="./header.jsp"%>
+<script type="text/javascript" src="./js/myReferPayList.js"></script>
 </head>
 <body>
 	<main id="main" class="main">
@@ -67,6 +68,26 @@
 		          </nav>
 			</div>
 			<!-- 페이징 끝 -->
+			<!-- 모달 시작 -->
+				<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="modalLabel">상세 정보</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								 <p id="modalContent"></p>
+							</div>
+							<div class="modal-footer">
+								  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
+			                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 모달 끝 -->
 		</div>
 	</div>
 	</main>

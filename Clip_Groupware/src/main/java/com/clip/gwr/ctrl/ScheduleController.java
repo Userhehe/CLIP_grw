@@ -1,5 +1,6 @@
 package com.clip.gwr.ctrl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IMemoService;
+import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.MemoVo;
 import com.clip.gwr.vo.NtcVo;
+import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +31,11 @@ public class ScheduleController {
 	
 	@Autowired
 	private IMemoService memoservice;
+	@Autowired
+	private IReservationService reservice;
+	
+	
+	
 	//화면 이동
 	@GetMapping(value = "schedule.do")
 	public String mainscheduel() {
@@ -44,6 +52,13 @@ public class ScheduleController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user_id", id.getUser_id());
 		map.put("fullDate", date);
+		String a = "1,2,3,4";
+		String[] stringArray = a.split(",");
+		int[] intArray2 = new int[stringArray.length];
+		for(int i = 0; i<stringArray.length; i++) {
+			intArray2[i] = Integer.parseInt(stringArray[i]);
+		}
+		map.put("type", intArray2);
 		List<MemoVo> lists = memoservice.selectScheduleAll(map);
 		System.out.println("MemoVo list : " +lists);
 		JSONArray memolist = new JSONArray();
@@ -68,14 +83,21 @@ public class ScheduleController {
 		log.info("화면에서 넘겨받은 seq값 {} : " , seq);
 		MemoVo mVo = new MemoVo();
 		NtcVo nVo = new NtcVo();
+		ReservationVo rVo = new ReservationVo();
 		if(seq.indexOf("USER") == 0) {
 			mVo = memoservice.myScheduleDetail(seq);
-			log.info("전달받은 전사seq의 메모 : {}" , mVo);
+			log.info("전달받은 개인seq의 메모 : {}" , mVo);
 			return mVo;
-		}else {
+		}else if(seq.indexOf("NTC") == 0) {
 			nVo = memoservice.ntcScheduleDetail(seq);
 			log.info("전달받은 전사seq의 메모 : {}" , nVo);
 			return nVo;
+		}else {
+			String numSeq = seq.replaceAll("\\D+", "");
+	        int intSeq = Integer.parseInt(numSeq);
+			rVo = reservice.reDetail(intSeq);
+			log.info("전달받은 예약seq의 메모 : {}" , rVo);
+			return rVo;
 		}
 	}
 	
