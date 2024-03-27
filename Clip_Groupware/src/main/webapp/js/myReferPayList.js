@@ -22,12 +22,7 @@ $(document).ready(function() {
 				console.log('에러시러요');
 			}
 		});
-	  //결재취소 버튼 클릭 이벤트
-	  $("#tempDel").on("click", function() {
-	    var appSeq = $(this).attr("data-appseq");
-	    window.location.href = "./myTempDelete.do?app_seq=" + appSeq; 
-	  });
+	  
 	});
 	
 });
-

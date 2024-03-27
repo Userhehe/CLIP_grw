@@ -126,6 +126,13 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		return sqlSession.update(NS+"cancelApproval",appSeq);
 	}
 
+	//임시저장 결재 삭제
+	@Override
+	public int tempDelete(String appSeq) {
+		log.info("ApprovalDaoImpl tempDelete 결재 삭제",appSeq);
+		return sqlSession.delete(NS+"tempDelete",appSeq);
+	}
+
 
 	
 

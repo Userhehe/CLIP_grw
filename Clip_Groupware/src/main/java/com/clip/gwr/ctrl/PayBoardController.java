@@ -1,7 +1,10 @@
 package com.clip.gwr.ctrl;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,28 @@ public class PayBoardController {
 		ApprovalVo vo =service.getOneApproval(app_seq);
 		return vo;
 	}
+	@GetMapping(value = "/cancelPay.do")
+	public String cancelPay(@RequestParam("app_seq") String app_seq , HttpSession session , HttpServletResponse resp) throws IOException {
+		log.info("myTempPayList cancelPay 결재취소 : {}",app_seq);
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		
+		int n = service.cancelApproval(app_seq);
+		if(n>0) {
+			out.println("<script language='javascript'>");
+			out.println("alert('결재를 성공적으로 취소하였습니다.');");
+			out.println("window.location.href='./myPayList.do';");
+			out.println("</script>");
+			out.flush();		
+		}else {
+			out.println("<script language='javascript'>");
+			out.println("alert('이용에 불편을 드려 죄송합니다.잠시후 다시 시도해주십시요.');");
+			out.println("window.location.href='./myPayList.do';");
+			out.println("</script>");
+			out.flush();
+		}
+		return null;
+	}
 	//임시저장 결재 파일 리스트 창 이동
 	@GetMapping(value = "/myTempPayList.do")
 	public String myTempPayList(Model model, HttpSession session) {
@@ -63,12 +88,28 @@ public class PayBoardController {
 		return vo;
 	}
 	
-	
-	//결재취소 
-	@PostMapping(value = "/cancelPay.do")
-	@ResponseBody
-	public String cancelPay(@RequestParam("app_seq")String app_seq) {
-		log.info("myTempPayList cancelPay 결재취소 : {}",app_seq);
+	//임시저장된 결재 삭제
+	@GetMapping(value="/myTempDelete.do")
+	public String myTempDel(@RequestParam("app_seq") String app_seq ,HttpServletResponse resp) throws IOException {
+		log.info("myTempDel 임시저장 결재 삭제 : {} ",app_seq);
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		out.println("<script language='javascript'>");
+		out.println("alert('임시저장된 결재를 하시겠습니까?');");
+		
+		int n = service.tempDelete(app_seq);
+		
+		if(n>0) {
+			out.println("alert('삭제가 정상적으로 처리되었습니다.');");
+			out.println("window.location.href='./myTempPayList.do';");
+			out.println("</script>");
+			out.flush();	
+		}else {
+			out.println("alert('오류입니다.다시 접속하여주십시오.');");
+			out.println("window.location.href='./myTempPayList.do';");
+			out.println("</script>");
+			out.flush();	
+		}
 		return null;
 	}
 	

@@ -93,7 +93,6 @@ public class PayController {
 		return "redirect:/myPaySelect.do" ; 
 	}
 	
-	
 	@GetMapping(value="/templateDelete.do")
 	public String gianDelete(HttpServletResponse resp,@RequestParam("gian_seq") String gian_seq) throws IOException {
 		log.info("PayController gianDelete POST:{}",gian_seq);
