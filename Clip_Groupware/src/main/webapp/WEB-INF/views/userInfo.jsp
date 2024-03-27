@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <title>사원목록</title>
 <%@ include file="./header.jsp" %>
-<link href="./assets/css/board.css" rel="stylesheet">
+<link href="./assets/css/userBoard.css" rel="stylesheet">
 <script type="text/javascript" src="./js/userInfo.js"></script>
 </head>
 <body>
