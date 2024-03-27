@@ -21,8 +21,7 @@
 	
 
 		<!-- 내가/내팀이 참조된 결재내역 전체 조회 (세션에서 나의 사원번호 사용)-->		
-	<select id="selectReferApproval" resultType="ApprovalVo" parameterType="java.lang.String">  
-	 
+	<select id="selectReferApproval" resultType="ApprovalVo" parameterType="java.lang.String">
 	  SELECT A.APP_SEQ, APP_TITLE, APP_CONTENT,
 		GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD') APP_CREATEDATE, APP_DRAFT
 			FROM APPROVAL a ,(
@@ -98,7 +97,7 @@
 	<!-- 나의 결재승인을 받아야하는 결재 내가 반려한 결재 리스트 조회 -->
    <select id="getMyRejectPay" resultType="ApprovalVo" parameterType="java.lang.String">
       SELECT A.APP_SEQ, A.APP_TITLE, A.APP_CONTENT,
-          A.GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
+          g.GIAN_NAME AS GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
       FROM 
           APPROVAL A
       JOIN 
@@ -114,6 +113,7 @@
               APPROVAL) JT
       ON 
           A.APP_SEQ = JT.APP_SEQ
+      JOIN GIAN g ON A.GIAN_SEQ = g.GIAN_SEQ 	    
       WHERE 
           (JT.PAYLINE_1ST = #{user_id} AND JT.PAYOK_1ST = 'N' AND A.APP_DRAFT ='결재반려')
           OR (JT.PAYLINE_2ND = #{user_id} AND (JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND = 'N') AND A.APP_DRAFT = '결재반려')
@@ -188,7 +188,10 @@
 	
 	</select>
 	
-	
+	<!-- 임시저장된 결재 삭제 -->
+	<delete id="tempDelete">
+		DELETE  FROM APPROVAL WHERE APP_SEQ = #{app_seq}
+	</delete>
 
 
 
@@ -229,8 +232,10 @@
 	UPDATE APPROVAL SET APP_DRAFT ='결재취소'
                 WHERE APP_SEQ = #{app_seq}	
 	</update>
-
-
-
-
+	
+	
+	
+	
+	
+	
 </mapper>

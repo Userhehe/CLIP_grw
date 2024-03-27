@@ -47,6 +47,8 @@ public interface IApprovalDao {
 	//결재 취소
 	public int cancelApproval(String appSeq);
 	
+	//임시저장된 결재 삭제
+	public int tempDelete(String appSeq);
 	
 	
 	
