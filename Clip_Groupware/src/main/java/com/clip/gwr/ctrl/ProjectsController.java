@@ -25,6 +25,7 @@ public class ProjectsController {
 	public String projectsProgress(Model model) {
 		log.info("PayController 진행도별 프로젝트 페이지");
 		List<ProjectsVo> lists = service.projectsProgressSel();
+		
 		model.addAttribute("lists", lists);
 		return "projectsProgress";
 	}
