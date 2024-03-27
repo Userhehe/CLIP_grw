@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>사용자 상세정보</title>
 <%@ include file="./header.jsp" %>
+<link href="./assets/css/userBoard.css" rel="stylesheet">
 </head>
 <body>
 	<main id="main" class="main">
@@ -29,51 +30,54 @@
 	              <tbody>
 	              	<c:forEach var='userDetailList' items="${userDetailList}" varStatus="vs">
 		                <tr>
-			                <td>아이디</td>
+			                <td style="background-color: grey; color: white;">아이디</td>
 			                <td>${userDetailList.user_id}</td>
 		                </tr>
 		                <tr>
-		                	<td>주민등록번호</td>
+		                	<td style="background-color: grey; color: white;">주민등록번호</td>
 			                <td>${userDetailList.user_registnum}</td>
 		                </tr>
 		                <tr>
-		                	<td>이메일</td>
+		                	<td style="background-color: grey; color: white;">이메일</td>
 			                <td>${userDetailList.user_email}</td>
 		                </tr>
 		                <tr>
-		                	<td>생년월일</td>
+		                	<td style="background-color: grey; color: white;">생년월일</td>
 			                <td>${userDetailList.user_birthday}</td>
 		                </tr>
 		                <tr>
-		                	<td>연락처</td>
+		                	<td style="background-color: grey; color: white;">연락처</td>
 			                <td>${userDetailList.user_phonenum}</td>
 		                </tr>
 		                <tr>
-		                	<td>주소</td>
+		                	<td style="background-color: grey; color: white;">주소</td>
 			                <td>${userDetailList.user_address}</td>
 		                </tr>
 		                <tr>
-		                	<td>부서</td>
+		                	<td style="background-color: grey; color: white;">부서</td>
 			                <td>${userDetailList.dept_name}</td>
 		                </tr>
 		                <tr>
-		                	<td>직급</td>
+		                	<td style="background-color: grey; color: white;">직급</td>
 			                <td>${userDetailList.ranks_name}</td>
 		                </tr>
 		                <tr>
-		                	<td>직책</td>
+		                	<td style="background-color: grey; color: white;">직책</td>
 			                <td>${userDetailList.positions_name}</td>
 		                </tr>
 		                <tr>
-		                	<td>입사일</td>
+		                	<td style="background-color: grey; color: white;">입사일${param.user_seq}</td>
 			                <td>${userDetailList.user_regdate}</td>
-		                </tr>
-	                </c:forEach>
-	              </tbody>
+		            	</tr>
+	            	</c:forEach>
+	          	</tbody>
               </table>
-              <!-- End Table with hoverable rows -->
-            </div>
-          </div>
+              	<div class="flex_end">
+	            	<button class="btn btn-secondary" onclick="window.location.href='./userInfo.do'">목록</button>
+<%-- 	            	<button class="btn btn-secondary ml_10" onclick="window.location.href='./userInfoUpdate.do?user_seq=${param.user_seq}'">사원정보수정</button> --%>
+           		</div>
+        	</div>
+    	</div>
 	</main>
 </body>
 </html>
