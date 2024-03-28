@@ -168,23 +168,23 @@ public class ApprovalJunitTest {
 		
 		//결재요청
 		ApprovalVo appVo = new ApprovalVo();
-		appVo.setApp_title("기안 결재 인서트 쿼리문입니다.");
+		appVo.setApp_title("조회 참조된 조회");
 		appVo.setApp_content("휴가 결재서 			이름 : 		성명 : 		....");
-		appVo.setGian_seq("GIAN_001");
+		appVo.setGian_seq("GIAN_1");
 		
 		
 		//결재라인 작성 칸
 		PaylineVo pVo = new PaylineVo();
-		pVo.setWriter("USER_049");	//결재 기안자
+		pVo.setWriter("USER_49");	//결재 기안자
 		
 		//임시 저장은 위에까지.
 		
 
 		//결재라인
 		Map<String, Object> lineMap = new HashMap<String, Object>();
-		lineMap.put("first", "USER_027");
-		lineMap.put("second", "USER_026");
-		lineMap.put("third", "USER_025");
+		lineMap.put("first", "USER_6");
+		lineMap.put("second", "USER_5");
+		lineMap.put("third", "USER_28");
 		pVo.setPaymentLine(lineMap);
 		
 		//라인별 체크
@@ -197,13 +197,13 @@ public class ApprovalJunitTest {
 		//참조인
 		Map<String, Object> refMap = new HashMap<String, Object>();
 		List<String> empList = new ArrayList<String>();
-		empList.add("USER_006");
-		empList.add("USER_005");
+		empList.add("USER_5");
+		empList.add("USER_51");
 		refMap.put("emp", empList);
 		
 		//참조 팀
 		List<String> teamList = new ArrayList<String>();
-		teamList.add("DEPT_006");
+		teamList.add("DEPT_2");
 		refMap.put("team", teamList);
 		
 		pVo.setReference(refMap);
@@ -214,10 +214,10 @@ public class ApprovalJunitTest {
 		appVo.setApp_payline(json);
 //		
 //		//날짜 지정한 결재일 시 입력
-		appVo.setApp_strdate("2024-04-01");
-		appVo.setApp_enddate("2024-04-04");
-	 	int result2 = service.saveTempApproval(appVo);
-		assertEquals(result2, 1);
+		appVo.setApp_strdate("2024-04-08");
+		appVo.setApp_enddate("2024-04-10");
+	 	int result = service.reqDynamicDateApproval(appVo);
+		assertEquals(result, 1);
 	 	
 		
 		

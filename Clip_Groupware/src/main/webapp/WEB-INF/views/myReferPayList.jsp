@@ -40,7 +40,7 @@
 						<tr>
 							<td>${vo.app_seq}</td>
 							<td>${vo.app_title}</td>
-							<td>${vo.gian_seq}</td>
+							<td>${vo.gian_name}</td>
 							<td>${vo.app_createdate}</td>
 							<td>${vo.app_draft}</td>
 						</tr>

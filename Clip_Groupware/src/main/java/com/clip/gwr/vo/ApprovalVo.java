@@ -25,5 +25,7 @@ public class ApprovalVo {
 	private String app_strdate;
 	private String app_enddate;
 	
+	private String gian_name;
+	
 //	private PaylineVo app_Payline;
 }
