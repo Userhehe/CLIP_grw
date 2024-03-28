@@ -195,7 +195,7 @@
 									<td><input type="checkbox" id="showNct" checked> 전사일정</td>
 								</tr>
 								<tr>
-									<td><input type="checkbox" id="showRe" checked> 회의실 예약</td>
+									<td><input type="checkbox" id="showRe" checked> 예약일정</td>
 								</tr>
 								<tr>
 									<td><input type="checkbox" id="showAn" checked> 휴가일정</td>

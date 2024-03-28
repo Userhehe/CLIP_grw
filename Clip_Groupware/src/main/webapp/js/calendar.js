@@ -1,31 +1,64 @@
 ////화면 로드시 걸어주는 이벤트들 ------------------------------------------------
-
 $(document).ready(function() {
-    $('#showAllEvent, #showPrs, #showNct, #showRe, #showAn').change(function() {
-		calendar();
-    });
+	
+	//화면 로드시 체크박스 상태 확인 하는 기능------------------------------------------------
+	function updateType() {
+        var type = [];
+        if ($('#showPrs').prop('checked')) {
+            type.push(1);
+        }
+        if ($('#showNct').prop('checked')) {
+            type.push(2);
+        }
+        if ($('#showRe').prop('checked')) {
+            type.push(3);
+        }
+        if ($('#showAn').prop('checked')) {
+            type.push(4);
+        }
+        return type.length > 0 ? type.join(',') : null;
+    }
+    
+    var initialType = updateType();
+    
+	calendar(initialType);
+	
     $('#showPrs, #showNct, #showRe, #showAn').change(function() {
-			        if ($('#showPrs').prop('checked') && $('#showNct').prop('checked') &&
-			         	$('#showRe').prop('checked') && $('#showAn').prop('checked')) {
-				
-			            $('#showAllEvent').prop('checked', true);
-			        } else {
-						$('#showAllEvent').prop('checked', false);
-							}
-			    });
-			    
-				$('#showAllEvent').change(function() {
-                    var isChecked = $(this).prop('checked');
-                    if (!isChecked) {//숨기기
-						$('#showPrs, #showNct, #showRe, #showAn').prop('checked', false);
-                    } else {//표시
-						$('#showPrs, #showNct, #showRe, #showAn').prop('checked', true);
-                    }
-                });
+		var type = updateType();
+        calendar(type);
+    });
+    
+    $('#showPrs, #showNct, #showRe, #showAn').change(function() {
+	    if ($('#showPrs').prop('checked') && $('#showNct').prop('checked') &&
+	     	$('#showRe').prop('checked') && $('#showAn').prop('checked')) {
+	
+	        $('#showAllEvent').prop('checked', true);
+	        
+	    } else {
+		
+			$('#showAllEvent').prop('checked', false);
+			
+				}
+	});
+	
+	$('#showAllEvent').change(function() {
+	        var isChecked = $(this).prop('checked');
+	        //해제
+	        if (!isChecked) {
+			$('#showPrs, #showNct, #showRe, #showAn').prop('checked', false);
+			var type = updateType();
+        	calendar(type);
+	        //체크
+	        } else {
+			$('#showPrs, #showNct, #showRe, #showAn').prop('checked', true);
+			var type = updateType();
+        	calendar(type);
+	        }
+	    });
+	//화면 로드시 체크박스 상태 확인 하는 기능 끝------------------------------------------------
 	
 	
-	
-	
+	//DateTimePicker 설정------------------------------------------------
     $.datetimepicker.setLocale('ko');
     $("#start, #end, #upStart, #upEnd").datetimepicker({
         disabledWeekDays: [0, 6],
@@ -36,13 +69,19 @@ $(document).ready(function() {
 			            '15:00', '15:30', '16:00', '16:30', 
 			            '17:00', '17:30', '18:00']
     });
-    calendar();
-
-	
+    //DateTimePicker 설정 끝------------------------------------------------
+    
+    //모달창 뒤로가기 막기 설정 끝------------------------------------------------
+    $('#calendarModal, #calendarModalDetail, #calendarModalUpdate').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    //모달창 뒤로가기 막기 설정------------------------------------------------
 });
 //화면 로드시 걸어주는 이벤트들 끝 ------------------------------------------------
+
 //calendar function ----------------------------
-function calendar(){
+function calendar(type){
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
 		dayMaxEventRows: true,
@@ -85,7 +124,6 @@ function calendar(){
             return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
         },
         eventClick: function(info) {
-//            info.el.style.backgroundColor = 'orange';
 			if(info.el.classList.contains('annual_event')||info.el.classList.contains('koHol')){
 				return false;
 			}
@@ -110,43 +148,54 @@ function calendar(){
 		{
             id: "allEvents",
             events: function(info, successCallback, failureCallback) {
-				var year = info.end.getFullYear();
-				var startMonth = info.start.getMonth() + 1;
-				var endMonth = info.end.getMonth() + 1;
-				var month = "";
+				var year = info.start.getFullYear();
+				var startMonth = info.start.getMonth();
+				var endMonth = info.end.getMonth();
+				var month = endMonth - startMonth;
 				
-				if (startMonth == 12) {
-				    month = "01";
-				} else if (startMonth == 11) {
-				    month = "12";
-				} else {
-				    var avgMonth = Math.floor((startMonth + endMonth) / 2);
-				    month = avgMonth < 10 ? "0" + avgMonth : avgMonth.toString();
+				if(month<0){
+					month+=12;
 				}
 				
-				var date = year + "-" + month;
+				var nextMonth = (startMonth + month)%12;
+				
+				if(nextMonth ===0){
+					nextMonth = 12;
+				}
+				
+				if(nextMonth === 1&&month !==0){
+					year+=1;
+				}
+				
+				var formattedNextMonth = ('0'+nextMonth).slice(-2);
+				
+				var date = year + '-' + formattedNextMonth;
 				
                 $.ajax({
                     type: "get",
-                    url: "./Ajax.do",
-                    data : {date:date},
-                    dataType: "json",
+                    url: "./selectScheduleAll.do",
+                    data : {date:date, type:type},
                     success: function(data) {
-                        var events = [];
-                        data.forEach(function(event) {
-                            var fcEvent = {
-                                title: event.title,
-                                start: event.start,
-                                end: event.end,
-                                seq: event.seq,
-                                className: event.seq.includes('USERSCHEDULE') ?
-                                			'memo_event' : event.seq.includes('NTCSCHEDULE') ?
-                                			'nct_event' : event.seq.includes('RESERVATION') ? 
-                                			'reser_event':'annual_event'
-                            };
-                            events.push(fcEvent);
-                        });
-                        successCallback(events);
+						if(data.length == 0||data == null){
+							console.log("조회내용 없음");
+						}else{
+							var events = [];
+	                        data.forEach(function(event) {
+	                            var fcEvent = {
+	                                title: event.title,
+	                                start: event.start,
+	                                end: event.end,
+	                                seq: event.seq,
+	                                className: event.seq.includes('USERSCHEDULE') ?
+	                                			'memo_event' : event.seq.includes('NTCSCHEDULE') ?
+	                                			'nct_event' : event.seq.includes('RESERVATION') ? 
+	                                			'reser_event':'annual_event'
+	                            };
+	                            events.push(fcEvent);
+	                        });
+	                        successCallback(events);
+						}
+                        
                     },
                     error: function() {
                         failureCallback();
@@ -181,7 +230,7 @@ function calendarModalDetail(seq){ //seq가져와 내용 상세조회 하기
 	    dataType:"json",
 	    data:{seq:seq},
 		success:function(Scheduledata){
-			if($('#user_id').val()==Scheduledata.user_id&&!"re_seq" in Scheduledata){
+			if($('#user_id').val()==Scheduledata.user_id&&!("re_seq" in Scheduledata)){
 				var buttonHTML = 
 				'<button type="button" class="btn btn-secondary" id="myScheduleUpdate">수정</button>' +
                 '<button type="button" class="btn btn-secondary" id="myScheduleDelete">삭제</button>' +
@@ -270,7 +319,8 @@ function calendarModal(day){
 				success:function(msg){
 					console.log(msg);
 					modalclose();
-					calendar();
+					var type = updateTypeModal();
+        			calendar(type);
 				}
 			});
 		}else{
@@ -282,7 +332,8 @@ function calendarModal(day){
 				success:function(msg){
 					console.log(msg);
 					modalclose();
-					calendar();
+					var type = updateTypeModal();
+        			calendar(type);
 				}
 			});
 		}
@@ -309,7 +360,8 @@ $(document).on("click", "#myScheduleDelete", function(){
 		    success:function(isc){
 				console.log(isc);
 				modalclose();
-				calendar();
+				var type = updateTypeModal();
+        		calendar(type);
 			}
 			
 		});
@@ -322,21 +374,17 @@ $(document).on("click", "#myScheduleDelete", function(){
 		    success:function(isc){
 				console.log(isc);
 				modalclose();
-				calendar();
+				var type = updateTypeModal();
+        		calendar(type);
 			}
 			
 		});
 	}
 });
-
-
-
-
 // 일정 삭제 기능 끝 ----------------------------
 
 
 //일정 수정 기능 ----------------------------
-
 $(document).on("click", "#myScheduleUpdate", function(){
 	$("#calendarModalUpdate").modal("show");
 	
@@ -397,7 +445,8 @@ $(document).on("click", "#myScheduleUpdate", function(){
 				success:function(msg){
 					console.log(msg);
 					modalclose();
-					calendar();
+					var type = updateTypeModal();
+        			calendar(type);
 				}
 			});
 		}else{
@@ -409,7 +458,8 @@ $(document).on("click", "#myScheduleUpdate", function(){
 				success:function(msg){
 					console.log(msg);
 					modalclose();
-					calendar();
+					var type = updateTypeModal();
+        			calendar(type);
 				}
 			});
 		}
@@ -419,3 +469,21 @@ $(document).on("click", "#myScheduleUpdate", function(){
 
 
 //일정 수정 기능 끝 ----------------------------
+//모달에서 등록,삭제,수정 시 체크박스 상태 다시 확인 기능----------------------------
+function updateTypeModal() {
+        var type = [];
+        if ($('#showPrs').prop('checked')) {
+            type.push(1);
+        }
+        if ($('#showNct').prop('checked')) {
+            type.push(2);
+        }
+        if ($('#showRe').prop('checked')) {
+            type.push(3);
+        }
+        if ($('#showAn').prop('checked')) {
+            type.push(4);
+        }
+        return type.length > 0 ? type.join(',') : null;
+    }
+//모달에서 등록,삭제,수정 시 체크박스 상태 다시 확인 기능 끝----------------------------
