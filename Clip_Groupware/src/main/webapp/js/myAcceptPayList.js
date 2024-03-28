@@ -6,6 +6,10 @@ $(document).ready(function() {
 			app_seq: appSeq
 		};
 		console.log('요청데이터:', requestData);
+		
+		$("#rejectBtn").attr("data-appseq", appSeq); 
+		$("#editBtn").attr("data-appseq", appSeq); 
+		
 		$.ajax({
 			url: "./myPayList.do?app_seq=" + requestData.app_seq,
 			type: "POST",
@@ -14,6 +18,14 @@ $(document).ready(function() {
 			success: function(data) {
 				console.log(data);
 				$("#modalContent").html("결재요청일자: " + data.app_createdate +"<br>결재상태:"+data.app_draft +"<br>결재내용: " + data.app_content );
+				
+				if(data.app_draft === "결재대기" || data.app_draft === "결재승인" ){
+					$("#editBtn").show();
+					$("#rejectBtn").show();
+				}else{
+					$("#editBtn").hide();
+					$("#rejectBtn").hide();
+				}
 				var modal = new bootstrap.Modal($("#detailModal"));	
 				modal.show();
 			},
@@ -21,5 +33,14 @@ $(document).ready(function() {
 				console.log('에러시러요');
 			}
 		});
+		
+		  $("#rejectBtn").on("click", function() {
+		    var appSeq = $(this).attr("data-appseq");
+		    window.location.href = "./rejectionPay.do?app_seq=" + appSeq; 
+		  });
+		   $("#editBtn").on("click", function() {
+		    var appSeq = $(this).attr("data-appseq");
+		    window.location.href = "./okPay.do?app_seq=" + appSeq; 
+		  });
 	});	
 });
