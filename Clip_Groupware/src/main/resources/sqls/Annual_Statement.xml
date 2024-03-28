@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clip.gwr.model.mapper.AnnualDaoImpl">
+
+  <insert id="insertAnnual" parameterType="java.util.Map">
+  INSERT INTO ANNUAL_CT (ANNCT_SEQ, USER_ID, ANNCT_DAY, ANNCT_DATE)
+   VALUES (('ANNCT_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL),#{user_id},
+    ROUND(15 / 12 * (12 - TO_NUMBER(TO_CHAR(SYSTIMESTAMP, 'MM'))), 0),SYSTIMESTAMP)
+  </insert>
+  
+  <update id="insertAnnualup" parameterType="java.util.Map">
+    UPDATE ANNUAL
+    SET ANNUAL_CT = ANNUAL_CT + (
+        SELECT NVL(ANNCT_DAY, 0)
+        FROM ANNUAL_CT
+        WHERE ANNCT_SEQ = #{annct_seq}
+    )
+    WHERE USER_ID = #{user_id}
+	</update>
+
+	<select id="selAnnual" resultType="com.clip.gwr.vo.AnnualVo">
+	SELECT u.USER_ID, u.USER_NAME, a.ANNUAL_CT, a.ANNUAL_USE ,a.ANNUAL_LEOV
+	FROM USERINFO u 
+	JOIN ANNUAL a 
+	ON u.USER_ID = a.USER_ID;
+	</select>
+	
+	<select id="detailAnnual" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualVo">
+	SELECT u.USER_ID, u.USER_NAME, a.ANNUAL_CT, a.ANNUAL_USE ,a.ANNUAL_LEOV
+	FROM USERINFO u 
+	JOIN ANNUAL a 
+	ON u.USER_ID = a.USER_ID
+	WHERE U.USER_ID = #{user_id}
+	</select>
+	
+	<update id="updateAnnual" parameterType="java.util.Map">
+	UPDATE ANNUAL
+	SET ANNUAL_CT = #{annual_ct} 
+	WHERE USER_ID = #{user_id}
+	</update>
+
+     
+     <update id="resetAnnual" parameterType="java.util.Map">
+		 UPDATE ANNUAL
+	SET ANNUAL_CT = 15,
+	    ANNUAL_USE = 0,
+	    ANNUAL_LEOV = 0
+	WHERE USER_ID IN (SELECT USER_ID FROM ANNUAL)
+	  AND TO_CHAR(SYSDATE, 'MMDD') = '0101'    
+     </update>
+     
+     <insert id="annUse" parameterType="java.util.Map" >
+      INSERT INTO CLIP.ANNUAL_USE (ANNUSE_SEQ, USER_ID, ANNUSE_STARTDATE, ANNUSE_ENDDATE, ANNUSE_DAY, ANNUSE_DATE)
+    VALUES ('ANNUALUSE_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL), #{user_id}, #{annuse_startdate}, #{annuse_enddate}, #{annuse_day}, TRUNC(SYSDATE))
+     </insert>
+     
+     <update id="annUseUpdate" parameterType="java.util.Map">
+     UPDATE CLIP.ANNUAL ANNUAL
+	SET ANNUAL.ANNUAL_USE = ANNUAL.ANNUAL_USE + 
+                        (SELECT ANNUSE_DAY
+                         FROM CLIP.ANNUAL_USE
+                         WHERE ANNUSE_SEQ = #{annuse_seq})
+	WHERE ANNUAL.USER_ID =  #{user_id}
+     </update>
+     
+     <update id="annLeovUpdate" parameterType="java.lang.String">
+        UPDATE CLIP.ANNUAL
+		SET ANNUAL_LEOV = ANNUAL_CT - ANNUAL_USE
+		WHERE USER_ID = #{user_id}
+      
+     </update>
+     
+     <select id="searchAnnual" parameterType="java.util.Map" resultType="com.clip.gwr.vo.AnnualVo">
+    SELECT u.USER_ID, a.ANNUAL_CT, a.ANNUAL_LEOV, a.ANNUAL_USE
+	FROM  CLIP.USERINFO u
+	JOIN  CLIP.ANNUAL a ON u.USER_ID = a.USER_ID
+	WHERE  
+	<if test="user_name != null and user_name != ''">
+			 u.USER_NAME LIKE '%' || #{user_name} || '%'
+		</if>
+     </select>
+
+</mapper>
