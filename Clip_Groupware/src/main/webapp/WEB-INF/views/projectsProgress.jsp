@@ -10,6 +10,7 @@
 <meta charset="utf-8">
 <title>Projects</title>
 <%@ include file="./header.jsp"%>
+<script type="text/javascript" src="./js/projects.js"></script>
 </head>
 <body>
 	<main id="main" class="main" style="background-color: f2f2f2;">
@@ -44,10 +45,10 @@
 							<ul style="list-style-type: none; padding: 0; display: flex;">
 								<li style="margin-right: 10px;"><input
 									class="form-check-input" type="radio" name="gridRadios"
-									id="gridRadios1" value="option1" checked=""> <label
+									id="projectsProgressSel" value="option1" checked=""> <label
 									class="form-check-label" for="gridRadios1">진행중</label></li>
 								<li><input class="form-check-input" type="radio"
-									name="gridRadios" id="gridRadios2" value="option2"> <label
+									name="gridRadios" id="projectsProgressDoneSel" value="option2"> <label
 									class="form-check-label" for="gridRadios2">완료</label></li>
 								<li></li>
 							</ul>

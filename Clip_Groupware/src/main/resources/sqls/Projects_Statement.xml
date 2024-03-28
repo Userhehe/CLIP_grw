@@ -17,7 +17,7 @@
 		WHERE PRJ_STATUS = '진행중'
 	</select>
 	
-	<select id="projectsProgressDone" resultType="ProjectsVo">
+	<select id="getCompletedProjects" resultType="ProjectsVo">
 		SELECT CLI_NAME,
 		PRJ_NAME, PRJ_PROGRESS, PRJ_STATUS, PRJ_SDATE, PRJ_DDATE
 		FROM PROJECTS p
