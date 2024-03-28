@@ -126,8 +126,7 @@
 	
 	
 	<!-- 결재 승인/반려에따라 결재라인 및 결재현황 변경로직 -->
-	
-		<!-- 결재라인 승인/반려시에 맞춰 결재라인승인 정보와 결재 현황을 업데이트 -->
+	<!-- 결재라인 승인/반려시에 맞춰 결재라인승인 정보와 결재 현황을 업데이트 -->
 	<update id="checkApprovalLine" parameterType="ApprovalVo">
 		UPDATE APPROVAL SET APP_PAYLINE = #{app_payline},
 					APP_DRAFT  = #{app_draft}

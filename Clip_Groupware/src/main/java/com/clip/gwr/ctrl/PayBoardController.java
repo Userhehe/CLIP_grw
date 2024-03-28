@@ -1,8 +1,10 @@
 package com.clip.gwr.ctrl;
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,10 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.clip.gwr.model.service.IApprovalService;
 import com.clip.gwr.vo.ApprovalVo;
+import com.clip.gwr.vo.PaylineVo;
 import com.clip.gwr.vo.UserinfoVo;
+import com.google.gson.Gson;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -128,9 +133,106 @@ public class PayBoardController {
 		return "myAcceptPayList";
 	}
 	
-	//결재승인시 현황 정보에 따른 수정
+	//본인 승인시 결재승인할 경우
+	@GetMapping(value="/okPay.do")
+	public String okPay(@RequestParam("app_seq")String app_seq,HttpSession session,HttpServletResponse resp) throws IOException {
+		log.info("okPay 승인자 승인해주는 경우 : {}",app_seq);
+		resp.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = resp.getWriter();
+		out.println("<script language='javascript'>");
+		out.println("alert('해당결재를 승인하시겠습니까?');");
+		out.println("alert('정상처리 되었습니다.);");
+		out.println("</script>");
+		out.flush();
+		
+		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
+		String user_id = loginUser.getUser_id();
+		System.out.println("사용자 ID:"+user_id);
+		
+		ApprovalVo approvalVo = service.getOneApproval(app_seq);
+		String payLine = approvalVo.getApp_payline();
+		System.out.println("결재라인 : "+payLine);
+		
+		Gson transGson = new Gson();
+		PaylineVo payLineVO = transGson.fromJson(payLine, PaylineVo.class);
+		System.out.println("결재라인 첫번째:"+payLineVO.getPaymentLine().get("first"));
+		System.out.println("결재라인 승인받은 첫번째:"+payLineVO.getPaymentOk().get("first"));
+		
+		Map<String,Object> voLine = payLineVO.getPaymentLine();
+		Map<String,Object> voLineOk = payLineVO.getPaymentOk();
+		String[] order = {"first", "second", "third"};
+		String app_draft = "결재대기";
+		ApprovalVo checkApprovalVo = new ApprovalVo();
+		
+		//승인 시
+		for (int i = 0; i < order.length; i++) {
+			if(voLine.get(order[i]).equals(user_id)) {
+				voLineOk.put(order[i], "Y");
+				
+				System.out.println(voLine.get(order[i]));
+				System.out.println(voLineOk.get(order[i]));
+				if(order[i].equals("first")) {
+					app_draft = "결재승인";
+				}else if(order[i].equals("second")) {
+					app_draft = "결재승인";
+				}else {
+					app_draft = "결재완료";
+				}
+				payLineVO.setPaymentLine(voLine);
+				payLineVO.setPaymentOk(voLineOk);
+				String strPayline = transGson.toJson(payLineVO);
+				checkApprovalVo.setApp_payline(strPayline);
+				checkApprovalVo.setApp_draft(app_draft);
+				checkApprovalVo.setApp_seq(app_seq);
+				System.out.println(checkApprovalVo);
+			}
+		}
+		int result = service.checkApprovalLine(checkApprovalVo);
+		
+		return "redirect:/myAcceptPayList.do";
+	}
 	
-	
+	//본인 승인시 결재반려할 경우
+	@GetMapping(value="/rejectionPay.do")
+	public String rejectPay(@RequestParam("app_seq")String app_seq,HttpSession session) {
+		log.info("rejectPay 내가 승인하는데 싫어서 결재 반려하는 경우 : {}",app_seq);
+		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
+		String user_id = loginUser.getUser_id();
+		System.out.println("사용자 ID:"+user_id);
+		
+		ApprovalVo approvalVo = service.getOneApproval(app_seq);
+		String payLine = approvalVo.getApp_payline();
+		System.out.println("결재라인 : "+payLine);
+		
+		Gson transGson = new Gson();
+		PaylineVo payLineVO = transGson.fromJson(payLine, PaylineVo.class);
+		System.out.println("결재라인 첫번째:"+payLineVO.getPaymentLine().get("first"));
+		System.out.println("결재라인 승인받은 첫번째:"+payLineVO.getPaymentOk().get("first"));
+		
+		Map<String,Object> voLine = payLineVO.getPaymentLine();
+		Map<String,Object> voLineOk = payLineVO.getPaymentOk();
+		String[] order = {"first", "second", "third"};
+		String app_draft = "결재대기";
+		ApprovalVo checkApprovalVo = new ApprovalVo();
+		
+		for(int i=0; i<order.length; i++) {
+			if(voLine.get(order[i]).equals(user_id)) {
+				voLineOk.put(order[i], "N");
+				app_draft = "결재반려";
+				System.out.println(voLine.get(order[i]));
+				System.out.println(voLineOk.get(order[i]));
+				payLineVO.setPaymentLine(voLine);
+				payLineVO.setPaymentOk(voLineOk);
+				String strPayline = transGson.toJson(payLineVO);
+				checkApprovalVo.setApp_payline(strPayline);
+				checkApprovalVo.setApp_draft(app_draft);
+				checkApprovalVo.setApp_seq(app_seq);
+				System.out.println(checkApprovalVo);
+			}
+		}
+		int rejectResult = service.checkApprovalLine(checkApprovalVo);
+		return "redirect:/myAcceptPayList.do";
+	}
 	
 	@GetMapping(value = "/myReferPayList.do")
 	public String myReferPayList(Model model, HttpSession session) {

@@ -18,14 +18,12 @@
 		<div class="card-body">
 			<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님 임시 저장한 결재리스트</h4>
 			<!-- 검색시작 -->
-			<div style="margin-left: 560px;">
-					<select  style="width: 35%; display: unset;" class="form-select " aria-label="Default select example">
-		                      <option selected="selected" >제목별 검색</option>
-		                      <option value="1">양식종류별 검색</option>
-		             </select>
-					<input style="width: 200px; display: unset;" id="gian_name"class="form-control" type="text" placeholder="Search...">
-					<button class="btn btn-warning rounded-pill" id="templateSearch">검색</button>
-				</div>
+			<div style="margin-left: 560px; margin-top: 20px;">
+				검색 : <input style=" width: 250px; display: unset;" id="searchInput"
+					class="form-control" type="text" placeholder="양식종류를 입력해주세요.">
+				<button class="btn btn-primary rounded-pill" id="templateSearch">검색</button>
+				<button class="btn btn-warning rounded-pill" id="resetSearch">검색 초기화</button>
+			</div>
 				<!-- 검색끝 -->
 				<table  class="table table-hover" style="margin-top: 10px;">
 					<thead>
@@ -46,6 +44,14 @@
 							</tr>
 						</c:forEach>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td></td>
+							<td><div id="noDataMessage" style="color: red; text-align: center;"></div></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tfoot>
 				</table>
 				<!-- 페이징 -->
 				<div style="margin-left: 450px;">
@@ -84,7 +90,7 @@
 								  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 			                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
 			                      <button type="button" class="btn btn-primary">결재 작성</button>
-			                      <button type="button" id="tempDel" data-appseq="" class="btn btn-warning">삭제</button>
+			                      <button type="button" id="tempDel" data-appseq="" class="btn btn-danger">삭제</button>
 							</div>
 						</div>
 					</div>

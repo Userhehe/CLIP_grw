@@ -87,8 +87,8 @@
 								<div class="modal-footer">
 									  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 				                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
-				                      <button type="button" class="btn btn-secondary">결재 수정</button>					        			 
-				                      <button type="button" class="btn btn-light">결재 취소</button>
+				                      <button type="button" class="btn btn-primary" id="editBtn" data-appseq="">결재 승인</button>					        			 
+				                      <button type="button" class="btn btn-danger" id="rejectBtn" data-appseq="">결재 반려</button>
 								</div>
 							</div>
 						</div>
@@ -155,8 +155,8 @@
 								<div class="modal-footer">
 									  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 				                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
-				                      	<button type="button" class="btn btn-secondary">결재 수정</button>					        			 
-				                      	<button type="button" class="btn btn-light">결재 취소</button>
+				                      <button type="button" class="btn btn-primary" id="editBtn" data-appseq="">결재 승인</button>					        			 
+				                      <button type="button" class="btn btn-danger" id="rejectBtn" data-appseq="">결재 반려</button>
 								</div>
 							</div>
 						</div>

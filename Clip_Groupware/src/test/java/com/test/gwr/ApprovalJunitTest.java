@@ -104,72 +104,68 @@ public class ApprovalJunitTest {
 		
 		
 		//결재 승인/반려에 따른 결재 현황 정보 수정 로직
-
-//		String approvalSeq = "APPROVAL_027";
-//		ApprovalVo approvalVo = service.getOneApproval(approvalSeq);
-//		String payLine = approvalVo.getApp_payline();
-//		System.out.println(payLine);
-//		Gson transGson = new Gson();
-//		PaylineVo paylineVo = transGson.fromJson(payLine, PaylineVo.class);
-//		System.out.println("paymentLine First : " + paylineVo.getPaymentLine().get("first"));
-//		System.out.println("paymentOk First : " + paylineVo.getPaymentOk().get("first"));
-//		//기존의 내 사원 번호로 내의 순서를 먼저 조회 후 순서에 맞는 결재 승인 정보를 내결재승인 결과에 맞게 변환시켜주고 결재현황도 맞춰서 변경 시켜주기.
-//		String myUser_id = "USER_027";
-//		
-//		Map<String, Object> voLine = paylineVo.getPaymentLine();
-//		Map<String, Object> voLineOk = paylineVo.getPaymentOk();
-//		String[] order = {"first", "second", "third"};
-//		String app_draft = "결재대기";
-//		ApprovalVo checkingApprovalVo = new ApprovalVo();
-//		
+		String approvalSeq = "APPROVAL_027";
+		ApprovalVo approvalVo = service.getOneApproval(approvalSeq);
+		String payLine = approvalVo.getApp_payline();
+		System.out.println(payLine);
+		Gson transGson = new Gson();
+		PaylineVo paylineVo = transGson.fromJson(payLine, PaylineVo.class);
+		System.out.println("paymentLine First : " + paylineVo.getPaymentLine().get("first"));
+		System.out.println("paymentOk First : " + paylineVo.getPaymentOk().get("first"));
+		//기존의 내 사원 번호로 내의 순서를 먼저 조회 후 순서에 맞는 결재 승인 정보를 내결재승인 결과에 맞게 변환시켜주고 결재현황도 맞춰서 변경 시켜주기.
+		String myUser_id = "USER_027";
+		
+		Map<String, Object> voLine = paylineVo.getPaymentLine();
+		Map<String, Object> voLineOk = paylineVo.getPaymentOk();
+		String[] order = {"first", "second", "third"};
+		String app_draft = "결재대기";
+		ApprovalVo checkingApprovalVo = new ApprovalVo();
+		
 		//승인 시
-//		for (int i = 0; i < order.length; i++) {
-//			if(voLine.get(order[i]).equals(myUser_id)) {
-//				voLineOk.put(order[i], "Y");
-//				
-//				System.out.println(voLine.get(order[i]));
-//				System.out.println(voLineOk.get(order[i]));
-//				if(order[i].equals("third")) {
-//					app_draft = "결재완료";
-//				}
-//				paylineVo.setPaymentLine(voLine);
-//				paylineVo.setPaymentOk(voLineOk);
-//				String strPayline = transGson.toJson(paylineVo);
-//				checkingApprovalVo.setApp_payline(strPayline);
-//				checkingApprovalVo.setApp_draft(app_draft);
-//				checkingApprovalVo.setApp_seq(approvalSeq);
-//				System.out.println(checkingApprovalVo);
-//			}
-//		}
-//		
-//		int result = service.checkApprovalLine(checkingApprovalVo);
-//		assertEquals(result, 1);
+		for (int i = 0; i < order.length; i++) {
+			if(voLine.get(order[i]).equals(myUser_id)) {
+				voLineOk.put(order[i], "Y");
+				
+				System.out.println(voLine.get(order[i]));
+				System.out.println(voLineOk.get(order[i]));
+				if(order[i].equals("third")) {
+					app_draft = "결재완료";
+				}
+				paylineVo.setPaymentLine(voLine);
+				paylineVo.setPaymentOk(voLineOk);
+				String strPayline = transGson.toJson(paylineVo);
+				checkingApprovalVo.setApp_payline(strPayline);
+				checkingApprovalVo.setApp_draft(app_draft);
+				checkingApprovalVo.setApp_seq(approvalSeq);
+				System.out.println(checkingApprovalVo);
+			}
+		}
 		
+		int result = service.checkApprovalLine(checkingApprovalVo);
+		assertEquals(result, 1);
+
 		//반려 시
-//		for (int i = 0; i < order.length; i++) {
-//			if(voLine.get(order[i]).equals(myUser_id)) {
-//				voLineOk.put(order[i], "N");
-//				app_draft = "결재반려";
-//				System.out.println(voLine.get(order[i]));
-//				System.out.println(voLineOk.get(order[i]));
-//				paylineVo.setPaymentLine(voLine);
-//				paylineVo.setPaymentOk(voLineOk);
-//				String strPayline = transGson.toJson(paylineVo);
-//				checkingApprovalVo.setApp_payline(strPayline);
-//				checkingApprovalVo.setApp_draft(app_draft);
-//				checkingApprovalVo.setApp_seq(approvalSeq);
-//				System.out.println(checkingApprovalVo);
-//			}
-//		}
-//		
-//		int rejectResult = service.checkApprovalLine(checkingApprovalVo);
-//		assertEquals(rejectResult, 1);
+		for (int i = 0; i < order.length; i++) {
+			if(voLine.get(order[i]).equals(myUser_id)) {
+				voLineOk.put(order[i], "N");
+				app_draft = "결재반려";
+				System.out.println(voLine.get(order[i]));
+				System.out.println(voLineOk.get(order[i]));
+				paylineVo.setPaymentLine(voLine);
+				paylineVo.setPaymentOk(voLineOk);
+				String strPayline = transGson.toJson(paylineVo);
+				checkingApprovalVo.setApp_payline(strPayline);
+				checkingApprovalVo.setApp_draft(app_draft);
+				checkingApprovalVo.setApp_seq(approvalSeq);
+				System.out.println(checkingApprovalVo);
+			}
+		}
+		
+		int rejectResult = service.checkApprovalLine(checkingApprovalVo);
+		assertEquals(rejectResult, 1);
 		
 		
 		
-		
-		
-//		
 		//결재요청
 		ApprovalVo appVo = new ApprovalVo();
 		appVo.setApp_title("기안 결재 인서트 쿼리문입니다.");
@@ -220,8 +216,8 @@ public class ApprovalJunitTest {
 //		//날짜 지정한 결재일 시 입력
 		appVo.setApp_strdate("2024-04-01");
 		appVo.setApp_enddate("2024-04-04");
-	 	int result = service.saveTempApproval(appVo);
-		assertEquals(result, 1);
+	 	int result2 = service.saveTempApproval(appVo);
+		assertEquals(result2, 1);
 	 	
 		
 		
