@@ -41,7 +41,7 @@ public class ReservationController {
 	// 예약 페이지 이동
 	@GetMapping(value = "/reservation.do")
 	public String reservation(Model model) {
-				List<MeeTingRoomVo> meeTingRoomVo = service.selectMeetingRoom();
+		List<MeeTingRoomVo> meeTingRoomVo = service.selectMeetingRoom();
 		model.addAttribute("meeTingRoomVo", meeTingRoomVo);
 		log.info("ReservationController reservation 회의실 예약화면 이동");
 		return "reservation";
@@ -63,6 +63,7 @@ public class ReservationController {
 			obj.put("content",vo.getRe_content());
 			obj.put("start",vo.getRe_start());
 			obj.put("end",vo.getRe_end());
+			log.info("무엇?:{}",obj);
 			reArr.add(obj);
 		}
 		return reArr;
@@ -71,13 +72,23 @@ public class ReservationController {
 	//예약 상세조회
 	@GetMapping(value = "/reDetail.do")
 	@ResponseBody
-	public Map<String, Object> reDetail(int seq) {
+	public Map<String, Object> reDetail(int seq, Model model) {
 		log.info("ReservationController reDetail 상세조회");
 		System.out.println("전달받은 re_seq값:" + seq);
 		List<ReAttendsVo> attlists = service.reAttList(seq);// 회의실 참석자 리스트
 		log.info("참석자 리스트:{}", attlists);
+		List<MeeTingRoomVo> meeTingRoomVo = service.selectMeetingRoom(); //회의실 리스트
+		model.addAttribute("meeTingRoomVo", meeTingRoomVo);
+		log.info("meeTingRoomVo", meeTingRoomVo);
+		
 		int index=0;
 		String attends ="";
+		
+		int cnt=0;
+		if(attlists.size()>0) {
+			cnt=1;
+		}
+		
 		for(ReAttendsVo att : attlists) {
 			log.info("att : {}", att);
 			attends += att.getUser_name();
@@ -85,6 +96,7 @@ public class ReservationController {
 			attends += att.getRanks_name();
 			if(index < attlists.size()-1) {
 				attends +=",";
+				cnt++;
 			}
 			index++;
 		}
@@ -92,32 +104,18 @@ public class ReservationController {
 		Map<String, Object> map = new HashMap<>(); //예약한 회의실 내용을 담을 예정
 		ReservationVo vo = service.reDetail(seq);
 		log.info("전달받은 seq의 내용 {}:" , vo);
-		map.put("roomNum", vo.getMe_room());
+		log.info("전달받은 seq의 내용 {}:" , attlists);
+		map.put("seq", vo.getRe_seq());
+		map.put("roomNum", vo.getMe_room()+"번");
 		map.put("title", vo.getRe_title());
 		map.put("content", vo.getRe_content());
 		map.put("start", vo.getRe_start());
 		map.put("end", vo.getRe_end());
+		map.put("attends", attends);
+		map.put("count", cnt);
 		log.info("선택된 seq의 상세보기 내용: {}", map);
 		return map;
 	}
-
-	//예약내용 수정하기
-	@GetMapping(value = "/reModify.do")
-	public ReservationVo reModify() {
-		log.info("ReservationController reModify");
-		
-		return null;
-	}
-	
-	//예약 취소하기
-	@GetMapping(value = "/reDel")
-	public String reDel() {
-		log.info("ReservationController reDel");
-		
-		return null;
-	}
-	
-	
 
 	
 	// 내 예약 페이지 이동
@@ -199,25 +197,49 @@ public class ReservationController {
 	//참석자 등록하기
 	@PostMapping(value = "/attinsert.do")
 	@ResponseBody
-	public String attinsert(String id, int seq) {
+	public Map<String, Object> attinsert(String id, int seq) {
 		log.info("ReservationController attinsert");
 		log.info("배열 : {}",id);
 		log.info("최신시퀀스:{}",seq);
 		
 		int cnt =0;
 		String[] ids = id.split(",");
+		Map<String, Object> map = new HashMap<>();
+		
 		for(String att: ids) {
-			Map<String, Object> map = new HashMap<>();
-			
 			map.put("user_id", att);
 			map.put("re_seq", seq);
 			service.attinsert(map);
 			cnt++;
 		}
 		System.out.println("총"+cnt+"명이 입력됨");
-		return "myReservation";
+		return map;
 	}
 	
-	// 예약하기 모달 기능 시작
+	//예약 취소하기
+		@GetMapping(value = "/reDel.do")
+		@ResponseBody
+		public int reDel(int seq) {
+			log.info("ReservationController reDel 예약을 삭제한다.");
+			log.info("삭제할 예약번호",seq);
+			int isc = service.reDel(seq);
+			log.info(isc > 0 ? "예약이 취소 성공":"예약 취소 실패");
+			return isc;
+		}
+		
+	//예약내용 수정하기
+		@GetMapping(value = "/reModify.do")
+		@ResponseBody
+		public ReservationVo reModify(int seq, String id) {
+			log.info("ReservationController reModify 참석자와 예약내용을 수정한다.");
+			service.reModifyRev(seq);
+			
+			
+			
+			service.reModifyAtt(id);
+			return null;
+		}
+	
+
 
 }
