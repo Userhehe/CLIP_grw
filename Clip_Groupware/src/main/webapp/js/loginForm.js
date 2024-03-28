@@ -64,21 +64,51 @@ function closePwModal() {
 	modal.style.display = "none";
 }
 
+// 비밀번호 재설정 - 비밀번호 입력란 활성화
+function passwordUpdateInputActive() {
+	document.getElementById('replacePassword').disabled = false;
+	document.getElementById('checkPassword').disabled = false;
+	document.getElementById('replacePasswordBtn').disabled = false;
+	document.getElementById('replacePasswordBtn').style.backgroundColor = '#ECB53B';
+}
+
+// 비밀번호 재설정 - 비밀번호 입력란 비활성화
+function passwordUpdateDisabled() {
+	document.getElementById('replacePassword').disabled = true;
+	document.getElementById('replacePassword').value = "";
+	document.getElementById('checkPassword').disabled = true;
+	document.getElementById('checkPassword').value = "";
+	document.getElementById('replacePasswordBtn').disabled = true;
+	document.getElementById('replacePasswordBtn').style.backgroundColor = 'lightgrey';
+}
+
+// 비밀번호 재설정 - 아이디 입력란 비활성화
+function sendCertnumFromIdDisabled() {
+	document.getElementById('id').disabled = true;
+	document.getElementById('sendCertnumBtn').disabled = true;
+	document.getElementById('sendCertnumBtn').style.backgroundColor = 'lightgrey';
+}
+
+// 비밀번호 재설정 - 인증번호 비교란 활성화
+function checkCertnumActive() {
+	document.getElementById('certnum').disabled = false;
+	document.getElementById('checkCertnumBtn').disabled = false;
+	document.getElementById('checkCertnumBtn').style.backgroundColor = '#ECB53B';
+}
+
 // 인증번호 타이머설정
 function startTimer() {
-    var timeLeft = 40; // 40초 설정
+    var timeLeft = 60; // 60초 설정
 
     var timerInterval = setInterval(function() {
         var minutes = Math.floor(timeLeft / 60);
         var seconds = timeLeft % 60;
 
-        // 화면에 표시할 형식을 지정합니다. 00:00 형식으로 표시합니다.
         document.getElementById('timer').textContent = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 
-        // 시간을 1초씩 감소합니다.
-        timeLeft--;
+        timeLeft--; // 시간 1초단위로 감소
 
-        // 타이머가 0이 되면 타이머를 멈춥니다.
+        // 타이머가 0이 되면 타이머 리셋
         if (timeLeft < 0) {
             clearInterval(timerInterval);
 		    document.getElementById('timer').textContent = '00:00';
@@ -90,11 +120,8 @@ function startTimer() {
     }, 1000); // 1초마다 실행
 }
 
-
-
 // 인증번호 재요청
 function certnumRequest() {
-	
 	document.getElementById('id').disabled = false;
 	document.getElementById('id').value = "";
 	document.getElementById('sendCertnumBtn').disabled = false;
@@ -113,13 +140,12 @@ function certnumRequest() {
 	document.getElementById('replacePasswordBtn').style.backgroundColor = 'lightgrey';
 }
 
-
 $(document).ready(function() {
+	
+	// 아이디 찾기
     $('#idFindForm').submit(function(event) {
 	    event.preventDefault();
-	        
 	    var email = $('#email').val();
-	    console.log('이메일주소 : ', email);
 	
 	    $.ajax({
 	        url: './findId.do',
@@ -127,8 +153,12 @@ $(document).ready(function() {
 	        dataType: 'json',
 	        data: { email:email },
 	        success: function(response) {
-	            console.log('아이디찾기성공');
-		        alert(response);
+				console.log('아이디찾기요청성공');
+				if(response === 1) {
+					alert('입력하신 이메일로 아이디값이 전송되었습니다.');
+				} else {
+					alert('해당 이메일정보를 가진 아이디가 존재하지 않습니다.\n다시 확인해주세요.');
+				}
 	        },
 	        error: function(xhr, status, error) {
 	            console.error('아이디찾기요청실패', status, error);
@@ -136,11 +166,10 @@ $(document).ready(function() {
 	    });
 	});
 
+	// 비밀번호 재설정 - 인증번호 발송
 	$('#sendCertnumForm').submit(function(event) {
 		event.preventDefault();
-		
 		var id = $('#id').val();
-		console.log('아이디 : ', id);
 		
 		$.ajax({
 			url: './sendCertnum.do',
@@ -148,16 +177,10 @@ $(document).ready(function() {
 			dataType: 'json',
 			data: { id: id },
 			success: function(response) {
-				console.log(typeof response, response)
-//				if (response.message === "인증번호가 입력된 아이디의 이메일주소로 발송되었습니다.") {
 				if (response === 1) {
 					console.log('아이디 있음');
-					document.getElementById('id').disabled = true;
-					document.getElementById('sendCertnumBtn').disabled = true;
-					document.getElementById('sendCertnumBtn').style.backgroundColor = 'lightgrey';
-					document.getElementById('certnum').disabled = false;
-					document.getElementById('checkCertnumBtn').disabled = false;
-					document.getElementById('checkCertnumBtn').style.backgroundColor = '#ECB53B';
+					sendCertnumFromIdDisabled();
+					checkCertnumActive();
 					alert('인증번호가 입력된 아이디의 이메일주소로 발송되었습니다.');
 					startTimer();
 				} else {
@@ -171,13 +194,11 @@ $(document).ready(function() {
 		});
 	});
 
+	// 비밀번호 재설정 - 인증번호 일치여부 확인
 	$('#checkCertnumForm').submit(function(event) {
 		event.preventDefault();
-		
 		var id = $('#id').val();
 		var certnum = $('#certnum').val();
-		console.log('아이디 : ', id);
-		console.log('인증번호 : ',certnum);
 		
 		$.ajax({
 			url: './checkCertnum.do',
@@ -185,23 +206,13 @@ $(document).ready(function() {
 			dataType: 'json',
 			data: { id:id, certnum:certnum },
 			success: function(response) {
-				console.log(typeof response, response)
-				console.log(response.message)
 				if(response === 1) {
 					console.log("인증번호 일치");
-					document.getElementById('replacePassword').disabled = false;
-					document.getElementById('checkPassword').disabled = false;
-					document.getElementById('replacePasswordBtn').disabled = false;
-					document.getElementById('replacePasswordBtn').style.backgroundColor = '#ECB53B';
+					passwordUpdateInputActive();
 					alert('인증번호가 일치합니다.');
 				} else {
 					console.log("인증번호 불일치")
-					document.getElementById('replacePassword').disabled = true;
-					document.getElementById('replacePassword').value = "";
-					document.getElementById('checkPassword').disabled = true;
-					document.getElementById('checkPassword').value = "";
-					document.getElementById('replacePasswordBtn').disabled = true;
-					document.getElementById('replacePasswordBtn').style.backgroundColor = 'lightgrey';
+					passwordUpdateDisabled();
 					alert('인증번호가 일치하지 않습니다.');
 				}
 			},
@@ -211,24 +222,23 @@ $(document).ready(function() {
 		});
 	});
 
+	// 비밀번호 재설정 - 비밀번호 재설정
 	$('#updatePasswordForm').submit(function(event) {
 		event.preventDefault();
-		
 		var id = $('#id').val();
 		var password = $('#replacePassword').val();
 		var passwordCheck = $('#checkPassword').val();
-		var passwordRole = /^[a-zA-Z0-9]{8,16}$/;
-		console.log('아이디 : ',id);
-		console.log('비밀번호 : ', password);
-		console.log('비밀번호확인 : ', passwordCheck);
+		var passwordRole = /^[a-zA-Z0-9]{8,16}$/; // 8~16자리 영문과 숫자조합 정규식
+		
 		if(!passwordRole.test(password)){
 			alert('비밀번호는 8~16자리의 영문 숫자 조합이어야합니다.');
 			return;
 		}
 		if(password != passwordCheck){
-			alert('두 비밀번호의 값이 일치하지 않습니다 다시 확인해주세요.');
+			alert('두 비밀번호의 값이 일치하지 않습니다.\n다시 확인해주세요.');
 			return;
 		}
+		
 		$.ajax({
 			url: './updatePasswordForm.do',
 			method: 'POST',
@@ -240,7 +250,7 @@ $(document).ready(function() {
 				location.href='./loginForm.do';
 			},
 			error: function(xhr, status, error) {
-				console.error('비밀번호업데이트실패', status, error)
+				console.error('비밀번호업데이트실패', status, error);
 			}
 		});
 	});

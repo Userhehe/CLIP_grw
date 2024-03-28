@@ -1,0 +1,137 @@
+body {
+	margin: 0; /* body의 기본 margin 제거 */
+	padding: 0; /* body의 기본 padding 제거 */
+	font-family: Arial, sans-serif; /* 폰트 지정 */
+}
+
+.container {
+	margin: 0 auto;
+	margin-top: 77px;
+	padding: 20px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.mg_top15 {
+	margin-top: 15px;
+}
+
+
+.font12 {
+	font-size: 12px;
+}
+
+.font20 {
+	font-size: 20px;
+}
+
+.w120px {
+	width: 120px;
+}
+
+.w143_7px {
+	width: 143.7px;
+}
+
+.w182_7px {
+	width: 182.7px;
+}
+
+.w249_8px {
+	width: 249.8px;
+}
+
+.w345px {
+	width: 345px;
+}
+
+.w661_5px {
+	width: 661.5px;
+}
+
+.ib {
+	display: inline-block;
+}
+
+.fc_red {
+	color: red;
+}
+
+.additional-image {
+	width: 300px;
+	position: relative;
+	margin-bottom: 20px auto; /* 위쪽으로 10px, 아래쪽으로 마진 없음 */
+	margin-top: 250px;
+}
+
+select {
+	height: 36px;
+}
+
+.input-field {
+	width: 185px;
+	height: 36px;
+	box-sizing: border-box;
+	margin-top: 10px;
+}
+
+.input-field {
+	position: relative;
+}
+
+.input-field input {
+	padding-left: 20px; /* 왼쪽에 10px의 패딩을 추가하여 텍스트를 왼쪽으로 이동 */
+}
+
+.button {
+	width: 126px;
+	height: 36px;
+	box-sizing: border-box;
+	color: white;
+	border: none;
+	padding: 10px;
+	cursor: pointer;
+	float: right;
+	font-size: 13px;
+}
+
+.wid100 {
+	width: 100%;
+}
+
+.jus-center {
+	justify-content: center;
+}
+
+.font40 {
+	font-size: 40px;
+}
+
+.wid40 {
+	width: 40%;	
+}
+
+.wid28 {
+	width: 28%;
+}
+
+.txt-center {
+	text-align: center;
+}
+
+/* 버튼 호버 효과 */
+.button:hover {
+	background-color: #0056b3;
+}
+
+.links {
+    margin-top: 15px; /* 링크들의 상단 여백 */
+    color: white; /* 흰색으로 변경 */
+}
+
+.links a:hover {
+    text-decoration: none; /* 호버 시 밑줄 제거 */
+}

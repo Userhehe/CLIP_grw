@@ -96,8 +96,7 @@ public class UserController {
 	@PostMapping(value = "/signUp.do")
 	public String signUpDone(HttpSession session, HttpServletResponse response, HttpServletRequest request) {
 		
-		//String user_password = passwordEncoder.encode("clip1234");
-		String user_password = passwordEncoder.encode("1111");
+		String user_password = passwordEncoder.encode("clip1234");
 		String user_name = request.getParameter("user_name");
 		String user_registnum = request.getParameter("user_start_registnum") + "-"
 								+ request.getParameter("user_last_registnum");
@@ -272,14 +271,21 @@ public class UserController {
 		return "userInfoDetail";
 	}
 	
-//	@GetMapping(value = "/userInfoUpdate.do")
-//	public String userInfoUpdate(HttpServletRequest request, Model model) {
-//		String user_seq = request.getParameter("user_seq");
-//		log.info("####user_seq : " + user_seq);
-//		
-//		List<UserinfoVo> userDetailList = userService.selectUserinfoDetail(user_seq);
-//		
-//		model.addAttribute("userDetailList",userDetailList);
-//		return "userInfoUpdate";
-//	}
+	@GetMapping(value = "/userInfoUpdate.do")
+	public String userInfoUpdate(HttpServletRequest request, Model model) {
+		String user_seq = request.getParameter("user_seq");
+		log.info("####user_seq : " + user_seq);
+		
+		List<UserinfoVo> userDetailList = userService.selectUserinfoDetail(user_seq);
+		log.info("####userDetailList : " + userDetailList);
+		List<DeptVo> deptLists = deptService.deptAll();
+		List<PositionsVo> positionsLists = positService.positionsAll();
+		List<RanksVo> ranksLists = ranksService.ranksAll();
+		
+		model.addAttribute("userDetailList",userDetailList);
+		model.addAttribute("deptLists", deptLists);
+		model.addAttribute("positionsLists", positionsLists);
+		model.addAttribute("ranksLists", ranksLists);
+		return "userInfoUpdate";
+	}
 }
