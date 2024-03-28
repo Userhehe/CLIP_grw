@@ -7,29 +7,31 @@ import com.clip.gwr.vo.ProjectsVo;
 
 public interface IProjectsDao {
 
-	
 	// 프로젝트 전체 조회
 	public List<ProjectsVo> getProjectsAll();
-	
+
 	// 프로젝트 상세 조회
 	public ProjectsVo projectsDetail(String prj_id);
-	
+
 	// 프로젝트 추가
 	public int projectsInsert(Map<String, Object> map);
-	
+
 	// 프로젝트 수정
 	public int projectsUpdate(Map<String, Object> map);
-	
+
 	// 프로젝트 삭제
 //	public int projectsDelete(String prj_id);/
-	
+
 	// 프로젝트 거래처별 검색
 	public List<ProjectsVo> projectsClientSel(String cli_id);
-	
+
 	// 프로젝트 기간별 검색
 	public List<ProjectsVo> projectsPeriodSel(Map<String, Object> map);
-	
+
 	// 프로젝트 진척도별 검색
 	public List<ProjectsVo> projectsProgressSel();
-	
+
+	// 프로젝트 진척도별 검색
+	public List<ProjectsVo> getCompletedProjects();
+
 }

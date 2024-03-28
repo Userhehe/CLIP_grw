@@ -30,6 +30,16 @@ public class ProjectsController {
 		return "projectsProgress";
 	}
 	
+	@GetMapping(value = "/projectsProgressDone.do")
+	public String projectsProgressDone(Model model) {
+	    log.info("PayController 완료된 프로젝트 페이지");
+	    List<ProjectsVo> doneProjects = service.getCompletedProjects();
+
+	    model.addAttribute("lists", doneProjects);
+
+	    return "projectsProgress";
+	}
+	
 	@GetMapping(value = "/projectsPeriod.do")
 	public String projectsPeriod() {
 		return "projectsPeriod";
