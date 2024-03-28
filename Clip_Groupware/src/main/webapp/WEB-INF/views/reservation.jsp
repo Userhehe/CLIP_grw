@@ -59,11 +59,19 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 	display: flex;
 }
 
+
+#reservationModalButton{
+	background-color: orange !important; 
+}
+#reservationModalButton:hover {
+    background-color: darkorange !important;
+}
+
 </style>
 </head>
 <body>
 
-			<!-- 예약 추가 모달 -->
+	<!-- 예약 추가 모달 -->
 	<div class="modal fade" id="reservationModal" tabindex="-1"	role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -82,10 +90,10 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 							<label for="re_start" class="col-form-label">예약일을 선택해주세요.</label>
 							<div class="input-group">
 								<span class="input-group-addon"> 
-								<input type="text"	class="form-control" readonly="readonly" ondblclick="return false" id="re_start" name="re_start">
+								<input type="text"	class="form-control" readonly="readonly" ondblclick="return false" id="re_start" name="re_start" placeholder="날짜선택">
 								</span> 
 								<span class="input-group-btn" style="margin-left: 20px;">
-									<button class="btn btn-secondary" type="button" onclick="selectPossibleMeRoomButton()">예약가능시간 보기</button>
+									<button class="btn btn-secondary" type="button" onclick="selPDate()">예약 가능 시간 선택</button>
 								</span>
 							</div>
 
@@ -159,8 +167,6 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 		<div class="container">
 			<div class="row">
 				<button class="btn btn-secondary" id="reservationModalButton" onclick="reservationModal()">예약하기</button>
-				<button class="btn btn-secondary" id="reservationModalButton" onclick="attenddd()">참가자 설정</button>
-				
 				<div class="card-body">
 					<div id="recalendar"></div>
 				</div>

@@ -36,67 +36,132 @@
 ul.jstree-container-ul>li>a>i.jstree-checkbox {
 	display: none;
 }
+
+.re_title:hover{
+	cursor: pointer;
+	color: orange;
+}
 </style>
 
 </head>
 <body>
-<!-- 값을 받기위한 hidden -->
-<%-- <input type="text" id="deRev" value="${vo.re_title}" style="display: none"> --%>
 
-
-<!-- 예약 상세보기 모달 -->
+<!-- 예약 상세보기 모달 & 수정 -->
 <div class="modal fade" id="redetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">       
     	<div class="modal-content">
+    		<form action="./reDetail.do" method="get" id="">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">회의실 예약 상세조회</h5>
+                	<div class="detailhidden" style="display: block;">
+                    	<h5 class="modal-title">회의실 예약 상세조회</h5>
+                    </div>
+                    <div class="modifyhidden" style="display: none;">
+                   		<h5 class="modal-title">회의실 예약 수정</h5>
+                    </div>
                 </div>
                 <div class="modal-body">
-               <div class="form-group">
-                     <div class="form-group">
+                <!-- 값을 저장할 input -->
+                <div class="form-group">
+					<div id="hiddenDiv" style="display: none;">
+						<input type="text" id="hiddenValue">
+					</div>	        
+		        </div>
+               <div class="form-group"><!-- 예약내용 전체  -->
 	                     <label for="title" class="col-form-label">회의실 번호</label>
-	                     <input type="text" class="form-control" id="deroomNum"  readonly="readonly" >
-                     </div>
+	                     
+	                     <div class="detailhidden" style="display: block;">
+	                     	<input type="text" class="form-control" id="deroomNum"  readonly="readonly" >
+	                     </div>
+	                     <div class="modifyhidden" style="display: none;">
+	                     	<select class="form-control" name="me_room" id="me_room">
+									<option value="1">1번</option>
+									<option value="2">2번</option>
+									<option value="3">3번</option>
+									<option value="4">4번</option>
+									<option value="5">5번</option>
+							</select> 
+	                     </div>
+	                     
+                     
+                     
                      <label for="startDate" class="col-form-label">시작 날짜</label>
-                     <div class="input-group">
-                        <input type="text" class="form-control"  id="destart" readonly="readonly">
-                        <span class="input-group-addon" id="imagebutton">
-                        	<i class="glyphicon glyphicon-calendar"></i>
-                        </span>
+                     <div class="detailhidden" style="display: block;">
+	                     <div class="input-group">
+	                        <input type="text" class="form-control"  id="destart" >
+	                     </div>
+                    </div>
+                    
+                    <div class="modifyhidden" style="display: none;">
+	                    <div class="input-group">
+							<span class="input-group-addon"> 
+								<input type="text"	class="form-control" readonly="readonly" ondblclick="return false" id="re_start" name="re_start">
+							</span> 
+							<span class="input-group-btn" style="margin-left: 20px;">
+								<button class="btn btn-secondary" type="button" onclick="selectPossibleMeRoomButton()">예약가능시간 보기</button>
+							</span>
+						</div>
+                    </div>
+                    
+                     <div class="detailhidden" style="display: block;">
+	                     <label for="endDate" class="col-form-label">종료 날짜</label>
+		                     <div class="input-group">
+		                        <input type="text" class="form-control"  id="deend" readonly="readonly">
+		                     </div>
                      </div>
-                     <label for="endDate" class="col-form-label">종료 날짜</label>
-                     <div class="input-group">
-                        <input type="text" class="form-control"  id="deend" readonly="readonly">
-                        <span class="input-group-addon" id="imagebutton2">
-                        	<i class="glyphicon glyphicon-calendar"></i>
-                        </span>
-                     </div>
+                     
                      <div class="form-group">
-	                     <label for="title" class="col-form-label">회의 제목</label>
-	                     <input type="text" class="form-control" id="detitle" readonly="readonly">
+	                    <label for="title" class="col-form-label">회의 제목</label>
+	                     <div class="detailhidden" style="display: block;">
+	                    	<input type="text" class="form-control" id="detitle" readonly="readonly">
+                     	</div>
+	                    <div class="modifyhidden" style="display: none;">
+	                    	<input type="text" class="form-control" id="detitle" readonly="readonly">
+                     	</div>
+	                   
                      </div>
+                     
 	                 <label for="content" class="col-form-label">일정 내용</label>
-	                 	<textarea class="form-control" rows="5" id="decontent" readonly="readonly"></textarea>
+	                 	<div class="detailhidden" style="display: block;">
+	                 		<textarea class="form-control" rows="5" id="decontent" readonly="readonly"></textarea>
+	                 	</div>
+	                 	<div class="modifyhidden" style="display: none;">
+	                 		<textarea class="form-control" rows="5" id="decontent" readonly="readonly"></textarea>
+	                 	</div>
+	                 	
 	                 <div class="form-group">
-	                     <label for="title" class="col-form-label">참석자</label>
-	                     <input type="text" class="form-control" id="deattlist" >
+		                 
+		                    <label for="title" class="col-form-label">참석자</label>
+		                 <div class="detailhidden" style="display: block;">
+		                    <input type="text" class="form-control" id="deattlist" readonly="readonly">
+	                     </div>
                      </div>
+                     
+                     <div class="form-group">
+                     	<div class="detailhidden" style="display: block;">
+	                     	<label for="title" class="col-form-label">참석 예정 인원</label>
+		                    <input type="text" id="count" readonly="readonly" style="border: none; outline: none;">
+	                 	</div>
+	                 </div>    
                </div>
             </div>
-            
+            </form>
              <div class="modal-footer">
-	             <button type="submit" class="btn btn-secondary" > 삭제 </button>
-	             <button type="submit" class="btn btn-secondary" > 수정 </button>
-	             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
+             	<div class="detailhidden" style="display: block;">	
+		            <button class="btn btn-secondary" id="delRev" onclick="delRev()"> 삭제 </button>
+		            <button class="btn btn-secondary" id="modifyRev" onclick="modifyRev()"> 수정 </button>
+		            <button class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
+            	</div>
+            	<div class="modifyhidden" style="display: none;">
+            		<button type="submit" class="btn btn-secondary" > 확인 </button>
+	            	<button class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
+            	</div>
+            	
              </div>    
         </div>            
     </div>
 </div>
-<!-- 예약 상세보기 모달 끝  -->
+<!-- 예약 상세보기&수정 모달 끝  -->
  
-
-	
-	
 	<main id="main" class="main">
 		<section class="section dashboard">
 		
@@ -128,9 +193,10 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 						<table class="table table-hover" style="margin-top: 10px;">
 							<thead>
 								<tr>
-									<th><input type="checkbox" class="allCheckBox" id="chCheck" onclick="checkAll(this.checked)"></th>
+									<th>예약번호</th>
 									<th>회의실 번호</th>
 									<th>회의 제목</th>
+									<th>예약 시간</th>
 									<th>예약일</th>
 								</tr>
 							</thead>
@@ -140,6 +206,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 										<td class="re_seq">${vo.re_seq}</td>
 										<td>${vo.me_room}</td>
 										<td class="re_title">${vo.re_title}</td>
+										<td>${vo.re_start }</td>
 										<td>${vo.re_create}</td>
 									</tr>
 								</c:forEach>
@@ -163,7 +230,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 						<table class="table table-hover" style="margin-top: 10px;">
 							<thead>
 								<tr>
-									<th><input type="checkbox" class="allCheckBox" id="chCheck" onclick="checkAll(this.checked)"></th>
+									<th>예약번호</th>
 									<th>회의실 번호</th>
 									<th>회의 제목</th>
 									<th>예약일</th>

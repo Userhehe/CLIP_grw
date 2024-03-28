@@ -27,6 +27,7 @@ function initCal(){ //달력 렌더링
 					addEventButton: { // 추가한 버튼 설정
 						text: "예약하기",  // 버튼 내용
 						click: function() { // 버튼 클릭 시 이벤트 추가
+						
 						},
 						
 					}
