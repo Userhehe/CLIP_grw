@@ -1,10 +1,6 @@
 package com.clip.gwr.ctrl;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -12,13 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,20 +38,16 @@ public class MailController {
 	 * @throws IOException
 	 */
 	@PostMapping(value = "/findId.do")
-	public String idFind(UserVo vo, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public int idFind(UserVo vo, HttpServletRequest request, HttpServletResponse response) throws IOException {
 	    String email = request.getParameter("email");
 	    log.info("####email : " + email);
 	    UserVo userVo = userService.findUserId(email);
 
 	    if (userVo == null || userVo.getUser_id() == null) {
-	    	return "{'입력하신 이메일에 대한 아이디가 존재하지 않습니다.'}";
+	    	return 0;
 	    }
 
-	    // 메일 발송 로직
-	    log.info("####id : " + userVo.getUser_id());
-	    
-	    
-	    return "{'아이디가 입력된 메일로 발송되었습니다.'}";
+	    return 1;
 //	    String setFrom = "dongin7767@naver.com";
 //	    MimeMessage message = javaMailSender.createMimeMessage();
 	    
@@ -70,11 +58,10 @@ public class MailController {
 //	        messageHelper.setSubject("CLIP GROUPWARE 아이디 정보입니다.");
 //	        messageHelper.setText("입력하신 이메일에 대한 아이디 정보는 " + userVo.getUser_id() + "입니다.");
 //	        javaMailSender.send(message);
-//
-//	        return "{'아이디가 입력된 메일로 발송되었습니다.'}";
+//	        return 1;
 //	    } catch (MailException | MessagingException e) {
 //	        e.printStackTrace();
-//	        return "{'메일 발송에 실패하였습니다.'}";
+//	        return 0;
 //	    }
 	}
 	

@@ -16,7 +16,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserinfoVo  {
+public class UserinfoVo implements Serializable{
 	private String user_id;
 	private String user_password;
 	private String user_name;
@@ -37,6 +37,5 @@ public class UserinfoVo  {
 	private String photo_seq;
 	private String user_auth;
 	private String user_status;
-	private String user_certnum;
 	private String user_regdate;
 }

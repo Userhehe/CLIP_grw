@@ -31,7 +31,9 @@
 	              	<c:forEach var='userDetailList' items="${userDetailList}" varStatus="vs">
 		                <tr>
 			                <td style="background-color: grey; color: white;">아이디</td>
-			                <td>${userDetailList.user_id}</td>
+			                <td>${userDetailList.user_id}
+			                	
+			                </td>
 		                </tr>
 		                <tr>
 		                	<td style="background-color: grey; color: white;">주민등록번호</td>
@@ -74,7 +76,7 @@
               </table>
               	<div class="flex_end">
 	            	<button class="btn btn-secondary" onclick="window.location.href='./userInfo.do'">목록</button>
-<%-- 	            	<button class="btn btn-secondary ml_10" onclick="window.location.href='./userInfoUpdate.do?user_seq=${param.user_seq}'">사원정보수정</button> --%>
+	            	<button class="btn btn-secondary ml_10" onclick="window.location.href='./userInfoUpdate.do?user_seq=${param.user_seq}'">사원정보수정</button>
            		</div>
         	</div>
     	</div>

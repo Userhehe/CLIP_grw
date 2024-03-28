@@ -10,8 +10,7 @@
 <link href="assets/img/favicon.png" rel="icon">
 <!-- Template Main CSS File -->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-<link href="assets/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="./assets/css/loginForm.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script type="text/javascript" src="./js/loginForm.js"></script>
@@ -63,7 +62,7 @@
 				        <div class="mg_top10">
 				        	<div class="flex_end">
 					        	<div>인증번호 입력시간 : &nbsp;</div>
-					        	<div id="timer" class="flex_end" name="timer">03:00</div>
+					        	<div id="timer" class="flex_end" name="timer">00:00</div>
 				        	</div>
 							<div class="form-group">
 								<input type="number" class="form-control replace_pw_input" id="certnum" name="certnum" placeholder="인증번호를 입력해주세요" required="required">

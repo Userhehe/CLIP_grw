@@ -37,21 +37,21 @@
 	</select>
 	
 	<!-- 인증번호 저장 -->
-	<update id="updateUserCertnum" parameterType="java.util.Map">
-		UPDATE USERINFO
-			SET USER_CERTNUM = #{user_certnum}
-		WHERE USER_ID = (SELECT USER_ID FROM USERINFO u WHERE USER_EMAIL = #{user_email})
-		AND USER_STATUS = 'Y'
-	</update>
+<!-- 	<update id="updateUserCertnum" parameterType="java.util.Map"> -->
+<!-- 		UPDATE USERINFO -->
+<!-- 			SET USER_CERTNUM = #{user_certnum} -->
+<!-- 		WHERE USER_ID = (SELECT USER_ID FROM USERINFO u WHERE USER_EMAIL = #{user_email}) -->
+<!-- 		AND USER_STATUS = 'Y' -->
+<!-- 	</update> -->
 	
 	<!-- 인증번호 확인 -->
-	<select id="comparisonCertNum" parameterType="java.util.Map" resultType="java.lang.Integer">
-		SELECT COUNT(*)
-			FROM USERINFO u
-		WHERE USER_CERTNUM = #{user_certnum}
-		AND USER_ID = (SELECT USER_ID FROM USERINFO u WHERE USER_EMAIL = #{user_email})
-		AND USER_STATUS = 'Y'
-	</select>
+<!-- 	<select id="comparisonCertNum" parameterType="java.util.Map" resultType="java.lang.Integer"> -->
+<!-- 		SELECT COUNT(*) -->
+<!-- 			FROM USERINFO u -->
+<!-- 		WHERE USER_CERTNUM = #{user_certnum} -->
+<!-- 		AND USER_ID = (SELECT USER_ID FROM USERINFO u WHERE USER_EMAIL = #{user_email}) -->
+<!-- 		AND USER_STATUS = 'Y' -->
+<!-- 	</select> -->
 	
 	<!-- 사원정보 등록 -->
 	<insert id="insertUserinfo" parameterType="java.util.Map">
@@ -62,15 +62,14 @@
 			(USER_ID, USER_PASSWORD, USER_NAME, USER_REGISTNUM, 
 			USER_PHONENUM, USER_EMAIL, USER_BIRTHDAY, 
 			USER_ADDRESS, RANKS_SEQ, DEPT_SEQ, 
-			POSITIONS_SEQ, USER_CERTNUM, 
-			USER_REGDATE)
-			VALUES('USER_' || TO_CHAR(USER_SEQ.NEXTVAL, 'FM000'), #{user_password}, #{user_name}, 
+			POSITIONS_SEQ, USER_REGDATE)
+			VALUES('USER_' || TO_CHAR(USER_SEQ.NEXTVAL), #{user_password}, #{user_name}, 
 			#{user_registnum}, #{user_phonenum}, #{user_email}, 
 			#{user_birthday}, #{user_address},
 			(SELECT RANKS_SEQ FROM RANKS WHERE RANKS_NAME = #{ranks_name}),
 			(SELECT DEPT_SEQ FROM DEPT WHERE DEPT_NAME = #{dept_name}),
 			(SELECT POSITIONS_SEQ FROM POSITIONS WHERE POSITIONS_NAME = #{positions_name}),
-			0, TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD'))
+			TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD'))
 	</insert>
 	
 	<!-- 이메일&연락처 중복체크 -->

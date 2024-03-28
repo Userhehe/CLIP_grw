@@ -44,36 +44,42 @@ public class ScheduleController {
 	}
 	
 	//전체 조회
-	@GetMapping(value = "/Ajax.do")
+	@GetMapping(value = "/selectScheduleAll.do")
 	@ResponseBody
-	public JSONArray date(HttpSession session, String date) {
-		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
-		log.info("session에서 받은값 : {}, {}" + id,date);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("user_id", id.getUser_id());
-		map.put("fullDate", date);
-		String a = "1,2,3,4";
-		String[] stringArray = a.split(",");
-		int[] intArray2 = new int[stringArray.length];
-		for(int i = 0; i<stringArray.length; i++) {
-			intArray2[i] = Integer.parseInt(stringArray[i]);
-		}
-		map.put("type", intArray2);
-		List<MemoVo> lists = memoservice.selectScheduleAll(map);
-		System.out.println("MemoVo list : " +lists);
-		JSONArray memolist = new JSONArray();
+	public JSONArray selectScheduleAll(HttpSession session, String date, String type){
+	    log.info("화면에서 받은값 : {}, {}" + date, type);
+	    Map<String, Object> map = new HashMap<String, Object>();
 
-		for(MemoVo vo : lists) {
-			JSONObject obj = new JSONObject();
-			obj.put("seq", vo.getPrs_seq());
-			obj.put("title",vo.getPrs_title());
-			obj.put("start",vo.getPrs_start());
-			obj.put("end",vo.getPrs_end());
-			memolist.add(obj);
-			
-		}
-		System.out.println("넘겨줄 데이터"+memolist);
-		return memolist;
+	    UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
+	    map.put("user_id", id.getUser_id());
+
+	    map.put("fullDate", date);
+
+	    if (type != null && !type.isEmpty()) {
+	        List<Integer> intList = new ArrayList<>();
+	        String[] stringArray = type.split(",");
+	        for (String str : stringArray) {
+	            intList.add(Integer.parseInt(str));
+	        }
+	        map.put("type", intList);
+	    } else {
+	        return null;
+	    }
+
+	    log.info("Map 값 : {}" + map);
+
+	    List<MemoVo> lists = memoservice.selectScheduleAll(map);
+	    JSONArray memolist = new JSONArray();
+	    for(MemoVo vo : lists) {
+	        JSONObject obj = new JSONObject();
+	        obj.put("seq", vo.getPrs_seq());
+	        obj.put("title", vo.getPrs_title());
+	        obj.put("start", vo.getPrs_start());
+	        obj.put("end", vo.getPrs_end());
+	        memolist.add(obj);
+	    }
+	    System.out.println("넘겨줄 데이터"+memolist);
+	    return memolist;
 	}
 	//상세 조회
 	@PostMapping(value = "/calendarModalDetail.do") 
