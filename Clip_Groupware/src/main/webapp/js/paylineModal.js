@@ -70,13 +70,13 @@ $(document).ready(function() {
 		
 		var jstreeData = [];
 		
-		jstreeData.push({"id":"DEPT_001","parent":"#","text":"디자인","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_002","parent":"#","text":"설계","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_003","parent":"#","text":"공무","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_004","parent":"#","text":"시공","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_005","parent":"#","text":"영업","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_006","parent":"#","text":"관리","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_007","parent":"#","text":"인사","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_1","parent":"#","text":"디자인","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_2","parent":"#","text":"설계","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_3","parent":"#","text":"공무","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_4","parent":"#","text":"시공","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_5","parent":"#","text":"영업","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_6","parent":"#","text":"관리","state":{"opened":false},"type":"parent"});
+		jstreeData.push({"id":"DEPT_7","parent":"#","text":"인사","state":{"opened":false},"type":"parent"});
 	
 		
 		$.ajax({
@@ -416,7 +416,7 @@ function clean() {
 
 //모달 띄우는 함수
 var openModal = function openModal(){
-	console.log("모달 나와라~");
+//	console.log("모달 나와라~");
 	$('#paylinemodal').modal('show');
 	
 }

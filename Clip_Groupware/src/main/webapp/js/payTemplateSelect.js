@@ -17,3 +17,24 @@ function half(value) {
 	
 }
 
+
+window.onload = function(){
+	function submitReq(){
+	
+	
+	var textarea = document.querySelector('#smartEditor1');
+
+	var textarea2 = $('#smartEditor1');
+
+//	var deptarea = textarea.getElementsByClassName('approval_user_dept')[0];
+//	var namearea = textarea.getElementsByClassName('approval_user_name')[0];
+//	var rankarea = textarea.getElementsByClassName('approval_user_rank')[0];
+	
+	console.log(textarea,textarea2);
+	
+	}
+	
+	document.getElementById('sunbmitReq').addEventListener('click', submitReq);
+}
+
+

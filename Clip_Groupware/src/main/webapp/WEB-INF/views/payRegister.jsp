@@ -116,12 +116,12 @@
 		            		
 		            	</div>	
 		            	
-		            	<div class="row mb-3" style="margin-top: 10px">
-		                  <label for="vaReason" class="col-sm-1 col-form-label">신청 사유</label>
-		                  <div class="col-sm-11">
-		                    <textarea class="form-control" style="height: 100px; width: 100%" id="vaReason"></textarea>
-		                  </div>
-		                </div>
+<!-- 		            	<div class="row mb-3" style="margin-top: 10px"> -->
+<!-- 		                  <label for="vaReason" class="col-sm-1 col-form-label">신청 사유</label> -->
+<!-- 		                  <div class="col-sm-11"> -->
+<!-- 		                    <textarea class="form-control" style="height: 100px; width: 100%" id="vaReason"></textarea> -->
+<!-- 		                  </div> -->
+<!-- 		                </div> -->
 		            					 
 					</div>
 					
@@ -134,7 +134,8 @@
 						<br> <br> <br>
 					</div>
 					<div style="text-align: center;">
-						<button type="submit" class="btn btn-primary rounded-pill">미리보기/결재요청</button>
+						<button id="sunbmitReq" class="btn btn-primary rounded-pill">미리보기/결재요청</button>
+<!-- 						<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal"> -->
 						<button type="submit" id="tempSave"
 							class="btn btn-secondary rounded-pill">임시저장</button>
 					</div>

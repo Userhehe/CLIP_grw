@@ -51,15 +51,15 @@ public class PayController {
 		model.addAttribute("dept_name",dept_name);
 		model.addAttribute("ranks_name",ranks_name);
 		
-		 String[] templateIds = {"GIAN_001", "GIAN_002", "GIAN_003"};
+		 String[] templateIds = {"GIAN_1", "GIAN_2", "GIAN_3"};
 		    for (int i = 0; i < templateIds.length; i++) {
 		        GianVo vo = service.templateDetail(templateIds[i]);
 		        model.addAttribute("vo" + i, vo);
 		    }
 		
-		GianVo vo1 =service.templateDetail("GIAN_001");
-		GianVo vo2 =service.templateDetail("GIAN_002");
-		GianVo vo3 =service.templateDetail("GIAN_003");
+		GianVo vo1 =service.templateDetail("GIAN_1");
+		GianVo vo2 =service.templateDetail("GIAN_2");
+		GianVo vo3 =service.templateDetail("GIAN_3");
 	    model.addAttribute("vo1", vo1);
 	    model.addAttribute("vo2", vo2);
 	    model.addAttribute("vo3", vo3);
