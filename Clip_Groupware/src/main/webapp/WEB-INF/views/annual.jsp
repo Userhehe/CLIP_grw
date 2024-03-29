@@ -14,32 +14,27 @@
 		<section class="section dashboard">
 				<div style="margin-left: 560px; margin-top: 20px;">
 					검색 : <input style=" width: 250px; display: unset;" id="searchInput"
-						class="form-control" type="text" placeholder="검색할 유저 아이디를 입력하세요">
+						class="form-control" type="text" placeholder="검색할 유저명을 입력하세요">
 					<button class="btn btn-primary rounded-pill" id="annualSearch">검색</button>
-					<button class="btn btn-warning rounded-pill" id="resetSearch">검색 초기화</button>
 				</div>
 				<table class="table table-hover" style="margin-top: 10px;">
-							<thead>
-								<tr>								   
-									<th>이름</th>
-									<th>전체 연차</th>
-									<th>사용 연차</th>
+							<thead>		
+							      <tr>					   
+									<th>이름</th>	
+									<th>아이디</th>							
 									<th>남은 연차</th>
 								</tr>
 							</thead>
 							<tbody id="annualTableBody">
-								<c:forEach var="alist" items="${anlist}" varStatus="vs">
-									<tr class="an-lists">
-										<td>${alist.user_name}</td>
-										<td>${alist.annual_ct}</td>
-										<td>${alist.annual_use}</td>
-										<td>${alist.annual_leov}</td>
+								<c:forEach var="anlist" items="${anlist}" varStatus="vs">
+									<tr style="cursor: pointer;" onclick="location.href='./detailAnn.do?user_id=${anlist.user_id}'">
+										<td>${anlist.user_name}</td>
+										<td>${anlist.user_id}</td>										
+										<td>${anlist.ann_leov - anlist.ann_useday}</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-			<a href="./gianInsert.do"><button
-					class="btn btn-primary rounded-pill">양식추가</button></a>
 		</section>
 		</div>
 	</div>

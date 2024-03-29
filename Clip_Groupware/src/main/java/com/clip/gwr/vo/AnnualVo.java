@@ -15,9 +15,20 @@ import lombok.ToString;
 @AllArgsConstructor
 public class AnnualVo {        
 
-	private String user_id     ;
-	private int annual_ct   ;
-	private int annual_leov ;
-	private int annual_use  ;
+	private String ann_seq   ;
+	private String user_id   ;
+	private int ann_day   ;
+	private String ann_date  ;
+	private int ann_leov  ;
+	private int ann_useday;
+	
+	private String ranks_seq ;
+	private String positions_seq;
+	private String dept_seq ;
 	private String user_name     ;
+	private String positions_name ;
+	private String ranks_name ;
+	private String dept_name ;
+	
+	
 }

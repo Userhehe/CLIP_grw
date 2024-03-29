@@ -130,7 +130,7 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 					<ul id="humanresource-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 						<li><a href="./userInfo.do"><i class="bi bi-circle"></i><span>인사 정보</span></a></li>
 						<li><a href="./selectDailyCheckList.do"><i class="bi bi-circle"></i><span>근태관리</span></a></li>
-						<li><a href="./annual.do"><i class="bi bi-circle"></i><span>연차관리</span></a></li>
+						<li><a href="./annAll.do"><i class="bi bi-circle"></i><span>연차관리</span></a></li>
 						<li><a href="./organization.do"><i class="bi bi-circle"></i><span>조직도</span></a></li>
 						<li><a href="./empty.do"><i class="bi bi-circle"></i><span>직급관리</span></a></li>
 						<li><a href="./position.do"><i class="bi bi-circle"></i><span>직책관리</span></a></li>
