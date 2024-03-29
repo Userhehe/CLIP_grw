@@ -43,6 +43,9 @@ public class ScheduleController {
 		return "schedule";
 	}
 	
+
+	
+	
 	//전체 조회
 	@GetMapping(value = "/selectScheduleAll.do")
 	@ResponseBody
@@ -81,6 +84,7 @@ public class ScheduleController {
 	    System.out.println("넘겨줄 데이터"+memolist);
 	    return memolist;
 	}
+	
 	//상세 조회
 	@PostMapping(value = "/calendarModalDetail.do") 
 	@ResponseBody

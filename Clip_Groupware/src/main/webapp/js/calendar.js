@@ -1,3 +1,4 @@
+var selectScheduleAll = true;
 ////화면 로드시 걸어주는 이벤트들 ------------------------------------------------
 $(document).ready(function() {
 	
@@ -127,7 +128,6 @@ function calendar(type){
 			if(info.el.classList.contains('annual_event')||info.el.classList.contains('koHol')){
 				return false;
 			}
-
             var seq = info.event.extendedProps.seq;
             calendarModalDetail(seq);
         },
@@ -170,11 +170,12 @@ function calendar(type){
 				var formattedNextMonth = ('0'+nextMonth).slice(-2);
 				
 				var date = year + '-' + formattedNextMonth;
-				
+				console.log("날짜값 : ",date);
                 $.ajax({
                     type: "get",
                     url: "./selectScheduleAll.do",
                     data : {date:date, type:type},
+                    dataType:"json",
                     success: function(data) {
 						if(data.length == 0||data == null){
 							console.log("조회내용 없음");
@@ -205,7 +206,7 @@ function calendar(type){
             }
         }]
     });
-    calendar.render();
+        calendar.render();
 };
 //calendar function 끝----------------------------
     
