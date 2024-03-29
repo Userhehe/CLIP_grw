@@ -22,6 +22,7 @@
 		<typeAlias type="com.clip.gwr.vo.NtcVo" alias="NtcVo"/> <!-- 03/21 -->
 		<typeAlias type="com.clip.gwr.vo.MemoVo" alias="MemoVo"/> <!-- 03/15 -->
 		<typeAlias type="com.clip.gwr.vo.ProjectsVo" alias="ProjectsVo"/> <!-- 03/25 -->
+		<typeAlias type="com.clip.gwr.vo.ProjectMemVo" alias="ProjectMemVo"/> <!-- 03/25 -->
 		<typeAlias type="com.clip.gwr.vo.ReAttendsVo" alias="ReAttendsVo"/>
 		<typeAlias type="com.clip.gwr.vo.AnnualVo" alias="AnnualVo"/>
 		<typeAlias type="com.clip.gwr.vo.AnnualctVo" alias="AnnualctVo"/>

@@ -16,6 +16,7 @@
 	<main id="main" class="main" style="background-color: f2f2f2;">
 		<section class="section dashboard">
 			<div>
+				<!-- inner header start -->
 				<div style="border-bottom: .5px solid #2F3438;">
 					<div style="display: flex; align-items: center;">
 						<ul class="nav nav-tabs nav-tabs-bordered" id="borderTab"
@@ -41,25 +42,39 @@
 									onclick="location.href='projectClient.do' ">발주처별 프로젝트</button>
 							</li>
 						</ul>
+			
+				<!-- 라디오버튼 시작 -->
 						<div style="margin-left: auto; margin-right: 10px; height: 40px;">
 							<ul style="list-style-type: none; padding: 0; display: flex;">
-								<li style="margin-right: 10px;"><input
-									class="form-check-input" type="radio" name="gridRadios"
-									id="projectsProgressSel" value="option1" checked=""> <label
-									class="form-check-label" for="gridRadios1">진행중</label></li>
-								<li><input class="form-check-input" type="radio"
-									name="gridRadios" id="projectsProgressDoneSel" value="option2"> <label
-									class="form-check-label" for="gridRadios2">완료</label></li>
+								<li style="margin-right: 10px;">
+									<input class="form-check-input" type="radio" name="gridRadios"
+										id="projectsProgressSel" value="option1"
+										onClick="location.href='./projectsProgress.do'" 
+										<c:if test="${radioChk == 0}">checked</c:if>>
+									<label class="form-check-label" for="gridRadios1"> 진행중</label>
+								</li>
+								<li>
+									<input class="form-check-input" type="radio"
+										onClick="location.href='./getCompletedProjects.do'"
+										name="gridRadios" id="projectsProgressDoneSel" value="option2"
+										<c:if test="${radioChk == 1}">checked</c:if>> 
+									<label class="form-check-label" for="gridRadios2">완료</label>
+								</li>
 								<li></li>
 							</ul>
 						</div>
+				<!-- 라디오버튼 끝 -->
+				
 					</div>
 				</div>
+				<!-- inner header End -->
+				<!-- 프로젝트 생성버튼 시작 -->
 				<div class="d-grid gap-2 mt-3">
 					<button class="btn btn-warning" type="button"
 						data-bs-toggle="modal" data-bs-target="#verticalycentered"
 						style="margin-top: 0px;">프로젝트 생성</button>
 				</div>
+				<!-- 프로젝트 생성버튼 끝 -->
 				<!-- 프로젝트 생성 모달창 시작 -->
 				<div class="modal fade" id="verticalycentered" tabindex="-1"
 					style="display: none;" aria-hidden="true">
@@ -135,7 +150,6 @@
 
 										</ul>
 									</form>
-									<!-- End General Form Elements -->
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -148,8 +162,7 @@
 				</div>
 				<!-- 프로젝트 생성 모달창 끝 -->
 
-				<div></div>
-
+				<!-- 프로젝트 리스트창 시작 -->
 				<div class="container" style="margin-left: 5px;">
 					<div class="row" style="width: 119%; flex-wrap: wrap;">
 						<c:forEach var="projects" items="${lists}" varStatus="vs">
@@ -163,7 +176,7 @@
 										</div>
 									</div>
 									<div>
-										<h5>참여자 : </h5>
+										 <h5>참여자 : [${lists2[vs.index].user_name}]</h5>
 									</div>
 									<div style="text-align: right; margin-top: 20px;">
 										<button type="button" class="btn btn-secondary"
@@ -175,7 +188,7 @@
 						</c:forEach>
 					</div>
 				</div>
-
+				<!-- 프로젝트 리스트창 끝 -->
 
 			</div>
 		</section>
