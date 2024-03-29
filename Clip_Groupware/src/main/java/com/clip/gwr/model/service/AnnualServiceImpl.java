@@ -16,68 +16,85 @@ import lombok.extern.slf4j.Slf4j;
 public class AnnualServiceImpl implements IAnnualService {
 
 	@Autowired
-	private IAnnualDao dao; 
+	private IAnnualDao dao;
+
+	@Override
+	public int insertAnn(Map<String, Object> map) {
+		log.info("AnnualServiceImpl insertAnn 연차등록 (사원 등록시)");
+		return dao.insertAnn(map);
+	}
+
+	@Override
+	public int insertAnnualUp(String user_id) {
+		log.info("AnnualServiceImpl insertAnnualUp 1달마다 연차 등록");
+		return dao.insertAnnualUp(user_id);
+	}
+
+	@Override
+	public List<AnnualVo> annAll() {
+		log.info("AnnualServiceImpl annAll 연차전체 조회");
+		return dao.annAll();
+	}
+
+	@Override
+	public AnnualVo detailAnn(String user_id) {
+		log.info("AnnualServiceImpl detailAnn 연차 상세 조회");
+		return dao.detailAnn(user_id);
+	}
+
+	@Override
+	public int updateAnn(String user_id) {
+		log.info("AnnualServiceImpl updateAnn 연차 수정");
+		return dao.updateAnn(user_id);
+	}
+
+	@Override
+	public int resetAnn(Map<String, Object> map) {
+		log.info("AnnualServiceImpl resetAnn 1년마다 연차 초기화 ");
+		return dao.resetAnn(map);
+	}
+
+	@Override
+	public int resetAnnualUse(Map<String, Object> map) {
+		log.info("AnnualServiceImpl resetAnnualUse 1년마다 사용연차 초기화 ");
+		return dao.resetAnnualUse(map);
+	}
 	
 	@Override
-	public int insertAnnual(Map<String, Object> map) {
-		log.info("AnnualServiceImpl insertAnnual 연차등록");
-		return dao.insertAnnual(map);
-	}
-
-	@Override
-	public int insertAnnualup(Map<String, Object> map) {
-	   log.info("AnnualServiceImpl insertAnnualup 발생연차 합산");
-		return dao.insertAnnualup(map);
-	}
-
-	@Override
-	public List<AnnualVo> selAnnual() {
-	 log.info("AnnualServiceImpl selAnnual 연차 전체 조회");
-		return dao.selAnnual();
-	}
-
-	@Override
-	public AnnualVo detailAnnual(String user_id) {
-		log.info("AnnualServiceImpl detailAnnual 연차 상세 조회");
-		return dao.detailAnnual(user_id);
-	}
-
-	@Override
-	public int updateAnnual(Map<String, Object> map) {
-		log.info("AnnualServiceImpl updateAnnual 연차 수정");
-		return dao.updateAnnual(map);
-	}
-
-	@Override
-	public int resetAnnual(Map<String, Object> map) {
-		log.info("AnnualServiceImpl resetAnnual  연차 초기화 ");
-		return dao.resetAnnual(map);
-	}
-
-	@Override
-	public int annUse(Map<String, Object> map) {
-		log.info("AnnualServiceImpl annUse 연차 신청");
-		return dao.annUse(map);
-	}
-
-	@Override
-	public int annUseUpdate(Map<String, Object> map) {
-		log.info("AnnualServiceImpl annUseUpdate  사용량 업데이트");
-		return dao.annUseUpdate(map);
-	}
-
-	@Override
-	public int annLeovUpdate(String user_id) {
-		log.info("AnnualServiceImpl annLeovUpdate 잔여연차 업데이트");
-		return dao.annLeovUpdate(user_id);
-	}
-
-	@Override
 	public List<AnnualVo> searchAnnual(Map<String, Object> map) {
-		log.info("AnnualServiceImpl searchAnnual 연차 검색");
+		log.info("AnnualServiceImpl searchAnnual  연차검색 ");
 		return dao.searchAnnual(map);
+	} 
+
+	@Override
+	public int chkAnn(String user_id) {
+		log.info("AnnualServiceImpl chkAnn 연차 데이터 존재 유무 확인 ");
+		return dao.chkAnn(user_id);
 	}
 
+	@Override
+	public int selAnnLe(String user_id) {
+		log.info("AnnualServiceImpl selAnnLe  데이터 잔여 일수 조회 ");
+		return dao.selAnnLe(user_id);
+	}
+
+	@Override
+	public int applyAnn(Map<String, Object> map) {
+		log.info("AnnualServiceImpl applyAnn  데이터 없을경우 연차신청 ");
+		return dao.applyAnn(map);
+	}
+
+	@Override
+	public int selAvaliday(String user_id) {
+		log.info("AnnualServiceImpl selAvaliday  사용가능일수 조회 ");
+		return dao.selAvaliday(user_id);
+	}
+
+	@Override
+	public int applyUpdateAnn(String user_id) {
+		log.info("AnnualServiceImpl applyUpdateAnn  연차신정(update) ");
+		return dao.applyUpdateAnn(user_id);
+	}
 	
 
 }

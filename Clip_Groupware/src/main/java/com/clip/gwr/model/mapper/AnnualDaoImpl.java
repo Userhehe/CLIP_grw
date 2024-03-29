@@ -14,69 +14,90 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 public class AnnualDaoImpl implements IAnnualDao {
-
+	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	private final String NS = "com.clip.gwr.model.mapper.AnnualDaoImpl.";
 	
+	
+	
 	@Override
-	public int insertAnnual(Map<String, Object> map) {
-		log.info("AnnualDaoImpl insertAnnual 연차등록");
-		return sqlSession.insert(NS+"insertAnnual",map);
+	public int insertAnn(Map<String, Object> map) {
+		log.info("##### 연차등록 (사원 등록시) insertAnn #####");
+		return sqlSession.insert(NS+"insertAnn",map);
 	}
 
 	@Override
-	public int insertAnnualup(Map<String, Object> map) {
-		log.info("AnnualDaoImpl insertAnnual 발생연차 합산  ");
-		return sqlSession.update(NS+"insertAnnualup" , map);
+	public int insertAnnualUp(String user_id) {
+		log.info("##### 1달마다 연차 등록  insertAnnualUp #####");
+		return sqlSession.update(NS+"insertAnnualUp",user_id);
 	}
 
 	@Override
-	public List<AnnualVo> selAnnual() {
-		log.info("AnnualDaoImpl selAnnual 연차 전체 조회");
-		return sqlSession.selectList(NS);
+	public List<AnnualVo> annAll() {
+		log.info("##### 연차전체조회 annAll #####");
+		return sqlSession.selectList(NS+"annAll");
 	}
 
 	@Override
-	public AnnualVo detailAnnual(String user_id) {
-		log.info("AnnualDaoImpl selAnnual 연차 상세 조회");
-		return sqlSession.selectOne(NS+"detailAnnual",user_id);
+	public AnnualVo detailAnn(String user_id) {
+		log.info("##### 연차상세조회 annAll #####");
+		return sqlSession.selectOne(NS+"detailAnn",user_id);
 	}
 
 	@Override
-	public int updateAnnual(Map<String, Object> map) {
-		log.info("AnnualDaoImpl selAnnual 연차 수정");
-		return sqlSession.update(NS+"updateAnnual",map);
+	public int updateAnn(String user_id) {
+		log.info("##### 연차 수정 updateAnn #####");
+		return sqlSession.update(NS+"updateAnn",user_id);
 	}
 
 	@Override
-	public int resetAnnual(Map<String, Object> map) {
-		log.info("AnnualDaoImpl resetAnnual 연차 초기화");
-		return sqlSession.update(NS+"resetAnnual",map);
+	public int resetAnn(Map<String, Object> map) {
+		log.info("##### 1년마다 연차 초기화  resetAnn #####");
+		return sqlSession.update(NS+"resetAnn",map);
 	}
 
 	@Override
-	public int annUse(Map<String, Object> map) {
-		log.info("AnnualDaoImpl annUse 연차 신청");
-		return sqlSession.insert(NS+"annUse",map);
+	public int resetAnnualUse(Map<String, Object> map) {
+		log.info("##### 1년마다 사용 연차 초기화  resetAnnualUse #####");
+		return sqlSession.update(NS+"resetAnnualUse",map);
 	}
-
-	@Override
-	public int annUseUpdate(Map<String, Object> map) {
-		log.info("AnnualDaoImpl annUseUpdate  사용량 업데이트");
-		return sqlSession.update(NS+"annUseUpdate",map);
-	}
-
-	@Override
-	public int annLeovUpdate(String user_id) {
-		log.info("AnnualDaoImpl annLeovUpdate  잔여연차 업데이트");
-		return sqlSession.update(NS+"annLeovUpdate",user_id);
-	}
-
+	
 	@Override
 	public List<AnnualVo> searchAnnual(Map<String, Object> map) {
-		log.info("AnnualDaoImpl searchAnnual  연차검색");
+		log.info("##### 연차검색 searchAnnual #####");
 		return sqlSession.selectList(NS+"searchAnnual",map);
 	}
 
+	@Override
+	public int chkAnn(String user_id) {
+		log.info("##### 연차 데이터 존재 유무 확인 chkAnn #####");
+		return sqlSession.selectOne(NS+"chkAnn",user_id);
+	}
+
+	@Override
+	public int selAnnLe(String user_id) {
+		log.info("##### 데이터 잔여 일수 조회 selAnnLe #####");
+		return sqlSession.selectOne(NS+"selAnnLe",user_id);
+	}
+
+	@Override
+	public int applyAnn(Map<String, Object> map) {
+		log.info("##### 데이터 없을경우 연차신청 applyAnn #####");
+		return sqlSession.insert(NS+"applyAnn",map);
+	}
+
+	@Override
+	public int selAvaliday(String user_id) {
+		log.info("##### 사용가능일수 조회 selAvaliday #####");
+		return sqlSession.selectOne(NS+"selAvaliday",user_id);
+	}
+
+	@Override
+	public int applyUpdateAnn(String user_id) {
+		log.info("##### 연차신정(update) applyUpdateAnn #####");
+		return sqlSession.update(NS+"applyUpdateAnn",user_id);
+	}
+
+		
 }

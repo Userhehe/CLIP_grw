@@ -2,79 +2,106 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.gwr.model.mapper.AnnualDaoImpl">
 
-  <insert id="insertAnnual" parameterType="java.util.Map">
-  INSERT INTO ANNUAL_CT (ANNCT_SEQ, USER_ID, ANNCT_DAY, ANNCT_DATE)
-   VALUES (('ANNCT_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL),#{user_id},
-    ROUND(15 / 12 * (12 - TO_NUMBER(TO_CHAR(SYSTIMESTAMP, 'MM'))), 0),SYSTIMESTAMP)
+  <insert id="insertAnn" parameterType="java.util.Map">
+   INSERT INTO ANNUAL_CT
+	(ANN_SEQ, USER_ID, ANN_DAY, ANN_DATE, ANN_LEOV)
+	VALUES(('ANN_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL)), #{user_id}, 0,SYSDATE, 0)
   </insert>
   
   <update id="insertAnnualup" parameterType="java.util.Map">
-    UPDATE ANNUAL
-    SET ANNUAL_CT = ANNUAL_CT + (
-        SELECT NVL(ANNCT_DAY, 0)
-        FROM ANNUAL_CT
-        WHERE ANNCT_SEQ = #{annct_seq}
-    )
-    WHERE USER_ID = #{user_id}
+	 UPDATE ANNUAL_CT
+	SET ANN_DAY=1, ANN_DATE=SYSDATE , ANN_LEOV = (SELECT ANN_DAY FROM  ANNUAL_CT WHERE USER_ID =#{user_id}) +1
+	WHERE USER_ID=#{user_id}
 	</update>
 
-	<select id="selAnnual" resultType="com.clip.gwr.vo.AnnualVo">
-	SELECT u.USER_ID, u.USER_NAME, a.ANNUAL_CT, a.ANNUAL_USE ,a.ANNUAL_LEOV
-	FROM USERINFO u 
-	JOIN ANNUAL a 
-	ON u.USER_ID = a.USER_ID;
+	<select id="annAll" resultType="com.clip.gwr.vo.AnnualVo">
+	SELECT ac.USER_ID, u.USER_NAME, (ac.ANN_LEOV - au.ANNUSE_DAY) AS ANN_LEOV
+	FROM ANNUAL_CT ac
+	JOIN ANNUAL_USE au ON ac.USER_ID = au.USER_ID
+	JOIN USERINFO u ON ac.USER_ID = u.USER_ID
 	</select>
 	
-	<select id="detailAnnual" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualVo">
-	SELECT u.USER_ID, u.USER_NAME, a.ANNUAL_CT, a.ANNUAL_USE ,a.ANNUAL_LEOV
-	FROM USERINFO u 
-	JOIN ANNUAL a 
-	ON u.USER_ID = a.USER_ID
-	WHERE U.USER_ID = #{user_id}
+	<select id="detailAnn" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualVo">
+	SELECT ac.USER_ID , u.USER_NAME , (ac.ANN_LEOV-au.ANNUSE_DAY) AS ANN_LEOV
+        FROM ANNUAL_CT ac JOIN ANNUAL_USE au 
+        ON ac.USER_ID  = au.USER_ID 
+        JOIN USERINFO u 
+        ON ac.USER_ID = u.USER_ID
+        WHERE ac.USER_ID =#{user_id}
 	</select>
 	
-	<update id="updateAnnual" parameterType="java.util.Map">
-	UPDATE ANNUAL
-	SET ANNUAL_CT = #{annual_ct} 
+	<update id="updateAnn" parameterType="java.lang.String" >
+	UPDATE ANNUAL_CT
+	SET ANN_DAY = #{ann_day}, 
+    ANN_LEOV = ANN_LEOV + #{ann_day} 
 	WHERE USER_ID = #{user_id}
 	</update>
 
      
-     <update id="resetAnnual" parameterType="java.util.Map">
-		 UPDATE ANNUAL
-	SET ANNUAL_CT = 15,
-	    ANNUAL_USE = 0,
-	    ANNUAL_LEOV = 0
-	WHERE USER_ID IN (SELECT USER_ID FROM ANNUAL)
-	  AND TO_CHAR(SYSDATE, 'MMDD') = '0101'    
-     </update>
+     <update id="resetAnn" parameterType="java.util.Map">
+     <![CDATA[
+        UPDATE ANNUAL_CT
+        SET ANN_DAY = 15, ANN_DATE = SYSDATE, ANN_LEOV = 15 
+        WHERE USER_ID IN (
+            SELECT USER_ID
+            FROM USERINFO
+            WHERE USER_REGDATE <= TRUNC(SYSDATE) - INTERVAL '1' YEAR)
+      ]]>
+	</update>
+	
+	<update id="resetAnnualUse"  parameterType="java.util.Map">
+	<![CDATA[
+	UPDATE ANNUAL_USE
+	SET ANNUSE_DAY = 0
+	WHERE USER_ID IN (
+	    SELECT USER_ID
+	    FROM USERINFO
+	    WHERE USER_REGDATE <= TRUNC(SYSDATE) - INTERVAL '1' YEAR)
+	]]>
+	</update>
      
-     <insert id="annUse" parameterType="java.util.Map" >
-      INSERT INTO CLIP.ANNUAL_USE (ANNUSE_SEQ, USER_ID, ANNUSE_STARTDATE, ANNUSE_ENDDATE, ANNUSE_DAY, ANNUSE_DATE)
-    VALUES ('ANNUALUSE_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL), #{user_id}, #{annuse_startdate}, #{annuse_enddate}, #{annuse_day}, TRUNC(SYSDATE))
-     </insert>
+     <select id="chkAnn" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualUseVo">
+     SELECT COUNT(*)
+	 FROM ANNUAL_USE 
+	 WHERE USER_ID =#{user_id}
+     </select>
      
-     <update id="annUseUpdate" parameterType="java.util.Map">
-     UPDATE CLIP.ANNUAL ANNUAL
-	SET ANNUAL.ANNUAL_USE = ANNUAL.ANNUAL_USE + 
-                        (SELECT ANNUSE_DAY
-                         FROM CLIP.ANNUAL_USE
-                         WHERE ANNUSE_SEQ = #{annuse_seq})
-	WHERE ANNUAL.USER_ID =  #{user_id}
-     </update>
+    <select id="selAnnLe" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualVo">
+    SELECT ANN_LEOV 
+	FROM ANNUAL_CT 
+	WHERE USER_ID = #{user_id}
+    </select>
      
-     <update id="annLeovUpdate" parameterType="java.lang.String">
-        UPDATE CLIP.ANNUAL
-		SET ANNUAL_LEOV = ANNUAL_CT - ANNUAL_USE
-		WHERE USER_ID = #{user_id}
-      
+    <insert id="applyAnn" parameterType="java.util.Map">
+    INSERT INTO ANNUAL_USE
+	(ANNUSE_SEQ, USER_ID, ANNUSE_STARTDATE, ANNUSE_ENDDATE, ANNUSE_DAY, ANNUSE_DATE)
+	VALUES(('ANNUSE_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL)),#{user_id},#{annuse_startdate},#{annuse_enddate},#{annuse_day},SYSDATE)
+    </insert>
+     
+     <select id="selAvaliday" resultType="com.clip.gwr.vo.AnnualVo">
+     SELECT (ac.ANN_LEOV-au.ANNUSE_DAY) AS 사용가능일수
+	 FROM ANNUAL_CT ac LEFT JOIN ANNUAL_USE au 
+	 ON ac.USER_ID =au.USER_ID 
+	 WHERE ac.USER_ID =#{user_id}
+     </select>
+     
+     <update id="applyUpdateAnn" parameterType="java.lang.String">
+     UPDATE ANNUAL_USE
+	 SET USER_ID=#{user_id}, ANNUSE_STARTDATE=#{annuse_startdate}, ANNUSE_ENDDATE=#{annuse_enddate}, 
+	 ANNUSE_DAY=(SELECT ANNUSE_DAY FROM ANNUAL_USE WHERE USER_ID =#{user_id})+1, ANNUSE_DATE=SYSDATE 
+	 WHERE USER_ID =#{user_id}
      </update>
      
      <select id="searchAnnual" parameterType="java.util.Map" resultType="com.clip.gwr.vo.AnnualVo">
-    SELECT u.USER_ID, a.ANNUAL_CT, a.ANNUAL_LEOV, a.ANNUAL_USE
-	FROM  CLIP.USERINFO u
-	JOIN  CLIP.ANNUAL a ON u.USER_ID = a.USER_ID
-	WHERE  
+	    SELECT u.USER_ID, u.USER_NAME, d.DEPT_NAME,
+	    p.POSITIONS_NAME,r.RANKS_NAME,(ac.ANN_LEOV - NVL(au.ANNUSE_DAY, 0)) AS 사용가능한_연차
+		FROM USERINFO u
+		JOIN ANNUAL_CT ac ON u.USER_ID = ac.USER_ID
+		JOIN DEPT d ON u.DEPT_SEQ = d.DEPT_SEQ
+		JOIN POSITIONS p ON u.POSITIONS_SEQ = p.POSITIONS_SEQ
+		JOIN RANKS r ON u.RANKS_SEQ = r.RANKS_SEQ
+		LEFT JOIN ANNUAL_USE au ON u.USER_ID = au.USER_ID
+		WHERE 
 	<if test="user_name != null and user_name != ''">
 			 u.USER_NAME LIKE '%' || #{user_name} || '%'
 		</if>
