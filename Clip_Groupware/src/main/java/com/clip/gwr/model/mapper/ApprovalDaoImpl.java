@@ -1,5 +1,6 @@
 package com.clip.gwr.model.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class ApprovalDaoImpl implements IApprovalDao {
 	// 내가/내팀이 참조된 결재내역 전체 조회
 	@Override
 	public List<ApprovalVo> selectReferApproval(String user_id) {
-		log.info("ApprovalDaoImpl selectReferApproval 내팀/내가 참조된 결재리스트 조회");
+		log.info("ApprovalDaoImpl selectReferApproval 내팀/내가 참조된 결재리스트 조회:{} ",user_id);
 		return sqlSession.selectList(NS+"selectReferApproval",user_id);
 	}
 

@@ -23,7 +23,7 @@
 						<div class="col-12">
 							<div class="card recent-sales overflow-auto">
 								<div class="card-body">
-									<h5 class="card-title">전자결재 <span>| E-work</span></h5>
+									<h5 class="card-title">일정관리 <span>| schedule</span></h5>
 										</div>
 									</div>
 								</div>
@@ -45,9 +45,10 @@
 <!-- ======= START schedule CARD ======= -->
 					<div class="card">
 						<div class="card-body">
-							<h5 class="card-title">일정관리 <span>| schedule</span></h5>
-							<div class="activity">
+							<h5 class="card-title">전자결재 <span>| E-work</span></h5>
+							<div class="activity" style="display: inline-block;">
 								<div class="activity-item d-flex">
+									
 								</div>
 							</div>
 						</div>

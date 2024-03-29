@@ -24,8 +24,19 @@ public class ApprovalVo {
 	private String app_draft;
 	private String app_strdate;
 	private String app_enddate;
+	private String dept_seq;
 	
+	private String user_id;
 	private String gian_name;
 	
-//	private PaylineVo app_Payline;
+	private String pay_user;
+	private String pay_sign;
+	private String pay_num;
+	private String pay_paydate;
+
+	private String ref_user;
+	private String ref_team;
+
+	private String rec_user;
+	private String rec_team;
 }

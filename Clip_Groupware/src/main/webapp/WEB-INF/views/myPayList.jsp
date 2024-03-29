@@ -36,7 +36,8 @@
 								<th>제목</th>
 								<th>양식 종류</th>
 								<th>작성일</th>
-								<th>결재현황</th>
+								<th>결재진행</th>
+								<th>결재상태</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -46,6 +47,7 @@
 									<td>${vo.app_title}</td>
 									<td>${vo.gian_seq}</td>
 									<td>${vo.app_createdate}</td>
+									<td>${vo.pay_num}</td>
 									<td>${vo.app_draft}</td>
 								</tr>
 							</c:forEach>
@@ -54,6 +56,7 @@
 							<tr>
 								<td></td>
 								<td><div id="noDataMessage" style="color: red; text-align: center;"></div></td>
+								<td></td>
 								<td></td>
 								<td></td>
 								<td></td>
