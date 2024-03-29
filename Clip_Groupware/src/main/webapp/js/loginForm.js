@@ -122,6 +122,7 @@ function startTimer() {
 
 // 인증번호 재요청
 function certnumRequest() {
+	
 	document.getElementById('id').disabled = false;
 	document.getElementById('id').value = "";
 	document.getElementById('sendCertnumBtn').disabled = false;

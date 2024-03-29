@@ -4,6 +4,10 @@ body {
 	font-family: Arial, sans-serif; /* 폰트 지정 */
 }
 
+select {
+	height: 36px;
+}
+
 .container {
 	margin: 0 auto;
 	margin-top: 77px;
@@ -48,6 +52,10 @@ body {
 	width: 345px;
 }
 
+.w297px {
+	width: 297px;
+}
+
 .w661_5px {
 	width: 661.5px;
 }
@@ -65,10 +73,6 @@ body {
 	position: relative;
 	margin-bottom: 20px auto; /* 위쪽으로 10px, 아래쪽으로 마진 없음 */
 	margin-top: 250px;
-}
-
-select {
-	height: 36px;
 }
 
 .input-field {
@@ -134,4 +138,11 @@ select {
 
 .links a:hover {
     text-decoration: none; /* 호버 시 밑줄 제거 */
+}
+
+#mail-check {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: -15px;
+	margin-bottom: 20px;
 }
