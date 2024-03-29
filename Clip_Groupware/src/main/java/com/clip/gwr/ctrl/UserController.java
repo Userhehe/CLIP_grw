@@ -161,7 +161,6 @@ public class UserController {
 			model.addAttribute("ranksLists", ranksLists);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "userInfo";
 		}
 		return "userInfo";
 	}
@@ -191,32 +190,9 @@ public class UserController {
 			model.addAttribute("ranksLists", ranksLists);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "/user/signUp";
 		}
 		return "/user/signUp";
 	}
-	
-//	@PostMapping(value = "/updatePasswordForm.do")
-//	public ResponseEntity<String> updatePassword(UserVo vo, HttpServletRequest request, HttpServletResponse response){
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		HttpHeaders headers = new HttpHeaders();
-//        headers.set("Content-Type", "text/html; charset=UTF-8");
-//        String id = request.getParameter("id");
-//		log.info("####아이디 값 : " + id);
-//		String password = request.getParameter("password");
-//		password = passwordEncoder.encode(password);
-//		log.info("####비밀번호 값 : " + password);
-//		map.put("password", password);
-//		map.put("user_id", id);
-//		try {
-//			int updateUser =  userService.updateUserPassword(map);
-//			log.info("####updateUser : " + updateUser);
-//			return new ResponseEntity<>("비밀번호가 변경되었습니다.", headers, HttpStatus.OK);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return new ResponseEntity<>("비밀번호가 변경되지않았습니다.", headers, HttpStatus.OK);
-//		}
-//	}
 	
 	@GetMapping(value = "/searchUserList.do")
 	public String searchUserList(HttpServletRequest request, Model model) {
@@ -254,7 +230,6 @@ public class UserController {
 			model.addAttribute("userList",userList);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "userInfo";
 		}
 		return "userInfo";
 	}
@@ -273,10 +248,10 @@ public class UserController {
 	
 	@GetMapping(value = "/userInfoUpdate.do")
 	public String userInfoUpdate(HttpServletRequest request, Model model) {
-		String user_seq = request.getParameter("user_seq");
-		log.info("####user_seq : " + user_seq);
+		String user_id = request.getParameter("user_seq");
+		log.info("####user_seq : " + user_id);
 		
-		List<UserinfoVo> userDetailList = userService.selectUserinfoDetail(user_seq);
+		List<UserinfoVo> userDetailList = userService.selectUserinfoDetail(user_id);
 		log.info("####userDetailList : " + userDetailList);
 		List<DeptVo> deptLists = deptService.deptAll();
 		List<PositionsVo> positionsLists = positService.positionsAll();
@@ -288,4 +263,64 @@ public class UserController {
 		model.addAttribute("ranksLists", ranksLists);
 		return "userInfoUpdate";
 	}
+	
+	@PostMapping(value = "/userInfoUpdateData.do")
+	public void userInfoUpdateData(HttpServletRequest request, HttpServletResponse response) {
+		String user_id = request.getParameter("user_id");
+		String user_name = request.getParameter("user_name");
+		String user_registnum = request.getParameter("user_start_registnum") + "-"
+								+ request.getParameter("user_last_registnum");
+		String user_email = request.getParameter("user_email") + "@" + request.getParameter("email");
+		
+		String user_birthday = request.getParameter("user_birthday");
+		String user_phonenum = request.getParameter("phone_firstnum") + "-" 
+							+ request.getParameter("phone_secondnum") + "-"
+							+ request.getParameter("phone_lastnum");
+		String user_address = request.getParameter("user_address");
+		String dept_name = request.getParameter("dept_name");
+		String ranks_name = request.getParameter("ranks_name");
+		String positions_name = request.getParameter("positions_name");
+		String user_auth = request.getParameter("user_auth");
+		String user_status = request.getParameter("user_status");
+		
+		log.info("#### user_id : " + user_id);
+		log.info("#### user_name : " + user_name);
+		log.info("#### user_registnum : " + user_registnum);
+		log.info("#### user_email : " + user_email);
+		log.info("#### user_birthday : " + user_birthday);
+		log.info("#### user_phonenum : " + user_phonenum);
+		log.info("#### user_address : " + user_address);
+		log.info("#### dept_name: " + dept_name);
+		log.info("#### ranks_name : " + ranks_name);
+		log.info("#### positions_name : " + positions_name);
+		log.info("#### user_auth : " + user_auth);
+		log.info("#### user_status : " + user_status);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("user_name", user_name);
+		map.put("user_registnum", user_registnum);
+		map.put("user_email", user_email);
+		map.put("user_birthday", user_birthday);
+		map.put("user_phonenum", user_phonenum);
+		map.put("user_address", user_address);
+		map.put("dept_name", dept_name);
+		map.put("ranks_name", ranks_name);
+		map.put("positions_name", positions_name);
+		map.put("user_auth", user_auth);
+		map.put("user_status", user_status);
+		try {
+			int updateUserInfo = userService.updateUserinfo(map);
+			log.info("####updateUserInfo : " + updateUserInfo);
+			response.sendRedirect("./userInfoUpdate.do?user_seq="+user_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+//	@PostMapping(value = "/emailCheck.do")
+//	public int emailCheck(HttpServletRequest request) {
+//		
+//		return 1;
+//	}
 }

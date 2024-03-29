@@ -9,13 +9,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>회원정보등록</title>
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 <%@ include file="./header.jsp"%>
 <link href="./assets/css/signUp.css" rel="stylesheet">
 </head>
 <body>
+<div class="modal fade" id="verticalycentered" tabindex="-1" aria-hidden="true" role="dialog">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title">Vertically Centered</h5>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         떠라
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+         <button type="button" class="btn btn-primary">Save changes</button>
+       </div>
+     </div>
+   </div>
+ </div>
 	<main id="main" class="main">
 		<div class="container" style="margin: 0;">
 			<div class="card-body w661_5px">
@@ -48,6 +62,9 @@
 								<option value="input_email">직접 입력</option>
 							</select>
 						</div>
+					</div>
+					<div id="mail-check">
+						<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#verticalycentered">이메일 중복체크</button>
 					</div>
 					<div class="row mb-3">
 						<label for="user_birthday" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>생년월일</label>

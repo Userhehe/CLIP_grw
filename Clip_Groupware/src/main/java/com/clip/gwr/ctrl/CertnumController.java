@@ -18,7 +18,6 @@
 //import org.springframework.web.bind.annotation.PostMapping;
 //import org.springframework.web.bind.annotation.RestController;
 //
-//import com.clip.gwr.conf.RedisKeyExpirationScheduler;
 //import com.clip.gwr.model.service.IUserService;
 //import com.clip.gwr.vo.UserVo;
 //
@@ -80,6 +79,7 @@
 //	        return 0;
 //	    }
 //	}
+//	
 //	@PostMapping(value = "/checkCertnum.do")
 //	public int compareCertNum(int certnum, String id){
 //        String key = "certnum_" + id;

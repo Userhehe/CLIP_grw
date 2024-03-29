@@ -72,17 +72,12 @@
 			TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD'))
 	</insert>
 	
-	<!-- 이메일&연락처 중복체크 -->
+	<!-- 이메일 중복체크 -->
 	<select id="duplicateCheckUserinfo" parameterType="java.util.Map" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 			FROM USERINFO u
 		WHERE USER_STATUS = 'Y' 
-		<if test="user_email != null">
-			AND USER_EMAIL = #{user_email}
-		</if>
-		<if test="user_phonenum != null">
-			AND USER_PHONENUM = #{user_phonenum}
-		</if>
+		AND USER_EMAIL = #{user_email}
 	</select>
 	
 	<!-- 사원목록 전체조회 -->
