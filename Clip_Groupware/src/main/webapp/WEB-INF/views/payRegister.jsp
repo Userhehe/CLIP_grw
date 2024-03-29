@@ -57,9 +57,10 @@
 		<div class="container">
 		<section class="section dashboard">
 			<div style="display: none">
-				<input type="text" disabled="disabled" name="user_name" value="${loginVo.user_name}">
-				<input type="text" disabled="disabled" name="dept_name" value="${loginVo.dept_name}">
-				<input type="text" disabled="disabled" name="ranks_name" value="${loginVo.ranks_name}">
+				<input type="text" disabled="disabled" id="session_user_name" value="${loginVo.user_name}">
+				<input type="text" disabled="disabled" id="session_dept_name" value="${loginVo.dept_name}">
+				<input type="text" disabled="disabled" id="session_ranks_name" value="${loginVo.ranks_name}">
+				<input type="text" disabled="disabled" id="session_user_id" value="${loginVo.user_id}">
 			</div>
 			<h5 class="card-title">${user_name}님 결재신청하실 기안서를 선택해주세요.</h5>
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -117,12 +118,28 @@
 		            		
 		            	</div>	
 		            	
-<!-- 		            	<div class="row mb-3" style="margin-top: 10px"> -->
-<!-- 		                  <label for="vaReason" class="col-sm-1 col-form-label">신청 사유</label> -->
-<!-- 		                  <div class="col-sm-11"> -->
-<!-- 		                    <textarea class="form-control" style="height: 100px; width: 100%" id="vaReason"></textarea> -->
-<!-- 		                  </div> -->
-<!-- 		                </div> -->
+		            	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
+              				 미리보기
+		              	</button>
+		            	<div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
+			                <div class="modal-dialog modal-xl" id="req_preview1">
+			                  <div class="modal-content">
+			                    <div class="modal-header">
+			                      <h5 class="modal-title">기안서 양식</h5>
+			                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			                    </div>
+			                    <div class="modal-body">
+									${vo1.gian_html}
+			                    </div>
+			                    <div class="modal-footer">
+			                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			                      <button type="button" class="btn btn-primary">결재 요청</button>
+			                    </div>
+			                  </div>
+			                </div>
+			              </div>
+		              
+		              
 		            					 
 					</div>
 					
@@ -131,12 +148,11 @@
 					<div class="form-group" style="margin-top:10px;">
 						<label for="reason">결재 양식</label>
 						<textarea name="gian_html" id="smartEditor1"
-							style="width: 100%; height: 600px;" disabled="disabled">${vo1.gian_html}</textarea>
+							style="width: 100%; height: auto;" disabled="disabled"></textarea>
 						<br> <br> <br>
 					</div>
 					<div style="text-align: center;">
-						<button id="sunbmitReq" class="btn btn-primary rounded-pill">미리보기/결재요청</button>
-<!-- 						<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal"> -->
+						<button id="sunbmitReq" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#reqPayment">미리보기/결재요청</button>
 						<button type="submit" id="tempSave"
 							class="btn btn-secondary rounded-pill">임시저장</button>
 					</div>
@@ -266,36 +282,7 @@
             
             
             
-            
-            <!-- 결재 신청 미리보기 -->
-			<div class="modal fade" id="reqPayment" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
-            
-            	<div class="modal-dialog modal-lg">
-            	
-            		<div class="modal-content">
-            		<form>
-		            	<div class="modal-header">
-			                <h4 class="modal-title" id="app"></h4>
-			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			               
-		                </div>
-		                <div class="modal-body row" id="gian_preview">
-			               
-			               
-		                	<hr>
-	                    </div>
-	                    <div class=modal-footer>
-	                      <button type="submit" class="btn btn-warning" >결재요청</button>
-	                      <a type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</a>
-	                    </div>
-	                    
-	                    </form>
-	                    
-                    </div>
-                    
-            	</div>
-            
-            </div>
+         
 			
 		</div>
 	</main>

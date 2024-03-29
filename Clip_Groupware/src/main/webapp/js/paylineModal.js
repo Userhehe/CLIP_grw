@@ -21,7 +21,7 @@ $(document).ready(function() {
 		
 		var payseq = ['first','second','third'];
 		
-		if(pick_length <= 3 && pick_length > 0){
+		if(pick_length > 0){
 			let html = `<label class="badge bg-warning" >결재라인</label>
 						<br/>
 						<table class="table table-bordered" style="display: inline-block; vertical-align: middle;">
@@ -50,10 +50,7 @@ $(document).ready(function() {
 				
 				document.getElementById('selectedPayLine').innerHTML = html;
 			} 
-			if(pick_length>3){
-				alert('결재인은 3명까지 지정할 수 있습니다!');
-				return;
-			}
+			
 			if(pick_length <= 0){
 				document.getElementById('selectedPayLine').innerHTML = '';
 			}
