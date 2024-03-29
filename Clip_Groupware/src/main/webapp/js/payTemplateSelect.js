@@ -18,23 +18,47 @@ function half(value) {
 }
 
 
+
+
+
 window.onload = function(){
-	function submitReq(){
+	//세션에 저장된  값
+	var name = document.getElementById("session_user_name").value;
+	var rank = document.getElementById("session_ranks_name").value;
+	var dept = document.getElementById("session_dept_name").value;
+	var userId = document.getElementById("session_user_id").value; 
+	
+	console.log(name,dept,rank, userId);
+	
+	var htmlmodal = document.getElementById("req_preview1");
+	console.log(htmlmodal);
+	
+	var deptSpace = htmlmodal.getElementsByClassName('approval_user_dept')[0];
+	var nameSpace = htmlmodal.getElementsByClassName('approval_user_name')[0];
+	var reqUserNameSpace = htmlmodal.getElementsByClassName('create_user_name')[0]
+	var rankSpace = htmlmodal.getElementsByClassName('approval_user_rank')[0];
+	var vaOptSpace = htmlmodal.getElementsByClassName('approval_va_opt')[0];
+	var strDateSpace = htmlmodal.getElementsByClassName('vac_start_date')[0];
+	var endDateSpace = htmlmodal.getElementsByClassName('vac_end_date')[0];
+	var contentSpace = htmlmodal.getElementsByClassName('approval_content')[0];
+	var todaySpace = htmlmodal.getElementsByClassName('approval_create_date')[0];
+	
+	//세션에 존재하는 값은 미리 로드
+	deptSpace.textContent = dept;
+	nameSpace.textContent = name;
+	reqUserNameSpace.textContent = name;
+	rankSpace.textContent = rank;
 	
 	
-	var textarea = document.querySelector('#smartEditor1');
-
-	var textarea2 = $('#smartEditor1');
-
-//	var deptarea = textarea.getElementsByClassName('approval_user_dept')[0];
-//	var namearea = textarea.getElementsByClassName('approval_user_name')[0];
-//	var rankarea = textarea.getElementsByClassName('approval_user_rank')[0];
 	
-	console.log(textarea,textarea2);
 	
-	}
 	
-	document.getElementById('sunbmitReq').addEventListener('click', submitReq);
+	
+	
+	
+	
 }
+
+
 
 
