@@ -93,15 +93,17 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 								<input type="text"	class="form-control" readonly="readonly" ondblclick="return false" id="re_start" name="re_start" placeholder="날짜선택">
 								</span> 
 								<span class="input-group-btn" style="margin-left: 20px;">
-									<button class="btn btn-secondary" type="button" onclick="selPDate()">예약 가능 시간 선택</button>
+									<button class="btn btn-secondary" type="button" onclick="selPDate()">날짜 선택 완료</button>
 								</span>
 							</div>
 
 							<div id="nawarayo" style="display: none">
 								<label for="re_start_time" class="col-form-label">예약 시간을 선택해주세요.(종료시간 = 시작시간 + 1시간)</label>
 								<div class="input-group">
-									<span class="input-group-addon"> <input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="re_start_time">
-									</span> <span class="input-group-btn" style="margin-left: 20px;">
+									<span class="input-group-addon"> 
+										<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="re_start_time">
+									</span> 
+									<span class="input-group-btn" style="margin-left: 20px;">
 										<input class="btn btn-secondary" type="button" value="예약 시간 선택 완료" onclick="reservationTime()">
 									</span>
 								</div>
@@ -125,7 +127,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 
 				<!-- 예약 추가 모달 끝 -->
 					
-				<!-- 참가인원 설정 모달 -->
+				<!-- 참가인원 설정 모달 (jstree사용) -->
 					<div class="modal fade" id="reAttModal" tabindex="-1"	role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
@@ -159,6 +161,50 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 					</div>
 				<!-- 참가인원 설정 모달 끝 -->
 				
+		<!-- 결재라인 모달 영역 -->
+		<div class="modal fade" id="paylinemodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
+            
+            	<div class="modal-dialog modal-lg">
+            	
+            		<div class="modal-content">
+		            	<div class="modal-header">
+			                <h4 class="modal-title">결재라인 지정</h4>
+			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			               
+		                </div>
+		                <div class="modal-body row">
+			                <div class="col-lg-6">
+			                	<div class="select_payline_area col-lg-12">
+			                		<div id="search_box">
+										<input id="search_input" type="text" placeholder="사원 검색">
+									</div>
+									<hr/>
+									
+									<div id="payLine_box"></div>
+			                	</div>
+			                </div>
+			                
+			                <div class="col-lg-6">
+			                	<div class="select_payline_area col-lg-12" style="height: 100%">
+			                		<div id="pickLine_box">
+			                		<h4>지정된 결재인</h4>
+			                		<hr/>
+			                		</div>
+			                	</div>
+		                	</div>
+		                	
+		                	<hr>
+	                    </div>
+	                    <div class=modal-footer>
+	                      <button type="button" class="btn btn-warning" id="applyPayLine">결재라인 지정확인</button>
+	                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
+	                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+	                    </div>
+                    </div>
+                    
+            	</div>
+            
+            </div>				
 				
 				
 				
@@ -166,7 +212,8 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 	<main id="main" class="main">
 		<div class="container">
 			<div class="row">
-				<button class="btn btn-secondary" id="reservationModalButton" onclick="reservationModal()">예약하기</button>
+				<button class="btn btn-secondary" id="reservationModalButton" onclick="reservationModal()" > 예약하기 </button>
+				<button class="btn btn-secondary" id="reservationModalButton" onclick="tlqkf()" > 참석자 명단 </button>
 				<div class="card-body">
 					<div id="recalendar"></div>
 				</div>

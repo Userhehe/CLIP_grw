@@ -119,10 +119,10 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 <!-- ======= START SIDEBAR ======= -->
 	<aside id="sidebar" class="sidebar">
 		<ul class="sidebar-nav" id="sidebar-nav">
-			<li class="mainlogo">
-				<a href="./main.do" class="logo d-flex align-items-center"> <img src="assets/img/logo.png" alt=""></a>
-			</li>
-<!-- ======= START humanresource-nav ======= -->
+			<a href="./main.do" class="logo d-flex align-items-center"> 
+				<img src="assets/img/logo.png" alt="">
+			</a>
+			<!-- ======= START humanresource-nav ======= -->
 				<li class="nav-item" style="margin-top: 200px">
 				<a class="nav-link collapsed" data-bs-target="#humanresource-nav" data-bs-toggle="collapse" href="#">
 					<i class="bi bi-file-earmark-person"></i><span>인사관리</span><i class="bi bi-chevron-down ms-auto"></i>
