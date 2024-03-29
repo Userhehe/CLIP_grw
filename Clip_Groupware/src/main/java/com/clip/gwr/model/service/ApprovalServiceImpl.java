@@ -28,7 +28,7 @@ public class ApprovalServiceImpl implements IApprovalService{
 	// 내가/내팀이 참조된 결재내역 전체 조회
 	@Override
 	public List<ApprovalVo> selectReferApproval(String user_id) {
-		log.info("결재내역 getAllApproval전체조회 {}", user_id);
+		log.info("결재내역 getAllApproval전체조회 {} ", user_id);
 		return approvalDao.selectReferApproval(user_id);
 	}
 

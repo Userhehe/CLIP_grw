@@ -161,7 +161,6 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 			</a>
 				<ul id="project-Nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 					<li><a href="./projectsProgress.do"> <i class="bi bi-circle"></i><span>프로젝트 조회</span></a></li>
-					<li><a href="tables-data.html"> <i class="bi bi-circle"></i><span>프로젝트 관리</span></a></li>
 				</ul>
 			</li>
 <!-- ======= END project-nav ======= -->

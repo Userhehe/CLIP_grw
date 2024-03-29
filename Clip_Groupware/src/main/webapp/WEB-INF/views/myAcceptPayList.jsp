@@ -17,13 +17,13 @@
 		<div class="card-body">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">전체 조회</button>
+                  <button class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">전체 결재문서 조회</button>
                 </li>
                 <li class="nav-item"	 role="presentation">
-                  <button class="nav-link" id="tab2" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1">승인할 결재문서조회</button>
+                  <button class="nav-link" id="tab2" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1">승인대기중인 결재문서 조회</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">결재취소한 결재조회 </button>
+                  <button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">반려처리한 결재문서 조회</button>
                 </li>
               </ul>
               <div class="tab-content pt-2" id="myTabContent">

@@ -135,16 +135,9 @@ public class PayBoardController {
 	
 	//본인 승인시 결재승인할 경우
 	@GetMapping(value="/okPay.do")
-	public String okPay(@RequestParam("app_seq")String app_seq,HttpSession session,HttpServletResponse resp) throws IOException {
+	public String okPay(@RequestParam("app_seq")String app_seq,HttpSession session) {
 		log.info("okPay 승인자 승인해주는 경우 : {}",app_seq);
-		resp.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = resp.getWriter();
-		out.println("<script language='javascript'>");
-		out.println("alert('해당결재를 승인하시겠습니까?');");
-		out.println("alert('정상처리 되었습니다.);");
-		out.println("</script>");
-		out.flush();
-		
+
 		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 		String user_id = loginUser.getUser_id();
 		System.out.println("사용자 ID:"+user_id);
@@ -189,13 +182,18 @@ public class PayBoardController {
 		}
 		int result = service.checkApprovalLine(checkApprovalVo);
 		
-		return "redirect:/myAcceptPayList.do";
-	}
+		if (result == 1) {
+		    return "redirect:/myAcceptPayList.do";
+		} else {
+		    return "redirect:/accessError.do";
+		}
+	}	
 	
 	//본인 승인시 결재반려할 경우
 	@GetMapping(value="/rejectionPay.do")
-	public String rejectPay(@RequestParam("app_seq")String app_seq,HttpSession session) {
+	public String rejectPay(@RequestParam("app_seq")String app_seq,HttpSession session){
 		log.info("rejectPay 내가 승인하는데 싫어서 결재 반려하는 경우 : {}",app_seq);
+		
 		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 		String user_id = loginUser.getUser_id();
 		System.out.println("사용자 ID:"+user_id);
@@ -231,6 +229,7 @@ public class PayBoardController {
 			}
 		}
 		int rejectResult = service.checkApprovalLine(checkApprovalVo);
+		
 		return "redirect:/myAcceptPayList.do";
 	}
 	
@@ -239,10 +238,11 @@ public class PayBoardController {
 		log.info("myReferPayList 내가 참조된 결재리스트 내역창");
 		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 		String user_id = loginUser.getUser_id();
+		System.out.println("참조아이디:"+user_id);
 		List<ApprovalVo> lists = service.selectReferApproval(user_id);
 		model.addAttribute("lists",lists);
+		System.out.println("담겨있는 리스트 : "+lists);
 		return "myReferPayList";
 	}
-	
 	
 }

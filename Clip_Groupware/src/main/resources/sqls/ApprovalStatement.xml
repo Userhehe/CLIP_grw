@@ -5,44 +5,31 @@
 
 	<!-- 내가 요청한 결재내역 전체 조회 (세션에서 나의 사원번호 사용)-->
 	<select id="getAllApproval" resultType="ApprovalVo" parameterType="java.lang.String">
-      SELECT p.APP_SEQ , p.APP_TITLE,p.APP_CONTENT,
-		g.GIAN_NAME "GIAN_SEQ" ,APP_CREATEDATE ,APP_DRAFT
-		FROM (SELECT a.APP_SEQ ,APP_TITLE,APP_CONTENT,
-			GIAN_SEQ,TO_CHAR(APP_CREATEDATE,'YYYY/MM/DD')AS APP_CREATEDATE ,APP_DRAFT 
-		FROM APPROVAL a JOIN (SELECT APP_SEQ
-								FROM (SELECT APP_SEQ,JSON_VALUE(APP_PAYLINE, '$.writer')JT 
-											FROM APPROVAL a )
-								WHERE JT = #{user_id} ) JS
-		ON (A.APP_SEQ = JS.APP_SEQ)
-		AND A.APP_DRAFT != '임시저장') p ,GIAN g
-		WHERE P.GIAN_SEQ = g.GIAN_SEQ
-	    ORDER BY p.APP_CREATEDATE DESC
+     	SELECT 
+		    p.APP_SEQ, 
+		    p.APP_TITLE, 
+		    p.APP_CONTENT, 
+		    g.GIAN_NAME AS GIAN_SEQ,  
+		    (ROW_NUMBER() OVER(PARTITION BY p.APP_SEQ ORDER BY pl.PAY_NUM) + 1) || '차 승인' AS PAY_NUM,
+		    TO_CHAR(p.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE, 
+		    p.APP_DRAFT ,p.USER_ID
+		FROM APPROVAL p 
+		JOIN GIAN g ON g.GIAN_SEQ = p.GIAN_SEQ 
+		JOIN PAYMENTLINE pl ON p.APP_SEQ = pl.APP_SEQ
+		WHERE p.USER_ID = #{user_id}  AND p.APP_DRAFT != '임시저장'
+		ORDER BY  p.APP_CREATEDATE DESC
 	</select>
 	
 
 		<!-- 내가/내팀이 참조된 결재내역 전체 조회 (세션에서 나의 사원번호 사용)-->		
-	<select id="selectReferApproval" resultType="ApprovalVo" parameterType="java.lang.String">
-		SELECT AP.APP_SEQ, AP.APP_TITLE, G.GIAN_NAME ,
-			AP.APP_CREATEDATE, AP.APP_DRAFT
-			FROM GIAN g JOIN
-			(SELECT A.APP_SEQ, APP_TITLE, APP_CONTENT,
-					GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD HH24:MI:SS') APP_CREATEDATE, APP_DRAFT
-				FROM APPROVAL a ,(
-					SELECT APP_SEQ
-					FROM APPROVAL a ,JSON_TABLE(A.APP_PAYLINE, '$.reference[*]'
-									COLUMNS(
-										EMP VARCHAR2(2000) FORMAT JSON PATH '$.emp',
-										DEPT VARCHAR2(2000) FORMAT JSON PATH '$.team'
-									))
-							WHERE INSTR(EMP, #{user_id} ) !=0
-							OR	INSTR(DEPT, (SELECT DEPT_SEQ 
-							FROM USERINFO u 
-							WHERE USER_ID = #{user_id} )) !=0) JS
-				WHERE A.APP_SEQ = JS.APP_SEQ
-				AND A.APP_DRAFT = '결재완료') AP
-				ON (AP.GIAN_SEQ = G.GIAN_SEQ )
-				ORDER BY APP_CREATEDATE DESC
-	</select>
+		<select id="selectReferApproval" resultType="ApprovalVo" parameterType="java.lang.String">
+			SELECT a.APP_SEQ ,a.APP_TITLE , g.GIAN_NAME  AS GIAN_SEQ  ,TO_CHAR(a.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE ,a.APP_DRAFT ,r.REF_USER  ,r.REF_TEAM  
+			FROM APPROVAL a 
+			JOIN GIAN g ON a.GIAN_SEQ = g.GIAN_SEQ 
+			JOIN REFERENCE r ON a.APP_SEQ = r.APP_SEQ
+			WHERE r.REF_USER = #{user_id}
+			ORDER BY a.APP_CREATEDATE DESC
+		</select>
 	
 
 	<!-- 나의 결재승인을 받아야하는 결재 리스트조회 (세션에서 사원번호 사용) -->
@@ -172,23 +159,12 @@
 
 
 	<!-- 임시저장한 결재리스트 조회 (세션에서 나의 사원번호 사용) -->
-	
-	
 	<select id="getTempApproval" parameterType="java.lang.String" resultType="ApprovalVo">
-	
-		SELECT p.APP_SEQ, p.APP_TITLE, p.APP_CONTENT,
-	       g.GIAN_NAME "GIAN_SEQ", APP_CREATEDATE
-		FROM (SELECT a.APP_SEQ, APP_TITLE, APP_CONTENT,
-	       GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, APP_DRAFT
-		FROM APPROVAL a JOIN (SELECT APP_SEQ
-								FROM (SELECT APP_SEQ ,JSON_VALUE(APP_PAYLINE, '$.writer') JT
-											FROM APPROVAL)
-								WHERE JT = #{user_id}) JS
-		ON (A.APP_SEQ = JS.APP_SEQ)
-		AND A.APP_DRAFT = '임시저장') p ,GIAN g
-		WHERE P.GIAN_SEQ = g.GIAN_SEQ
-	    ORDER BY p.APP_CREATEDATE DESC
-	
+		SELECT p.APP_SEQ ,p.APP_TITLE ,p.APP_CONTENT ,g.GIAN_NAME  AS GIAN_SEQ ,  TO_CHAR(p.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE
+		FROM APPROVAL p
+		JOIN GIAN g ON p.GIAN_SEQ = g.GIAN_SEQ
+		WHERE p.USER_ID = #{user_id} AND p.APP_DRAFT = '임시저장'
+		ORDER BY p.APP_CREATEDATE DESC
 	</select>
 	
 	<!-- 임시저장된 결재 삭제 -->
