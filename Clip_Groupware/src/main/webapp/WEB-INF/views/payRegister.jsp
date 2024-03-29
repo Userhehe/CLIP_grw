@@ -54,6 +54,7 @@
 </head>
 <body>
 	<main id="main" class="main">
+		<div class="container">
 		<section class="section dashboard">
 			<div style="display: none">
 				<input type="text" disabled="disabled" name="user_name" value="${loginVo.user_name}">
@@ -296,7 +297,7 @@
             
             </div>
 			
-		
+		</div>
 	</main>
 </body>
 </html>
