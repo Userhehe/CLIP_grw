@@ -7,9 +7,10 @@
 	<select id="getProjectsAll" resultType="ProjectsVo">
 		SELECT CLI_NAME,
 		PRJ_NAME, PRJ_PROGRESS
-		FROM PROJECTS p ;
+		FROM PROJECTS p 
 	</select>
 
+	<!-- 프로젝트 진행도별 조회 -->
 	<select id="projectsProgressSel" resultType="ProjectsVo">
 		SELECT CLI_NAME,
 		PRJ_NAME, PRJ_PROGRESS, PRJ_STATUS, PRJ_SDATE, PRJ_DDATE
@@ -23,6 +24,13 @@
 		FROM PROJECTS p
 		WHERE PRJ_STATUS = '완료'
 	</select>
+	
+	<select id="getMemberName" resultType="ProjectMemVo">
+		SELECT u.USER_NAME 
+		FROM USERINFO u JOIN PROJECT_MEM m
+		ON u.USER_ID = m.USER_ID 
+
+	</select>
 
 	<select id="projectsClientSel" resultType="ProjectsVo">
 		SELECT PRJ_ID,
@@ -30,7 +38,7 @@
 		PRJ_MANAGER,
 		PRJ_PROGRESS
 		FROM PROJECTS
-		WHERE CLI_NAME = #{'cli_name'}
+		WHERE CLI_NAME = #{cli_name}
 	</select>
 
 	<!-- 프로젝트 기간별조회 -->
@@ -40,8 +48,23 @@
 		PRJ_MANAGER,
 		PRJ_PROGRESS
 		FROM PROJECTS
-		WHERE PRJ_SDATE = #{'prj_sdate'}
+		WHERE PRJ_SDATE = #{prj_sdate}
 	</select>
+	
+		<!-- 프로젝트 구성원 입력 -->
+	<insert id="pmeminsert" parameterType="java.util.Map">
+		INSERT INTO ATTENDS (PRJ_ID, USER_ID, RANKS_NAME, USER_NAME)
+			VALUES(
+			#{prj_id},#{user_id}, 
+			(SELECT RANKS_NAME
+					FROM RANKS r 
+					JOIN USERINFO u ON r.RANKS_SEQ =u.RANKS_SEQ 
+					WHERE u.USER_ID = #{user_id} ),
+			(SELECT USER_NAME
+					FROM USERINFO
+					WHERE USER_ID = #{user_id})	
+			)
+	</insert>
 
 
 </mapper>
