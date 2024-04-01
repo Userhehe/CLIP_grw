@@ -13,7 +13,7 @@
 	<insert id="insertDept" parameterType="java.util.Map">
 		INSERT INTO DEPT
 	        (DEPT_SEQ, DEPT_NAME, DEPT_REGDATE)
-	        VALUES('DEPT_' || TO_CHAR(USER_SEQ.NEXTVAL, 'FM000'), #{dept_name}, SYSTIMESTAMP)
+	        VALUES('DEPT_' || TO_CHAR(USER_SEQ.NEXTVAL), #{dept_name}, SYSTIMESTAMP)
 	</insert>
 	
    <!-- 부서 수정 -->

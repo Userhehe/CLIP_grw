@@ -25,6 +25,7 @@
     </style>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/dept.js"></script>
     <%@ include file="./header.jsp"%>
 </head>
 <body>
@@ -38,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <form action="./searchDept.do" method="post" onsubmit="return chsSubmit()">
+            <form action="./tree.do" method="post" onsubmit="return chsSubmit()">
                 <table class="table table-striped" style="margin-top: 10px;">
                     <thead>
                         <tr>
@@ -57,7 +58,7 @@
                                 <td>${lists.dept_regdate}</td>
                                 <td style="text-align: right;">
                                     <a href="./updateDept.do" style="margin-right: 10px;">
-                                        <button class="btn btn-info rounded-pill">수정</button>
+                                        <button class="btn btn-info rounded-pill" >수정</button>
                                     </a>
                                     <a href="./delDept.do">
                                         <button class="btn btn-danger rounded-pill">삭제</button>

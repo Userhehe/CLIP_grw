@@ -43,9 +43,9 @@ public class AnnualServiceImpl implements IAnnualService {
 	}
 
 	@Override
-	public int updateAnn(String user_id) {
+	public int updateAnn(Map<String, Object> map) {
 		log.info("AnnualServiceImpl updateAnn 연차 수정");
-		return dao.updateAnn(user_id);
+		return dao.updateAnn(map);
 	}
 
 	@Override

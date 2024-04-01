@@ -32,10 +32,8 @@ public class SignsDaoImpl implements ISignsDao {
 	}
 
 	@Override
-	//public List<SignsVo> selectPad(String userId) {
 	public SignsVo selectPad(String userId) {
-		log.info("##### 서명 조회 selectPad #####");
-		//return sqlSession.selectList(NS + "selectPad",userId);
+		log.info("##### 서명 조회 selectPad #####");		
 		return sqlSession.selectOne(NS + "selectPad",userId);
 	}
 

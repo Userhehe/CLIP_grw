@@ -56,9 +56,8 @@ public class SignsController {
 		log.info("Signature_Upload insertPad");
 		Gson signGson = new Gson();
 		Map<String, String> map = signGson.fromJson(signJson, Map.class);
-//		String user_id = map.get("user_id");
-		String user_id = "USER_004";
-		String user_name = "신정원";
+		String user_id = map.get("user_id");
+	    String user_name = map.get("user_name");
 		String signs_name = map.get("title");
 		String signs_image = map.get("data");
 		Map<String, Object> inMap = new HashMap<String, Object>();
@@ -73,7 +72,7 @@ public class SignsController {
 	@GetMapping(value = "/selectPad.do")
 	public String selectPad(HttpServletRequest request, Model model) {
 	    log.info("Signature_Upload selectPad.do");
-	    String user_id = request.getParameter("userId");
+	    String user_id = request.getParameter("user_id");
 	    String signs_seq = request.getParameter("signs_seq");
 	    
 	    log.info("###### signs_seq : " + signs_seq);

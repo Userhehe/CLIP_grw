@@ -20,7 +20,7 @@ public interface IAnnualService {
 			public AnnualVo detailAnn(String user_id);
 			
 			// 연차 수정 
-			public int updateAnn(String user_id);
+			public int updateAnn(Map<String, Object> map);
 			
 			// 1년마다 연차 초기화 
 			public int resetAnn(Map<String, Object> map);

@@ -30,5 +30,4 @@ public class AnnualVo {
 	private String ranks_name ;
 	private String dept_name ;
 	
-	
 }

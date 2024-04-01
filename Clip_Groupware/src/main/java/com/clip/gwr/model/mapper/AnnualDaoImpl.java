@@ -46,9 +46,9 @@ public class AnnualDaoImpl implements IAnnualDao {
 	}
 
 	@Override
-	public int updateAnn(String user_id) {
+	public int updateAnn(Map<String, Object> map) {
 		log.info("##### 연차 수정 updateAnn #####");
-		return sqlSession.update(NS+"updateAnn",user_id);
+		return sqlSession.update(NS+"updateAnn",map);
 	}
 
 	@Override
