@@ -33,9 +33,9 @@ public class RanksDaoImpl implements IRanksDao {
 	}
 
 	@Override
-	public int delRanks(Map<String, Object> map) {
+	public int delRanks(String ranks_seq) {
 		log.info("##### 직급삭제 delRanks #####");
-		return sqlSession.delete(NS+"delRanks",map);
+		return sqlSession.delete(NS+"delRanks",ranks_seq);
 	}
 
 	@Override

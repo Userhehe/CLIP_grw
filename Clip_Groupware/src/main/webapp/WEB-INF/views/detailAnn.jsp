@@ -27,48 +27,38 @@
 	                </tr>
 	              </thead>
 	              <tbody>
-	              	<c:forEach var='anDetailList' items="${anDetailList}" varStatus="vs">
-		                <tr>
-			                <td style="background-color: grey; color: white;">아이디</td>
-			                <td>${anDetailList.user_id}
-			                	
-			                </td>
-		                </tr>
-		                <tr>
-		                	<td style="background-color: grey; color: white;">이름</td>
-			                <td>${anDetailList.user_name}</td>
-		                </tr>
-<!-- 		                <tr> -->
-<!-- 		                	<td style="background-color: grey; color: white;">부서</td> -->
-<%-- 			                <td>${anDetailList.dept_name}</td> --%>
-<!-- 		                </tr> -->
-<!-- 		                <tr> -->
-<!-- 		                	<td style="background-color: grey; color: white;">직급</td> -->
-<%-- 			                <td>${anDetailList.ranks_name}</td> --%>
-<!-- 		                </tr> -->
-<!-- 		                <tr> -->
-<!-- 		                	<td style="background-color: grey; color: white;">직책</td> -->
-<%-- 			                <td>${anDetailList.positions_name}</td> --%>
-<!-- 		                </tr> -->
-		                  <tr>
-		                	<td style="background-color: grey; color: white;">발생 연차</td>
-			                <td>${anDetailList.annual_ct}</td>
-		                </tr>
-		                  <tr>
-		                	<td style="background-color: grey; color: white;">사용 연차</td>
-			                <td>${anDetailList.annual_use}</td>
-		                </tr>
-		                <tr>
-		                	<td style="background-color: grey; color: white;">잔여 연차</td>
-			                <td>${anDetailList.annual_leov}</td>
-		                </tr>
-		                
-	            	</c:forEach>
+	              	<c:forEach var='anDetail' items="${anDetailList}" varStatus="vs">
+				    <tr>
+				        <td style="background-color: grey; color: white;">아이디</td>
+				        <td>${anDetail.user_id}</td>
+				    </tr> 
+				    <tr>
+				        <td style="background-color: grey; color: white;">이름</td>
+				        <td>${anDetail.user_name}</td>
+				    </tr>
+				    <tr> 
+				        <td style="background-color: grey; color: white;">부서</td> 
+				        <td>${anDetail.dept_name}</td> 
+				    </tr> 
+				    <tr> 
+				        <td style="background-color: grey; color: white;">직급</td> 
+				        <td>${anDetail.ranks_name}</td> 
+				    </tr> 
+				    <tr> 
+				        <td style="background-color: grey; color: white;">직책</td> 
+				        <td>${anDetail.positions_name}</td> 
+				    </tr> 
+				    <tr>
+				        <td style="background-color: grey; color: white;">사용 가능 연차</td>
+				        <td>${anDetail.ann_leov - anDetail.ann_useday}</td>
+				    </tr>
+				</c:forEach>
+
 	          	</tbody>
               </table>
               	<div class="flex_end">
-	            	<button class="btn btn-secondary" onclick="window.location.href='./selAnnual.do'">목록</button>
-	            	<button class="btn btn-secondary ml_10" onclick="window.location.href='./userInfoUpdate.do?user_seq=${param.user_seq}'">사원정보수정</button>
+	            	<button class="btn btn-secondary" onclick="window.location.href='./annAll.do'">목록</button>
+	            	<button class="btn btn-secondary ml_10" onclick="window.location.href='./updateAnn.do?user_id=${param.user_id}'">연차수정</button>
            		</div>
         	</div>
     	</div>

@@ -12,7 +12,7 @@
 	 <insert id="insertRanks" parameterType="java.util.Map">
 	 INSERT INTO RANKS
 	(RANKS_SEQ, RANKS_NAME, RANKS_REGDATE)
-	VALUES('RANKS_' || TO_CHAR(RANKS_SEQ.NEXTVAL, 'FM000'), #{ranks_name}, SYSTIMESTAMP)
+	VALUES('RANKS_' || TO_CHAR(RANKS_SEQ.NEXTVAL), #{ranks_name}, SYSTIMESTAMP)
 	 </insert>
 	 
 	 <!-- 직급 수정 -->

@@ -9,9 +9,14 @@
   </insert>
   
   <update id="insertAnnualup" parameterType="java.util.Map">
-	 UPDATE ANNUAL_CT
-	SET ANN_DAY=1, ANN_DATE=SYSDATE , ANN_LEOV = (SELECT ANN_DAY FROM  ANNUAL_CT WHERE USER_ID =#{user_id}) +1
-	WHERE USER_ID=#{user_id}
+  <![CDATA[
+	UPDATE ANNUAL_CT
+	SET ANN_DAY = 1,
+    ANN_DATE = SYSDATE,
+    ANN_LEOV = (SELECT ANN_DAY FROM ANNUAL_CT WHERE USER_ID = #{user_id}) + 1
+	WHERE USER_ID = #{user_id}
+	AND (SYSDATE - ANN_DATE) < 365;
+	 ]]>
 	</update>
 
 	<select id="annAll" resultType="com.clip.gwr.vo.AnnualVo">
@@ -22,19 +27,22 @@
 	</select>
 	
 	<select id="detailAnn" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualVo">
-	SELECT ac.USER_ID , u.USER_NAME , (ac.ANN_LEOV-au.ANNUSE_DAY) AS ANN_LEOV
-        FROM ANNUAL_CT ac JOIN ANNUAL_USE au 
-        ON ac.USER_ID  = au.USER_ID 
-        JOIN USERINFO u 
-        ON ac.USER_ID = u.USER_ID
-        WHERE ac.USER_ID =#{user_id}
+    SELECT ac.USER_ID, u.USER_NAME, (ac.ANN_LEOV - au.ANNUSE_DAY) AS ANN_LEOV,
+           r.RANKS_NAME AS ranks_name, p.POSITIONS_NAME AS positions_name, d.DEPT_NAME AS dept_name
+    FROM ANNUAL_CT ac 
+    JOIN ANNUAL_USE au ON ac.USER_ID = au.USER_ID 
+    JOIN USERINFO u ON ac.USER_ID = u.USER_ID
+    LEFT JOIN RANKS r ON u.RANKS_SEQ = r.RANKS_SEQ
+    LEFT JOIN POSITIONS p ON u.POSITIONS_SEQ = p.POSITIONS_SEQ
+    LEFT JOIN DEPT d ON u.DEPT_SEQ = d.DEPT_SEQ
+    WHERE ac.USER_ID = #{user_id}
 	</select>
 	
 	<update id="updateAnn" parameterType="java.lang.String" >
-	UPDATE ANNUAL_CT
-	SET ANN_DAY = #{ann_day}, 
+    UPDATE ANNUAL_CT
+    SET ANN_DAY = #{ann_day}, 
     ANN_LEOV = ANN_LEOV + #{ann_day} 
-	WHERE USER_ID = #{user_id}
+    WHERE USER_ID = #{user_id}
 	</update>
 
      
@@ -79,7 +87,7 @@
     </insert>
      
      <select id="selAvaliday" resultType="com.clip.gwr.vo.AnnualVo">
-     SELECT (ac.ANN_LEOV-au.ANNUSE_DAY) AS 사용가능일수
+     SELECT (ac.ANN_LEOV-au.ANNUSE_DAY) AS ANN_LEOV
 	 FROM ANNUAL_CT ac LEFT JOIN ANNUAL_USE au 
 	 ON ac.USER_ID =au.USER_ID 
 	 WHERE ac.USER_ID =#{user_id}
@@ -94,7 +102,7 @@
      
      <select id="searchAnnual" parameterType="java.util.Map" resultType="com.clip.gwr.vo.AnnualVo">
 	    SELECT u.USER_ID, u.USER_NAME, d.DEPT_NAME,
-	    p.POSITIONS_NAME,r.RANKS_NAME,(ac.ANN_LEOV - NVL(au.ANNUSE_DAY, 0)) AS 사용가능한_연차
+	    p.POSITIONS_NAME,r.RANKS_NAME,(ac.ANN_LEOV - NVL(au.ANNUSE_DAY, 0)) AS ANN_LEOV
 		FROM USERINFO u
 		JOIN ANNUAL_CT ac ON u.USER_ID = ac.USER_ID
 		JOIN DEPT d ON u.DEPT_SEQ = d.DEPT_SEQ
@@ -104,6 +112,15 @@
 		WHERE 
 	<if test="user_name != null and user_name != ''">
 			 u.USER_NAME LIKE '%' || #{user_name} || '%'
+		</if>
+		<if test="ranks_name != null and ranks_name != ''">
+			AND r.RANKS_NAME = #{ranks_name}
+		</if>
+		<if test="dept_name != null and dept_name != ''">
+			AND d.DEPT_NAME = #{dept_name}
+		</if>
+		<if test="positions_name != null and positions_name != ''">
+			AND p.POSITIONS_NAME = #{positions_name}
 		</if>
      </select>
 

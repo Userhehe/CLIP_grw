@@ -15,7 +15,7 @@ public interface IRanksDao {
 			public int updateRanks(Map<String, Object>map);
 			
 			// 직급 삭제 
-			public int delRanks(Map<String, Object>map);
+			public int delRanks(String ranks_seq);
 			
 			// 직급 검색 
 			public List<RanksVo> searchRanks(Map<String, Object>map);

@@ -32,9 +32,9 @@ public class RanksServiceImpl implements IRanksService {
 	}
 
 	@Override
-	public int delRanks(Map<String, Object> map) {
-		log.info("RanksServiceImpl delRanks 직급 삭제 :{}",map);
-		return dao.delRanks(map);
+	public int delRanks(String ranks_seq) {
+		log.info("RanksServiceImpl delRanks 직급 삭제 :{}",ranks_seq);
+		return dao.delRanks(ranks_seq);
 	}
 
 	@Override
