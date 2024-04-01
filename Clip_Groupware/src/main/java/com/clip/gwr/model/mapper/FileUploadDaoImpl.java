@@ -86,9 +86,9 @@ public class FileUploadDaoImpl implements IFileUploadDao {
 	 * 사진파일 조회
 	 */
 	@Override
-	public List<FileVo> selectPhotoinfo(Map<String, Object> map) {
+	public List<FileVo> selectPhotoinfo(String user_id) {
 		log.info("##### 사진파일 조회 selectPhotoinfo #####");
-		return sqlSession.selectList(NS + "selectPhotoinfo", map);
+		return sqlSession.selectList(NS + "selectPhotoinfo", user_id);
 	}
 
 }

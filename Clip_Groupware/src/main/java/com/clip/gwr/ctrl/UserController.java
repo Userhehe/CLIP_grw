@@ -1,9 +1,6 @@
 package com.clip.gwr.ctrl;
 
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,15 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.clip.gwr.model.service.IDeptService;
 import com.clip.gwr.model.service.IPositionsService;
@@ -30,7 +25,6 @@ import com.clip.gwr.model.service.IUserService;
 import com.clip.gwr.vo.DeptVo;
 import com.clip.gwr.vo.PositionsVo;
 import com.clip.gwr.vo.RanksVo;
-import com.clip.gwr.vo.UserVo;
 import com.clip.gwr.vo.UserinfoVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -70,11 +64,21 @@ public class UserController {
 //		}
 //		return "loginForm";
 //	}
+	/**
+	 * 로그인페이지로 이동
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value = "/loginForm.do") 
 	public String loginForm(Model model) {
 		return "loginForm";
 	}
 	
+	/**
+	 * 사용자정보등록 페이지로 이동
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value = "/signUp.do")
 	public String signUp(Model model) {
 		log.info("회원가입 이동");
@@ -93,24 +97,38 @@ public class UserController {
 		return "signUp";
 	}
 	
+	/**
+	 * 사용자 정보 등록
+	 * @param session
+	 * @param response
+	 * @param request
+	 * @return
+	 */
 	@PostMapping(value = "/signUp.do")
 	public String signUpDone(HttpSession session, HttpServletResponse response, HttpServletRequest request) {
+		String inputPhoneFirstnum = request.getParameter("inputPhoneFirstnum");
+		String phoneFirstnum = "";
+		if(inputPhoneFirstnum == null || inputPhoneFirstnum =="") {
+			phoneFirstnum = request.getParameter("phoneFirstnum");
+		} else {
+			phoneFirstnum = inputPhoneFirstnum;
+		}
 		
-		String user_password = passwordEncoder.encode("clip1234");
-		String user_name = request.getParameter("user_name");
-		String user_registnum = request.getParameter("user_start_registnum") + "-"
-								+ request.getParameter("user_last_registnum");
-		String user_email = request.getParameter("user_email") + "@" + request.getParameter("email");
+		String user_password = passwordEncoder.encode("clip1234"); // 사용자 등록시 처음 비밀번호
+		String user_name = request.getParameter("userName");
+		String user_registnum = request.getParameter("userStartRegistnum") + "-"
+								+ request.getParameter("userLastRegistnum");
+		String user_email = request.getParameter("userEmail") + "@" + request.getParameter("emailDomain");
 		
-		String user_birthday = request.getParameter("user_birthday");
-		String user_phonenum = request.getParameter("phone_firstnum") + "-" 
-							+ request.getParameter("phone_secondnum") + "-"
-							+ request.getParameter("phone_lastnum");
-		String user_address = request.getParameter("user_address");
-		String dept_name = request.getParameter("dept_name");
-		String ranks_name = request.getParameter("ranks_name");
-		String positions_name = request.getParameter("positions_name");
-		String user_auth = request.getParameter("user_auth");	
+		String user_birthday = request.getParameter("userBirthday");
+		String user_phonenum = phoneFirstnum + "-" 
+							+ request.getParameter("phoneSecondnum") + "-"
+							+ request.getParameter("phoneLastnum");
+		String user_address = request.getParameter("userAddress");
+		String dept_name = request.getParameter("deptName");
+		String ranks_name = request.getParameter("ranksName");
+		String positions_name = request.getParameter("positionsName");
+		String user_auth = request.getParameter("userAuth");	
 		
 		log.info("#### user_password : " + user_password);
 		log.info("#### user_name : " + user_name);
@@ -138,6 +156,13 @@ public class UserController {
 		map.put("user_auth", user_auth);
 		try {
 			int signUp = userService.insertUserinfo(map);
+			log.info("####signUp : " + signUp);
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script language='javascript'>");
+            out.println("alert('사용자정보가 등록되었습니다.')");
+            out.println("</script>");
+            out.flush();
 			return "signUp";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -145,6 +170,11 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * 사용자목록 조회로 이동 
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value = "/userInfo.do")
 	public String userInfo(Model model) {
 		log.info("userInfo 이동");
@@ -194,6 +224,12 @@ public class UserController {
 		return "/user/signUp";
 	}
 	
+	/**
+	 * 상뇽자 목록 검색
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value = "/searchUserList.do")
 	public String searchUserList(HttpServletRequest request, Model model) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -210,7 +246,6 @@ public class UserController {
 		log.info("####searchRanks : " + searchRanks);
 		log.info("####searchName : " + searchName);
 		
-		// 문자열을 Date 객체로 변환
         try {
 			map.put("user_name", searchName);
 			map.put("ranks_name", searchRanks);
@@ -234,6 +269,12 @@ public class UserController {
 		return "userInfo";
 	}
 	
+	/**
+	 * 사용자정보 상세조회
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value = "/userInfoDetail.do")
 	public String userInfoDetail(HttpServletRequest request, Model model) {
 		String user_seq = request.getParameter("user_seq");
@@ -246,6 +287,12 @@ public class UserController {
 		return "userInfoDetail";
 	}
 	
+	/**
+	 * 사용자정보 수정 화면 이동
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value = "/userInfoUpdate.do")
 	public String userInfoUpdate(HttpServletRequest request, Model model) {
 		String user_id = request.getParameter("user_seq");
@@ -264,24 +311,37 @@ public class UserController {
 		return "userInfoUpdate";
 	}
 	
+	/**
+	 * 사용자정보 수정
+	 * @param request
+	 * @param response
+	 */
 	@PostMapping(value = "/userInfoUpdateData.do")
 	public void userInfoUpdateData(HttpServletRequest request, HttpServletResponse response) {
-		String user_id = request.getParameter("user_id");
-		String user_name = request.getParameter("user_name");
-		String user_registnum = request.getParameter("user_start_registnum") + "-"
-								+ request.getParameter("user_last_registnum");
-		String user_email = request.getParameter("user_email") + "@" + request.getParameter("email");
+		String inputPhoneFirstnum = request.getParameter("inputPhoneFirstnum");
+		String phoneFirstnum = "";
+		if(inputPhoneFirstnum == null || inputPhoneFirstnum =="") {
+			phoneFirstnum = request.getParameter("phoneFirstnum");
+		} else {
+			phoneFirstnum = inputPhoneFirstnum;
+		}
 		
-		String user_birthday = request.getParameter("user_birthday");
-		String user_phonenum = request.getParameter("phone_firstnum") + "-" 
-							+ request.getParameter("phone_secondnum") + "-"
-							+ request.getParameter("phone_lastnum");
-		String user_address = request.getParameter("user_address");
-		String dept_name = request.getParameter("dept_name");
-		String ranks_name = request.getParameter("ranks_name");
-		String positions_name = request.getParameter("positions_name");
-		String user_auth = request.getParameter("user_auth");
-		String user_status = request.getParameter("user_status");
+		String user_id = request.getParameter("userId");
+		String user_name = request.getParameter("userName");
+		String user_registnum = request.getParameter("userStartRegistnum") + "-"
+								+ request.getParameter("userLastRegistnum");
+		String user_email = request.getParameter("userEmail") + "@" + request.getParameter("emailDomain");
+		
+		String user_birthday = request.getParameter("userBirthday");
+		String user_phonenum = phoneFirstnum + "-" 
+							+ request.getParameter("phoneSecondnum") + "-"
+							+ request.getParameter("phoneLastnum");
+		String user_address = request.getParameter("userAddress");
+		String dept_name = request.getParameter("deptName");
+		String ranks_name = request.getParameter("ranksName");
+		String positions_name = request.getParameter("positionsName");
+		String user_auth = request.getParameter("userAuth");
+		String user_status = request.getParameter("userStatus");
 		
 		log.info("#### user_id : " + user_id);
 		log.info("#### user_name : " + user_name);
@@ -312,15 +372,51 @@ public class UserController {
 		try {
 			int updateUserInfo = userService.updateUserinfo(map);
 			log.info("####updateUserInfo : " + updateUserInfo);
-			response.sendRedirect("./userInfoUpdate.do?user_seq="+user_id);
+			response.sendRedirect("./userInfoUpdate.do?user_seq=" + user_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-//	@PostMapping(value = "/emailCheck.do")
-//	public int emailCheck(HttpServletRequest request) {
-//		
-//		return 1;
-//	}
+	/**
+	 * 이메일 중복체크
+	 * @param request
+	 * @return
+	 */
+	@PostMapping(value = "/emailCheck.do")
+	@ResponseBody
+	public Map<String, Integer> emailCheck(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String user_email = request.getParameter("frontEmail") + "@" + request.getParameter("backEmail");
+		log.info("####user_email : " + user_email);
+		map.put("user_email", user_email);
+		int emailCheck = userService.duplicateCheckEmail(map);
+		log.info("####emailCheck : " + emailCheck);
+		
+		Map<String, Integer> response = new HashMap<>();
+	    response.put("emailCheck", emailCheck);
+	    return response;
+	}
+	
+	@GetMapping(value = "/myPage.do")
+	public String myPage(HttpSession session, Model model) {
+		UserinfoVo loginVo = (UserinfoVo)session.getAttribute("loginVo");
+		log.info("####loginVo : " + loginVo);
+		String user_id = loginVo.getUser_id();
+		List<UserinfoVo> userDetailList = userService.selectUserinfoDetail(user_id);
+		log.info("####userDetailList : " + userDetailList);
+		model.addAttribute("userDetailList",userDetailList);
+		return "myPage";
+	}
+	
+	@GetMapping(value = "/certiOfImpl.do")
+	public String certiOfImpl(HttpSession session, Model model) {
+		UserinfoVo loginVo = (UserinfoVo)session.getAttribute("loginVo");
+		log.info("####loginVo : " + loginVo);
+		String user_id = loginVo.getUser_id();
+		List<UserinfoVo> jejicLists = userService.selectJejicDownload(user_id);
+		log.info("####jejicLists : " + jejicLists);
+		model.addAttribute("jejicLists",jejicLists);
+		return "certiOfImpl";
+	}
 }

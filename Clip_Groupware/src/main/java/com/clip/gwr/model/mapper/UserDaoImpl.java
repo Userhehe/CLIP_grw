@@ -87,9 +87,9 @@ public class UserDaoImpl implements IUserDao {
 	 * 이메일&연락처 중복체크
 	 */
 	@Override
-	public int duplicateCheckUserinfo(Map<String, Object> map) {
-		log.info("##### 이메일&연락처 중복체크 duplicateCheckUserinfo #####");
-		return sqlSession.selectOne(NS + "duplicateCheckUserinfo", map);
+	public int duplicateCheckEmail(Map<String, Object> map) {
+		log.info("##### 이메일&연락처 중복체크 duplicateCheckEmail #####");
+		return sqlSession.selectOne(NS + "duplicateCheckEmail", map);
 	}
 	
 	/**
@@ -132,9 +132,9 @@ public class UserDaoImpl implements IUserDao {
 	 * 재직증명서 다운로드
 	 */
 	@Override
-	public List<UserinfoVo> selectJejicDownload(Map<String, Object> map) {
+	public List<UserinfoVo> selectJejicDownload(String user_id) {
 		log.info("##### 재직증명서 다운로드 selectJejicDownload #####");
-		return sqlSession.selectList(NS + "selectJejicDownload", map);
+		return sqlSession.selectList(NS + "selectJejicDownload", user_id);
 	}
 
 	/**

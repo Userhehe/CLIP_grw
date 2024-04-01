@@ -152,12 +152,11 @@ public class userJUnitTest {
 	 * 이메일&연락처 중복체크
 	 */
 //	@Test
-	public void duplicateCheckUserinfo() {
+	public void duplicateCheckEmail() {
 		map.put("user_email","dongin7777@gmail.com");
-		map.put("user_phonenum","010-1234-5678");
-		int duplicateCheckUserinfo = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.duplicateCheckUserinfo", map);
-		System.out.println("##duplicateCheckUserinfo : " + duplicateCheckUserinfo);
-		assertNotNull(duplicateCheckUserinfo);
+		int duplicateCheckEmail = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.duplicateCheckEmail", map);
+		System.out.println("##duplicateCheckEmail : " + duplicateCheckEmail);
+		assertNotNull(duplicateCheckEmail);
 	}
 	
 	/**
@@ -224,8 +223,8 @@ public class userJUnitTest {
 	 */
 	//@Test
 	public void selectJejicDownload() {
-		map.put("user_id","USER_001");
-		List<UserinfoVo> lists = usrService.selectJejicDownload(map);
+		String user_id = "USER_1";
+		List<UserinfoVo> lists = usrService.selectJejicDownload(user_id);
 		System.out.println(lists);
 		assertNotNull(lists);
 	}

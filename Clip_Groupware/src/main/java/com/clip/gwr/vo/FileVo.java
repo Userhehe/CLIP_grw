@@ -14,10 +14,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FileVo {
+	private String fileName;
+	
 	private String file_seq; //파일 시퀀스
 	private String file_targetseq; //기능테이블별 시퀀스코드 
 	private String file_targetobj;//테이블 시퀀스 별 파일넘버
-	private String file_originname; //파일 원본 이름ㄴ
+	private String file_originname; //파일 원본 이름
 	private String file_storename;  //저장된 파일 이름
 	private int file_size; //파일크기
 	private byte[] file_ff; //파일

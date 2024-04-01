@@ -62,7 +62,7 @@ public interface IUserService {
 	 * @param map
 	 * @return
 	 */
-	public int duplicateCheckUserinfo(Map<String, Object> map);
+	public int duplicateCheckEmail(Map<String, Object> map);
 	
 	/**
 	 * 사원목록 전체조회
@@ -94,7 +94,7 @@ public interface IUserService {
 	 * @param map
 	 * @return
 	 */
-	public List<UserinfoVo> selectJejicDownload(Map<String, Object> map);
+	public List<UserinfoVo> selectJejicDownload(String user_id);
 	
 	/**
 	 * 사용자 권한조회
