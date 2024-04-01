@@ -67,5 +67,10 @@ public class ProjectsServiceImpl implements IProjectsService {
 		return 0;
 	}
 
+	@Override
+	public List<ProjectsVo> getProgressProjects(Map<String, Object> map) {
+		return dao.getProgressProjects(map);
+	}
+
 
 }

@@ -75,6 +75,11 @@ public class ProjectsDaoImpl implements IProjectsDao {
 		return sqlSession.update(NS + "projectsUpdate", map);
 	}
 
+	@Override
+	public List<ProjectsVo> getProgressProjects(Map<String, Object> map) {
+		return sqlSession.selectList(NS + "getProgressProjects", map);
+	}
+
 
 	// 프로젝트 삭제
 

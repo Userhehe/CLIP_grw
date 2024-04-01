@@ -25,4 +25,5 @@ public class ProjectsVo {
 	private String prj_manager		;
 	private String prj_progress		;
 	private String user_id			;
+	private String user_name        ;
 }

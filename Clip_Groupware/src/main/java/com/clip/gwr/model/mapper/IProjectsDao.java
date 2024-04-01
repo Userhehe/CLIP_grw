@@ -35,6 +35,9 @@ public interface IProjectsDao {
 	// 프로젝트 수정
 	public int projectsUpdate(Map<String, Object> map);
 
+	// 진행중 혹은 완료 목록 조회
+	public List<ProjectsVo> getProgressProjects(Map<String, Object> map);
+
 	// 프로젝트 삭제
 //	public int projectsDelete(String prj_id);
 	
