@@ -29,7 +29,7 @@ $(document).ready(function() {
  					}
 			    	
 			    	
-			        var modal = new bootstrap.Modal($("#detailModal"));
+			        var modal = new bootstrap.Modal($("#detailModal2"));
 			        modal.show();
 			      },
 			      error: function(error) {

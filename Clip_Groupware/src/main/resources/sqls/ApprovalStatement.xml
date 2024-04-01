@@ -31,100 +31,52 @@
 			ORDER BY a.APP_CREATEDATE DESC
 		</select>
 	
-
 	<!-- 나의 결재승인을 받아야하는 결재 리스트조회 (세션에서 사원번호 사용) -->
 	<select id="getMyPaycheck" resultType="ApprovalVo" parameterType="java.lang.String">
-		SELECT A.APP_SEQ, A.APP_TITLE, A.APP_CONTENT,
-		       g.GIAN_NAME AS GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
-		FROM APPROVAL A
-		JOIN (
-		    SELECT 
-		        APP_SEQ,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentLine.first') AS PAYLINE_1ST,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentLine.second') AS PAYLINE_2ND,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentLine.third') AS PAYLINE_3RD,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentOk.first') AS PAYOK_1ST,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentOk.second') AS PAYOK_2ND,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentOk.third') AS PAYOK_3RD
-		    FROM 
-		        APPROVAL
-		) JT ON A.APP_SEQ = JT.APP_SEQ
-		JOIN GIAN g ON A.GIAN_SEQ = g.GIAN_SEQ
-		WHERE 
-		    (JT.PAYLINE_1ST = #{user_id} AND A.APP_DRAFT NOT IN ('임시저장', '결재취소'))
-		    OR (JT.PAYLINE_2ND = #{user_id} AND JT.PAYOK_1ST != 'N' AND A.APP_DRAFT NOT IN ('임시저장', '결재취소'))
-		    OR (JT.PAYLINE_3RD = #{user_id} AND JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND != 'N' AND A.APP_DRAFT NOT IN ('임시저장', '결재취소'))
-		ORDER BY 
-		    A.APP_CREATEDATE DESC
+		SELECT 
+		    a.APP_SEQ,  a.APP_TITLE, a.APP_DRAFT, p.PAY_NUM , p.PAY_USER ,p.PAY_REJECTREASON,
+		    g.GIAN_NAME AS GIAN_SEQ ,  TO_CHAR(a.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE 
+		FROM APPROVAL a 
+		JOIN GIAN g ON g.GIAN_SEQ = a.GIAN_SEQ 
+		JOIN PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ
+		WHERE a.APP_DRAFT IN ('결재대기', '결재반려')
+		AND p.PAY_SIGN IN ('N', 'D')
+		AND p.PAY_USER = #{user_id}
+		ORDER BY a.APP_CREATEDATE DESC
 	</select>
 	
 	
 	<!-- 나의 결재승인을 받아야하는 결재 아직 미처리한 리스트조회 (세션에서 사원번호 사용) -->
 	<select id="getMyUnprocessedPaycheck" resultType="ApprovalVo" parameterType="java.lang.String">
-		SELECT A.APP_SEQ, A.APP_TITLE, A.APP_CONTENT,
-		       g.GIAN_NAME AS GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
-		FROM APPROVAL A
-		JOIN (
-		    SELECT 
-		        APP_SEQ,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentLine.first') AS PAYLINE_1ST,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentLine.second') AS PAYLINE_2ND,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentLine.third') AS PAYLINE_3RD,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentOk.first') AS PAYOK_1ST,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentOk.second') AS PAYOK_2ND,
-		        JSON_VALUE(APP_PAYLINE, '$.paymentOk.third') AS PAYOK_3RD
-		    FROM 
-		        APPROVAL
-		) JT ON A.APP_SEQ = JT.APP_SEQ
-		JOIN GIAN g ON A.GIAN_SEQ = g.GIAN_SEQ 	
-		WHERE 
-		    (JT.PAYLINE_1ST = #{user_id} AND JT.PAYOK_1ST = 'N' AND A.APP_DRAFT NOT IN ('임시저장', '결재취소', '결재반려'))
-		    OR (JT.PAYLINE_2ND = #{user_id} AND JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND = 'N' AND A.APP_DRAFT NOT IN ('임시저장', '결재취소', '결재반려'))
-		    OR (JT.PAYLINE_3RD = #{user_id} AND JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND != 'N' AND JT.PAYOK_3RD = 'N' AND A.APP_DRAFT NOT IN ('임시저장', '결재취소', '결재반려'))
-		ORDER BY 
-		    A.APP_CREATEDATE DESC
+		SELECT 
+		    a.APP_SEQ, 
+		    a.APP_TITLE, 
+		    a.APP_DRAFT, 
+		    g.GIAN_NAME AS GIAN_SEQ ,  TO_CHAR(a.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE	
+		FROM APPROVAL a 
+		JOIN GIAN g ON g.GIAN_SEQ = a.GIAN_SEQ 
+		JOIN PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ
+		WHERE a.APP_DRAFT IN ('결재대기')
+		AND p.PAY_SIGN IN ('N', 'D')
+		AND p.PAY_USER =  #{user_id}
+		ORDER BY p.PAY_ASIGNDATE DESC
 	</select>
 	
 	<!-- 나의 결재승인을 받아야하는 결재 내가 반려한 결재 리스트 조회 -->
    <select id="getMyRejectPay" resultType="ApprovalVo" parameterType="java.lang.String">
-      SELECT A.APP_SEQ, A.APP_TITLE, A.APP_CONTENT,
-          g.GIAN_NAME AS GIAN_SEQ, TO_CHAR(A.APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, A.APP_DRAFT
-      FROM 
-          APPROVAL A
-      JOIN 
-          (SELECT 
-              APP_SEQ,
-              JSON_VALUE(APP_PAYLINE, '$.paymentLine.first') AS PAYLINE_1ST,
-              JSON_VALUE(APP_PAYLINE, '$.paymentLine.second') AS PAYLINE_2ND,
-              JSON_VALUE(APP_PAYLINE, '$.paymentLine.third') AS PAYLINE_3RD,
-              JSON_VALUE(APP_PAYLINE, '$.paymentOk.first') AS PAYOK_1ST,
-              JSON_VALUE(APP_PAYLINE, '$.paymentOk.second') AS PAYOK_2ND,
-              JSON_VALUE(APP_PAYLINE, '$.paymentOk.third') AS PAYOK_3RD
-          FROM 
-              APPROVAL) JT
-      ON 
-          A.APP_SEQ = JT.APP_SEQ
-      JOIN GIAN g ON A.GIAN_SEQ = g.GIAN_SEQ 	    
-      WHERE 
-          (JT.PAYLINE_1ST = #{user_id} AND JT.PAYOK_1ST = 'N' AND A.APP_DRAFT ='결재반려')
-          OR (JT.PAYLINE_2ND = #{user_id} AND (JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND = 'N') AND A.APP_DRAFT = '결재반려')
-          OR (JT.PAYLINE_3RD = #{user_id} AND (JT.PAYOK_1ST != 'N' AND JT.PAYOK_2ND != 'N' AND JT.PAYOK_3RD = 'N') AND A.APP_DRAFT ='결재반려')
-      ORDER BY 
-          A.APP_CREATEDATE DESC
+     SELECT 
+		    a.APP_SEQ, 
+		    a.APP_TITLE, 
+		    a.APP_DRAFT, 
+		    g.GIAN_NAME AS GIAN_SEQ ,  TO_CHAR(a.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE , p.PAY_REJECTREASON 
+		FROM APPROVAL a 
+		JOIN GIAN g ON g.GIAN_SEQ = a.GIAN_SEQ 
+		JOIN PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ
+		WHERE a.APP_DRAFT IN ('결재반려')
+		AND p.PAY_SIGN IN ('N', 'D')
+		AND p.PAY_USER =  #{user_id}
+		ORDER BY p.PAY_ASIGNDATE DESC
    </select>
-	
-	
-	
-	
-	<!-- 결재 승인/반려에따라 결재라인 및 결재현황 변경로직 -->
-	<!-- 결재라인 승인/반려시에 맞춰 결재라인승인 정보와 결재 현황을 업데이트 -->
-	<update id="checkApprovalLine" parameterType="ApprovalVo">
-		UPDATE APPROVAL SET APP_PAYLINE = #{app_payline},
-					APP_DRAFT  = #{app_draft}
-		WHERE APP_SEQ = #{app_seq}
-	</update>
-	
-
 
 	<!-- 결재내역 단일 상세 조회 (클릭한 결재의 결재시퀀스 사용) -->
 	<select id="getOneApproval" resultType="ApprovalVo" parameterType="java.lang.String">
