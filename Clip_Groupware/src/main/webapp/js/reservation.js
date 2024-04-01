@@ -307,7 +307,7 @@ function del(event) {
 
 	// 선택된 노드 삭제하기 
 	parentDiv.remove();
-	console.log("삭제된 사원",)
+	console.log("삭제된 사원");
 
 
 	//#apr_chk div안에 있는 apr_row의 총 개수
