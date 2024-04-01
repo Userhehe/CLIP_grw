@@ -3,7 +3,7 @@
 <mapper namespace="com.clip.gwr.model.mapper.UserDaoImpl">
 	<!-- 로그인 --> 
 	<select id="userLogin" parameterType="java.lang.String" resultType="com.clip.gwr.vo.UserinfoVo">
-		SELECT USER_ID, USER_PASSWORD, USER_NAME, USER_AUTH, USER_STATUS,
+		SELECT USER_ID, USER_PASSWORD, USER_NAME, USER_AUTH, USER_STATUS, RANKS_SEQ, DEPT_SEQ, POSITIONS_SEQ,
 		(SELECT RANKS_NAME FROM RANKS r INNER JOIN USERINFO u ON r.RANKS_SEQ = u.RANKS_SEQ WHERE u.USER_ID = #{username}) AS RANKS_NAME,
 		(SELECT DEPT_NAME FROM DEPT d INNER JOIN USERINFO u ON d.DEPT_SEQ = u.DEPT_SEQ WHERE USER_ID = #{username}) AS DEPT_NAME,
 		(SELECT POSITIONS_NAME FROM POSITIONS p INNER JOIN USERINFO u ON p.POSITIONS_SEQ = u.POSITIONS_SEQ WHERE USER_ID = #{username}) AS POSITIONS_NAME
@@ -36,23 +36,6 @@
 		AND USER_STATUS = 'Y'
 	</select>
 	
-	<!-- 인증번호 저장 -->
-<!-- 	<update id="updateUserCertnum" parameterType="java.util.Map"> -->
-<!-- 		UPDATE USERINFO -->
-<!-- 			SET USER_CERTNUM = #{user_certnum} -->
-<!-- 		WHERE USER_ID = (SELECT USER_ID FROM USERINFO u WHERE USER_EMAIL = #{user_email}) -->
-<!-- 		AND USER_STATUS = 'Y' -->
-<!-- 	</update> -->
-	
-	<!-- 인증번호 확인 -->
-<!-- 	<select id="comparisonCertNum" parameterType="java.util.Map" resultType="java.lang.Integer"> -->
-<!-- 		SELECT COUNT(*) -->
-<!-- 			FROM USERINFO u -->
-<!-- 		WHERE USER_CERTNUM = #{user_certnum} -->
-<!-- 		AND USER_ID = (SELECT USER_ID FROM USERINFO u WHERE USER_EMAIL = #{user_email}) -->
-<!-- 		AND USER_STATUS = 'Y' -->
-<!-- 	</select> -->
-	
 	<!-- 사원정보 등록 -->
 	<insert id="insertUserinfo" parameterType="java.util.Map">
 		<selectKey keyProperty="user_seq" resultType="java.lang.Integer" order="BEFORE">
@@ -73,7 +56,7 @@
 	</insert>
 	
 	<!-- 이메일 중복체크 -->
-	<select id="duplicateCheckUserinfo" parameterType="java.util.Map" resultType="java.lang.Integer">
+	<select id="duplicateCheckEmail" parameterType="java.util.Map" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 			FROM USERINFO u
 		WHERE USER_STATUS = 'Y' 
@@ -152,10 +135,10 @@
 	</update>
 	
 	<!-- 재직증명서 다운로드 -->
-	<select id="selectJejicDownload" parameterType="java.util.Map" resultType="com.clip.gwr.vo.UserinfoVo">
+	<select id="selectJejicDownload" parameterType="java.lang.String" resultType="com.clip.gwr.vo.UserinfoVo">
 		SELECT U.USER_NAME, U.USER_REGISTNUM, U.USER_BIRTHDAY, 
-		U.USER_ADDRESS, U.USER_REGDATE, R.RANKS_NAME,
-		(SELECT USER_NAME FROM USERINFO WHERE RANKS_SEQ = 'RANKS_001') AS BOSS_NAME, 
+		U.USER_ADDRESS, TO_CHAR(U.USER_REGDATE, 'YYYY-MM-DD') AS USER_REGDATE, R.RANKS_NAME,
+		(SELECT USER_NAME FROM USERINFO WHERE RANKS_SEQ = 'RANKS_1') AS BOSS_NAME, 
 		TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') AS TODAY
 			FROM USERINFO u 
 		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ

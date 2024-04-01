@@ -61,5 +61,5 @@ public interface IFileUploadService {
 	 * @param map
 	 * @return
 	 */
-	public List<FileVo> selectPhotoinfo(Map<String, Object> map);
+	public List<FileVo> selectPhotoinfo(String user_id);
 }

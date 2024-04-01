@@ -19,7 +19,7 @@
 		</selectKey>
 		INSERT INTO PHOTOINFO
 			(PHOTO_SEQ, USER_ID)
-		VALUES('PHOTO_' || TO_CHAR(PHOTO_SEQ.NEXTVAL, 'FM000'), #{user_id})
+		VALUES('PHOTO_' || TO_CHAR(PHOTO_SEQ.NEXTVAL), #{user_id})
 	</insert>
 	
 	<!-- 사진파일 등록 2 -->
@@ -28,7 +28,7 @@
 			(FILE_SEQ, FILE_TARGETSEQ, FILE_TARGETOBJ, 
 			FILE_ORIGINNAME, FILE_STORENAME, FILE_SIZE, 
 			FILE_PATH)
-		VALUES('FILEFEATURE_' || TO_CHAR(FILEFEATURE_SEQ.NEXTVAL, 'FM000'),
+		VALUES('FILEFEATURE_' || TO_CHAR(FILEFEATURE_SEQ.NEXTVAL),
 			(SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id}), 
 			1, #{file_originname}, #{file_storename}, #{file_size}, #{file_path})
 	</insert>
@@ -67,14 +67,11 @@
 	</delete>
 	
 	<!-- 사진파일 조회 -->
-	<select id="selectPhotoinfo" parameterType="java.util.Map" resultType="com.clip.gwr.vo.FileVo">
+	<select id="selectPhotoinfo" parameterType="java.lang.String" resultType="com.clip.gwr.vo.FileVo">
 		SELECT FILE_TARGETSEQ, FILE_SEQ, FILE_TARGETSEQ, 
 		FILE_TARGETOBJ, FILE_ORIGINNAME, FILE_STORENAME,
 		FILE_SIZE
 			FROM FILE_FEATURE ff
 		WHERE FILE_TARGETSEQ = (SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id})
 	</select>
-	
-	
-	
 </mapper>

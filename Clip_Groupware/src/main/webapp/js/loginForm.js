@@ -131,7 +131,9 @@ function certnumRequest() {
 	document.getElementById('certnum').disabled = true;
 	document.getElementById('certnum').value = "";
 	document.getElementById('checkCertnumBtn').disabled = true;
+//	$('#checkCertnumBtn').prop('disabled', true);
 	document.getElementById('checkCertnumBtn').style.backgroundColor = 'lightgrey';
+//	$('#checkCertnumBtn').css('backgroundColor', 'lightgrey');
 	
 	document.getElementById('replacePassword').disabled = true;
 	document.getElementById('replacePassword').value = "";
@@ -162,7 +164,7 @@ $(document).ready(function() {
 				}
 	        },
 	        error: function(xhr, status, error) {
-	            console.error('아이디찾기요청실패', status, error);
+	            console.error('아이디찾기요청실패', xhr, status, error);
 	        }
 	    });
 	});

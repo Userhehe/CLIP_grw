@@ -85,9 +85,9 @@ public class FileUploadServiceImpl implements IFileUploadService {
 	 * 사진파일 조회
 	 */
 	@Override
-	public List<FileVo> selectPhotoinfo(Map<String, Object> map) {
+	public List<FileVo> selectPhotoinfo(String user_id) {
 		log.info("FileUploadServiceImpl selectPhotoinfo 사진파일 조회");
-		return dao.selectPhotoinfo(map);
+		return dao.selectPhotoinfo(user_id);
 	}
 	
 }

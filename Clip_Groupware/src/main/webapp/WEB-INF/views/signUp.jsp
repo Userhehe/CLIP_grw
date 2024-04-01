@@ -11,25 +11,9 @@
 <title>회원정보등록</title>
 <%@ include file="./header.jsp"%>
 <link href="./assets/css/signUp.css" rel="stylesheet">
+<script type="text/javascript" src="./js/signUp.js"></script>
 </head>
 <body>
-<div class="modal fade" id="verticalycentered" tabindex="-1" aria-hidden="true" role="dialog">
-   <div class="modal-dialog" role="document">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h5 class="modal-title">Vertically Centered</h5>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-       </div>
-       <div class="modal-body">
-         떠라
-       </div>
-       <div class="modal-footer">
-         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-         <button type="button" class="btn btn-primary">Save changes</button>
-       </div>
-     </div>
-   </div>
- </div>
 	<main id="main" class="main">
 		<div class="container" style="margin: 0;">
 			<div class="card-body w661_5px">
@@ -37,68 +21,112 @@
 				<div class="fc_red font12">&nbsp;&nbsp;* 값은 필수값입니다</div>
 				<form action="./signUp.do" method="post">
 					<div class="row mb-3">
-						<label for="inputText" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>성명</label>
+						<label for="userName" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>성명</label>
 						<div class="col-sm-10">
-							<input type="text" id="user_name" name="user_name" class="form-control" required="required">
+							<input type="text" id="userName" name="userName" class="form-control" required="required">
 						</div>
 					</div>
 					<div class="row mb-3">
-						<label for="inputEmail" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>주민등록번호</label>
+						<label for="inputRegistnum" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>주민등록번호</label>
 						<div class="col-sm-10">
-							<input type="text" id="user_start_registnum" name="user_start_registnum" class="form-control w249_8px ib" placeholder="주민등록번호 앞자리" required="required"> 
+							<input type="text" id="userStartRegistnum" name="userStartRegistnum" class="form-control w249_8px ib" placeholder="주민등록번호 앞자리" required="required"> 
 							<span class="ib">-</span> 
-							<input type="password" id="user_last_registnum" name="user_last_registnum" class="form-control w249_8px ib" placeholder="주민등록번호 뒷자리" required="required">
+							<input type="password" id="userLastRegistnum" name="userLastRegistnum" class="form-control w249_8px ib" placeholder="주민등록번호 뒷자리" required="required">
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="inputEmail" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>Email</label>
 						<div class="col-sm-10">
-							<input type="text" id="user_email" name="user_email" class="form-control w345px ib" required="required"> 
+							<input type="text" id="userEmail" name="userEmail" class="form-control w345px ib" required="required"> 
 							<span class="ib">@</span> 
-							<select name="email" class="form-select w143_7px ib">
-								<option value="gmail.com">gmail.com</option>
-								<option value="naver.com">naver.com</option>
-								<option value="hanmail.com">hanmail.com</option>
-								<option value="input_email">직접 입력</option>
-							</select>
+							<input type="text" id="emailDomain" name="emailDomain" class="form-control w143_7px ib" value="">
 						</div>
 					</div>
-					<div id="mail-check">
+					<div id="mailCheck">
 						<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#verticalycentered">이메일 중복체크</button>
 					</div>
+					<!-- 이메일 중복체크 모달창 -->
+					<div class="modal fade" id="verticalycentered" tabindex="-1">
+				  		<div class="modal-dialog modal-dialog-centered">
+						    <div class="modal-content">
+						        <div class="modal-header">
+						            <h5 class="modal-title">이메일 중복체크</h5>
+						            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				        	  	</div>
+							    <div class="modal-body">
+								<c:set var="emailSplit" value="${fn:split(userDetailList.user_email, '@')}"/>
+								<input type="text" id="frontEmail" name="frontEmail" class="form-control w297px ib" value="${emailSplit[0]}" required="required"> 
+								<span class="ib">@</span>
+								<select id="backEmail" name="backEmail" class="form-select w143_7px ib">
+									<option value="gmail.com" <c:if test="${emailSplit[1] eq 'gmail.com'}">selected</c:if>>gmail.com</option>
+									<option value="naver.com" <c:if test="${emailSplit[1] eq 'naver.com'}">selected</c:if>>naver.com</option>
+									<option value="hanmail.com" <c:if test="${emailSplit[1] eq 'hanmail.com'}">selected</c:if>>hanmail.com</option>
+									<option value="openInputEmail" <c:if test="${emailSplit[1] ne 'gmail.com' and emailSplit[1] ne 'naver.com' and emailSplit[1] ne 'hanmail.com'}">selected</c:if>>직접 입력</option>
+								</select>
+								<div id="mailDomainInput">
+									직접입력 : &nbsp;
+									<input type="text" id="inputEmail" class="form-control w143_7px" name="backEmail"
+										<c:choose>
+											<c:when test="${emailSplit[1] ne 'gmail.com' and emailSplit[1] ne 'naver.com' and emailSplit[1] ne 'hanmail.com'}">
+												value="${emailSplit[1]}"
+											</c:when>
+											<c:otherwise>
+												value=""
+											</c:otherwise>
+										</c:choose>
+									>
+								</div>
+									<div id="emailUnAvailable">이미 존재하는 아이디입니다.</div>
+									<div id="emailAvailable">사용가능한 아이디입니다.</div>
+									<button type="button" id="emailCheckBtn" class="btn btn-primary btn-sm">이메일 중복체크</button>
+							    </div>
+							    <div class="modal-footer">
+							      	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							        <button type="button" id="emailInsertBtn" class="btn btn-primary" data-bs-dismiss="modal">이메일 등록</button>
+							    </div>
+						    </div>
+				  		</div>
+					</div>
 					<div class="row mb-3">
-						<label for="user_birthday" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>생년월일</label>
+						<label for="userBirthday" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>생년월일</label>
 						<div class="col-sm-10">
-							<input type="number" id="user_birthday" name="user_birthday" class="form-control" maxlength="8" placeholder="생년월일8자리 ex)19980423" required="required">
+							<input type="number" id="userBirthday" name="userBirthday" class="form-control" maxlength="8" placeholder="생년월일8자리 ex)19980423" required="required">
 						</div>
 					</div>
 
 					<div class="row mb-3">
 						<label for="inputEmail" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>연락처</label>
 						<div class="col-sm-10">
-							<select name="phone_firstnum" class="form-select w120px ib">
+							<select id="phoneFirstnum" name="phoneFirstnum" class="form-select w120px ib">
 								<option value="010">010</option>
 								<option value="011">011</option>
-								<option value="input_phone">직접 입력</option>
+								<option value="inputPhone">직접 입력</option>
 							</select> 
 							<span class="ib">-</span> 
-							<input type="number" id="phone_secondnum" name="phone_secondnum" class="form-control w182_7px ib" placeholder="연락처 앞자리" required="required"> 
+							<input type="number" id="phoneSecondnum" name="phoneSecondnum" class="form-control w182_7px ib" placeholder="연락처 앞자리" required="required"> 
 							<span class="ib">-</span> 
-							<input type="number" id="phone_lastnum" name="phone_lastnum" class="form-control w182_7px ib" placeholder="연락처 뒷자리" required="required">
+							<input type="number" id="phoneLastnum" name="phoneLastnum" class="form-control w182_7px ib" placeholder="연락처 뒷자리" required="required">
+						</div>
+					</div>
+					
+					<div id="phonenumFrontInputCt" class="row mb-3">
+						<label for="phonenumFrontInput" class="col-sm-2 col-form-label font12"><span class="fc_red">&nbsp;&nbsp;</span></label>
+						<div id="phonenumFrontInput" class="col-sm-10">
+							<input type="number" id="inputPhoneFirstnum" name="inputPhoneFirstnum" class="form-control w120px ib" value="" placeholder="직접입력">
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label for="user_address" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>주소</label>
+						<label for="userAddress" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>주소</label>
 						<div class="col-sm-10">
-							<input type="text" id="user_address" name="user_address" class="form-control" required="required">
+							<input type="text" id="userAddress" name="userAddress" class="form-control" required="required">
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label for="dept_name" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;부서선택</label>
+						<label for="deptName" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;부서선택</label>
 						<div class="col-sm-10">
-							<select name="dept_name" class="form-select">
+							<select name="deptName" class="form-select">
 								<option value="">부서선택</option>
 								<c:forEach var="deptLists" items="${deptLists}" varStatus="vs">
 									<option value="${deptLists.dept_name}">${deptLists.dept_name}</option>
@@ -107,9 +135,9 @@
 						</div>
 					</div>
 					<div class="row mb-3">
-						<label for="ranks_name" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;직급선택</label>
+						<label for="ranksName" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;직급선택</label>
 						<div class="col-sm-10">
-							<select name="ranks_name" class="form-select">
+							<select name="ranksName" class="form-select">
 								<option value="">직급선택</option>
 								<c:forEach var="positLists" items="${positionsLists}" varStatus="vs">
 									<option value="${positLists.positions_name}">${positLists.positions_name}</option>
@@ -119,9 +147,9 @@
 					</div>
 
 					<div class="row mb-3">
-						<label for="positions_name" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;직책선택</label>
+						<label for="positionsName" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;직책선택</label>
 						<div class="col-sm-10">
-							<select name="positions_name" class="form-select">
+							<select name="positionsName" class="form-select">
 								<option value="">직책선택</option>
 								<c:forEach var="ranksLists" items="${ranksLists}" varStatus="vs">
 									<option value="${ranksLists.ranks_name}">${ranksLists.ranks_name}</option>
@@ -131,9 +159,9 @@
 					</div>
 
 					<div class="row mb-3">
-						<label for="user_auth" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>관리자여부</label>
+						<label for="userAuth" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>관리자여부</label>
 						<div class="col-sm-10">
-							<select name="user_auth" class="form-select">
+							<select name="userAuth" class="form-select">
 								<option value="ROLE_USER">N</option>
 								<option value="ROLE_ADMIN">Y</option>
 							</select>
@@ -142,7 +170,7 @@
 					<br>
 					<div class="row mb-3">
 						<div>
-							<button type="submit" class="btn btn-secondary button">사원정보등록</button>
+							<button type="submit" id="userInfoInsertBtn" class="btn btn-secondary button">사원정보등록</button>
 						</div>
 					</div>
 				</form>

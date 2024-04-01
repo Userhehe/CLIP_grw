@@ -78,16 +78,16 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 							<h6>${loginVo.user_name}</h6> <span> ${loginVo.dept_name}팀 (${loginVo.ranks_name})</span>
 						</li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+						<li><a class="dropdown-item d-flex align-items-center" href="./myPage.do">
 						<i class="bi bi-person"></i>
-						<span>프로필</span>
+						<span>마이페이지</span>
 						</a>
 						</li>
-						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-						<i class="bi bi-gear"></i>
-						<span>개인정보 수정</span></a>
-						</li>
+<!-- 						<li><hr class="dropdown-divider"></li> -->
+<!-- 						<li><a class="dropdown-item d-flex align-items-center" href="users-profile.html"> -->
+<!-- 						<i class="bi bi-gear"></i> -->
+<!-- 						<span>개인정보 수정</span></a> -->
+<!-- 						</li> -->
 						
 						<li id="checkInButton">
 						    <a class="dropdown-item d-flex align-items-center" href="insertDailyCheckIntime.do" onclick="handleCheckInButtonClick()">

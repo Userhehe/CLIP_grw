@@ -1,0 +1,35 @@
+.pd7_4per {
+	padding: 7.4%;
+}
+
+.ib {
+	display: inline-block;
+}
+
+.bgcolorTrans {
+	background: initial;
+}
+
+.mgTop30px {
+	margin-top: 30px;
+}
+
+#profileCt {
+	
+}
+
+#userInfoDetailCt {
+	margin-left: 120px;
+}
+
+#userInfoDetail {
+	padding: 0 50px 20px
+}
+
+#profilePhotoDelBtn {
+	margin-top: 5px;
+}
+
+#title {
+	font-size: 30px;	
+}

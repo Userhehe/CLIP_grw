@@ -85,9 +85,9 @@ public class UserServiceImpl implements IUserService {
 	 * 이메일&연락처 중복체크
 	 */
 	@Override
-	public int duplicateCheckUserinfo(Map<String, Object> map) {
-		log.info("UserServiceImpl duplicateCheckUserinfo 이메일&연락처 중복체크");
-		return dao.duplicateCheckUserinfo(map);
+	public int duplicateCheckEmail(Map<String, Object> map) {
+		log.info("UserServiceImpl duplicateCheckEmail 이메일&연락처 중복체크");
+		return dao.duplicateCheckEmail(map);
 	}
 	
 	/**
@@ -132,9 +132,9 @@ public class UserServiceImpl implements IUserService {
 	 * 재직증명서 다운로드
 	 */
 	@Override
-	public List<UserinfoVo> selectJejicDownload(Map<String, Object> map) {
+	public List<UserinfoVo> selectJejicDownload(String user_id) {
 		log.info("UserServiceImpl selectJejicDownload 재직증명서 다운로드");
-		return dao.selectJejicDownload(map);
+		return dao.selectJejicDownload(user_id);
 	}
 
 	/**

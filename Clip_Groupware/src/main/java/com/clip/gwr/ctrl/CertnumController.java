@@ -56,8 +56,8 @@
 //		String email = userVo.getUser_email();
 //		String key = "certnum_" + id; // Redis에 저장할 키 생성
 //		ValueOperations<String, Integer> valueOps = redisTemplate.opsForValue();
-//        Integer redisCertnum = valueOps.get(key);
-//        log.info("####redisCertnum : " + redisCertnum);
+////        Integer redisCertnum = valueOps.get(key);
+////        log.info("####redisCertnum : " + redisCertnum);
 //        
 //        valueOps.set(key, ranNum); // Redis에 랜덤한 값 저장
 //        redisTemplate.expire(key, 60, TimeUnit.SECONDS); // 키값 1분 뒤 만료
@@ -114,14 +114,4 @@
 //			return "{ \"message\": \"비밀번호가 변경되지않았습니다.\" }";
 //		}
 //	}
-//	
-////	@PostMapping(value = "/deleteRedisKey.do")
-////	public String deleteRedisKey(HttpServletRequest request){
-////		HttpHeaders headers = new HttpHeaders();
-////        headers.set("Content-Type", "text/html; charset=UTF-8");
-////		String id = request.getParameter("id");
-////		String key = "certnum_" + id;
-////		redisTemplate.delete(key);
-////		return "{ \"message\": \"인증번호가 만료되었습니다.\" }";
-////	}
 //}
