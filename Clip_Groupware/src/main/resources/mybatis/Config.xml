@@ -26,6 +26,9 @@
 		<typeAlias type="com.clip.gwr.vo.ReAttendsVo" alias="ReAttendsVo"/>
 		<typeAlias type="com.clip.gwr.vo.AnnualVo" alias="AnnualVo"/>
 		<typeAlias type="com.clip.gwr.vo.AnnualUseVo" alias="AnnualUseVo"/>
+		<typeAlias type="com.clip.gwr.vo.PaymentlineVo" alias="PaymentlineVo"/>
+		<typeAlias type="com.clip.gwr.vo.ReceiverVo" alias="ReceiverVo"/>
+		<typeAlias type="com.clip.gwr.vo.ReferenceVo" alias="ReferenceVo"/>
 		
 	</typeAliases>
 	
@@ -44,5 +47,10 @@
 		<mapper resource="sqls/Memo_Statement.xml"/> <!-- 03/15 -->
 		<mapper resource="sqls/Projects_Statement.xml"/> <!-- 03/25 -->
 		<mapper resource="sqls/Annual_Statement.xml"/>
+		<mapper resource="sqls/Paymentline_Statement.xml"/><!-- 04/01 -->
+		<mapper resource="sqls/Receiver_Statement.xml"/>
+		<mapper resource="sqls/Reference_Statement.xml"/>
+		
+		
 	</mappers>
 </configuration>

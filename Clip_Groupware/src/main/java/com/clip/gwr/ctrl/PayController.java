@@ -47,9 +47,11 @@ public class PayController {
 		String ranks_name = loginUser.getRanks_name();
 		System.out.println("로그인한 정보:"+user_name+","+dept_name+","+ranks_name);
 		
+		
 		model.addAttribute("user_name",user_name);
 		model.addAttribute("dept_name",dept_name);
 		model.addAttribute("ranks_name",ranks_name);
+		
 		
 		 String[] templateIds = {"GIAN_1", "GIAN_2", "GIAN_3"};
 		    for (int i = 0; i < templateIds.length; i++) {
