@@ -1,4 +1,5 @@
 var selectScheduleAll = true;
+var selectScheduleAllDate = "";
 ////화면 로드시 걸어주는 이벤트들 ------------------------------------------------
 $(document).ready(function() {
 	
@@ -17,7 +18,7 @@ $(document).ready(function() {
         if ($('#showAn').prop('checked')) {
             type.push(4);
         }
-        return type.length > 0 ? type.join(',') : null;
+        return type.length > 0 ? type.join(',') : 5;
     }
     
     var initialType = updateType();
@@ -25,6 +26,7 @@ $(document).ready(function() {
 	calendar(initialType);
 	
     $('#showPrs, #showNct, #showRe, #showAn').change(function() {
+		selectScheduleAll = false;
 		var type = updateType();
         calendar(type);
     });
@@ -47,11 +49,13 @@ $(document).ready(function() {
 	        //해제
 	        if (!isChecked) {
 			$('#showPrs, #showNct, #showRe, #showAn').prop('checked', false);
+			selectScheduleAll = false;
 			var type = updateType();
         	calendar(type);
 	        //체크
 	        } else {
 			$('#showPrs, #showNct, #showRe, #showAn').prop('checked', true);
+			selectScheduleAll = false;
 			var type = updateType();
         	calendar(type);
 	        }
@@ -143,70 +147,116 @@ function calendar(type){
 			className: "koHol", 
 			color: "red", 
 			textColor: "white"
-						
 		},
 		{
             id: "allEvents",
             events: function(info, successCallback, failureCallback) {
-				var year = info.start.getFullYear();
-				var startMonth = info.start.getMonth();
-				var endMonth = info.end.getMonth();
-				var month = endMonth - startMonth;
-				
-				if(month<0){
-					month+=12;
+				if(selectScheduleAll == true){
+					var year = info.start.getFullYear();
+					var startMonth = info.start.getMonth();
+					var endMonth = info.end.getMonth();
+					var month = endMonth - startMonth;
+					
+					if(month<0){
+						month+=12;
+					}
+					
+					var nextMonth = (startMonth + month)%12;
+					
+					if(nextMonth ===0){
+						nextMonth = 12;
+					}
+					
+					if(nextMonth === 1&&month !==0){
+						year+=1;
+					}
+					
+					var formattedNextMonth = ('0'+nextMonth).slice(-2);
+					var date = year + '-' + formattedNextMonth;
+					selectScheduleAllDate = date
+					console.log("날짜값 : ",date);
+	                $.ajax({
+	                    type: "get",
+	                    url: "./selectScheduleAll.do",
+	                    data : {date:date, type:type},
+	                    dataType:"json",
+	                    success: function(data) {
+							if(data.length == 0||data == null){
+								console.log("조회내용 없음");
+								successCallback(data);
+							}else{
+								var events = [];
+		                        data.forEach(function(event) {
+		                            var fcEvent = {
+		                                title: event.title,
+		                                start: event.start,
+		                                end: event.end,
+		                                seq: event.seq,
+		                                className: event.seq.includes('USERSCHEDULE') ?
+		                                			'memo_event' : event.seq.includes('NTCSCHEDULE') ?
+		                                			'nct_event' : event.seq.includes('RESERVATION') ? 
+		                                			'reser_event':'annual_event'
+		                            };
+		                            events.push(fcEvent);
+		                        });
+		                        successCallback(events);
+							}
+	                        
+	                    },
+	                    error: function() {
+	                        failureCallback();
+	                        alert("일정을 불러오는데 실패했습니다.");
+	                    }
+	                });
+				}else{
+					var date = selectScheduleAllDate;
+					console.log("날짜값 : ",date);
+	                $.ajax({
+	                    type: "get",
+	                    url: "./selectScheduleAll.do",
+	                    data : {date:date, type:type},
+	                    dataType:"json",
+	                    success: function(data) {
+							if(data.length == 0||data == null){
+								successCallback(data);
+								console.log("조회내용 없음");
+							}else{
+								var events = [];
+		                        data.forEach(function(event) {
+		                            var fcEvent = {
+		                                title: event.title,
+		                                start: event.start,
+		                                end: event.end,
+		                                seq: event.seq,
+		                                className: event.seq.includes('USERSCHEDULE') ?
+		                                			'memo_event' : event.seq.includes('NTCSCHEDULE') ?
+		                                			'nct_event' : event.seq.includes('RESERVATION') ? 
+		                                			'reser_event':'annual_event'
+		                            };
+		                            events.push(fcEvent);
+		                        });
+		                        successCallback(events);
+							}
+	                        
+	                    },
+	                    error: function() {
+	                        failureCallback();
+	                        alert("일정을 불러오는데 실패했습니다.");
+	                    }
+	                });
 				}
 				
-				var nextMonth = (startMonth + month)%12;
-				
-				if(nextMonth ===0){
-					nextMonth = 12;
-				}
-				
-				if(nextMonth === 1&&month !==0){
-					year+=1;
-				}
-				
-				var formattedNextMonth = ('0'+nextMonth).slice(-2);
-				
-				var date = year + '-' + formattedNextMonth;
-				console.log("날짜값 : ",date);
-                $.ajax({
-                    type: "get",
-                    url: "./selectScheduleAll.do",
-                    data : {date:date, type:type},
-                    dataType:"json",
-                    success: function(data) {
-						if(data.length == 0||data == null){
-							console.log("조회내용 없음");
-						}else{
-							var events = [];
-	                        data.forEach(function(event) {
-	                            var fcEvent = {
-	                                title: event.title,
-	                                start: event.start,
-	                                end: event.end,
-	                                seq: event.seq,
-	                                className: event.seq.includes('USERSCHEDULE') ?
-	                                			'memo_event' : event.seq.includes('NTCSCHEDULE') ?
-	                                			'nct_event' : event.seq.includes('RESERVATION') ? 
-	                                			'reser_event':'annual_event'
-	                            };
-	                            events.push(fcEvent);
-	                        });
-	                        successCallback(events);
-						}
-                        
-                    },
-                    error: function() {
-                        failureCallback();
-                        alert("일정을 불러오는데 실패했습니다.");
-                    }
-                });
             }
         }]
-    });
+    }); 
+    if(selectScheduleAll == true){
         calendar.render();
+	}else{
+		calendar.changeView('dayGridMonth', selectScheduleAllDate);
+		selectScheduleAll = true;
+		calendar.render();
+	}
+	
 };
 //calendar function 끝----------------------------
     
@@ -320,6 +370,7 @@ function calendarModal(day){
 				success:function(msg){
 					console.log(msg);
 					modalclose();
+					selectScheduleAll = false;
 					var type = updateTypeModal();
         			calendar(type);
 				}
@@ -333,6 +384,7 @@ function calendarModal(day){
 				success:function(msg){
 					console.log(msg);
 					modalclose();
+					selectScheduleAll = false;
 					var type = updateTypeModal();
         			calendar(type);
 				}
@@ -361,6 +413,7 @@ $(document).on("click", "#myScheduleDelete", function(){
 		    success:function(isc){
 				console.log(isc);
 				modalclose();
+				selectScheduleAll = false;
 				var type = updateTypeModal();
         		calendar(type);
 			}
@@ -375,6 +428,7 @@ $(document).on("click", "#myScheduleDelete", function(){
 		    success:function(isc){
 				console.log(isc);
 				modalclose();
+				selectScheduleAll = false;
 				var type = updateTypeModal();
         		calendar(type);
 			}
@@ -446,6 +500,7 @@ $(document).on("click", "#myScheduleUpdate", function(){
 				success:function(msg){
 					console.log(msg);
 					modalclose();
+					selectScheduleAll = false;
 					var type = updateTypeModal();
         			calendar(type);
 				}
@@ -459,6 +514,7 @@ $(document).on("click", "#myScheduleUpdate", function(){
 				success:function(msg){
 					console.log(msg);
 					modalclose();
+					selectScheduleAll = false;
 					var type = updateTypeModal();
         			calendar(type);
 				}

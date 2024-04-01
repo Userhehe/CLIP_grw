@@ -50,12 +50,11 @@ public class ScheduleController {
 	@GetMapping(value = "/selectScheduleAll.do")
 	@ResponseBody
 	public JSONArray selectScheduleAll(HttpSession session, String date, String type){
-	    log.info("화면에서 받은값 : {}, {}" + date, type);
+	    log.info("화면에서 date값 : {}" + date);
+	    log.info("화면에서 type값 : {}" + type);
 	    Map<String, Object> map = new HashMap<String, Object>();
-
 	    UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
 	    map.put("user_id", id.getUser_id());
-
 	    map.put("fullDate", date);
 
 	    if (type != null && !type.isEmpty()) {
