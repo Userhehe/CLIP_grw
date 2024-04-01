@@ -17,7 +17,12 @@ $(document).ready(function() {
 			data: JSON.stringify(requestData),
 			success: function(data) {
 				console.log(data);
-				$("#modalContent").html("결재요청일자: " + data.app_createdate +"<br>결재상태:"+data.app_draft +"<br>결재내용: " + data.app_content );
+				
+				if(data.app_draft === "결재반려"){
+					$("#modalContent").html("결재요청일자: " + data.app_createdate +"<br>결재상태:"+data.app_draft +  "<br>결재 반려사유 : " + data.pay_rejectreason  +"<br>결재내용: " + data.app_content );
+				}else{
+					$("#modalContent").html("결재요청일자: " + data.app_createdate +"<br>결재상태:"+data.app_draft +"<br>결재내용: " + data.app_content );					
+				}
 				
 				if(data.app_draft === "결재대기" || data.app_draft === "결재승인" ){
 					$("#editBtn").show();

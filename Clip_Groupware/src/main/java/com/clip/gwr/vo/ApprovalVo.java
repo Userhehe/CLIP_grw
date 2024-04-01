@@ -33,6 +33,7 @@ public class ApprovalVo {
 	private String pay_sign;
 	private String pay_num;
 	private String pay_paydate;
+	private String pay_rejectreason;
 
 	private String ref_user;
 	private String ref_team;
