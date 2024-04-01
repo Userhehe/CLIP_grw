@@ -142,51 +142,9 @@ public class PayBoardController {
 		String user_id = loginUser.getUser_id();
 		System.out.println("사용자 ID:"+user_id);
 		
-		ApprovalVo approvalVo = service.getOneApproval(app_seq);
-		String payLine = approvalVo.getApp_payline();
-		System.out.println("결재라인 : "+payLine);
+
 		
-		Gson transGson = new Gson();
-		PaylineVo payLineVO = transGson.fromJson(payLine, PaylineVo.class);
-		System.out.println("결재라인 첫번째:"+payLineVO.getPaymentLine().get("first"));
-		System.out.println("결재라인 승인받은 첫번째:"+payLineVO.getPaymentOk().get("first"));
-		
-		Map<String,Object> voLine = payLineVO.getPaymentLine();
-		Map<String,Object> voLineOk = payLineVO.getPaymentOk();
-		String[] order = {"first", "second", "third"};
-		String app_draft = "결재대기";
-		ApprovalVo checkApprovalVo = new ApprovalVo();
-		
-		//승인 시
-		for (int i = 0; i < order.length; i++) {
-			if(voLine.get(order[i]).equals(user_id)) {
-				voLineOk.put(order[i], "Y");
-				
-				System.out.println(voLine.get(order[i]));
-				System.out.println(voLineOk.get(order[i]));
-				if(order[i].equals("first")) {
-					app_draft = "결재승인";
-				}else if(order[i].equals("second")) {
-					app_draft = "결재승인";
-				}else {
-					app_draft = "결재완료";
-				}
-				payLineVO.setPaymentLine(voLine);
-				payLineVO.setPaymentOk(voLineOk);
-				String strPayline = transGson.toJson(payLineVO);
-				checkApprovalVo.setApp_payline(strPayline);
-				checkApprovalVo.setApp_draft(app_draft);
-				checkApprovalVo.setApp_seq(app_seq);
-				System.out.println(checkApprovalVo);
-			}
-		}
-		int result = service.checkApprovalLine(checkApprovalVo);
-		
-		if (result == 1) {
-		    return "redirect:/myAcceptPayList.do";
-		} else {
-		    return "redirect:/accessError.do";
-		}
+		return null;
 	}	
 	
 	//본인 승인시 결재반려할 경우
