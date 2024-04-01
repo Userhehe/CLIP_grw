@@ -7,6 +7,8 @@
 </div>
 <div style="text-align: center;" align="center">
 	<strong><br></strong>
+	<table class="table table-bordered" style="display: inline-block; vertical-align: middle;">
+						<tbody style="border: black solid 1px;"><tr><th>1차 결재자</th><th>2차 결재자</th><th>3차 결재자</th><th>4차 결재자</th><th>5차 결재자</th></tr><tr><td name="1" value="USER_59">김동휘 대리</td><td name="2" value="USER_1">윤지상 대리</td><td name="3" value="USER_57">김동인 대리</td><td name="4" value="USER_53">김동세 대리</td><td name="5" value="USER_30">박균명 부장</td></tr></tbody></table>
 </div>
 <table cellspacing="0" cellpadding="0" align="center" border="0" id="oldhtmltable-_h6j862tv" data-controltype="ecount.report.shape.table" class="ec-editable" style="table-layout: fixed; width: 800px; height: 280px;" height="216px" width="355px">
 	<colgroup>
@@ -41,7 +43,7 @@
 		<tr align="center" data-key="oldhtmltablerow-_hvqhgwww" style="height: 35px;" height="35px">
 			<td style="border-right: 1px solid rgb(0, 0, 0); border-bottom: 1px solid rgb(0, 0, 0); border-left: 1px solid rgb(0, 0, 0);" class="ec-resizableWidthCell ec-resizableHeightCell" data-columnid="oldhtmltablecell-_1si4byqe" data-key="oldhtmltablerow-_hvqhgwww" sectiontype="tbody"><b><span style="font-family: 나눔고딕, NanumGothic, sans-serif;">기</span></b><b><span style="font-family: 나눔고딕, NanumGothic, sans-serif; font-size: 9pt;">&nbsp;
 						&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></b><b><span style="font-family: 나눔고딕, NanumGothic, sans-serif;">간</span></b></td>
-			<td style="border-right: 1px solid rgb(0, 0, 0); border-bottom: 1px solid rgb(0, 0, 0);" colspan="5" class="ec-resizableWidthCell ec-resizableHeightCell" data-columnid="oldhtmltablecell-_tuuclyfv" data-key="oldhtmltablerow-_hvqhgwww" sectiontype="tbody"><b><span style="font-family: 나눔고딕, NanumGothic, sans-serif;"><a class="vac_start_date"></a>&nbsp;~&nbsp;<a class="vac_end_date"></a></span></b></td>
+			<td style="border-right: 1px solid rgb(0, 0, 0); border-bottom: 1px solid rgb(0, 0, 0);" colspan="5" class="ec-resizableWidthCell ec-resizableHeightCell" data-columnid="oldhtmltablecell-_tuuclyfv" data-key="oldhtmltablerow-_hvqhgwww" sectiontype="tbody"><b><span style="font-family: 나눔고딕, NanumGothic, sans-serif;"><span class="vac_start_date"></span>&nbsp;~&nbsp;<span class="vac_end_date"></span></span></b></td>
 		</tr>
 		<tr align="center" data-key="oldhtmltablerow-_hvqhgwww" style="height: 125px;" height="35px">
 			<td style="border-right: 1px solid rgb(0, 0, 0); border-bottom: 1px solid rgb(0, 0, 0); border-left: 1px solid rgb(0, 0, 0);" class="ec-resizableWidthCell ec-resizableHeightCell" data-columnid="oldhtmltablecell-_1si4byqe" data-key="oldhtmltablerow-_hvqhgwww" sectiontype="tbody"><b><span style="font-family: 나눔고딕, NanumGothic, sans-serif;">신&nbsp;
@@ -64,8 +66,8 @@
 				</div>
 				<div style="text-align: center;">
 					<b><span style="font-family: 나눔고딕, NanumGothic, sans-serif;">신청인:
-							<a class="create_user_name"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<a class="create_user_sign"></a>(인)
+							<span class="create_user_name"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="create_user_sign"></span>(인)
 					</span></b>
 				</div> <b><br> <br></b></td>
 		</tr>

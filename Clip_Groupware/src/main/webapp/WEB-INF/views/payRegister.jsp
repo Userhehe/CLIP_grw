@@ -39,6 +39,7 @@
 
 </style>
 <script type="text/javascript" src="./js/payTemplateSelect.js"></script>
+<script type="text/javascript" src=""></script>
 
 <!-- SmartEditor2 라이브러리  -->
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js"
@@ -50,6 +51,8 @@
 	href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
 
+
+
 <link rel="stylesheet" href="./css/jstree.css" />
 </head>
 <body>
@@ -60,7 +63,8 @@
 				<input type="text" disabled="disabled" id="session_user_name" value="${loginVo.user_name}">
 				<input type="text" disabled="disabled" id="session_dept_name" value="${loginVo.dept_name}">
 				<input type="text" disabled="disabled" id="session_ranks_name" value="${loginVo.ranks_name}">
-				<input type="text" disabled="disabled" id="session_user_id" value="${loginVo.user_id}">
+				<input type="text" disabled="disabled" id="session_user_id" name="user" value="${loginVo.user_id}">
+				
 			</div>
 			<h5 class="card-title">${user_name}님 결재신청하실 기안서를 선택해주세요.</h5>
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -80,6 +84,7 @@
 						aria-controls="contact" aria-selected="false" tabindex="-1">출장
 						보고서</button>
 				</li>
+				
 			</ul>
 			<div class="tab-content pt-2" id="myTabContent">
 				<div class="tab-pane fade show active" id="home" role="tabpanel"
@@ -94,7 +99,7 @@
 				
 					<div class="form-group" style="margin-top:10px;">
 					    <label for="vaSel">연차 종류</label> 
-					    <select class="form-select" aria-label="Default select example" id="vaSel" style="width:37%;" onchange="half(this.value)">
+					    <select class="form-select" aria-label="Default select example" id="vaSel" style="width:37%;" onchange="half(this)">
 					        <option value="">--사용하실 연차종류를 선택하세요.--</option>
 					        <option value="day">연차</option>
 					        <option value="halfDay">반차</option>
@@ -118,10 +123,12 @@
 		            		
 		            	</div>	
 		            	
-		            	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
+					</div>
+					
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewGian" onclick="gatheringInfo()">
               				 미리보기
 		              	</button>
-		            	<div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
+		            	<div class="modal fade" id="previewGian" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
 			                <div class="modal-dialog modal-xl" id="req_preview1">
 			                  <div class="modal-content">
 			                    <div class="modal-header">
@@ -138,17 +145,14 @@
 			                  </div>
 			                </div>
 			              </div>
-		              
-		              
-		            					 
-					</div>
+					
 					
 					
 					
 					<div class="form-group" style="margin-top:10px;">
-						<label for="reason">결재 양식</label>
-						<textarea name="gian_html" id="smartEditor1"
-							style="width: 100%; height: auto;" disabled="disabled"></textarea>
+						<label for="reason">신청 사유</label>
+						<textarea name="gian_html" id="approvalContent"
+							style="width: 100%; height: 600px;"></textarea>
 						<br> <br> <br>
 					</div>
 					<div style="text-align: center;">

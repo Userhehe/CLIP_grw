@@ -27,4 +27,6 @@ public class PaylineVo {
 	private Map<String, Object> reference;
 	
 	
+	//JSON 형태로 진행할 때 사용
+	
 }

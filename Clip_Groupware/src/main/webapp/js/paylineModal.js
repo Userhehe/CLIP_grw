@@ -19,7 +19,7 @@ $(document).ready(function() {
 		var pick_length = pick_usersList.length;
 //		console.log(pick_length);
 		
-		var payseq = ['first','second','third'];
+//		var payseq = ['first','second','third'];
 		
 		if(pick_length > 0){
 			let html = `<label class="badge bg-warning" >결재라인</label>
@@ -38,7 +38,7 @@ $(document).ready(function() {
 					var value = pickUser.getAttribute('value');
 					var name = pickUser.getAttribute('name');
 	//				console.log (value, name);
-					html += `<td name=${payseq[i]} value= ${value}>${name}</td>`;
+					html += `<td name=${i+1} value= ${value}>${name}</td>`;
 				}
 				
 				html += `</tr></table>`;
