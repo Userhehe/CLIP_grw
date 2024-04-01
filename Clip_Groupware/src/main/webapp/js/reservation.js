@@ -1,39 +1,7 @@
 $(document).ready(function() {
-   //리스트로 만든 참석자와 최신예약 시퀀스값넘기기   
-   var selempval=[]; //참석자 배열
-   
-   $("#attChoice").on("click", function() {
-   var attends = "";
-   for(var i = 0; i<selempval.length; i++){ //참석자 리스트에 , 찍기
-      attends += selempval[i];
-      if(i < selempval.length-1){
-         attends +=",";
-      }
-   }
-   
-   var seq =  $('#hiddenValue').val();
-    //console.log("넘어가라:", attends, seq);
-    $.ajax({
-        url: "./attinsert.do",
-        type: "POST",
-        data: { id: attends, seq: seq },
-        dataType: "json",
-        success: function(data) {
-			if(data!=null){
-				console.log("전달받은 data", data);
-				$("#reAttModal").modal("hide");
-           		alert("참석자가 등록되었습니다.");
-           		location.reload();
-			}else{
-				alert("참석자 등록 실패");	
-			}
-            
-        },
-        error: function() {
-            alert("서버 에러");
-        }
-       });
-   });
+
+
+
    //현재 날짜 및 시간 가져오기
    var now = new Date();
    var curHour = now.getHours();
@@ -81,7 +49,7 @@ $(document).ready(function() {
       $("#re_start_time").datetimepicker('show');
    });
    
-   
+   //jstree----------------------------------------------------------
    //데이터 jstree형식으로 바꿔줌
    function convertData() {
       var jstreeData = [];
@@ -112,30 +80,29 @@ $(document).ready(function() {
 						startJstree(jstreeData);
 					},
 					error: function() {
-						alert('결재라인 로드 실패');
+						alert('jstree 로드 실패');
 					}
 				});
    }   
    
    
-   //jstree 설정 ----------
 	function startJstree(data){
 		
 		
 		//jstree 시작 
-		$('#payLine_box').jstree({
-			
-			//jstree의 사용할 플러그인들.
-			plugins: ['search', 'contextmenu','types'],
+		$('#emp_box').jstree({
+			//jstree 사용할 플러그인 설정
+			plugins: ['search','types', 'contextmenu'], 
 			
 			core : {
 				check_callback: true,	//노드들에 콜백을 적용시킬 수 있게 할 것인지 말것인지 설정값 디폴트는 트루다.
 				data: data
 			},
+			
 			//검색 플러그인 설정 값
 			search : {
-							'case_insensitive': true,
-							'show_only_matches': true
+				'case_insensitive': true, //검색에 대소문자를 구분하지 않음
+				'show_only_matches': true //검색어와 정확하게 일치하는 항목만 보여줌
 			},
 			
 			//노드의 이미지 설정...
@@ -151,32 +118,29 @@ $(document).ready(function() {
 				}
 			},
 			
-			//contextmenu(우클릭?) 플러그인 설정 값
-			contextmenu : {
-				items: function(node) {
-					var items = {
-						put: {
-							label: "결재자 추가",
-							action: function() {	//클릭시 이벤트
-							
+			//우클릭 설정
+			contextmenu: {
+				items: function(node){
+					var items ={
+						rightClick:{
+							label:"참석자 추가",
+							action:function(){ //우클릭 이벤트 설정하기 
 								// 선택된 노드의 id 가져옴
-								var sel = $("#payLine_box").jstree('get_selected');
-	
+								var sel = $("#emp_box").jstree('get_selected');
+								
 								//선택된 노드 숨김
-								$("#payLine_box").jstree('hide_node', sel);
-	
+								$("#emp_box").jstree('hide_node', sel);
+								
 								//선택된 노드의 텍스트 내용을 가져옴
-								var selText = $("#payLine_box").jstree().get_text(sel);
-								console.log('텍스트 : ',selText, '노드 : ',sel);
-	
+								var selText = $("#emp_box").jstree().get_text(sel);
+								console.log('텍스트 : ',selText, '사원 아이디 : ',sel);
 								
-	
 								//선택리스트 창의 구조 가져오기
-								var htmlCode = $("#pickLine_box").html();
-								
+								var htmlCode = $("#pickatt_box").html();
 								
 								//직급 없애고 이름만 추출
 								var newSelText = selText.substring(0, selText.indexOf(" ")).trim();
+								console.log("추출된 이름 :",newSelText)
 								
 								//sel : 선택한 태그의 id,  selText : 선택한 태그위치의 텍스트
 								//span 태그 이미지 태그로 바꾸기...
@@ -184,65 +148,13 @@ $(document).ready(function() {
 								htmlCode += "<div class='apr_row'><div class='sel_apr'>" + selText 
 								+ "<span onclick='del(event)' class='bi bi-file-x-fill'></span></div><input type='hidden' name='user_id' value='"
 								+sel+"'><input type='hidden' name='emp_name' value='"+newSelText+"'><input id='chkPosi' type='hidden' name='" 
-								+ selText + "' value='" + $("#payLine_box").jstree().get_node(sel).original.id + "'></div>";
+								+ selText + "' value='" + $("#emp_box").jstree().get_node(sel).original.id + "'></div>";
 								
+								$("#pickatt_box").html(htmlCode);
 								
-								//console.log($("#payLine_box").jstree().get_node(sel));
-	
-								$("#pickLine_box").html(htmlCode);
-	
-	
-	
-	
-								//결재라인 직급 순서 로직 
-								
-								var jstree = $("#payLine_box").jstree();
-								
-								//직급의 순서 배열
-								var rankseq = ["사원", "주임", "대리", "과장", "차장", "부장", "이사", "부사장", "사장", "대표이사"];
-								
-								//가져온 노드의 텍스트
-								var nodeText = jstree.get_node(sel).text;
-								console.log(nodeText, nodeText.indexOf(" "));
-								console.log(nodeText.substring(nodeText.indexOf(" "),nodeText.length).trim());
-//								var userRankName = userRank.substring()
-								//노드의 직급
-								var userRank = nodeText.substring(nodeText.indexOf(" "),nodeText.length).trim();
-								
-								//직급의 순서 번호
-								var rankIndex = rankseq.indexOf(userRank);
-								
-								
-								console.log(rankIndex);
-	
-	
 								//선택된 노드 선택 해제하기
-								$("#payLine_box").jstree('deselect_node', sel);
-	
-								//jstree에서 트리에 있는 모든 노드의 정보를 가져와서 변수에 저장
-								//null : 첫 번째 매개변수는 가져올 노드의 ID, null을 사용하면 모든 노드를 가지고 오게 됨
-								//flat : 모든 노드가 트리 구조를 유지하면서 하나의 배열에 포함 됨
-								var allNodes = jstree.get_json(null, { flat: true });
-	
-								//모든 노드와 선택된 노드의 position_flag 비교 후 disable 해줌
-								for (var i = 0; i < allNodes.length; i++) {
-									//트리의 노드
-									var iNode = jstree.get_node(allNodes[i]);
-									
-									//구분 노드가 아닐 시 (리프노드일 시 )
-									if(iNode.parents != "#"){
-										//순서 노드의 텍스트
-										var iNodeText = iNode.text; 
-										//텍스트에서 가져온 직급
-										var iNodeRank= iNodeText.substring(iNodeText.indexOf(" "),iNodeText.length).trim();
-										//직급의 순위
-										var iRankIndex = rankseq.indexOf(iNodeRank);
-									
-										if (iRankIndex < rankIndex) {
-											$("#payLine_box").jstree('disable_node', iNode);
-										}
-									}
-								}
+								$("#pickatt_box").jstree('deselect_node', sel);
+								
 							}
 						}
 					};
@@ -251,21 +163,20 @@ $(document).ready(function() {
 						items.put = false;
 					}
 	
-					var chkParent = $("#payLine_box").jstree().is_parent(node);
+					var chkParent = $("#emp_box").jstree().is_parent(node);
 					if (chkParent) {
 						items.put = false;
 					}
 					
 					return items;
 				}
-				
 			}
-			
-		});
+						
+		}); //jstree 끝
 	
 	
 		// 트리를 처음부터 열린 상태로 보여줌
-	$('#payLine_box').on('ready.jstree', function() {
+	$('#emp_box').on('ready.jstree', function() {
 		$(this).jstree('open_all');
 	});
 
@@ -280,7 +191,7 @@ $(document).ready(function() {
 		// 300 밀리초 후에 검색 수행
 		searchTimer = setTimeout(function() {
 			var v = $('#search_input').val().trim();
-			$('#payLine_box').jstree(true).search(v);
+			$('#emp_box').jstree(true).search(v);
 		}, 300);
 	});
 	
@@ -288,113 +199,10 @@ $(document).ready(function() {
 	}
    
    convertData();  //jstree에 값을 넣어줄 데이터들 조회하는 함수를 실행하기 위함 
-   
-   
-      
-//      data.forEach(function(item) {
-//         jstreeData.push({
-//            "id": item.user_id,
-//            "parent": item.dept_seq,
-//            "text": item.user_name+" "+item.ranks_name,
-//            "type" : 'leaves'
-//         });
-//      });
-//      
-//      
-//      return jstreeData;
-//   }
-//   
-//   
-//   //jstree 결과가 
-//   function initializeJSTree() {
-//      $.ajax({
-//         url: './selectAttendsJstree.do',
-//         dataType: 'json',
-//         success: function(data) {
-//            var jstreeData = convertData(data);
-//            $('#selectAttendsJstree').jstree({
-//               'core': {
-//                  'data': jstreeData,
-//                  'check_callback':true
-//               },//코어 영역끝
-//               checkbox: {
-//                  three_state: false
-//               },
-//               search: {
-//                  'case_insensitive': true,
-//                  'show_only_matches': true
-//               },
-//
-//               plugins: ["search", "checkbox","contextmenu"]
-//            });
-//         }/*success 끝*/
-//      });/*ajax 끝*/
-//   }
-//   
-//   
-//   //아작스 실행하는 놈
-//   initializeJSTree();
-   
 
-   
-
-
-function insertAddAtt(){   
-   $("#reAttModal").modal("show");
-      //select_node.jstree 이벤트 핸들링
-      var txtarea = $("#addemp"); //선택한 사원의 정보가 보이는곳
-      var selemptxt=[]; //jsp에 보이는 값
-//      var selempval=[]; //db에 전달될 값
-      var seq=$("#hiddenValue").val();
-      
-      $('#selectAttendsJstree').on('select_node.jstree', function(e, data) {
-          if (!data.node.id.includes('DEPT')) { // 부서의 정보가 전달되는 것을 방지
-              var selemp = data.node.text; // 화면에 보일 사원정보
-              var selempid = data.node.id; // 컨트롤러로 보낼 사원정보
-              selemptxt.push(selemp);
-              selempval.push(selempid);
-              
-             console.log("선택한 사원정보:",selemp);
-             console.log("선택한 사원정보 배열:",selemptxt);
-             console.log("선택한 사원id 배열:",selempval);
-      
-              txtarea.val(selemptxt.join("\n"));
-          }
-      });
-      
-      // deselect_node.jstree 이벤트 핸들링
-      $('#selectAttendsJstree').on('deselect_node.jstree', function(e, data) {
-          if (!data.node.id.includes('DEPT')) { // 부서의 정보가 전달되는 것을 방지
-              var deselemp = data.node.text;
-              var deselempid = data.node.id;
-            selemptxt = selemptxt.filter(emp => emp !== deselemp);
-            selempval = selempval.filter(emp => emp !== deselempid);
-            
-            console.log("선택취소한 사원정보:",deselemp);
-             console.log("선택한 사원정보 배열:",selemptxt);
-             console.log("선택한 사원id 배열:",selempval);
-             
-             txtarea.val(selemptxt.join("\n"));
-          }
-          
-   });   
-}
-      
-   
-   
-   // 검색창 글자 입력하면 나오는놈
-   $('#selectAttendsJstree_search').keyup(function() {
-   $('#selectAttendsJstree').jstree(true).show_all();
-   $('#selectAttendsJstree').jstree('search', $(this).val());
-   });
-   
-
-   //jstree-----------------------------------
  
- 
-//   //예약 등록 버튼-----------------------------------
+    //예약 등록 버튼-----------------------------------
    $("#addReservation").click(function() {
-   
       var me_room = document.getElementById("me_room").value;
       var re_start = document.getElementById("re_start").value;
       var re_start_time = document.getElementById("re_start_time").value;
@@ -482,16 +290,104 @@ function insertAddAtt(){
    })
    
    });
+   
 });
-
-
-
-
-
-
-
-
 //dcoument ready 끝------------------------------------
+
+//참석자 이름 빼기
+function del(event) {
+	// 클릭된 span의 parent div
+	var parentDiv = (event.target.parentNode).parentNode;
+	console.log('이벤트 노드의 상위 노드 : ',parentDiv);
+
+
+	//#apr_chk div 탐색
+	var chkDiv = parentDiv.parentNode;
+	console.log('parentDiv의 상위노드 : ',chkDiv)
+
+	// 선택된 노드 삭제하기 
+	parentDiv.remove();
+	console.log("삭제된 사원",)
+
+
+	//#apr_chk div안에 있는 apr_row의 총 개수
+//	var chkDiv_len = chkDiv.querySelectorAll('.apr_row').length;
+//	console.log("남은 row 개수", chkDiv_len)
+//
+//	//삭제한 선택 라인의 사원의 직급을 파악하는 작업
+//	var rankseq = ["사원", "주임", "대리", "과장", "차장", "부장", "이사", "부사장", "사장", "대표이사"];
+//
+//	if (chkDiv_len !== 0) {
+//		
+//		//마지막 apr_row 탐색
+//		var chkDiv_last = chkDiv.querySelectorAll('.apr_row')[chkDiv_len - 1];
+//		
+//		//마지막 apr_row의 position_flag
+//		var chkDiv_last_p;
+//		chkDiv_last_p = chkDiv_last.querySelector("#chkPosi").name;
+//		console.log('chkDiv_last : ', chkDiv_last);
+//		console.log('chkDiv_last_p : ', chkDiv_last_p);
+//		
+//		//노드의 직급
+//		var userRank = chkDiv_last_p.substring(chkDiv_last_p.indexOf(" "),chkDiv_last_p.length).trim();
+//		
+//		//직급의 순서 번호
+//		var rankIndex = rankseq.indexOf(userRank);
+//	
+//	
+//	} else {
+//		//chkDiv_len이 0개일때 chkDiv_last값이 -1이 되지 않도록 chkDiv_len이 0일 때(#"apr_chk")에 아무것도 있지 않을 때 chkDiv_last_p를 0으로 만들어줌
+//		rankIndex = 0;
+//	}
+//	//console.log(chkDiv);
+//	//console.log(chkDiv_len);
+//	
+//	//취소한 노드안의 sel_apr이라는 클래스를 가진 div 탐색
+//	var childDiv = parentDiv.querySelector('.sel_apr')
+//	
+//	console.log(childDiv);
+//	
+//	//childDiv의 내용 저장
+//	var childText = childDiv.textContent
+//	
+//	
+//	
+//	//findTreeNodeByText function을 통해 childText와 같은 내용의 node 저장
+//	var treeNode = findTreeNodeByText(childText);
+//	if (treeNode) {
+//		var jstree = $("#emp_box").jstree();
+//		var allNodes = jstree.get_json(null, { flat: true });
+//		
+//		//treeNode의 아이디로 hide 됐던 노드 다시 show 해주기
+//		$("#emp_box").jstree('show_node', treeNode.id);
+//		
+//		console.log('treeNode.id : ', treeNode.id);
+//		
+//		
+//		
+//		//#apr_chk div에 있던 것들이 삭제되면 다시 #jstree에서 직급에 따라 disable된것이 enable 처리
+//		for (var i = 0; i < allNodes.length; i++) {
+//         var iNode = jstree.get_node(allNodes[i]);
+//         
+//         //결재라인 맨 마지막에 있는 녀석의 직급을 파악하고 그놈보다 높거나 같은 직급은 활성화 시키는 로직
+//	   	  if(iNode.parents != "#"){
+//				//순서 노드의 텍스트
+//				var iNodeText = iNode.text; 
+//				//텍스트에서 가져온 직급
+//				var iNodeRank= iNodeText.substring(iNodeText.indexOf(" "),iNodeText.length).trim();
+//				//직급의 순위
+//				var iRankIndex = rankseq.indexOf(iNodeRank);
+//			
+//				  if (iRankIndex >= rankIndex) {
+//		            $("#emp_box").jstree('enable_node', iNode);
+//		         }
+//			}
+//			
+//      }
+//      
+//      
+//	}
+}
 
 
 
@@ -596,6 +492,6 @@ function modifyRev(){
 	}
 }
 
-function TLqkf(){
-	$("#paylinemodal").modal("show");
+function tlqkf(){
+	$("#reattmodal").modal("show");
 }
