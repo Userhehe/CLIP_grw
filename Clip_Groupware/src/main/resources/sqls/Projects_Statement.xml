@@ -9,20 +9,22 @@
 		PRJ_NAME, PRJ_PROGRESS
 		FROM PROJECTS p 
 	</select>
-
-	<!-- 프로젝트 진행도별 조회 -->
-	<select id="projectsProgressSel" resultType="ProjectsVo">
-		SELECT CLI_NAME,
-		PRJ_NAME, PRJ_PROGRESS, PRJ_STATUS, PRJ_SDATE, PRJ_DDATE
-		FROM PROJECTS p
-		WHERE PRJ_STATUS = '진행중'
-	</select>
 	
-	<select id="getCompletedProjects" resultType="ProjectsVo">
-		SELECT CLI_NAME,
-		PRJ_NAME, PRJ_PROGRESS, PRJ_STATUS, PRJ_SDATE, PRJ_DDATE
-		FROM PROJECTS p
-		WHERE PRJ_STATUS = '완료'
+	<!-- 첫번째 탭 : 진행중/완료 목록 조회 -->
+	<select id="getProgressProjects" parameterType="java.util.Map" resultType="ProjectsVo">
+		SELECT p.PRJ_ID, p.PRJ_NAME,p.CLI_NAME, p.PRJ_SDATE, p.PRJ_DDATE, p.PRJ_STATUS, p.PRJ_MANAGER, p.PRJ_PROGRESS, pm.USER_ID, u.USER_NAME
+		FROM PROJECTS p 
+		JOIN PROJECT_MEM pm ON p.PRJ_ID = pm.PRJ_ID
+		JOIN USERINFO u ON pm.USER_ID = u.USER_ID
+		WHERE 1=1
+			<if test="PRJ_STATUS != null and PRJ_STATUS != ''">
+			AND PRJ_STATUS = #{PRJ_STATUS}
+			</if>
+			<if test="CLI_NAME != null and CLI_NAME != ''">
+			AND CLI_NAME = #{CLI_NAME}
+			</if>
+			<!-- AND u.USER_ID IN (#{USER_ID}) -->
+		ORDER BY p.PRJ_SDATE ASC 
 	</select>
 	
 	<select id="getMemberName" resultType="ProjectMemVo">

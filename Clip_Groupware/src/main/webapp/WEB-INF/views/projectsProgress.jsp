@@ -49,13 +49,11 @@
 								<li style="margin-right: 10px;">
 									<input class="form-check-input" type="radio" name="gridRadios"
 										id="projectsProgressSel" value="option1"
-										onClick="location.href='./projectsProgress.do'" 
 										<c:if test="${radioChk == 0}">checked</c:if>>
 									<label class="form-check-label" for="gridRadios1"> 진행중</label>
 								</li>
 								<li>
 									<input class="form-check-input" type="radio"
-										onClick="location.href='./getCompletedProjects.do'"
 										name="gridRadios" id="projectsProgressDoneSel" value="option2"
 										<c:if test="${radioChk == 1}">checked</c:if>> 
 									<label class="form-check-label" for="gridRadios2">완료</label>

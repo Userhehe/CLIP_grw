@@ -29,4 +29,9 @@ public interface IProjectsService {
 	// 프로젝트 추가
 	public int projectsInsert(Map<String,Object>map);
 
+	
+	///////// 여기서 부터 다시
+	
+	public List<ProjectsVo> getProgressProjects(Map<String, Object> map);
+
 }
