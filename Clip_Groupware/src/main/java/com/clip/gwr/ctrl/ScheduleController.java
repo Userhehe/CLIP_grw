@@ -78,6 +78,7 @@ public class ScheduleController {
 	        obj.put("title", vo.getPrs_title());
 	        obj.put("start", vo.getPrs_start());
 	        obj.put("end", vo.getPrs_end());
+	        obj.put("user_id", vo.getUser_id());
 	        memolist.add(obj);
 	    }
 	    System.out.println("넘겨줄 데이터"+memolist);
