@@ -19,7 +19,7 @@
 			<div>
 				<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님 요청 결재리스트</h4>
 				<div style="margin-left: 560px;">
-					<select  id="statusSelect"  style="width: 35%; display: unset;" class="form-select " aria-label="Default select example">
+					<select  id="statusSelect"  style="width: 15%; display: unset;" class="form-select " aria-label="Default select example">
 		                      <option value="all" selected="selected" >전체 검색</option>
 		                      <option value="결재대기">결재대기</option>
 		                      <option value="결재반려">결재반려</option>
