@@ -17,14 +17,11 @@
 	</insert>
 	
    <!-- 부서 수정 -->
-    <update id="updateDept" parameterType="java.util.Map">
-		UPDATE DEPT D
-		SET D.DEPT_NAME = #{dept_name}
-		WHERE D.DEPT_SEQ = #{dept_seq}
-		AND D.DEPT_SEQ IN (
-		SELECT U.DEPT_SEQ
-		FROM USERINFO U)
-     </update>
+ <update id="updateDept" parameterType="java.util.Map">
+    UPDATE DEPT D
+    SET D.DEPT_NAME = #{dept_name}
+    WHERE D.DEPT_SEQ = #{dept_seq}
+</update>
      
      <!-- 부서 삭제  -->
      <delete id="delDept" parameterType="java.util.Map">
@@ -32,17 +29,17 @@
 	 WHERE DEPT_SEQ =#{dept_seq}
      </delete>
      
-     <!-- 부서 검색 -->
-     <select id="searchDept" parameterType="java.util.Map">
-     SELECT *
-	 FROM DEPT
-	 WHERE 1=1
-	 	<if test="dept_name != null">
-			AND DEPT_NAME LIKE '%' || #{dept_name} || '%'
-		</if>
-     </select>
+<!--      부서 검색 -->
+<!--      <select id="searchDept" parameterType="java.util.Map"> -->
+<!--      SELECT * -->
+<!-- 	 FROM DEPT -->
+<!-- 	 WHERE 1=1 -->
+<!-- 	 	<if test="dept_name != null"> -->
+<!-- 			AND DEPT_NAME LIKE '%' || #{dept_name} || '%' -->
+<!-- 		</if> -->
+<!--      </select> -->
      
-     <!-- 부서 중복 검색 -->
+     <!-- 부서 중복 검사 -->
      <select id="duplicateCheckDept" parameterType="java.util.Map">
      SELECT COUNT(*)
 	 FROM DEPT

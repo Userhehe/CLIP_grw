@@ -19,5 +19,7 @@ public class DeptVo {
 	private String dept_seq;
 	private String dept_name;
 	private String dept_regdate;
+	private String user_id;
+	private String user_name;
 
 }

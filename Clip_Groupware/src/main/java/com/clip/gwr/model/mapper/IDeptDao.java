@@ -20,7 +20,7 @@ public interface IDeptDao {
 		public List<DeptVo> searchDept(String dept_name);
 		
 		// 부서 중복검사 
-		public int duplicateCheckDept(Map<String, Object>map);
+		public int duplicateCheckDept(String dept_name);
 		
 		// 부서 전체조회 
 	   public List<DeptVo> deptAll();

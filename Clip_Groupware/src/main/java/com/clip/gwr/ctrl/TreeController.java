@@ -22,7 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-public class TreeController {
+public class TreeController
+{
     
     @Autowired
     private IUserService userService;

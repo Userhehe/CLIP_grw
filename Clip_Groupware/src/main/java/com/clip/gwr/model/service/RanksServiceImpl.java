@@ -44,9 +44,9 @@ public class RanksServiceImpl implements IRanksService {
 	}
 
 	@Override
-	public int duplicateRanks(Map<String, Object> map) {
-		log.info("RanksServiceImpl duplicateRanks 직급명 중복 검사: {}",map);
-		return dao.duplicateRanks(map);
+	public int duplicateRanks(String ranks_name) {
+		log.info("RanksServiceImpl duplicateRanks 직급명 중복 검사: {}",ranks_name);
+		return dao.duplicateRanks(ranks_name);
 	}
 
 	@Override

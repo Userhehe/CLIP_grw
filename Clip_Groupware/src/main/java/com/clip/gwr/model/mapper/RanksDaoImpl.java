@@ -45,9 +45,9 @@ public class RanksDaoImpl implements IRanksDao {
 	}
 
 	@Override
-	public int duplicateRanks(Map<String, Object> map) {
+	public int duplicateRanks(String ranks_name) {
 		log.info("##### 직급명 중복검사 duplicateRanks #####");
-		return sqlSession.selectOne(NS+"duplicateRanks",map);
+		return sqlSession.selectOne(NS+"duplicateRanks",ranks_name);
 	}
 
 	@Override
