@@ -80,6 +80,28 @@ public class ProjectsDaoImpl implements IProjectsDao {
 		return sqlSession.selectList(NS + "getProgressProjects", map);
 	}
 
+	@Override
+	public int insertProject(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NS + "insertProject", map);
+	}
+
+	@Override
+	public List<ProjectsVo> selectClientList() {
+		return sqlSession.selectList(NS + "selectClientList");
+	}
+
+	@Override
+	public int insertPrjMem(Map<String, Object> map) {
+		return sqlSession.insert(NS + "insertPrjMem", map);
+	}
+
+	@Override
+	public int insertClient(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(NS + "insertClient", map);
+	}
+
 
 	// 프로젝트 삭제
 
