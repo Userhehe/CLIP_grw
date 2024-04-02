@@ -125,49 +125,16 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 						</div>
 					</div> 
 
-				<!-- 예약 추가 모달 끝 -->
-					
-<!-- 				참가인원 설정 모달 (jstree사용) -->
-<!-- 					<div class="modal fade" id="reAttModal" tabindex="-1"	role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!-- 					<div class="modal-dialog" role="document"> -->
-<!-- 						<div class="modal-content"> -->
-
-<!-- 							<div class="form-group"> -->
-<!-- 							 <div id="hiddenDiv" style="display: none;"> -->
-<!-- 						        값을 저장할 input -->
-<!-- 						        <input type="text" id="hiddenValue"> -->
-<!-- 						    </div> -->
-<!-- 									<div class="modal-header"> -->
-<!-- 										<h5 class="modal-title" id="exampleModalLabel">회의 참석자를 선택 하세요</h5> -->
-<!-- 									</div> -->
-<!-- 									<div class="modal-body"> -->
-<!-- 										<input class="form-control mt-2" id="selectAttendsJstree_search" type="text" placeholder="사원 검색 창입니다."> -->
-<!-- 				                           <div id="attadd"> -->
-<!-- 				                              <div id="selectAttendsJstree"></div> -->
-<!-- 				                              <div id="attendsCheckList" style="display: none"> -->
-<!-- 				                                 <input type="text" id="re_attend" name="re_attend"> -->
-<!-- 				                              </div> -->
-<!-- 				                              <input type="text" id="addemp" placeholder="참석자를 선택하세요"> -->
-<!-- 				                           </div> -->
-<!-- 									</div> modal body -->
-<!-- 							</div> form-group -->
-								
-<!-- 								<div class="modal-footer"> -->
-<!-- 									<input class="btn btn-secondary" type="button" value="선택 완료" id="attChoice" >  -->
-<!-- 									<input class="btn btn-secondary" type="button" value="취소" id="addReservationCancel" onclick="redetailclose()"> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				참가인원 설정 모달 끝 -->
 				
-		<!-- 결재라인 모달 영역 -->
+		<!-- 회의 참여인원 설정 모달 -->
 		<div class="modal fade" id="reattmodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
             
             	<div class="modal-dialog modal-lg">
             	
             		<div class="modal-content">
 		            	<div class="modal-header">
+		            	 <div id="hiddenValue" style="display: none;">
+		            	 </div>
 			                <h4 class="modal-title">회의 참석자 선택</h4>
 			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			               
@@ -175,7 +142,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 		                <div class="modal-body row">
 			                <div class="col-lg-6">
 			                	<div class="select_payline_area col-lg-12">
-			                		<div id="search_box">
+			                		<div id="empChoice">
 										<h5>사원 선택</h5>
 									</div>
 									<hr/>
@@ -196,9 +163,9 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 		                	<hr>
 	                    </div>
 	                    <div class=modal-footer>
-	                      <button type="button" class="btn btn-warning" id="applyPayLine">결재라인 지정확인</button>
+	                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
 	                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
-	                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+	                      <button type="button" class="btn btn-warning" id="attconfirm" onclick="attconfirm()">참석자 등록</button>
 	                    </div>
                     </div>
                     
@@ -213,7 +180,6 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 		<div class="container">
 			<div class="row">
 				<button class="btn btn-secondary" id="reservationModalButton" onclick="reservationModal()" > 예약하기 </button>
-				<button class="btn btn-secondary" id="attbtn" onclick="tlqkf()" > 참석자 명단 </button>
 				<div class="card-body">
 					<div id="recalendar"></div>
 				</div>

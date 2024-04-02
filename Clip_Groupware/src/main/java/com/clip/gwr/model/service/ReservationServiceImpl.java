@@ -23,9 +23,9 @@ public class ReservationServiceImpl implements IReservationService {
 	
 	//본인 예약 정보 전체조회
 	@Override
-	public List<ReservationVo> myReservationAll(String user_id) {
-		log.info("ReservationServiceImpl myReservationAll 사용자 아이디 :{}",user_id);
-		return dao.myReservationAll(user_id);
+	public List<ReservationVo> myReservationAll(Map<String, Object> map) {
+		log.info("ReservationServiceImpl myReservationAll 사용자 아이디 :{}",map);
+		return dao.myReservationAll(map);
 	}
 	
 	//회의실 예약하기
@@ -58,16 +58,16 @@ public class ReservationServiceImpl implements IReservationService {
 	
 	//
 	@Override
-	public int reModifyRev(int re_seq) {
+	public int reModifyRev(Map<String, Object> map) {
 		log.info("ReservationServiceImpl reModifyRev 예약내용 수정");		
-		return dao.reModifyRev(re_seq);
+		return dao.reModifyRev(map);
 	}
 
 	//참석자 삭제
 	@Override
-	public int reModifyAtt(String user_id) {
+	public int reModifyAtt(int re_seq) {
 		log.info("ReservationServiceImpl reModifyAtt 참석자 삭제");
-		return dao.reModifyAtt(user_id);
+		return dao.reModifyAtt(re_seq);
 	}
 	
 	//예약내용 삭제
@@ -99,6 +99,11 @@ public class ReservationServiceImpl implements IReservationService {
 	@Override
 	public int attinsert(Map<String, Object> map) {
 		return dao.attinsert(map);
+	}
+
+	@Override
+	public List<ReservationVo> myReservation(String user_id) {
+		return dao.myReservation(user_id);
 	}
 
 	
