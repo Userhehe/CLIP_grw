@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,6 @@ import com.clip.gwr.vo.MeeTingRoomVo;
 import com.clip.gwr.vo.ReAttendsVo;
 import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
-import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -50,10 +48,14 @@ public class ReservationController {
 	//예약 달력에 전체 조회 하기
 	@GetMapping(value = "/reList.do")
 	@ResponseBody
-	public JSONArray reAllList(HttpSession session) {
+	public JSONArray reAllList(HttpSession session,String date) {
 		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
 		log.info("session에서 받은값 :" + id);
-		List<ReservationVo>lists = service.myReservationAll(id.getUser_id());
+		Map<String, Object> map =new HashMap<>();
+		map.put("user_id", id.getUser_id());
+		map.put("fulldate", date);
+		log.info("map값:{}",map);
+		List<ReservationVo>lists = service.myReservationAll(map);
 		JSONArray reArr = new JSONArray();
 		for(ReservationVo vo : lists) {
 			JSONObject obj = new JSONObject();
@@ -63,7 +65,6 @@ public class ReservationController {
 			obj.put("content",vo.getRe_content());
 			obj.put("start",vo.getRe_start());
 			obj.put("end",vo.getRe_end());
-			log.info("무엇?:{}",obj);
 			reArr.add(obj);
 		}
 		return reArr;
@@ -123,7 +124,7 @@ public class ReservationController {
 	public String myReservation(Model model, HttpSession session) {
 		log.info("ReservationController myReservation 회의실 예약 수정 화면 이동");
 		UserinfoVo id = (UserinfoVo) session.getAttribute("loginVo");
-		List<ReservationVo> myReservationList = service.myReservationAll(id.getUser_id());
+		List<ReservationVo> myReservationList = service.myReservation(id.getUser_id());
 		model.addAttribute("myReservationList",myReservationList);
 		return "myReservation";
 	}
@@ -156,7 +157,7 @@ public class ReservationController {
 	}
 	
 
-	// jstree
+	//jstree
 	@GetMapping(value = "/selectAttendsJstree.do")
 	@ResponseBody
 	public String selectAttendsJstree() {
@@ -197,15 +198,14 @@ public class ReservationController {
 	//참석자 등록하기
 	@PostMapping(value = "/attinsert.do")
 	@ResponseBody
-	public Map<String, Object> attinsert(String id, int seq) {
-		log.info("ReservationController attinsert");
-		log.info("배열 : {}",id);
+	public Map<String, Object> attinsert(String id, int seq) { 
+		log.info("ReservationController attinsert 참석자 입력");
+		log.info("참석자 id : {}",id);
 		log.info("최신시퀀스:{}",seq);
-		
 		int cnt =0;
+		
 		String[] ids = id.split(",");
 		Map<String, Object> map = new HashMap<>();
-		
 		for(String att: ids) {
 			map.put("user_id", att);
 			map.put("re_seq", seq);
@@ -227,17 +227,31 @@ public class ReservationController {
 			return isc;
 		}
 		
+		
 	//예약내용 수정하기
-		@GetMapping(value = "/reModify.do")
+		@PostMapping(value = "/reModify.do")
 		@ResponseBody
-		public ReservationVo reModify(int seq, String id) {
-			log.info("ReservationController reModify 참석자와 예약내용을 수정한다.");
-			service.reModifyRev(seq);
+		public Map<String, Object> reModifyRev(@RequestParam Map<String, Object> map, HttpSession session) {
+			log.info("ReservationController reModify 예약내용을 수정한다.");
+			UserinfoVo vo = (UserinfoVo) session.getAttribute("loginVo");
+			log.info("vo의 값:{}",vo);
+			String id = vo.getUser_id();
+
 			
+			map.put("user_id", id);
+			log.info("사용자 아이디:{}",id);
+			log.info("map값:{}",map);
+			service.reModifyRev(map);
 			
-			
-			service.reModifyAtt(id);
-			return null;
+//			service.reModifyAtt(id);
+			return map;
+		}
+	//예약 참석자 수정하기 
+		public int reModifyAtt(int seq) {
+			log.info("ReservationController reModifyAtt 참석자를 수정한다.");
+			log.info("참석자가 초기화될 예약 seq :{}", seq);
+			 int isc = service.reModifyAtt(seq);
+			return isc;
 		}
 	
 

@@ -50,7 +50,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 <div class="modal fade" id="redetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">       
     	<div class="modal-content">
-    		<form action="./reDetail.do" method="get" id="">
+    		<form id="Revmodify">
                 <div class="modal-header">
                 	<div class="detailhidden" style="display: block;">
                     	<h5 class="modal-title">회의실 예약 상세조회</h5>
@@ -60,15 +60,14 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
                     </div>
                 </div>
                 <div class="modal-body">
-                <!-- 값을 저장할 input -->
+                <!--seq 값을 저장할 input -->
                 <div class="form-group">
 					<div id="hiddenDiv" style="display: none;">
-						<input type="text" id="hiddenValue">
+						<input type="text" id="hiddenValue" name="re_seq">
 					</div>	        
 		        </div>
-               <div class="form-group"><!-- 예약내용 전체  -->
+               <div class="form-group">
 	                     <label for="title" class="col-form-label">회의실 번호</label>
-	                     
 	                     <div class="detailhidden" style="display: block;">
 	                     	<input type="text" class="form-control" id="deroomNum"  readonly="readonly" >
 	                     </div>
@@ -97,17 +96,24 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 								<input type="text"	class="form-control" readonly="readonly" ondblclick="return false" id="re_start" name="re_start">
 							</span> 
 							<span class="input-group-btn" style="margin-left: 20px;">
-								<button class="btn btn-secondary" type="button" onclick="selectPossibleMeRoomButton()">예약가능시간 보기</button>
+								<button class="btn btn-secondary" type="button" onclick="selPDate()">날짜 선택 완료</button>
 							</span>
 						</div>
                     </div>
+                    <!-- 종료날짜 -->
+                    <div id="nawarayo" style="display: none">
+								<label for="re_start_time" class="col-form-label">예약 시간을 선택해주세요.(회의 종료시간 = 시작 시간 + 1시간)</label>
+								<div class="input-group">
+									<span class="input-group-addon"> 
+										<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="re_start_time">
+									</span> 
+									<span class="input-group-btn" style="margin-left: 20px;">
+										<input class="btn btn-secondary" type="button" value="예약 시간 선택 완료" onclick="reservationTime()">
+									</span>
+								</div>
+							</div>
+                    <!-- 종료날짜 끝 -->
                     
-                     <div class="detailhidden" style="display: block;">
-	                     <label for="endDate" class="col-form-label">종료 날짜</label>
-		                     <div class="input-group">
-		                        <input type="text" class="form-control"  id="deend" readonly="readonly">
-		                     </div>
-                     </div>
                      
                      <div class="form-group">
 	                    <label for="title" class="col-form-label">회의 제목</label>
@@ -115,52 +121,92 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 	                    	<input type="text" class="form-control" id="detitle" readonly="readonly">
                      	</div>
 	                    <div class="modifyhidden" style="display: none;">
-	                    	<input type="text" class="form-control" id="detitle" readonly="readonly">
+	                    	<input type="text" class="form-control" id="re_title" name="re_title">
                      	</div>
 	                   
                      </div>
                      
-	                 <label for="content" class="col-form-label">일정 내용</label>
+	                 <label for="content" class="col-form-label">회의 내용</label>
 	                 	<div class="detailhidden" style="display: block;">
 	                 		<textarea class="form-control" rows="5" id="decontent" readonly="readonly"></textarea>
 	                 	</div>
 	                 	<div class="modifyhidden" style="display: none;">
-	                 		<textarea class="form-control" rows="5" id="decontent" readonly="readonly"></textarea>
+	                 		<textarea class="form-control" rows="5" id="re_content" name="re_content"></textarea>
 	                 	</div>
-	                 	
-	                 <div class="form-group">
-		                 
-		                    <label for="title" class="col-form-label">참석자</label>
-		                 <div class="detailhidden" style="display: block;">
-		                    <input type="text" class="form-control" id="deattlist" readonly="readonly">
-	                     </div>
-                     </div>
-                     
-                     <div class="form-group">
-                     	<div class="detailhidden" style="display: block;">
-	                     	<label for="title" class="col-form-label">참석 예정 인원</label>
-		                    <input type="text" id="count" readonly="readonly" style="border: none; outline: none;">
-	                 	</div>
-	                 </div>    
                </div>
             </div>
-            </form>
+           </form>
+
+            
+            
+            
              <div class="modal-footer">
              	<div class="detailhidden" style="display: block;">	
-		            <button class="btn btn-secondary" id="delRev" onclick="delRev()"> 삭제 </button>
-		            <button class="btn btn-secondary" id="modifyRev" onclick="modifyRev()"> 수정 </button>
-		            <button class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
+             		<button type="button" class="btn btn-secondary" onclick="modifyRev()"> 수정 </button>
+		            <button type="button" class="btn btn-danger" id="delRev" onclick="delRev()"> 삭제 </button>
+		            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
             	</div>
             	<div class="modifyhidden" style="display: none;">
-            		<button type="submit" class="btn btn-secondary" > 확인 </button>
-	            	<button class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
+            		<button type="button" class="btn btn-secondary" onclick="modifycon()" id="modifycon"> 확인 </button>
+	            	<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
             	</div>
-            	
-             </div>    
+             </div>   
         </div>            
     </div>
 </div>
 <!-- 예약 상세보기&수정 모달 끝  -->
+
+
+<!-- 회의 참여인원 설정 모달 -->
+		<div class="modal fade" id="reattmodalmodify" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
+            
+            	<div class="modal-dialog modal-lg">
+            	
+            		<div class="modal-content">
+		            	<div class="modal-header">
+		            	 <div id="hiddenValue" style="display: none;">
+		            	 </div>
+			                <h4 class="modal-title">회의 참석자 선택</h4>
+			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			               
+		                </div>
+		                <div class="modal-body row">
+			                <div class="col-lg-6">
+			                	<div class="select_payline_area col-lg-12">
+			                		<div id="empChoice">
+										<h5>사원 선택</h5>
+									</div>
+									<hr/>
+										<input id="search_input" type="text" placeholder="사원 검색">						
+									<div id="emp_box"></div>
+			                	</div>
+			                </div>
+			                
+			                <div class="col-lg-6">
+			                	<div class="select_payline_area col-lg-12" style="height: 100%">
+			                		<div id="pickatt_box">
+			                		<h5>지정된 참석자</h5>
+			                		<hr/>
+			                		</div>
+			                	</div>
+		                	</div>
+		                	
+		                	<hr>
+	                    </div>
+	                    <div class=modal-footer>
+	                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
+	                      <button type="button" class="btn btn-warning" id="attconfirm" onclick="attmodify()">참석자 등록</button>
+	                    </div>
+                    </div>
+                    
+            	</div>
+            
+            </div>
+            <!-- 회의 참여인원 설정 모달 끝-->
+ 
+ 
+ 
  
 	<main id="main" class="main">
 		<section class="section dashboard">

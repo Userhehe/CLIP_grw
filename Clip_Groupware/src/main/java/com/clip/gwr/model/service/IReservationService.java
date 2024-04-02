@@ -11,10 +11,13 @@ import com.clip.gwr.vo.UserinfoVo;
 public interface IReservationService {
 	
 	//예약 조회(일정창에서)
-	public List<ReservationVo> myReservationAll(String user_id);
+	public List<ReservationVo> myReservationAll(Map<String, Object> map);
 	
 	//예약 등록
 	public int myReservationInsert(Map<String, Object> map);
+	
+	//내가 등록한 예약 조회(일정수정창)
+	public List<ReservationVo> myReservation (String user_id);
 	
 	//회의실 목록
 	public List<MeeTingRoomVo> selectMeetingRoom();
@@ -29,10 +32,10 @@ public interface IReservationService {
 	public ReservationVo reDetail(int re_seq);
 	
 	//예약내용 수정하기
-	public int reModifyRev(int re_seq);
+	public int reModifyRev(Map<String, Object> map);
 		
 	//참석자 수정하기
-	public int reModifyAtt(String user_id);
+	public int reModifyAtt(int re_seq);
 		
 	//예약 취소하기
 	public int reDel(int re_seq);

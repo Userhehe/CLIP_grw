@@ -24,9 +24,9 @@ public class ReservationDaoImpl implements IReservationDao{
 	private final String NS = "com.clip.gwr.model.mapper.ReservationDaoImpl.";
 
 	@Override
-	public List<ReservationVo> myReservationAll(String user_id) {
+	public List<ReservationVo> myReservationAll(Map<String, Object> map) {
 		log.info("##### 나의 예약정보 전체 조회 myReservationAll #####");
-		return sqlSession.selectList(NS+"myReservationAll", user_id);
+		return sqlSession.selectList(NS+"myReservationAll", map);
 	}
 	
 	@Override
@@ -54,15 +54,15 @@ public class ReservationDaoImpl implements IReservationDao{
 	}
 
 	@Override
-	public int reModifyRev(int re_seq) {
+	public int reModifyRev(Map<String, Object> map) {
 		log.info("##### 예약내용 수정 reModifyRev");
-		return sqlSession.update(NS+"reModify", re_seq);
+		return sqlSession.update(NS+"reModifyRev", map);
 	}
 	
 	@Override
-	public int reModifyAtt(String user_id) {
+	public int reModifyAtt(int re_seq) {
 		log.info("##### 참석자 삭제 reModifyAtt");
-		return sqlSession.delete(NS+"reModifyAtt", user_id );
+		return sqlSession.delete(NS+"reModifyAtt", re_seq);
 	}
 
 	@Override
@@ -93,6 +93,12 @@ public class ReservationDaoImpl implements IReservationDao{
 	public int attinsert(Map<String, Object> map) {
 		log.info("##### 회의 참석자 입력하기 attinsert");
 		return sqlSession.insert(NS+"attinsert",map);
+	}
+
+	@Override
+	public List<ReservationVo> myReservation(String user_id) {
+		log.info("##### 내가 등록한 예약 불러오기 myReservation");
+		return sqlSession.selectList(NS+"myReservation", user_id);
 	}
 
 	
