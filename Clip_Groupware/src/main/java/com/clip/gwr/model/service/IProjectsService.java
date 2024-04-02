@@ -34,4 +34,10 @@ public interface IProjectsService {
 	
 	public List<ProjectsVo> getProgressProjects(Map<String, Object> map);
 
+	public int insertProject(Map<String, Object> map);
+
+	public List<ProjectsVo> selectClientList();
+
+	int insertClient(Map<String, Object> map);
+
 }

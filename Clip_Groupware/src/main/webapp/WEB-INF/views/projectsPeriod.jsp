@@ -6,6 +6,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>Projects</title>
 <%@ include file="./header.jsp"%>
+<script type="text/javascript" src="./js/projects.js"></script>
 </head>
 <body>
 	<main id="main" class="main">
@@ -40,12 +41,12 @@
 				<!-- 검색버튼 시작 -->
 						<div style="margin-left: auto; margin-right: 5px; height: 42px">
 							<ul style="list-style-type: none; padding: 0; display: flex;">
-								<li><input type="date" class="form-control" id="startDate"
+								<li><input type="date" class="form-control" id="prjStartDate"
 									name="startDate"></li>
 								<li>~</li>
-								<li><input type="date" class="form-control" id="endDate"
+								<li><input type="date" class="form-control" id="prjEndDate"
 									name="endDate"></li>
-								<li><button type="button" class="btn btn-warning">검색</button></li>
+								<li><button type="button" id="periodSrchBtn" class="btn btn-warning">검색</button></li>
 							</ul>
 						</div>
 				<!-- 검색버튼 끝 -->
@@ -72,49 +73,47 @@
 							</div>
 							<div class="modal-body">
 								<div class="card-body">
-									<form>
+									<form id="newProject">
 										<div class="row mb-3">
 											<label for="inputText" class="col-sm-2 col-form-label">프로젝트
 												명</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="projectNm">
 											</div>
 										</div>
 										<div class="row mb-3">
 											<label for="inputEmail" class="col-sm-2 col-form-label">발주처</label>
 											<div class="col-sm-10">
-												<input type="email" class="form-control">
+												<select class="form-select"
+													aria-label="Default select example" name="cliNm">
+													<c:forEach var="client" items="${clientList}">
+														<option value="${client.CLI_NAME}">${client.CLI_NAME}</option>
+													</c:forEach>
+												</select>
 											</div>
 										</div>
 										<div class="row mb-3">
 											<label for="inputPassword" class="col-sm-2 col-form-label">현장명</label>
 											<div class="col-sm-10">
-												<input type="password" class="form-control">
+												<input type="text" class="form-control" name="workSite">
 											</div>
 										</div>
 										<div class="row mb-3">
 											<label for="inputDate" class="col-sm-2 col-form-label">시작일자</label>
 											<div class="col-sm-10">
-												<input type="date" class="form-control">
+												<input type="date" class="form-control" name="prjSdate">
 											</div>
 										</div>
 										<div class="row mb-3">
 											<label for="inputDate" class="col-sm-2 col-form-label">마감기한</label>
 											<div class="col-sm-10">
-												<input type="date" class="form-control">
+												<input type="date" class="form-control" name="prjEdate">
 											</div>
 										</div>
 										<div class="row mb-3">
 											<label for="inputPassword" class="col-sm-2 col-form-label">비고</label>
 											<div class="col-sm-10">
-												<textarea class="form-control" style="height: 100px"></textarea>
-											</div>
-										</div>
-										<div class="row mb-3">
-											<label for="inputNumber" class="col-sm-2 col-form-label">발주서
-												첨부</label>
-											<div class="col-sm-10">
-												<input class="form-control" type="file" id="formFile">
+												<textarea class="form-control" style="height: 100px" name="prjNote"></textarea>
 											</div>
 										</div>
 										<ul class="col-sm-10">
@@ -140,7 +139,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-bs-dismiss="modal">닫기</button>
-								<button type="button" class="btn btn-warning">등록</button>
+								<button type="button" id="prjInsertBtn" class="btn btn-warning">등록</button>
 							</div>
 						</div>
 					</div>

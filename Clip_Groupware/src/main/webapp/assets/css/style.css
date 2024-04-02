@@ -376,7 +376,6 @@ h6 {
 
 .header .toggle-sidebar-btn {
   font-size: 32px;
-  padding-left: 90%;
   cursor: pointer;
   color: #012970;
 }
@@ -384,7 +383,7 @@ h6 {
 
 @media (max-width: 1199px) {
   .header .search-bar {
-    position: fixed;
+  width: 100vw; /* 화면 전체 너비로 설정 */
     top: 50px;
     left: 0;
     right: 0;
@@ -567,11 +566,10 @@ h6 {
 .mainlogo {
 	width: 200px;
 	height: 99px;
-	position: fixed;
-	top : 60px;
-	left : 50px;
+	margin-top : 60px;
+	margin-left : 25px;
 	right: 50px;
-	bottom : 100px;
+	margin-bottom : 50px;
 }
 
 @media (max-width: 1199px) {
@@ -1174,3 +1172,9 @@ h6 {
     max-width: 50%;
   }
 }
+
+    /* 부모 요소를 가운데 정렬하는 CSS 스타일 */
+    #newProject .d-grid {
+        display: flex;
+        justify-content: center;
+    }
