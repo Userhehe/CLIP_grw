@@ -20,5 +20,7 @@ public class RanksVo {
 	private String ranks_seq;
 	private String ranks_name;
 	private String ranks_regdate;
+	private String user_id;
+	private String user_name;
 
 }

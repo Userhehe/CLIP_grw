@@ -45,9 +45,9 @@ public class DeptDaoImpl implements IDeptDao{
 	}
     // 부서 중복 검사 
 	@Override
-	public int duplicateCheckDept(Map<String, Object>map) {
+	public int duplicateCheckDept(String dept_name) {
 		log.info("##### 부서 중복검사 duplicateCheckDept #####");
-		return sqlSession.selectOne(NS+"duplicateCheckDept",map);
+		return sqlSession.selectOne(NS+"duplicateCheckDept",dept_name);
 	}
 	// 부서 전체 조회  
 	@Override

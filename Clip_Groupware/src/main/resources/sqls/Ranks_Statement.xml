@@ -20,9 +20,6 @@
 	    UPDATE RANKS R
 		SET R.RANKS_NAME = #{ranks_name}
 		WHERE R.RANKS_SEQ = #{ranks_seq} 
-		AND R.RANKS_SEQ IN (
-		    SELECT U.RANKS_SEQ
-		    FROM CLIP.USERINFO U)
 	 </update>
 	 
 	 <!-- 직급 삭제 -->

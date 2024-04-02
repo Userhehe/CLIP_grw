@@ -44,9 +44,9 @@ public class DeptServiceImpl implements IDeptService {
 	}
     //부서 중복 검사 
 	@Override
-	public int duplicateCheckDept(Map<String, Object> map) {
-		log.info("DeptServiceImpl duplicateCheckDept 부서 중복 검사 : {} ",map);
-		return dao.duplicateCheckDept(map);
+	public int duplicateCheckDept(String dept_name) {
+		log.info("DeptServiceImpl duplicateCheckDept 부서 중복 검사 : {} ",dept_name);
+		return dao.duplicateCheckDept(dept_name);
 	}
 	// 부서 전체 조회 
 	@Override
