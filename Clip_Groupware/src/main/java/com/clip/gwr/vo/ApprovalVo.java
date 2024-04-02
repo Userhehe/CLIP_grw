@@ -1,5 +1,7 @@
 package com.clip.gwr.vo;
 
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -25,5 +27,12 @@ public class ApprovalVo {
 	private String app_enddate;
 	private String app_moddate;
 	private String user_id;
+	
+
+	private String pay_user;
+	private String pay_sign;
+	private String pay_num;
+	private String pay_asigndate;
+	private String pay_rejectreason;
 	
 }

@@ -5,19 +5,43 @@
 
 	<!-- 내가 요청한 결재내역 전체 조회 (세션에서 나의 사원번호 사용)-->
 	<select id="getAllApproval" resultType="ApprovalVo" parameterType="java.lang.String">
-     	SELECT 
-		    p.APP_SEQ, 
-		    p.APP_TITLE, 
-		    p.APP_CONTENT, 
-		    g.GIAN_NAME AS GIAN_SEQ,  
-		    (ROW_NUMBER() OVER(PARTITION BY p.APP_SEQ ORDER BY pl.PAY_NUM) + 1) || '차 승인' AS PAY_NUM,
-		    TO_CHAR(p.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE, 
-		    p.APP_DRAFT ,p.USER_ID
-		FROM APPROVAL p 
-		JOIN GIAN g ON g.GIAN_SEQ = p.GIAN_SEQ 
-		JOIN PAYMENTLINE pl ON p.APP_SEQ = pl.APP_SEQ
-		WHERE p.USER_ID = #{user_id}  AND p.APP_DRAFT != '임시저장'
-		ORDER BY  p.APP_CREATEDATE DESC
+     	SELECT
+		    a.APP_SEQ, a.APP_TITLE, a.APP_CONTENT,
+		    TO_CHAR(a.APP_STRDATE, 'YYYY"년"MM"월"DD"일"') AS APP_STRDATE , a.APP_ENDDATE,
+		    a.APP_MODDATE, g.GIAN_NAME AS GIAN_SEQ, a.APP_DRAFT,
+		    (
+		        CASE
+		        	WHEN a.APP_DRAFT = '결재취소' THEN '결재취소'
+		            WHEN p.pay_num IS NOT NULL THEN
+		                CASE
+		                    WHEN p.pay_num = 1 THEN '1차 승인중'
+		                    WHEN p.pay_num = 2 THEN '2차 승인중'
+		                    ELSE TO_CHAR(p.pay_num) || '차 승인중'
+		                END
+		            ELSE '결재완료'
+		        END
+		    ) AS PAY_NUM
+		FROM
+		    approval a
+		JOIN
+		    gian g ON g.GIAN_SEQ = a.GIAN_SEQ
+		LEFT JOIN (
+		    SELECT
+		        app_seq,
+		        MIN(pay_num) AS pay_num
+		    FROM
+		        paymentline
+		    WHERE
+		        pay_sign = 'N'
+		    GROUP BY
+		        app_seq
+		) p ON p.app_seq = a.app_seq
+		JOIN
+		    approval a2 ON a2.APP_SEQ = a.APP_SEQ
+		WHERE
+		    a2.USER_ID = #{user_id} AND a.APP_DRAFT != '임시저장'
+		ORDER BY
+    		a.APP_SEQ DESC 
 	</select>
 	
 
@@ -27,7 +51,7 @@
 			FROM APPROVAL a 
 			JOIN GIAN g ON a.GIAN_SEQ = g.GIAN_SEQ 
 			JOIN REFERENCE r ON a.APP_SEQ = r.APP_SEQ
-			WHERE r.REF_USER = #{user_id}
+			WHERE r.REF_USER = #{user_id} AND APP_DRAFT = '결재완료'
 			ORDER BY a.APP_CREATEDATE DESC
 		</select>
 	
@@ -39,12 +63,55 @@
 		FROM APPROVAL a 
 		JOIN GIAN g ON g.GIAN_SEQ = a.GIAN_SEQ 
 		JOIN PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ
-		WHERE a.APP_DRAFT IN ('결재대기', '결재반려')
-		AND p.PAY_SIGN IN ('N', 'D')
+		WHERE a.APP_DRAFT IN ('결재대기','결재진행')
+		AND p.PAY_SIGN IN ('Y','N', 'D')
 		AND p.PAY_USER = #{user_id}
 		ORDER BY a.APP_CREATEDATE DESC
 	</select>
 	
+	<!-- 나의 결재를 승인을 받아야하는 결재 상세보기  -->
+	<select id="oneMyPaycheck" resultType="ApprovalVo" parameterType="java.lang.String">
+		SELECT a.APP_SEQ ,a.USER_ID ,a.APP_CONTENT, a.APP_DRAFT ,p.MIN_PAY_NUM, pl.PAY_USER , 
+				pl.PAY_SIGN , MIN_PAY_NUM AS PAY_NUM , pl.PAY_REJECTREASON  , pl.PAY_ASIGNDATE 
+		FROM APPROVAL a
+		JOIN (
+		    SELECT APP_SEQ, MIN(PAY_NUM) AS MIN_PAY_NUM
+		    FROM PAYMENTLINE
+		    WHERE PAY_SIGN = 'N'
+		    GROUP BY APP_SEQ
+		) p ON a.APP_SEQ = p.APP_SEQ  
+		JOIN PAYMENTLINE pl ON pl.APP_SEQ = p.APP_SEQ AND pl.PAY_NUM = p.MIN_PAY_NUM
+		WHERE  a.APP_SEQ = #{app_seq} AND p.MIN_PAY_NUM IS NOT NULL
+	</select>
+	
+	<!-- 내가 반려했던 결재 상세보기  -->
+	<select id="oneMyPayPause" resultType="ApprovalVo" parameterType="java.lang.String">
+		SELECT a.APP_CONTENT ,p.MIN_PAY_NUM
+		FROM APPROVAL a
+		JOIN (
+		    SELECT APP_SEQ, MIN(PAY_NUM) AS MIN_PAY_NUM
+		    FROM PAYMENTLINE
+		    WHERE PAY_SIGN = 'D'
+		    GROUP BY APP_SEQ
+		) p ON a.APP_SEQ = p.APP_SEQ  
+		WHERE  a.APP_SEQ = #{app_seq} AND p.MIN_PAY_NUM IS NOT NULL
+	</select>
+	
+	
+	<!-- 내가 승인한거 조회하는 쿼~~~~~~~~~~~리  -->
+	<select id="oneMyPaychecked" resultType="ApprovalVo" parameterType="java.lang.String">
+		SELECT a.USER_ID ,a.APP_CONTENT, a.APP_DRAFT ,p.MIN_PAY_NUM, pl.PAY_USER , 
+				pl.PAY_SIGN , MIN_PAY_NUM AS PAY_NUM , pl.PAY_REJECTREASON  , pl.PAY_ASIGNDATE 
+		FROM APPROVAL a
+		JOIN (
+		    SELECT APP_SEQ, MAX(PAY_NUM) AS MIN_PAY_NUM
+		    FROM PAYMENTLINE
+		    WHERE PAY_SIGN = 'Y'
+		    GROUP BY APP_SEQ
+		) p ON a.APP_SEQ = p.APP_SEQ  
+		JOIN PAYMENTLINE pl ON pl.APP_SEQ = p.APP_SEQ AND pl.PAY_NUM = p.MIN_PAY_NUM
+		WHERE  a.APP_SEQ = #{app_seq} AND p.MIN_PAY_NUM IS NOT NULL
+	</select>
 	
 	<!-- 나의 결재승인을 받아야하는 결재 아직 미처리한 리스트조회 (세션에서 사원번호 사용) -->
 	<select id="getMyUnprocessedPaycheck" resultType="ApprovalVo" parameterType="java.lang.String">
@@ -56,8 +123,8 @@
 		FROM APPROVAL a 
 		JOIN GIAN g ON g.GIAN_SEQ = a.GIAN_SEQ 
 		JOIN PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ
-		WHERE a.APP_DRAFT IN ('결재대기')
-		AND p.PAY_SIGN IN ('N', 'D')
+		WHERE a.APP_DRAFT IN ('결재진행','결재완료')
+		AND p.PAY_SIGN IN ('Y','N')
 		AND p.PAY_USER =  #{user_id}
 		ORDER BY p.PAY_ASIGNDATE DESC
 	</select>
@@ -77,7 +144,7 @@
 		AND p.PAY_USER =  #{user_id}
 		ORDER BY p.PAY_ASIGNDATE DESC
    </select>
-
+   
 	<!-- 결재내역 단일 상세 조회 (클릭한 결재의 결재시퀀스 사용) -->
 	<select id="getOneApproval" resultType="ApprovalVo" parameterType="java.lang.String">
 		SELECT *
@@ -85,10 +152,7 @@
 	        WHERE APP_SEQ = #{app_seq} 
 	</select>	
 
-
-
 	<!-- 결재 조건별검색 전체리스트 조회 (옵션태그에서 선택한 태그의 밸류 사용) -->
-
 	<select id="conditionSearchApproval" resultType="ApprovalVo" parameterType="java.util.Map">
     SELECT APP_SEQ, APP_TITLE, APP_CONTENT,
            GIAN_SEQ, TO_CHAR(APP_CREATEDATE, 'YYYY/MM/DD') AS APP_CREATEDATE, APP_DRAFT
@@ -158,6 +222,28 @@
 	VALUES('APPROVAL_' || TO_CHAR(APPROVAL_SEQ.NEXTVAL), #{app_title}, #{app_content},
 			#{gian_seq}, '임시저장' , #{app_payline} )
 	</insert>
+	
+	<!-- 승인시 쿼리 시작 -->
+	<update id="approvePay" parameterType="ApprovalVo">
+		UPDATE APPROVAL a
+		SET 
+		    APP_DRAFT = #{app_draft}
+		WHERE 
+		    APP_SEQ = #{app_seq}
+	</update>
+	
+	<update id="approvePayLine" parameterType="ApprovalVo">
+		UPDATE PAYMENTLINE
+		SET 
+		    PAY_SIGN = 'Y',
+		    PAY_ASIGNDATE = LOCALTIMESTAMP 
+		WHERE 
+		    APP_SEQ = #{app_seq}
+		    AND PAY_SIGN = 'N' AND PAY_NUM = #{pay_num}
+	</update>
+	
+	<!-- 승인시 쿼리 종료 -->
+	
 	
 	<update id="cancelApproval" parameterType="ApprovalVo">
 	UPDATE APPROVAL SET APP_DRAFT ='결재취소'

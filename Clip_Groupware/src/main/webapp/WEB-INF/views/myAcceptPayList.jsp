@@ -23,7 +23,7 @@
                   <button class="nav-link" id="tab2" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">반려처리한 결재문서 조회</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="false" tabindex="-1">내가 승인/반려처리한 결재문서 조회</button>
+                  <button class="nav-link" id="tab3" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="false" tabindex="-1">내가 승인한 결재문서 조회</button>
                 </li>
               </ul>
               	<div class="tab-content pt-1" id="myTabContent">
@@ -40,7 +40,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="vo" items="${lists2}" varStatus="vs">
+							<c:forEach var="vo" items="${lists}" varStatus="vs">
 								<tr>
 									<td>${vo.app_seq}</td>
 									<td>${vo.app_title}</td>
@@ -73,7 +73,7 @@
 					</div>
 					<!-- 페이징 끝 -->
 					<!-- 모달 시작 -->
-					<div class="modal fade" id="detailModal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+					<div class="modal fade" id="detailModal1" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -82,13 +82,13 @@
 											aria-label="Close"></button>
 									</div>
 									<div class="modal-body">
-										 <p id="modalContent"></p>
+										 <p id="modalContent1"></p>
 									</div>
 									<div class="modal-footer">
 										  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 					                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
-					                      <button type="button" class="btn btn-primary" id="editBtn" data-appseq="">결재 승인</button>					        			 
-					                      <button type="button" class="btn btn-danger" id="rejectBtn" data-appseq="">결재 반려</button>
+					                      <button type="button" class="btn btn-primary" id="editBtn" data-appseq="">결재승인</button>	
+					                      <button type="button" class="btn btn-danger" id="rejectBtn" data-appseq="">결재반려</button>
 									</div>
 								</div>
 							</div>
@@ -143,7 +143,7 @@
 				</div>
 				<!-- 페이징 끝 -->
 				<!-- 모달 시작 -->
-				<div class="modal fade" id="detailModal3" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+				<div class="modal fade" id="detailModal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -152,7 +152,7 @@
 										aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
-									 <p id="modalContent"></p>
+									 <p id="modalContent2"></p>
 								</div>
 								<div class="modal-footer">
 									  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
@@ -166,7 +166,7 @@
                 </div>
                 <div class="tab-content pt-3" id="myTabContent">
                 	<div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="all-tab">
-					<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님이 승인/보류 처리하신 문서를 조회하였습니다.</h4>
+					<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님이 승인하신 문서를 조회하였습니다.</h4>
                 	<table  class="table table-hover" style="margin-top: 10px;">
 					<thead>
 						<tr>
@@ -178,7 +178,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="vo" items="${lists}" varStatus="vs">
+						<c:forEach var="vo" items="${lists2}" varStatus="vs">
 							<tr>
 								<td>${vo.app_seq}</td>
 								<td>${vo.app_title}</td>
@@ -187,7 +187,7 @@
 								<td>${vo.app_draft}</td>
 							</tr>
 						</c:forEach>
-					</tbody>
+					</tbody>	
 				</table>
 				<!-- 페이징 -->
 				<div style="margin-left: 450px;">
@@ -220,7 +220,7 @@
 										aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
-									 <p id="modalContent"></p>
+									 <p id="modalContent3"></p>
 								</div>
 								<div class="modal-footer">
 									  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.clip.gwr.model.mapper.IApprovalDao;
 import com.clip.gwr.vo.ApprovalVo;
@@ -119,6 +120,33 @@ public class ApprovalServiceImpl implements IApprovalService{
 	public int tempDelete(String appSeq) {
 		log.info("결제삭제 : {}",appSeq);
 		return approvalDao.tempDelete(appSeq);
+	}
+	
+	//결재 승인시 실행
+	@Override
+	@Transactional
+	public int approvePays(String app_seq) {
+		int result = approvalDao.approvePay(app_seq);
+	    result += approvalDao.approvePayLine(app_seq);
+	    return result;
+	}
+
+	@Override
+	public ApprovalVo oneMyPaycheck(String app_seq) {
+		log.info("결재 단건 조회 : {}",app_seq);
+		return approvalDao.oneMyPaycheck(app_seq);
+	}
+
+	@Override
+	public ApprovalVo oneMyPaychecked(String app_seq) {
+		log.info("결재 단건 조회 : {}",app_seq);
+		return approvalDao.oneMyPaychecked(app_seq);
+	}
+
+	@Override
+	public ApprovalVo oneMyPayPause(String app_seq) {
+		log.info("결재 단건 조회 : {}",app_seq);
+		return approvalDao.oneMyPayPause(app_seq);
 	}
 
 }
