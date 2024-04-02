@@ -35,6 +35,7 @@
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<!-- <script type="text/javascript" src="./js/header.js"></script> -->
 <!-- <script type="text/javascript" src="./js/calendar.js"></script> -->
 
 </head>
@@ -85,11 +86,12 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
                      <h6>${loginVo.user_name}</h6> <span> ${loginVo.dept_name}팀 (${loginVo.ranks_name})</span>
                   </li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                  <i class="bi bi-person"></i>
-                  <span>프로필</span>
-                  </a>
-                  </li>
+				  <li>
+				  	<a class="dropdown-item d-flex align-items-center" href="./myPage.do">
+						<i class="bi bi-person"></i>
+						<span>마이페이지</span>
+				  	</a>
+				  </li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                   <i class="bi bi-gear"></i>
