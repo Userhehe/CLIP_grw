@@ -195,21 +195,22 @@
     INSERT INTO APPROVAL
         (APP_SEQ, APP_TITLE, APP_CONTENT,
         GIAN_SEQ, APP_PAYLINE, APP_STRDATE,
-        APP_ENDDATE)
+        APP_ENDDATE, USER_ID)
     VALUES('APPROVAL_' || TO_CHAR(APPROVAL_SEQ.NEXTVAL), #{app_title}, #{app_content},
         #{gian_seq}, #{app_payline},
         <choose>
             <!-- 만약 시작 날짜와 끝 날짜가 모두 존재하는 경우 -->
             <when test="app_strdate != null and app_enddate != null">
                 TO_DATE( #{app_strdate}, 'YYYY-MM-DD HH24:MI:SS'),
-                TO_DATE( #{app_enddate}, 'YYYY-MM-DD HH24:MI:SS')
+                TO_DATE( #{app_enddate}, 'YYYY-MM-DD HH24:MI:SS'),
             </when>
             <!-- 만약 시작 날짜와 끝 날짜가 모두 존재하지 않는 경우 -->
             <otherwise>
                 LOCALTIMESTAMP,  
-                LOCALTIMESTAMP
+                LOCALTIMESTAMP,
             </otherwise>
         </choose>
+         #{user_id}
     )
 	</insert>
 
@@ -249,6 +250,8 @@
 	UPDATE APPROVAL SET APP_DRAFT ='결재취소'
                 WHERE APP_SEQ = #{app_seq}	
 	</update>
+	
+	
 	
 	
 	

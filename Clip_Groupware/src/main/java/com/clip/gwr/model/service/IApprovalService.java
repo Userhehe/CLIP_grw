@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.clip.gwr.vo.ApprovalVo;
+import com.clip.gwr.vo.PaymentlineVo;
 
 public interface IApprovalService {
 
@@ -37,8 +38,8 @@ public interface IApprovalService {
 	//결재 조건별 선택 리스트 조회
 	public List<ApprovalVo> optionalApprovalList(Map<String, Object> map);
 	
-	//기안 결재요청	(파일 업로드 트랜잭션걸기)
-	public int reqDynamicDateApproval(ApprovalVo approvalVo);
+	//기안 결재요청	
+	public boolean reqDynamicDateApproval(ApprovalVo approvalVo, List<PaymentlineVo> list);
 	
 	//기안 결재 임시저장
 	public int saveTempApproval(ApprovalVo approvalVo);

@@ -1,19 +1,24 @@
-function modify(){
-   console.log("수정 modal 버튼 클릭");
-  
-  
-}
+//function modify(){
+//   console.log("수정 modal 버튼 클릭");
+//  
+//  
+//}
 
 function half(event) {
 	
 	//휴가계 종류에 가져오기
 	var selectedOpt = event.options[event.selectedIndex];
 	var vaOpt = selectedOpt.textContent;
+	
 //	console.log(vaOpt);		
 	//가져온 종류 미리보기에 넣기
-	var htmlmodal = document.getElementById("req_preview1");
-	var vaOptSpace = htmlmodal.getElementsByClassName('approval_va_opt')[0];
-	vaOptSpace.textContent = vaOpt;
+		var htmlmodal = document.getElementById("req_preview1");
+		var vaOptSpace = htmlmodal.getElementsByClassName('approval_va_opt')[0];
+	if(selectedOpt.value){
+		vaOptSpace.textContent = vaOpt;
+	} else {
+		vaOptSpace.textContent = '';
+	}
 
 	
 	//반가일 시 시간 선택창 표시
@@ -63,6 +68,77 @@ function gatheringInfo(){
 	reqUserNameSpace.textContent = name;
 	rankSpace.textContent = rank;
 	
+	//결재라인 지정 시 미리보기 창에 보여주기
+	
+	//테이블을 붙일 공간
+	var infoArea = htmlmodal.querySelector('.modal-body');
+	var paySpace = infoArea.querySelectorAll('div')[1];
+	
+//	console.log(paySpace);
+	var beforeTable = paySpace.querySelector('table');
+	
+	//미리보기 창을 다시 열 시 기존에 있던 테이블 지우기.
+	if(beforeTable){
+		beforeTable.parentNode.removeChild(beforeTable);
+	}
+	
+	var selectedPayLine = document.getElementById('selectedPayLine');
+	
+    // table 요소
+	if (selectedPayLine && selectedPayLine.children.length > 0) {
+		
+    var table = selectedPayLine.querySelector('table');
+   
+    
+    // table이 존재하면 작업을 수행
+    if (table) {
+	
+		 //깊은 복사를 위한 true 값
+	    var cloneTable = table.cloneNode(true);
+			    
+//	    console.log(table, cloneTable);
+
+        // 복사한 테이블의 tbody 요소.
+        var tbody = cloneTable.querySelector('tbody');
+        
+//        console.log(tbody);
+        
+        if (tbody) {
+            // 복사한 tbody에 float: right, margin-right 속성 추가.
+            tbody.style.float = 'right';
+            tbody.style.marginRight = '15%';
+            tbody.style.border = '1px';
+        }
+        
+        // th 태그를 감싸고 있는 tr 태그를 제거.
+        var thRow = cloneTable.querySelector('tr');
+        if (thRow) {
+            thRow.parentNode.removeChild(thRow);
+        }
+        
+        // 기존의 td 태그를 가진 tr 태그를 복제하여 추가.
+        var tdCols = cloneTable.querySelectorAll('td');
+        if (tdCols && tdCols.length > 0) {
+			var newRow = document.createElement('tr');
+			newRow.setAttribute('style', 'height:60px');
+            for (var i = 0; i < tdCols.length; i++) {
+                newRow.appendChild(document.createElement('td'));
+            }
+                tbody.appendChild(newRow);
+        }
+        
+        // paySpace에 복사한 table을 추가.
+         paySpace.appendChild(cloneTable);
+    }
+    
+    
+    
+    
+	}
+	
+	
+	
+	
 	
 	//시작일 종료일
 	var startDate = document.getElementById('startDate');
@@ -109,11 +185,15 @@ function gatheringInfo(){
 	 todaySpace.textContent = todate; 
 	
 	var inputContent = document.getElementById('approvalContent').value;
-	console.log(inputContent);
+//	console.log(inputContent);
 	
 	contentSpace.textContent = inputContent;
 	
 	app_content = htmlmodal.getElementsByClassName('modal-body')[0].innerHTML;
+	
+	
+	
+	
 }
 
 
@@ -127,12 +207,120 @@ window.onload = function(){
 	 var endTime = document.getElementById('endTime');
 	 endTime.addEventListener('change',checkTimeOrder);
 	 
-	
 	 
-	 
+	var gian1Modal = document.getElementById('previewGian');
+	var modalfoot1 = gian1Modal.querySelector('.modal-footer');
+//	console.log('modal : ',modalfoot1);
+	var submit1 = modalfoot1.getElementsByTagName('button')[1];
+//	console.log('submit1 : ',submit1);
+	submit1.addEventListener('click',draft_application);
 	 
 }
 
+
+//기안 신청 함수
+function draft_application(){
+	
+	//입력 내용들을 체크.
+	var modal = document.querySelector('#req_preview1');
+	
+	var dept = modal.getElementsByClassName('approval_user_dept')[0].textContent;
+	var name = modal.getElementsByClassName('approval_user_name')[0].textContent;
+	var reqUserName = modal.getElementsByClassName('create_user_name')[0].textContent;
+	
+//	console.log(dept, name, reqUserName);
+	if(!(dept&&name&&reqUserName)){
+		alert('로그인 정보를 확인해 주세요.');
+		return;
+	}
+	
+//	var table = modal.querySelector('.ec-editable');
+	var payOp = modal.querySelector('.approval_va_opt').textContent;
+	
+	if(!payOp){
+		alert('연차 종류를 선택해주세요.');
+		return;
+	}
+	
+	var strDate = modal.querySelector('.vac_start_date').textContent;
+	var endDate = modal.querySelector('.vac_end_date').textContent;
+	
+	if(!(strDate&&endDate)){
+		alert('기간을 지정해주세요.');
+		return;
+	}
+	
+	var appContent = modal.querySelector('.approval_content').textContent;
+	if(!appContent){
+		alert('사유를 입력해주세요.');
+		return;
+	}
+	
+	var body = modal.querySelector('.modal-body');
+//	console.log(body);
+	var payTable = body.querySelectorAll('div')[1].querySelector('table')
+	if(!payTable){
+		alert('결재라인 지정은 필수 입니다.');
+		return;
+	}
+
+	//입력내용 체크 종료
+	
+	//요청을 보낼 데이터 모으기
+	
+	//전자결재 테이블 정보
+	var user_id = document.querySelector('[name = "user_id"]').value;
+	var app_title = document.querySelector('[name = "app_title"]').value;
+	var app_content = body.innerHTML;
+	var gian_seq = 'GIAN_1';
+	var app_strdate = document.querySelector('#startDate');
+	var app_enddate = document.querySelector('#endDate');
+	var approval = {
+		"user_id" : user_id,
+		"app_title" : app_title,
+		"app_content" : app_content,
+		"gian_seq" : gian_seq,
+		"app_strdate" : app_strdate,
+		"app_enddate" : app_enddate
+	}
+	
+	console.log('전자결재 정보 : ',approval);
+	
+	//결재라인 테이블정보
+	let paymentLine = [];
+//	지정한 결재인 만큼의 수를 반복하여 결재인 데이터 만들기.
+	var lineTable = document.querySelector('#selectedPayLine').querySelector('table');
+	var rows = lineTable.querySelectorAll('td');
+	for(let i = 0; rows.length > i; i++){
+		var pay_num = rows[i].getAttribute('name');
+		var pay_user = rows[i].getAttribute('value');
+		var pay = {"pay_num" : pay_num,
+					"pay_user" : pay_user};
+//		생성된 객체 하나씩 배열에 넣기
+		paymentLine.push(pay);
+	}
+	console.log(paymentLine);
+	
+	fetch('/myPayInsert.do', {
+		method : 'POST',
+		header : {'Content-Type' : 'application/json'},
+		body : JSON.stringify({'ApprovalVo' : approval, 'PaymentlineVo' : paymentLine})
+	}).then(response => {
+		if (!response.ok) {
+	        throw new Error('Network response was not ok');
+	    }
+	    return response.json();
+	}).then(data => {
+		 console.log('Success:', data);
+	}).catch(error => {
+	    console.error('Error:', error);
+	});
+	
+	
+	
+	
+	
+}
 
 
 
@@ -144,7 +332,7 @@ function checkDateorder(){
 	
 	var frontDate = new Date(startDate.value);
 	var backDate = new Date(endDate.value);
-	console.log(frontDate, backDate);	
+//	console.log(frontDate, backDate);	
 
 	if(frontDate > backDate) {
 		endDate.value = '';
@@ -162,7 +350,7 @@ function checkTimeOrder(){
 	
 //	var frontTime = new Date(startTime.value);
 //	var backTime = new Date(endTime.value);
-	console.log(startTime, endTime);
+//	console.log(startTime, endTime);
 	
 	if(startTime > endTimeVal){
 		endTime.value = '';

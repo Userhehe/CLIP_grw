@@ -38,27 +38,31 @@ public class PaymentlineJUnitTest {
 	@Test
 	public void test() {
 		
-		List<PaymentlineVo> lists = paymentlineDao.getApprovalPayLine("APPROVAL_18");
-		assertNotEquals(0, lists.size());
+//		List<PaymentlineVo> lists = paymentlineDao.getApprovalPayLine("APPROVAL_18");
+//		assertNotEquals(0, lists.size());
 		
 		
 		
-		Map<String, Object> parameterMap = new HashMap();
-		parameterMap.put("appSeq", "APPROVAL_18");
+//		Map<String, Object> parameterMap = new HashMap();
+//		parameterMap.put("appSeq", "APPROVAL_18");
+//		
+		
 
-		List<PaymentlineVo> paymentLineList = new ArrayList<>();
+		List<PaymentlineVo> list = new ArrayList<>();
 		for (int i = 1; i <= 3; i++) {
 		    PaymentlineVo paymentLine = new PaymentlineVo();
+		    paymentLine.setApp_seq("APPROVAL_20");
 		    paymentLine.setPay_user("USER_" + (27-i));
 		    paymentLine.setPay_num(i);
-		    paymentLineList.add(paymentLine);
+		    list.add(paymentLine);
 		}
-
-		parameterMap.put("paymentLineList", paymentLineList);
+		
+		System.out.println(list);
 
 		// MyBatis의 SQL 세션을 이용하여 쿼리를 실행
-		paymentlineDao.putPayLine(parameterMap);
-		
+		int result = paymentlineDao.putPayLine(list);
+		System.out.println("********실행된 로우의 수는 몇개일 까? : " + result);
+		assertNotEquals(0, result);
 		
 //		List<PaymentlineVo> addPayline = new ArrayList<PaymentlineVo>();
 //		

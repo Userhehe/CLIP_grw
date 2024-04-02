@@ -10,14 +10,14 @@
 		ORDER BY PAY_NUM 	
 	</select>
 	
+	
 	<!-- 결재를 신청할때 결재라인에 대한 정보가 같이 입력되는 쿼리 -->
-  	<insert id="putPayLine" parameterType="java.util.Map">
-  		INSERT INTO PAYMENTLINE p (APP_SEQ, PAY_USER ,PAY_NUM)  
-		<foreach collection="paymentLineList" item="item" separator=",">
-			VALUES (#{app_seq}, #{pay_user}, #{pay_num})
+  	<update id="putPayLine" parameterType="java.util.List">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+  			INTO PAYMENTLINE (APP_SEQ, PAY_USER ,PAY_NUM) VALUES
+			( #{item.app_seq}, #{item.pay_user}, #{item.pay_num} )
 		</foreach>
-		
-  	</insert>
+  	</update>
   	
   	
   	
