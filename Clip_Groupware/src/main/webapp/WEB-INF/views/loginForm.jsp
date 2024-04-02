@@ -93,7 +93,7 @@
 	
 	<div class="container">
 		<img src="assets/img/loginlogo.png" class="additional-image" alt="loginlogo">
-		<!-- <form action="./login" method="post"> -->
+<!-- 		<form action="./login" method="post"> -->
 		<form action="./loginForms.do" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="input-field">

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.clip.gwr.model.mapper.FileDaoImpl">
+<!-- <mapper namespace="com.clip.gwr.model.mapper.FileDaoImpl"> -->
+<mapper namespace="com.clip.gwr.model.mapper.FileUploadDaoImpl">
 
 	<!-- File Upload -->
-	<insert id="insertFile" parameterType="java.util.Map">
-		<selectKey keyProperty="file_seq" resultType="java.lang.Integer" order="BEFORE">
-			SELECT FILEFEATURE_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
-		INSERT INTO FILE_FEATURE
-		(FILE_SEQ , FILE_TARGETSEQ , FILE_TARGETOBJ , FILE_ORINGINNAME, FILE_STORENAME, FILE_SIZE, FILE_FF)
-		VALUES(#{file_seq},#{file_targetseq} ,#{file_targetobj},#{file_oringinname}, #{file_storename}, #{file_size}, #{file_ff,jdbcType=BLOB})
-	</insert>
+<!-- 	<insert id="insertFile" parameterType="java.util.Map"> -->
+<!-- 		<selectKey keyProperty="file_seq" resultType="java.lang.Integer" order="BEFORE"> -->
+<!-- 			SELECT FILEFEATURE_SEQ.NEXTVAL FROM DUAL -->
+<!-- 		</selectKey> -->
+<!-- 		INSERT INTO FILE_FEATURE -->
+<!-- 		(FILE_SEQ , FILE_TARGETSEQ , FILE_TARGETOBJ , FILE_ORINGINNAME, FILE_STORENAME, FILE_SIZE, FILE_FF) -->
+<!-- 		VALUES(#{file_seq},#{file_targetseq} ,#{file_targetobj},#{file_oringinname}, #{file_storename}, #{file_size}, #{file_ff,jdbcType=BLOB}) -->
+<!-- 	</insert> -->
 
 	<!-- 사진파일 등록 1 -->
 	<insert id="insertPhotoinfo" parameterType="java.util.Map">
@@ -49,19 +50,19 @@
 	</update>
 	
 	<!-- 사진파일 삭제1 -->
-	<delete id="deletePhotoFileinfo" parameterType="java.util.Map">
+	<delete id="deletePhotoFileinfo" parameterType="java.lang.String">
 		DELETE FROM FILE_FEATURE ff 
 		WHERE FILE_TARGETSEQ = (SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id})
 	</delete>
 	
 	<!-- 사진파일 삭제2 -->
-	<update id="updatePhotoPhotoinfo" parameterType="java.util.Map">
+	<update id="updatePhotoPhotoinfo" parameterType="java.lang.String">
 		UPDATE USERINFO SET PHOTO_SEQ = NULL
 		WHERE USER_ID = #{user_id}
 	</update>
 	
 	<!-- 사진파일 삭제3 -->
-	<delete id="deletePhotoUserinfo" parameterType="java.util.Map">
+	<delete id="deletePhotoUserinfo" parameterType="java.lang.String">
 		DELETE FROM PHOTOINFO p 
 		WHERE USER_ID = #{user_id}
 	</delete>
@@ -73,5 +74,28 @@
 		FILE_SIZE
 			FROM FILE_FEATURE ff
 		WHERE FILE_TARGETSEQ = (SELECT PHOTO_SEQ FROM PHOTOINFO p WHERE USER_ID = #{user_id})
+	</select>
+	
+	<!-- 사진유무 체크 -->
+	<select id="checkPhotoUse" parameterType="java.lang.String" resultType="Integer">
+		SELECT COUNT(*)
+			FROM USERINFO ff
+		WHERE PHOTO_SEQ IS NOT NULL AND USER_ID = #{user_id}
+	</select>
+	
+	<!-- 사진파일명 조회 -->
+	<select id="selectPhotoName" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT FILE_STORENAME
+			FROM FILE_FEATURE ff
+		INNER JOIN PHOTOINFO p ON ff.FILE_TARGETSEQ = p.PHOTO_SEQ
+		WHERE p.USER_ID = #{user_id}
+	</select>
+	
+	<!-- 사진파일 경로 조회 -->
+	<select id="selectPhotoPath" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT FILE_PATH
+			FROM FILE_FEATURE ff
+		INNER JOIN PHOTOINFO p ON ff.FILE_TARGETSEQ = p.PHOTO_SEQ
+		WHERE p.USER_ID = #{user_id}
 	</select>
 </mapper>

@@ -4,12 +4,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                       
 					    http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
-			
-	<display-name>Clip_Groupware</display-name> 
+
+	<display-name>Clip_Groupware</display-name>
 	<welcome-file-list>
 		<welcome-file>/WEB-INF/views/loginForm.jsp</welcome-file>
 	</welcome-file-list>
-					    
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
@@ -23,7 +23,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
+
 	<servlet>
 		<servlet-name>springDispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -38,7 +38,7 @@
 		<servlet-name>springDispatcherServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -55,7 +55,7 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<filter>
 		<filter-name>accessLogFilter</filter-name>
 		<filter-class>com.clip.gwr.filter.AccessFilter</filter-class>
@@ -64,19 +64,19 @@
 		<filter-name>accessLogFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<!-- 세션만료 시간설정 -->
 	<session-config>
-	    <session-timeout>60</session-timeout>
+		<session-timeout>60</session-timeout>
 	</session-config>
-	
-<!-- 	<filter>  -->
-<!-- 		<filter-name>springSecurityFilterChain</filter-name>  -->
-<!-- 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  -->
-<!-- 	</filter>  -->
-<!-- 	<filter-mapping>  -->
-<!-- 		<filter-name>springSecurityFilterChain</filter-name>  -->
-<!-- 		<url-pattern>/*</url-pattern>  -->
+
+<!-- 	<filter> -->
+<!-- 		<filter-name>springSecurityFilterChain</filter-name> -->
+<!-- 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> -->
+<!-- 	</filter> -->
+<!-- 	<filter-mapping> -->
+<!-- 		<filter-name>springSecurityFilterChain</filter-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
 <!-- 	</filter-mapping> -->
-						    
+
 </web-app>

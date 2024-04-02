@@ -58,27 +58,27 @@ public class FileUploadServiceImpl implements IFileUploadService {
 	 * 사진파일 삭제 1
 	 */
 	@Override
-	public int deletePhotoFileinfo(Map<String, Object> map) {
+	public int deletePhotoFileinfo(String user_id) {
 		log.info("FileUploadServiceImpl deletePhotoFileinfo 사진파일 삭제 1");
-		return dao.deletePhotoFileinfo(map);
+		return dao.deletePhotoFileinfo(user_id);
 	}
 	
 	/**
 	 * 사진파일 삭제 2
 	 */
 	@Override
-	public int updatePhotoPhotoinfo(Map<String, Object> map) {
+	public int updatePhotoPhotoinfo(String user_id) {
 		log.info("FileUploadServiceImpl updatePhotoPhotoinfo 사진파일 삭제 2");
-		return updatePhotoPhotoinfo(map);
+		return dao.updatePhotoPhotoinfo(user_id);
 	}
 
 	/**
 	 * 사진파일 삭제 3
 	 */
 	@Override
-	public int deletePhotoUserinfo(Map<String, Object> map) {
+	public int deletePhotoUserinfo(String user_id) {
 		log.info("FileUploadServiceImpl deletePhotoUserinfo 사진파일 삭제 3");
-		return deletePhotoUserinfo(map);
+		return dao.deletePhotoUserinfo(user_id);
 	}
 	
 	/**
@@ -89,5 +89,31 @@ public class FileUploadServiceImpl implements IFileUploadService {
 		log.info("FileUploadServiceImpl selectPhotoinfo 사진파일 조회");
 		return dao.selectPhotoinfo(user_id);
 	}
+
+	/**
+	 * 사진유무 조회
+	 */
+	@Override
+	public int checkPhotoUse(String user_id) {
+		log.info("FileUploadServiceImpl checkPhotoUse 사진유무 체크");
+		return dao.checkPhotoUse(user_id);
+	}
+
+	/**
+	 * 사진파일명 조회
+	 */
+	@Override
+	public String selectPhotoName(String user_id) {
+		log.info("FileUploadServiceImpl selectPhotoName 사진파일명 조회");
+		return dao.selectPhotoName(user_id);
+	}
 	
+	/**
+	 * 사진파일 경로 조회
+	 */
+	@Override
+	public String selectPhotoPath(String user_id) {
+		log.info("FileUploadServiceImpl selectPhotoPath 사진파일 경로 조회");
+		return dao.selectPhotoPath(user_id);
+	}
 }

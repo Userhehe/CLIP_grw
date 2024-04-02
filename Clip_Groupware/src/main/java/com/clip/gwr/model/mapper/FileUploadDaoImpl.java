@@ -59,27 +59,27 @@ public class FileUploadDaoImpl implements IFileUploadDao {
 	 * 사진파일 삭제 1
 	 */
 	@Override
-	public int deletePhotoFileinfo(Map<String, Object> map) {
+	public int deletePhotoFileinfo(String user_id) {
 		log.info("##### 사진파일 삭제 1 deletePhotoFileinfo #####");
-		return sqlSession.delete(NS + "deletePhotoFileinfo", map);
+		return sqlSession.delete(NS + "deletePhotoFileinfo", user_id);
 	}
 	
 	/**
 	 * 사진파일 삭제 2
 	 */
 	@Override
-	public int updatePhotoPhotoinfo(Map<String, Object> map) {
+	public int updatePhotoPhotoinfo(String user_id) {
 		log.info("##### 사진파일 삭제 2 updatePhotoPhotoinfo #####");
-		return 0;
+		return sqlSession.update(NS + "updatePhotoPhotoinfo", user_id);
 	}
 
 	/**
 	 * 사진파일 삭제 3
 	 */
 	@Override
-	public int deletePhotoUserinfo(Map<String, Object> map) {
+	public int deletePhotoUserinfo(String user_id) {
 		log.info("##### 사진파일 삭제 3 deletePhotoUserinfo #####");
-		return 0;
+		return sqlSession.delete(NS + "deletePhotoUserinfo", user_id);
 	}
 	
 	/**
@@ -89,6 +89,33 @@ public class FileUploadDaoImpl implements IFileUploadDao {
 	public List<FileVo> selectPhotoinfo(String user_id) {
 		log.info("##### 사진파일 조회 selectPhotoinfo #####");
 		return sqlSession.selectList(NS + "selectPhotoinfo", user_id);
+	}
+
+	/**
+	 * 사진유무 체크
+	 */
+	@Override
+	public int checkPhotoUse(String user_id) {
+		log.info("##### 사진유무 체크 checkPhotoUse #####");
+		return sqlSession.selectOne(NS + "checkPhotoUse", user_id);
+	}
+
+	/**
+	 * 사진파일명 조회
+	 */
+	@Override
+	public String selectPhotoName(String user_id) {
+		log.info("##### 사진파일명 조회 selectPhotoName #####");
+		return sqlSession.selectOne(NS + "selectPhotoName", user_id);
+	}
+	
+	/**
+	 * 사진파일 경로 조회
+	 */
+	@Override
+	public String selectPhotoPath(String user_id) {
+		log.info("##### 사진파일 경로 조회 selectPhotoName #####");
+		return sqlSession.selectOne(NS + "selectPhotoPath", user_id);
 	}
 
 }

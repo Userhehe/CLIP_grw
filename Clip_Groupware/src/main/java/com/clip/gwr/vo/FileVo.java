@@ -16,8 +16,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FileVo {
-	private String fileName;
-	private MultipartFile uploadImage;
 	private String file_seq; //파일 시퀀스
 	private String file_targetseq; //기능테이블별 시퀀스코드 
 	private String file_targetobj;//테이블 시퀀스 별 파일넘버

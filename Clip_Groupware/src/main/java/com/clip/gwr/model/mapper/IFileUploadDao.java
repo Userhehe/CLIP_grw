@@ -40,21 +40,21 @@ public interface IFileUploadDao {
 	 * @param map
 	 * @return
 	 */
-	public int deletePhotoFileinfo(Map<String, Object> map);
+	public int deletePhotoFileinfo(String user_id);
 	
 	/**
 	 * 사진파일 삭제 2
 	 * @param map
 	 * @return
 	 */
-	public int updatePhotoPhotoinfo(Map<String, Object> map);
+	public int updatePhotoPhotoinfo(String user_id);
 	
 	/**
 	 * 사진파일 삭제 3
 	 * @param map
 	 * @return
 	 */
-	public int deletePhotoUserinfo(Map<String, Object> map);
+	public int deletePhotoUserinfo(String user_id);
 	
 	/**
 	 * 사진파일 조회
@@ -62,4 +62,27 @@ public interface IFileUploadDao {
 	 * @return
 	 */
 	public List<FileVo> selectPhotoinfo(String user_id);
+	
+	
+	/**
+	 * 사진유무 체크
+	 * @param user_id
+	 * @return
+	 */
+	public int checkPhotoUse(String user_id);
+	
+	
+	/**
+	 * 사진파일명 조회
+	 * @param user_id
+	 * @return
+	 */
+	public String selectPhotoName(String user_id);
+	
+	/**
+	 * 사진경로 조회
+	 * @param user_id
+	 * @return
+	 */
+	public String selectPhotoPath(String user_id);
 }
