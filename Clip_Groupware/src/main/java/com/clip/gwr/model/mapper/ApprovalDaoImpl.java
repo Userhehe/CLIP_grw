@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.clip.gwr.vo.ApprovalVo;
 
@@ -134,14 +135,39 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		return sqlSession.delete(NS+"tempDelete",appSeq);
 	}
 
+	//승인 처리시 실행
+	@Override
+	public int approvePay(String app_seq) {
+		log.info("approvePays 승인 처리 : {} {} {}",app_seq);
+		return sqlSession.update(NS+"approvePay",app_seq);
+	}
+	@Override
+	public int approvePayLine(String app_seq) {
+		log.info("approvePayLine 승인 처리 : {} {} {}",app_seq);
+		return sqlSession.update(NS+"approvePayLine",app_seq);
+	}
 
-	
+
+	@Override
+	public ApprovalVo oneMyPaycheck(String app_seq) {
+		log.info("approvePayLine 승인 처리 : {} ",app_seq);
+		return sqlSession.selectOne(NS+"oneMyPaycheck",app_seq);
+	}
 
 
+	@Override
+	public ApprovalVo oneMyPaychecked(String app_seq) {
+		log.info("oneMyPaychecked 했던거 불러오기 : {} ",app_seq);
+		return sqlSession.selectOne(NS+"oneMyPaychecked",app_seq);
+	}
 
-	
 
-	
+	@Override
+	public ApprovalVo oneMyPayPause(String app_seq) {
+		log.info("oneMyPayPause 반려 했던거 불러오기 : {} ",app_seq);
+		return sqlSession.selectOne(NS+"oneMyPayPause",app_seq);
+	}
+
 
 	
 }

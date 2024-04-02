@@ -50,9 +50,18 @@ public interface IApprovalDao {
 	//임시저장된 결재 삭제
 	public int tempDelete(String appSeq);
 	
+	//결재 승인 처리 
+	public int approvePay(String app_seq);
+	public int approvePayLine(String app_seq);
 	
+	//승인시 단건조회
+	public ApprovalVo oneMyPaycheck(String app_seq);
 	
+	//승인했던거 단건조회
+	public ApprovalVo oneMyPaychecked(String app_seq);
 	
+	//내가 반려했던거 단건조회
+	public ApprovalVo oneMyPayPause(String app_seq);
 
 	
 }
