@@ -30,9 +30,6 @@ public class fileUploadJUnitTest {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	@Autowired
-	private IFileUploadService service; 
-
 	Map<String, Object> map = new HashMap<String, Object>();
 	
 	/**
@@ -93,8 +90,8 @@ public class fileUploadJUnitTest {
 	 */
 //	@Test
 	public void deletePhotoFileinfo() {
-		map.put("user_id","USER_002");
-		int deletePhotoFileinfo = sqlSession.delete("com.clip.gwr.model.mapper.FileUploadDaoImpl.deletePhotoFileinfo", map);
+		String user_id = "USER_1";
+		int deletePhotoFileinfo = sqlSession.delete("com.clip.gwr.model.mapper.FileUploadDaoImpl.deletePhotoFileinfo", user_id);
 		System.out.println("##deletePhotoFileinfo : " + deletePhotoFileinfo);
 		assertNotNull(deletePhotoFileinfo);
 	}
@@ -130,5 +127,38 @@ public class fileUploadJUnitTest {
 		List<FileVo> lists = sqlSession.selectList("com.clip.gwr.model.mapper.FileUploadDaoImpl.selectPhotoinfo", map);
 		System.out.println(lists);
 		assertNotNull(lists);
+	}
+	
+	/**
+	 * 사진유무 체크
+	 */
+//	@Test
+	public void checkPhotoUse() {
+		String user_id = "USER_57";
+		int checkPhotoUse = sqlSession.selectOne("com.clip.gwr.model.mapper.FileUploadDaoImpl.checkPhotoUse", user_id);
+		System.out.println(checkPhotoUse);
+		assertNotNull(user_id);
+	}
+	
+	/**
+	 * 사진파일명 조회
+	 */
+//	@Test
+	public void selectPhotoName() {
+		String user_id = "USER_57";
+		String selectPhotoName = sqlSession.selectOne("com.clip.gwr.model.mapper.FileUploadDaoImpl.selectPhotoName", user_id);
+		System.out.println(selectPhotoName);
+		assertNotNull(user_id);
+	}
+	
+	/**
+	 * 사진경로 조회
+	 */
+	@Test
+	public void selectPhotoPath() {
+		String user_id = "USER_57";
+		String selectPhotoPath = sqlSession.selectOne("com.clip.gwr.model.mapper.FileUploadDaoImpl.selectPhotoPath", user_id);
+		System.out.println(selectPhotoPath);
+		assertNotNull(user_id);
 	}
 }

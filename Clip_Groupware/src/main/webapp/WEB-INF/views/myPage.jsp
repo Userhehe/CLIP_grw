@@ -8,8 +8,10 @@
 <title>마이페이지</title>
 <%@ include file="./header.jsp" %>
 <link href="./assets/css/myPage.css" rel="stylesheet">
+<script type="text/javascript" src="./js/myPage.js"></script>
 <body>
 	<main id="main" class="main" style="padding: 3.85% 9% 3.85% 9%;">
+		<input type="hidden" id="photoCheck" name="photoCheck" value="${checkPhotoUse}">
 		<c:forEach var="userDetailList" items="${userDetailList}" varStatus="vs">
 			<div class="pagetitle">
 		    	<nav>
@@ -23,31 +25,43 @@
 		        	<div class="col-xl-4">
 		          		<div id="profileCt" class="card">
 		            		<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-				            	<img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+								<c:choose>
+									<c:when test="${checkPhotoUse eq 1}">
+										<img src="./images/userprofile/${fileStorename}" alt="profile.img">
+									</c:when>
+									<c:otherwise>
+										<img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+									</c:otherwise>
+								</c:choose>		            			
 				            	<h2>${userDetailList.user_name}</h2>
 				            	<br>
 				            	<h3>${userDetailList.dept_name}팀 ${userDetailList.positions_name}</h3>
 				           	</div>
 				        </div>
 				        
-				        <form action="./photoUpload.do" method="post" enctype="multipart/form-data">
+				        <form id="photoNone" action="./photoUpload.do" method="post" enctype="multipart/form-data">
 					        <div class="card bgcolorTrans">
-					        	<input type="file" name="uploadImage">
-					        	<button type="submit" id="profilePhotoUploadBtn" class="btn btn-dark">프로필 사진 등록</button>
+					        	<input type="file" id="uploadImage" name="uploadImage">
+					        	<button type="submit" id="profilePhotoUploadBtn" class="btn btn-dark btn-sm">프로필 사진 등록</button>
 					        </div>
 				        </form>
 				        
-				        <div class="card bgcolorTrans">
-	                   		<button type="button" id="profilePhotoUpdateBtn" class="btn btn-warning">프로필사진 수정</button>
-	                   		<button type="button" id="profilePhotoDelBtn" class="btn btn-danger">프로필사진 삭제</button>
+				        <div id="photoUse" class="card bgcolorTrans">
+				        	<form id="photoUpdate" action="./photoUpdate.do" method="post" enctype="multipart/form-data">
+				        		<input type="file" id="updateImage" name="updateImage">
+	                   			<button type="submit" id="profilePhotoUpdateBtn" class="btn btn-warning btn-sm">프로필사진 수정</button>
+	                   		</form>
+	                   		<form id="photoDel" action="./photoDel.do" method="post">
+	                   			<button type="submit" id="profilePhotoDelBtn" class="btn btn-danger btn-sm">프로필사진 삭제</button>
+	                   		</form>
 				        </div>
 				        
 				        <div class="card bgcolorTrans">
-	                   		<button type="button" class="btn btn-dark" onclick="window.location.href = './certiOfImpl.do'">재직증명서 다운로드</button>
+	                   		<button type="button" class="btn btn-dark btn-sm" onclick="window.location.href = './certiOfImpl.do'">재직증명서 다운로드</button>
 				        </div>
 				        
 				        <div class="card bgcolorTrans">
-	                   		<button type="button" class="btn btn-dark">서명등록</button>
+	                   		<button type="button" class="btn btn-dark btn-sm">서명등록</button>
 				        </div>
 		        	</div>
 		        	<div class="col-xl-8">

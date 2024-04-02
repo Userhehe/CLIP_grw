@@ -16,13 +16,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.clip.gwr.model.service.IDeptService;
+import com.clip.gwr.model.service.IFileUploadService;
 import com.clip.gwr.model.service.IPositionsService;
 import com.clip.gwr.model.service.IRanksService;
 import com.clip.gwr.model.service.IUserService;
 import com.clip.gwr.vo.DeptVo;
+import com.clip.gwr.vo.FileVo;
 import com.clip.gwr.vo.PositionsVo;
 import com.clip.gwr.vo.RanksVo;
 import com.clip.gwr.vo.UserinfoVo;
@@ -45,7 +46,8 @@ public class UserController {
 	@Autowired
 	private IRanksService ranksService;
 	
-//	private UserServiceImpl service;
+	@Autowired
+	private IFileUploadService fileUploadService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
@@ -225,7 +227,7 @@ public class UserController {
 	}
 	
 	/**
-	 * 상뇽자 목록 검색
+	 * 사용자 목록 검색
 	 * @param request
 	 * @param model
 	 * @return
@@ -398,15 +400,45 @@ public class UserController {
 	    return response;
 	}
 	
+	/**
+	 * 마이페이지
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value = "/myPage.do")
-	public String myPage(HttpSession session, Model model) {
+	public String myPage(HttpSession session, HttpServletResponse response, Model model) {
 		UserinfoVo loginVo = (UserinfoVo)session.getAttribute("loginVo");
 		log.info("####loginVo : " + loginVo);
 		String user_id = loginVo.getUser_id();
-		List<UserinfoVo> userDetailList = userService.selectUserinfoDetail(user_id);
-		log.info("####userDetailList : " + userDetailList);
-		model.addAttribute("userDetailList",userDetailList);
-		return "myPage";
+		try {
+			List<UserinfoVo> userDetailList = userService.selectUserinfoDetail(user_id);
+			log.info("####userDetailList : " + userDetailList);
+			List<FileVo> fileList = fileUploadService.selectPhotoinfo(user_id);
+			log.info("####fileList : " + fileList);
+			int checkPhotoUse = fileUploadService.checkPhotoUse(user_id);
+			log.info("####checkPhotoUse : " + checkPhotoUse);
+			
+//			String fileStorename = "";
+//			for(FileVo file : fileList) {
+//				fileStorename = file.getFile_storename();
+//				log.info("####fileStorename : " + fileStorename);
+//				break;
+//			}
+			String fileStorename = fileUploadService.selectPhotoName(user_id);
+			log.info("####beforeSaveFileName : " + fileStorename);
+			
+			model.addAttribute("fileStorename",fileStorename);
+			model.addAttribute("userDetailList",userDetailList);
+			model.addAttribute("fileList",fileList);
+			model.addAttribute("checkPhotoUse",checkPhotoUse);
+//			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+//			response.setHeader("Pragma", "no-cache");
+			return "myPage";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "accessError";
+		}
 	}
 	
 	@GetMapping(value = "/certiOfImpl.do")
