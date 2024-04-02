@@ -1,7 +1,6 @@
 package com.clip.gwr.model.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,9 @@ public class PaymentlineDaoImpl implements IPaymentlineDao {
 	}
 
 	@Override
-	public int putPayLine(Map<String, Object> map) {
+	public int putPayLine(List<PaymentlineVo> list) {
 		log.info("PaymentlineDaoImpl putPayLine 결재라인 입력");
-		return sqlSession.insert(NS+"putPayLine", map);
+		return sqlSession.insert(NS+"putPayLine", list);
 	}
 
 }

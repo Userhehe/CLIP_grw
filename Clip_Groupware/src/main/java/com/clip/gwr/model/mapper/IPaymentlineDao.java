@@ -11,6 +11,6 @@ public interface IPaymentlineDao {
 	public List<PaymentlineVo> getApprovalPayLine(String app_seq);
 	
 	//결재라인 정보 넣기
-	public int putPayLine(Map<String, Object> map);
+	public int putPayLine(List<PaymentlineVo> list);
 	
 }

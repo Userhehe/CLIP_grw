@@ -39,7 +39,6 @@
 
 </style>
 <script type="text/javascript" src="./js/payTemplateSelect.js"></script>
-<script type="text/javascript" src=""></script>
 
 <!-- SmartEditor2 라이브러리  -->
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js"
@@ -63,7 +62,7 @@
 				<input type="text" disabled="disabled" id="session_user_name" value="${loginVo.user_name}">
 				<input type="text" disabled="disabled" id="session_dept_name" value="${loginVo.dept_name}">
 				<input type="text" disabled="disabled" id="session_ranks_name" value="${loginVo.ranks_name}">
-				<input type="text" disabled="disabled" id="session_user_id" name="user" value="${loginVo.user_id}">
+				<input type="text" disabled="disabled" id="session_user_id" name="user_id" value="${loginVo.user_id}">
 				
 			</div>
 			<h5 class="card-title">${user_name}님 결재신청하실 기안서를 선택해주세요.</h5>
@@ -125,6 +124,7 @@
 		            	
 					</div>
 					
+					<!-- gian_1 신청 -->
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewGian" onclick="gatheringInfo()">
               				 미리보기
 		              	</button>

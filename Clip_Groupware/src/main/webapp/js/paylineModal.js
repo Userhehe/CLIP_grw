@@ -24,7 +24,7 @@ $(document).ready(function() {
 		if(pick_length > 0){
 			let html = `<label class="badge bg-warning" >결재라인</label>
 						<br/>
-						<table class="table table-bordered" style="display: inline-block; vertical-align: middle;">
+						<table class="table table-bordered" style="display: table; vertical-align: middle;">
 						<tr>`; 
 						
 				for(let i = 0; i<pick_length; i++){

@@ -15,9 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clip.gwr.model.service.IApprovalService;
 import com.clip.gwr.model.service.IGianService;
 import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.GianVo;
@@ -36,6 +38,8 @@ public class PayController {
 	
 	@Autowired
 	private IReservationService reservationService;
+	
+	private IApprovalService approvalService;
 
 	@GetMapping(value="/payRegister.do")
 	public String payRegister(HttpServletResponse resp,Model model,HttpSession session) throws IOException {
@@ -74,8 +78,10 @@ public class PayController {
 		return "myPaySelect";
 	}
 	
+	
+	//결재 작성 후 요청
 	@PostMapping(value="/myPayInsert.do")
-	public String myPayInsert(HttpSession session,HttpServletResponse resp) throws IOException {
+	public String myPayInsert(@RequestBody String json ,HttpServletResponse resp) throws IOException {
 		log.info("PayController myPayInsert 결재작성 post");
 		
 		resp.setContentType("text/html; charset=UTF-8");

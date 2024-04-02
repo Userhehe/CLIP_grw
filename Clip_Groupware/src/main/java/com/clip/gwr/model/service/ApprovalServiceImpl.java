@@ -5,9 +5,12 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.clip.gwr.model.mapper.IApprovalDao;
+import com.clip.gwr.model.mapper.IPaymentlineDao;
 import com.clip.gwr.vo.ApprovalVo;
+import com.clip.gwr.vo.PaymentlineVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,6 +20,9 @@ public class ApprovalServiceImpl implements IApprovalService{
 
 	@Autowired
 	private IApprovalDao approvalDao;
+	
+	@Autowired
+	private IPaymentlineDao PaymentlineDao;
 	
 	//내가 요청한 결재내역 전체 조회	
 	@Override
@@ -93,11 +99,15 @@ public class ApprovalServiceImpl implements IApprovalService{
 	
 	
 	
-	//기안 결재요청	(파일 업로드 트랜잭션걸기)
+	//기안 결재요청	
+	@Transactional
 	@Override
-	public int reqDynamicDateApproval(ApprovalVo approvalVo) {
-		log.info("결재 요청: {}",approvalVo);
-		return approvalDao.reqDynamicDateApproval(approvalVo);
+	public boolean reqDynamicDateApproval(ApprovalVo approvalVo, List<PaymentlineVo> list) {
+		log.info("결재 요청: {}, 결재라인 정보들 {}",approvalVo, list);
+		boolean isc = false;
+		int reqResult = approvalDao.reqDynamicDateApproval(approvalVo);
+		int payLineResult = PaymentlineDao.putPayLine(list);
+		return isc = (reqResult>0 && payLineResult>0) ? true:false;
 	}
 
 	//기안 결재 임시저장
@@ -121,4 +131,5 @@ public class ApprovalServiceImpl implements IApprovalService{
 		return approvalDao.tempDelete(appSeq);
 	}
 
+	
 }
