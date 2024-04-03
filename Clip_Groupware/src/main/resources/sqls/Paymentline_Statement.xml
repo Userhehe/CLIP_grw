@@ -15,7 +15,7 @@
   	<update id="putPayLine" parameterType="java.util.List">
 		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
   			INTO PAYMENTLINE (APP_SEQ, PAY_USER ,PAY_NUM) VALUES
-			( #{item.app_seq}, #{item.pay_user}, #{item.pay_num} )
+			( 'APPROVAL_' || TO_CHAR(APPROVAL_SEQ.CURRVAL) , #{item.pay_user}, #{item.pay_num} )
 		</foreach>
   	</update>
   	

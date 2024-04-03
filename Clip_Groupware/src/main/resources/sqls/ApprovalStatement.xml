@@ -194,10 +194,10 @@
 	<insert id="reqDynamicDateApproval" parameterType="ApprovalVo">
     INSERT INTO APPROVAL
         (APP_SEQ, APP_TITLE, APP_CONTENT,
-        GIAN_SEQ, APP_PAYLINE, APP_STRDATE,
+        GIAN_SEQ, APP_STRDATE,
         APP_ENDDATE, USER_ID)
     VALUES('APPROVAL_' || TO_CHAR(APPROVAL_SEQ.NEXTVAL), #{app_title}, #{app_content},
-        #{gian_seq}, #{app_payline},
+        #{gian_seq}, 
         <choose>
             <!-- 만약 시작 날짜와 끝 날짜가 모두 존재하는 경우 -->
             <when test="app_strdate != null and app_enddate != null">
