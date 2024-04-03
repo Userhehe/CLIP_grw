@@ -22,7 +22,5 @@ public class SignsVo {
 	private String signs_regdate ;
 	private String user_name ;
 	private String signs_name;
-	
-	
 	 
 }

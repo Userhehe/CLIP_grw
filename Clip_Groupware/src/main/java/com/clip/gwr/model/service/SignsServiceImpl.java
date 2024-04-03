@@ -25,16 +25,16 @@ public class SignsServiceImpl implements ISignService {
 	}
 
 	@Override
-	public int delPad(Map<String, Object> map) {
-		log.info("SignsServiceImpl delPad 서명 삭제 : {}",map);
-		return dao.delPad(map);
+	public int delPad(String signs_seq) {
+		log.info("SignsServiceImpl delPad 서명 삭제 : {}",signs_seq);
+		return dao.delPad(signs_seq);
 	}
 
 	@Override
 //	public List<SignsVo> selectPad(String userId) {
-	public SignsVo selectPad(String userId) {
-		log.info("SignsServiceImpl selectPad 서명 조회 : {}",userId);
-		return dao.selectPad(userId);
+	public SignsVo selectPad(String signs_seq) {
+		log.info("SignsServiceImpl selectPad 서명 조회 : {}",signs_seq);
+		return dao.selectPad(signs_seq);
 	}
 
 	@Override

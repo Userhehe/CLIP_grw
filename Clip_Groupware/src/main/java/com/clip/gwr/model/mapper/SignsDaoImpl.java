@@ -26,15 +26,15 @@ public class SignsDaoImpl implements ISignsDao {
 	}
 
 	@Override
-	public int delPad(Map<String, Object> map) {
+	public int delPad(String signs_seq) {
 		log.info("##### 서명 삭제 delPad #####");
-		return sqlSession.delete(NS+"delPad",map);
+		return sqlSession.delete(NS+"delPad",signs_seq);
 	}
 
 	@Override
-	public SignsVo selectPad(String userId) {
+	public SignsVo selectPad(String signs_seq) {
 		log.info("##### 서명 조회 selectPad #####");		
-		return sqlSession.selectOne(NS + "selectPad",userId);
+		return sqlSession.selectOne(NS + "selectPad",signs_seq);
 	}
 
 	@Override
