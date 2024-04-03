@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -42,7 +43,10 @@ public class ProjectsController {
 		log.info("PayController 최초 로딩된 프로젝트 페이지");
 		
 		int radioChk = 0;
-		model.addAttribute("radioChk",radioChk);
+		model.addAttribute("radioChk", radioChk);
+		//발주처 select box 데이터 조회
+		List<ProjectsVo> clientList = service.selectClientList();
+		model.addAttribute("clientList", clientList);
 		return "projectsProgress";
 	}
 
@@ -50,8 +54,8 @@ public class ProjectsController {
 
 	@GetMapping(value="/getProgressList.do")
 	@ResponseBody
-	public JSONArray getProgressList(String prjStatus, String clientNm, HttpSession session) {
-		log.info("PayController 완료된 프로젝트 페이지");
+	public JSONArray getProgressList(String prjStatus, String clientNm, String startDate, String endDate, HttpSession session) {
+		log.info("PayController 프로젝트 페이지");
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -61,6 +65,11 @@ public class ProjectsController {
 	    }
 	    if(clientNm != null && !clientNm.isEmpty()) {
 	    	map.put("CLI_NAME",clientNm);
+	    }
+	    
+	    if(startDate != null && !startDate.isEmpty()) {
+	    	map.put("PRJ_SDATE",startDate);
+	    	map.put("PRJ_EDATE",endDate);
 	    }
 	    
 		UserinfoVo loginVo = (UserinfoVo)session.getAttribute("loginVo");
@@ -86,12 +95,11 @@ public class ProjectsController {
 	
 	@GetMapping(value = "/projectsPeriod.do")
 	public String projectsPeriod(Model model) {
-		log.info("PayController 기간별 프로젝트 페이지");
-		List<ProjectsVo> lists = service.getProjectsAll();
-		List<ProjectMemVo> lists2 = service.getMemberName();
 		
-		model.addAttribute("lists", lists);
-		model.addAttribute("lists2", lists2);
+		//발주처 select box 데이터 조회
+		List<ProjectsVo> clientList = service.selectClientList();
+		model.addAttribute("clientList", clientList);
+
 		return "projectsPeriod";
 	}
 
@@ -99,13 +107,10 @@ public class ProjectsController {
 	
 	@GetMapping(value = "/projectClient.do")
 	public String projectClient(Model model) {
-		/*
-		 * log.info("PayController 발주처별 프로젝트 페이지"); List<ProjectsVo> lists =
-		 * service.getProjectsAll(); List<ProjectMemVo> lists2 =
-		 * service.getMemberName();
-		 * 
-		 * model.addAttribute("lists", lists); model.addAttribute("lists2", lists2);
-		 */
+		
+		//발주처 select box 데이터 조회
+		List<ProjectsVo> clientList = service.selectClientList();
+		model.addAttribute("clientList", clientList);
 		
 		return "projectClient";
 	}
@@ -113,7 +118,48 @@ public class ProjectsController {
 //------------프로젝트 상세조회-----------------------//	
 	
 	@GetMapping(value = "/projectDetail.do")
-	public String projectDetail() {
+	public String projectDetail(HttpServletRequest request, Model model) {
+		
+		String prjId = request.getParameter("project_id");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<ProjectsVo> prjectDetail = service.selectDetailList(prjId);
+		/* map = service.selectDetailList(prjId); */
+		model.addAttribute("result", prjectDetail);
+
 		return "projectDetail";
 	}
+	
+//-----------프로젝트 추가-----------------------//	
+	
+	@PostMapping(value = "/insertProject.do") 
+	@ResponseBody
+	public int insertProject(@RequestParam Map<String, Object> map, HttpSession session) {
+		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
+		map.put("user_id", id.getUser_id());
+
+		log.info("담긴 map 내용 {} : " , map);
+		int isc = service.insertProject(map);
+		return isc;
+	}
+	
+	// ------------클라이언트 추가 : 메인 화면 -----------------------//
+
+	@GetMapping(value = "/addClient.do")
+	public String addClient() {
+		log.info("PayController 최초 로딩된 프로젝트 페이지");
+
+		return "addClient";
+	}
+
+	@PostMapping(value = "/addClient.do")
+	@ResponseBody
+	public int insertClient(@RequestParam Map<String, Object> map) {
+
+		log.info("담긴 map 내용 {} : ", map);
+		int isc = service.insertClient(map);
+		return isc;
+	}
+
+
 }

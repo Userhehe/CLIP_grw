@@ -73,51 +73,50 @@
 						</div>
 						<div class="modal-body">
 							<div class="card-body">
-								<form>
+								<form id="newProject">
 									<div class="row mb-3">
 										<label for="inputText" class="col-sm-2 col-form-label">프로젝트
 											명</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control">
+											<input type="text" class="form-control" name="projectNm">
 										</div>
 									</div>
 									<div class="row mb-3">
 										<label for="inputEmail" class="col-sm-2 col-form-label">발주처</label>
 										<div class="col-sm-10">
-											<input type="email" class="form-control">
+											<select class="form-select"
+												aria-label="Default select example" name="cliNm">
+												<c:forEach var="client" items="${clientList}">
+													<option value="${client.CLI_NAME}">${client.CLI_NAME}</option>
+												</c:forEach>
+											</select>
 										</div>
 									</div>
-									<div class="row mb-3">
-										<label for="inputPassword" class="col-sm-2 col-form-label">현장명</label>
-										<div class="col-sm-10">
-											<input type="password" class="form-control">
+										<div class="row mb-3">
+											<label for="inputPassword" class="col-sm-2 col-form-label">현장명</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="workSite">
+											</div>
 										</div>
-									</div>
 									<div class="row mb-3">
 										<label for="inputDate" class="col-sm-2 col-form-label">시작일자</label>
 										<div class="col-sm-10">
-											<input type="date" class="form-control">
+											<input type="date" class="form-control" name="prjSdate">
 										</div>
 									</div>
 									<div class="row mb-3">
 										<label for="inputDate" class="col-sm-2 col-form-label">마감기한</label>
 										<div class="col-sm-10">
-											<input type="date" class="form-control">
+											<input type="date" class="form-control" name="prjEdate">
 										</div>
 									</div>
 									<div class="row mb-3">
 										<label for="inputPassword" class="col-sm-2 col-form-label">비고</label>
 										<div class="col-sm-10">
-											<textarea class="form-control" style="height: 100px"></textarea>
+											<textarea class="form-control" style="height: 100px" name="prjNote"></textarea>
 										</div>
 									</div>
-									<div class="row mb-3">
-										<label for="inputNumber" class="col-sm-2 col-form-label">발주서
-											첨부</label>
-										<div class="col-sm-10">
-											<input class="form-control" type="file" id="formFile">
-										</div>
-									</div>
+
 									<ul class="col-sm-10">
 										<h5>필요 제출목록</h5>
 										<li class="form-check"><input class="form-check-input"
@@ -140,7 +139,7 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-bs-dismiss="modal">닫기</button>
-							<button type="button" class="btn btn-warning">등록</button>
+							<button type="button" id="prjInsertBtn" class="btn btn-warning">등록</button>
 						</div>
 					</div>
 				</div>

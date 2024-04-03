@@ -72,5 +72,39 @@ public class ProjectsServiceImpl implements IProjectsService {
 		return dao.getProgressProjects(map);
 	}
 
+	@Override
+	public int insertProject(Map<String, Object> map) {
+		int cnt = 0;
+		String prjId = "";
+		// 프로젝트 인서트
+		 // cnt = dao.insertProject(map);
+		cnt = dao.insertProject(map);
+		// 프로젝트 멤버도 인서트
+		if(cnt>0) {
+			dao.insertPrjMem(map);
+		}
+
+		return cnt;
+	}
+	
+	@Override
+	public int insertClient(Map<String, Object> map) {
+		int cnt = 0;
+		String cliName = "";
+		// 프로젝트 인서트
+		cnt = dao.insertClient(map);
+		return cnt;
+	}
+
+	@Override
+	public List<ProjectsVo> selectClientList() {
+		return dao.selectClientList();
+	}
+
+	@Override
+	public List<ProjectsVo> selectDetailList(String prjId) {
+		return dao.selectDetailList(prjId);
+	}
+
 
 }

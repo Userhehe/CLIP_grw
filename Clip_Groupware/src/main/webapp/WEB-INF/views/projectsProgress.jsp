@@ -10,6 +10,7 @@
 <meta charset="utf-8">
 <title>Projects</title>
 <%@ include file="./header.jsp"%>
+<link href="assets/css/style.css" rel="stylesheet">
 <script type="text/javascript" src="./js/projects.js"></script>
 </head>
 <body>
@@ -86,51 +87,56 @@
 							</div>
 							<div class="modal-body">
 								<div class="card-body">
-									<form>
+									<form id="newProject">
 										<div class="row mb-3">
 											<label for="inputText" class="col-sm-2 col-form-label">프로젝트
 												명</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control">
+												<input type="text" class="form-control" name="projectNm">
 											</div>
 										</div>
 										<div class="row mb-3">
 											<label for="inputEmail" class="col-sm-2 col-form-label">발주처</label>
 											<div class="col-sm-10">
-												<input type="email" class="form-control">
+												<select class="form-select"
+													aria-label="Default select example" name="cliNm">
+													<c:forEach var="client" items="${clientList}">
+														<option value="${client.CLI_NAME}">${client.CLI_NAME}</option>
+													</c:forEach>
+												</select>
 											</div>
 										</div>
 										<div class="row mb-3">
 											<label for="inputPassword" class="col-sm-2 col-form-label">현장명</label>
 											<div class="col-sm-10">
-												<input type="password" class="form-control">
+												<input type="text" class="form-control" name="workSite">
 											</div>
 										</div>
 										<div class="row mb-3">
 											<label for="inputDate" class="col-sm-2 col-form-label">시작일자</label>
 											<div class="col-sm-10">
-												<input type="date" class="form-control">
+												<input type="date" class="form-control" name="prjSdate">
 											</div>
 										</div>
 										<div class="row mb-3">
 											<label for="inputDate" class="col-sm-2 col-form-label">마감기한</label>
 											<div class="col-sm-10">
-												<input type="date" class="form-control">
+												<input type="date" class="form-control" name="prjEdate">
 											</div>
 										</div>
 										<div class="row mb-3">
 											<label for="inputPassword" class="col-sm-2 col-form-label">비고</label>
 											<div class="col-sm-10">
-												<textarea class="form-control" style="height: 100px"></textarea>
+												<textarea class="form-control" style="height: 100px" name="prjNote"></textarea>
 											</div>
 										</div>
-										<div class="row mb-3">
+<!-- 										<div class="row mb-3">
 											<label for="inputNumber" class="col-sm-2 col-form-label">발주서
 												첨부</label>
 											<div class="col-sm-10">
 												<input class="form-control" type="file" id="formFile">
 											</div>
-										</div>
+										</div> -->
 										<ul class="col-sm-10">
 											<h5>필요 제출목록</h5>
 											<li class="form-check"><input class="form-check-input"
@@ -153,7 +159,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-bs-dismiss="modal">닫기</button>
-								<button type="button" class="btn btn-warning">등록</button>
+								<button type="button" id="prjInsertBtn" class="btn btn-warning">등록</button>
 							</div>
 						</div>
 					</div>
@@ -161,31 +167,30 @@
 				<!-- 프로젝트 생성 모달창 끝 -->
 
 				<!-- 프로젝트 리스트창 시작 -->
-				<div class="container" style="margin-left: 5px;">
-					<div class="row" style="width: 119%; flex-wrap: wrap;">
-						<c:forEach var="projects" items="${lists}" varStatus="vs">
-							<div class="col-md-4" style="width: 20%; flex: 0 0 20%;">
-								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; width: 100%; border-radius: 20px;">
-									<div>
-										<div class="card-title">
-											<span style="font-weight: bold; font-size: 17px;">[${projects.cli_name}]</span><br>
-											<div style="margin-top: 5px;">${projects.prj_name}</div>
-										</div>
-									</div>
-									<div>
-										 <h5>참여자 : [${lists2[vs.index].user_name}]</h5>
-									</div>
-									<div style="text-align: right; margin-top: 20px;">
-										<button type="button" class="btn btn-secondary"
-											onclick="location.href='projectDetail.do?project_id=${project.PRJ_ID}'"
-											style="margin-right: 15px;">상세보기</button>
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
-				</div>
+<div class="container" style="margin-left: 5px;">
+    <div class="row" style="width: 119%; flex-wrap: wrap;">
+        <c:forEach var="projects" items="${lists}" varStatus="vs">
+            <div class="col-md-4" style="width: 20%; flex: 0 0 20%;">
+                <div class="card-body"
+                     style="margin-top: 30px; background-color: white; height: 230px; width: 100%; border-radius: 20px; position: relative;">
+                    <div>
+                        <div class="card-title" style="margin-bottom: 0px;">
+                            <span style="font-weight: bold; font-size: 17px;">[${projects.cli_name}]</span><br>
+                            <div style="margin-top: 5px;">${projects.prj_name}</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 0px;">
+                        <h5>참여자 : [${lists2[vs.index].user_name}]</h5>
+                    </div>
+                    <button type="button" class="btn btn-secondary" style="text-align: right; margin-top: 15px; position: relative; right: 0; bottom: 0;"
+                            onclick="location.href='projectDetail.do?project_id=${project.PRJ_ID}'">상세보기
+                    </button>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
+
 				<!-- 프로젝트 리스트창 끝 -->
 
 			</div>

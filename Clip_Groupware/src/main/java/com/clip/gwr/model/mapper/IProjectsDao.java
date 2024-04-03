@@ -38,6 +38,16 @@ public interface IProjectsDao {
 	// 진행중 혹은 완료 목록 조회
 	public List<ProjectsVo> getProgressProjects(Map<String, Object> map);
 
+	public int insertProject(Map<String, Object> map);
+
+	public List<ProjectsVo> selectClientList();
+
+	public int insertPrjMem(Map<String, Object> map);
+
+	public int insertClient(Map<String, Object> map);
+
+	public List<ProjectsVo> selectDetailList(String prjId);
+
 	// 프로젝트 삭제
 //	public int projectsDelete(String prj_id);
 	
