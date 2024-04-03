@@ -186,8 +186,8 @@ function gatheringInfo(){
 	
 	var inputContent = document.getElementById('approvalContent').value;
 //	console.log(inputContent);
-	
-	contentSpace.textContent = inputContent;
+	contentSpace.querySelector('span').style.wordWrap = 'break-word';  
+	contentSpace.querySelector('span').textContent = inputContent;
 	
 	app_content = htmlmodal.getElementsByClassName('modal-body')[0].innerHTML;
 	
@@ -273,8 +273,8 @@ function draft_application(){
 	var app_title = document.querySelector('[name = "app_title"]').value;
 	var app_content = body.innerHTML;
 	var gian_seq = 'GIAN_1';
-	var app_strdate = document.querySelector('#startDate');
-	var app_enddate = document.querySelector('#endDate');
+	var app_strdate = document.querySelector('#startDate').value;
+	var app_enddate = document.querySelector('#endDate').value;
 	var approval = {
 		"user_id" : user_id,
 		"app_title" : app_title,
@@ -284,7 +284,7 @@ function draft_application(){
 		"app_enddate" : app_enddate
 	}
 	
-	console.log('전자결재 정보 : ',approval);
+//	console.log('전자결재 정보 : ',approval);
 	
 	//결재라인 테이블정보
 	let paymentLine = [];
@@ -301,17 +301,30 @@ function draft_application(){
 	}
 	console.log(paymentLine);
 	
-	fetch('/myPayInsert.do', {
+	var jsonForm = JSON.stringify({'ApprovalVo' : approval, 'PaymentlineVoList' : paymentLine});
+	
+	console.log('제이슨 형태로 만들어 보자 : ',jsonForm);
+	console.log('데이터 타입은? : ',typeof jsonForm);
+//	var appro = JSON.stringify(approval); 
+
+	fetch('./myPayInsert.do', {
 		method : 'POST',
-		header : {'Content-Type' : 'application/json'},
-		body : JSON.stringify({'ApprovalVo' : approval, 'PaymentlineVo' : paymentLine})
+		headers : {'Content-Type' : 'application/json'},
+		body : jsonForm
 	}).then(response => {
 		if (!response.ok) {
-	        throw new Error('Network response was not ok');
+	        throw new Error('요청에 실패하였습니다!');
 	    }
-	    return response.json();
+	    return response.text();
 	}).then(data => {
+		if(data === 'success'){
 		 console.log('Success:', data);
+		 alert('결재신청에 성공하였습니다.');
+		 window.location.href = './myPayList.do'
+		 return;
+		 }
+		 alert('결재신청에 실패하였습니다. 다시 시도해주세요.');
+		 console.log('Fail:', data);
 	}).catch(error => {
 	    console.error('Error:', error);
 	});
