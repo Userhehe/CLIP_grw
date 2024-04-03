@@ -37,13 +37,10 @@
 					<div class="row mb-3">
 						<label for="inputEmail" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>Email</label>
 						<div class="col-sm-10">
-							<input type="text" id="userEmail" name="userEmail" class="form-control w345px ib" required="required"> 
+							<input type="text" id="userEmail" name="userEmail" class="form-control w345px ib" data-bs-toggle="modal" data-bs-target="#verticalycentered" required="required"> 
 							<span class="ib">@</span> 
-							<input type="text" id="emailDomain" name="emailDomain" class="form-control w143_7px ib" value="">
+							<input type="text" id="emailDomain" name="emailDomain" class="form-control w143_7px ib" data-bs-toggle="modal" data-bs-target="#verticalycentered">
 						</div>
-					</div>
-					<div id="mailCheck">
-						<button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#verticalycentered">이메일 중복체크</button>
 					</div>
 					<!-- 이메일 중복체크 모달창 -->
 					<div class="modal fade" id="verticalycentered" tabindex="-1">
@@ -124,9 +121,9 @@
 					</div>
 
 					<div class="row mb-3">
-						<label for="deptName" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;부서선택</label>
+						<label for="deptName" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>부서선택</label>
 						<div class="col-sm-10">
-							<select name="deptName" class="form-select">
+							<select id="deptName" name="deptName" class="form-select">
 								<option value="">부서선택</option>
 								<c:forEach var="deptLists" items="${deptLists}" varStatus="vs">
 									<option value="${deptLists.dept_name}">${deptLists.dept_name}</option>
@@ -135,24 +132,24 @@
 						</div>
 					</div>
 					<div class="row mb-3">
-						<label for="ranksName" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;직급선택</label>
+						<label for="ranksName" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>직급선택</label>
 						<div class="col-sm-10">
-							<select name="ranksName" class="form-select">
+							<select id="ranksName" name="ranksName" class="form-select">
 								<option value="">직급선택</option>
-								<c:forEach var="positLists" items="${positionsLists}" varStatus="vs">
-									<option value="${positLists.positions_name}">${positLists.positions_name}</option>
+								<c:forEach var="ranksLists" items="${ranksLists}" varStatus="vs">
+									<option value="${ranksLists.ranks_name}">${ranksLists.ranks_name}</option>
 								</c:forEach>
 							</select>
 						</div>
 					</div>
 
 					<div class="row mb-3">
-						<label for="positionsName" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;직책선택</label>
+						<label for="positionsName" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>직책선택</label>
 						<div class="col-sm-10">
-							<select name="positionsName" class="form-select">
+							<select id="positionsName" name="positionsName" class="form-select">
 								<option value="">직책선택</option>
-								<c:forEach var="ranksLists" items="${ranksLists}" varStatus="vs">
-									<option value="${ranksLists.ranks_name}">${ranksLists.ranks_name}</option>
+								<c:forEach var="positionsLists" items="${positionsLists}" varStatus="vs">
+									<option value="${positionsLists.positions_name}">${positionsLists.positions_name}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -167,10 +164,18 @@
 							</select>
 						</div>
 					</div>
+					
+					<div class="row mb-3">
+						<label for="userRegdate" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>입사일</label>
+						<div class="col-sm-10">
+							<input type="date" id="userRegdate" name="userRegdate" class="form-control" required="required">
+						</div>
+					</div>
 					<br>
 					<div class="row mb-3">
-						<div>
-							<button type="submit" id="userInfoInsertBtn" class="btn btn-secondary button">사원정보등록</button>
+						<div class="flex_end">
+							<button class="btn btn-secondary" onclick="window.location.href='./userInfo.do'">목록</button>&nbsp;
+							<button type="submit" id="userInfoInsertBtn" class="btn btn-secondary">사원정보등록</button>
 						</div>
 					</div>
 				</form>

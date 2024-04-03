@@ -33,7 +33,6 @@
 		SELECT USER_EMAIL
 			FROM USERINFO u
 		WHERE USER_ID = #{user_id}
-		AND USER_STATUS = 'Y'
 	</select>
 	
 	<!-- 사원정보 등록 -->
@@ -52,22 +51,21 @@
 			(SELECT RANKS_SEQ FROM RANKS WHERE RANKS_NAME = #{ranks_name}),
 			(SELECT DEPT_SEQ FROM DEPT WHERE DEPT_NAME = #{dept_name}),
 			(SELECT POSITIONS_SEQ FROM POSITIONS WHERE POSITIONS_NAME = #{positions_name}),
-			TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD'))
+			TO_DATE(#{user_regdate}, 'YYYY-MM-DD'))
 	</insert>
 	
 	<!-- 이메일 중복체크 -->
 	<select id="duplicateCheckEmail" parameterType="java.util.Map" resultType="java.lang.Integer">
 		SELECT COUNT(*)
-			FROM USERINFO u
-		WHERE USER_STATUS = 'Y' 
-		AND USER_EMAIL = #{user_email}
+			FROM USERINFO u 
+		WHERE USER_EMAIL = #{user_email}
 	</select>
 	
 	<!-- 사원목록 전체조회 -->
 	<select id="selectUserinfoList" resultType="com.clip.gwr.vo.UserinfoVo">
 		SELECT U.USER_ID, U.USER_NAME, R.RANKS_NAME, 
 	        D.DEPT_NAME, PO.POSITIONS_NAME, U.PHOTO_SEQ,
-	        U.USER_AUTH, TO_CHAR(U.USER_REGDATE, 'YYYY-MM-DD') AS USER_REGDATE
+	        U.USER_AUTH, U.USER_STATUS, TO_CHAR(U.USER_REGDATE, 'YYYY-MM-DD') AS USER_REGDATE
 		FROM USERINFO U
 		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
 		INNER JOIN DEPT D ON U.DEPT_SEQ = D.DEPT_SEQ
@@ -86,7 +84,7 @@
 		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
 		INNER JOIN DEPT D ON U.DEPT_SEQ = D.DEPT_SEQ
 		INNER JOIN POSITIONS PO ON U.POSITIONS_SEQ = PO.POSITIONS_SEQ
-		WHERE USER_STATUS = 'Y'
+		WHERE 1=1
 		<if test="user_name != null and user_name != ''">
 			AND U.USER_NAME LIKE '%' || #{user_name} || '%'
 		</if>
@@ -98,6 +96,9 @@
 		</if>
 		<if test="positions_name != null and positions_name != ''">
 			AND PO.POSITIONS_NAME = #{positions_name}
+		</if>
+		<if test="user_status != null and user_status != ''">
+			AND U.USER_STATUS = #{user_status}
 		</if>
 		<if test="start_regdate != null and end_regdate != null and start_regdate != '' and end_regdate != ''">
 			AND U.USER_REGDATE BETWEEN TO_DATE(#{start_regdate}, 'YYYY-MM-DD') 
@@ -118,7 +119,7 @@
 		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
 		INNER JOIN DEPT D ON U.DEPT_SEQ = D.DEPT_SEQ
 		INNER JOIN POSITIONS PO ON U.POSITIONS_SEQ = PO.POSITIONS_SEQ
-		WHERE USER_STATUS = 'Y'
+		WHERE 1=1
 		AND U.USER_ID = #{user_id}
 	</select>
 	
@@ -130,18 +131,21 @@
 			RANKS_SEQ = (SELECT RANKS_SEQ FROM RANKS r WHERE RANKS_NAME = #{ranks_name}), 
 			DEPT_SEQ = (SELECT DEPT_SEQ FROM DEPT d WHERE DEPT_NAME = #{dept_name}), 
 			POSITIONS_SEQ = (SELECT POSITIONS_SEQ FROM POSITIONS p WHERE POSITIONS_NAME = #{positions_name}), 
-			USER_AUTH = #{user_auth} , USER_STATUS = #{user_status}
+			USER_AUTH = #{user_auth} , USER_STATUS = #{user_status}, USER_REGDATE = TO_DATE(#{user_regdate}, 'YYYY-MM-DD')
 		WHERE USER_ID = #{user_id}
 	</update>
 	
 	<!-- 재직증명서 다운로드 -->
 	<select id="selectJejicDownload" parameterType="java.lang.String" resultType="com.clip.gwr.vo.UserinfoVo">
-		SELECT U.USER_NAME, U.USER_REGISTNUM, U.USER_BIRTHDAY, 
-		U.USER_ADDRESS, TO_CHAR(U.USER_REGDATE, 'YYYY-MM-DD') AS USER_REGDATE, R.RANKS_NAME,
+		SELECT u.USER_NAME, u.USER_REGISTNUM, TO_CHAR(u.USER_BIRTHDAY, 'YYYY-MM-DD') AS USER_BIRTHDAY, 
+		u.USER_ADDRESS, TO_CHAR(u.USER_REGDATE, 'YYYY-MM-DD') AS USER_REGDATE,
+		d.DEPT_NAME, p.POSITIONS_NAME, r.RANKS_NAME,
 		(SELECT USER_NAME FROM USERINFO WHERE RANKS_SEQ = 'RANKS_1') AS BOSS_NAME, 
 		TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') AS TODAY
 			FROM USERINFO u 
-		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
+		INNER JOIN DEPT d ON u.DEPT_SEQ = d.DEPT_SEQ
+		INNER JOIN POSITIONS p ON u.POSITIONS_SEQ = p.POSITIONS_SEQ
+		INNER JOIN RANKS r ON u.RANKS_SEQ = r.RANKS_SEQ
 		WHERE USER_ID = #{user_id}
 	</select>
 	
@@ -149,6 +153,6 @@
 	<select id="selectUserAuth" parameterType="java.lang.String" resultType="java.lang.String">
 		SELECT USER_AUTH 
 			FROM USERINFO u 
-			WHERE user_id = #{user_id};
+			WHERE user_id = #{user_id}
 	</select>
 </mapper>

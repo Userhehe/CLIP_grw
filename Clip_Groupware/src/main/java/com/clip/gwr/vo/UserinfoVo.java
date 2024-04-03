@@ -38,4 +38,6 @@ public class UserinfoVo implements Serializable{
 	private String user_auth;
 	private String user_status;
 	private String user_regdate;
+	private String today;
+	private String boss_name;
 }

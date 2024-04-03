@@ -41,14 +41,14 @@
 							<label for="inputEmail" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>Email</label>
 							<div class="col-sm-10">
 								<c:set var="emailSplit" value="${fn:split(userDetailList.user_email, '@')}"/>
-								<input type="text" id="userEmail" name="userEmail" class="form-control w345px ib" value="${emailSplit[0]}" required="required"> 
+								<input type="text" id="userEmail" name="userEmail" class="form-control w345px ib" value="${emailSplit[0]}" data-bs-toggle="modal" data-bs-target="#verticalycentered" required="required"> 
 								<span class="ib">@</span>
-								<input type="text" id="emailDomain" name="emailDomain" class="form-control w143_7px ib" value="${emailSplit[1]}">
+								<input type="text" id="emailDomain" name="emailDomain" class="form-control w143_7px ib" value="${emailSplit[1]}" data-bs-toggle="modal" data-bs-target="#verticalycentered" required="required">
  							</div>
 						</div>
-						<div id="mailCheck">
-							<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#verticalycentered">이메일 중복체크</button>
-						</div>
+<!-- 						<div id="mailCheck"> -->
+<!-- 							<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#verticalycentered">이메일 중복체크</button> -->
+<!-- 						</div> -->
 						<!-- 이메일 중복체크 모달창 -->
 						<div class="modal fade" id="verticalycentered" tabindex="-1">
 					  		<div class="modal-dialog modal-dialog-centered">
@@ -136,10 +136,9 @@
 						</div>
 	
 						<div class="row mb-3">
-							<label for="deptName" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;부서선택</label>
+							<label for="deptName" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>부서선택</label>
 							<div class="col-sm-10">
-								<select name="deptName" class="form-select">
-									<option value="">부서선택</option>
+								<select id="deptName" name="deptName" class="form-select">
 									<c:forEach var="deptLists" items="${deptLists}" varStatus="vs">
 										<c:choose>
 											<c:when test="${deptLists.dept_name eq userDetailList.dept_name}">
@@ -154,10 +153,9 @@
 							</div>
 						</div>
 						<div class="row mb-3">
-							<label for="ranksName" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;직급선택</label>
+							<label for="ranksName" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>직급선택</label>
 							<div class="col-sm-10">
-								<select name="ranksName" class="form-select">
-									<option value="">직급선택</option>
+								<select id="ranksName" name="ranksName" class="form-select">
 									<c:forEach var="ranks" items="${ranksLists}" varStatus="vs">
 										<c:choose>
 											<c:when test="${ranks.ranks_name eq userDetailList.ranks_name}">
@@ -173,10 +171,9 @@
 						</div>
 	
 						<div class="row mb-3">
-							<label for="positionsName" class="col-sm-2 col-form-label font12">&nbsp;&nbsp;직책선택</label>
+							<label for="positionsName" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>직책선택</label>
 							<div class="col-sm-10">
-								<select name="positionsName" class="form-select">
-									<option value="">직책선택</option>
+								<select id="positionsName" name="positionsName" class="form-select">
 									<c:forEach var="positions" items="${positionsLists}" varStatus="vs">
 										<c:choose>
 											<c:when test="${positions.positions_name eq userDetailList.positions_name}">
@@ -210,10 +207,17 @@
 								</select>
 							</div>
 						</div>
+						<div class="row mb-3">
+							<label for="userRegdate" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>입사일</label>
+							<div class="col-sm-10">
+								<input type="date" id="userRegdate" name="userRegdate" class="form-control" value="${userDetailList.user_regdate}" required="required">
+							</div>
+						</div>
 						<br>
 						<div class="row mb-3">
-							<div>
-								<button type="submit" id="userInfoUpdateBtn" class="btn btn-secondary button">사원정보수정</button>
+							<div class="flex_end">
+								<button type="button" class="btn btn-secondary" onclick="window.location.href='./userInfo.do'">목록</button>&nbsp;
+								<button type="submit" id="userInfoUpdateBtn" class="btn btn-secondary">사원정보수정</button>
 							</div>
 						</div>
 					</c:forEach>

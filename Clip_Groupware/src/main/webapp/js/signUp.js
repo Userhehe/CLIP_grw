@@ -8,6 +8,28 @@ $(document).ready(function(){
 	$('#phonenumFrontInputCt').hide(); // 연락처 지역번호 직접입력란 숨기기
 	$('#inputPhoneFirstnum').attr('disabled',true); // 연락처 지역번호 직접입력란 비활성화
 	
+	// 새로고침으로 submit 되지 않도록
+	var userInfoInsertBtn = document.getElementById("userInfoInsertBtn");
+		userInfoInsertBtn.addEventListener("submit", function(event) {
+		event.preventDefault();
+	});
+	
+	// 이메일 키보드 입력시 이메일 등록버튼 비활성화
+	var frontEmail = document.getElementById('frontEmail');
+	frontEmail.addEventListener('keyup', function(event) {
+		$('#emailAvailable').hide();
+		$('#emailUnAvailable').hide();
+		$('#emailInsertBtn').prop('disabled',true);
+	});
+	
+	// 이메일 도메인 키보드 입력시 이메일 등록버튼 비활성화
+	var inputEmail = document.getElementById('inputEmail');
+	inputEmail.addEventListener('keyup', function(event) {
+		$('#emailAvailable').hide();
+		$('#emailUnAvailable').hide();
+		$('#emailInsertBtn').prop('disabled',true);
+	});
+	
 	// 이메일 중복체크
 	$('#emailCheckBtn').click(function(){
 		var frontEmail = $('#frontEmail').val();
@@ -33,7 +55,7 @@ $(document).ready(function(){
 				console.log('responseType', typeof response);
 				console.log('response.emailCheck',response.emailCheck);
 				console.log('response.emailCheckType', typeof response.emailCheck);
-				if(response.emailCheck === 1) {
+				if(response.emailCheck >= 1) {
 					alert('입력하신 이메일로 가입된 아이디가 존재합니다.\n다른 이메일을 입력해주세요.');
 					$('#emailUnAvailable').show();
 					$('#emailAvailable').hide();
@@ -89,10 +111,25 @@ $(document).ready(function(){
 	
 	// 필수입력란 미입력시 return
 	$('#userInfoInsertBtn').click(function(event){
-		if ($('#phoneFirstnum option[value="inputPhone"]').prop('selected') && ($('#inputPhoneFirstnum').val() == null || $('#inputPhoneFirstnum').val() == "")) {
+		if ($('#phoneFirstnum option[value="inputPhone"]').prop('selected') && ($('#inputPhoneFirstnum').val() === '')) {
 			alert('연락처 지역번호를 입력해주세요');
 			event.preventDefault(); // 폼 제출을 취소합니다.
 			return;
+		}
+		if($('#deptName').val() === '') {
+			alert('부서를 선택해주세요');
+			event.preventDefault(); // 폼 제출을 취소합니다.
+			return;			
+		}
+		if($('#ranksName').val() === '') {
+			alert('직급을 선택해주세요');
+			event.preventDefault(); // 폼 제출을 취소합니다.
+			return;			
+		}
+		if($('#positionsName').val() === '') {
+			alert('직책을 선택해주세요');
+			event.preventDefault(); // 폼 제출을 취소합니다.
+			return;			
 		}
 	});
 });

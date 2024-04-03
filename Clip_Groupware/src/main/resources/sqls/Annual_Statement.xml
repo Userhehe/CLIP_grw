@@ -3,9 +3,15 @@
 <mapper namespace="com.clip.gwr.model.mapper.AnnualDaoImpl">
 
   <insert id="insertAnn" parameterType="java.util.Map">
-   INSERT INTO ANNUAL_CT
-	(ANN_SEQ, USER_ID, ANN_DAY, ANN_DATE, ANN_LEOV)
-	VALUES(('ANN_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL)), #{user_id}, 0,SYSDATE, 0)
+  		<selectKey keyProperty="user_seq" resultType="java.lang.Integer" order="BEFORE">
+			SELECT USER_SEQ.NEXTVAL-1 AS USER_SEQ FROM DUAL
+		</selectKey>
+<!--    INSERT INTO ANNUAL_CT -->
+<!-- 	(ANN_SEQ, USER_ID, ANN_DAY, ANN_DATE, ANN_LEOV) -->
+<!-- 	VALUES(('ANN_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL)), #{user_id}, 0,SYSDATE, 0) -->
+	   INSERT INTO ANNUAL_CT
+		(ANN_SEQ, USER_ID, ANN_DAY, ANN_DATE, ANN_LEOV)
+		VALUES(('ANN_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL)), 'USER_' || TO_CHAR(USER_SEQ.NEXTVAL-1), 0,SYSDATE, 0)
   </insert>
   
   <update id="insertAnnualup" parameterType="java.util.Map">
