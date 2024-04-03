@@ -11,6 +11,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -184,5 +185,15 @@ public class ScheduleController {
 		log.info("전사 내용 {} : " , map);
 		int isc = memoservice.ntcScheduleUpdate(map);
 		return isc;
+	}
+	
+	//공지 사항
+	@GetMapping(value = "/nctBoard.do")
+	public String nctBoard(Model model) {
+		log.info("ScheduleController nctBoard 공지사항페이지 이동");
+		List<NtcVo> lists = memoservice.selectNtcBoard();
+		log.info("ScheduleController nctBoard 공지사항 내용 : {}",lists);
+		model.addAttribute("selectNtcBoard", lists);
+		return "nctBoard";
 	}
 }

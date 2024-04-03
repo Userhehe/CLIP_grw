@@ -68,4 +68,10 @@ public class MemoServiceImpl implements IMemoService{
 	public int ntcScheduleUpdate(Map<String, Object> map) {
 		return dao.ntcScheduleUpdate(map);
 	}
+	
+	//공지사항(전사)
+	@Override
+	public List<NtcVo> selectNtcBoard() {
+		return dao.selectNtcBoard();
+	}
 }

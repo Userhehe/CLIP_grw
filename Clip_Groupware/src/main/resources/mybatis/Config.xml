@@ -51,6 +51,5 @@
 		<mapper resource="sqls/Receiver_Statement.xml"/>
 		<mapper resource="sqls/Reference_Statement.xml"/>
 		
-		
 	</mappers>
 </configuration>

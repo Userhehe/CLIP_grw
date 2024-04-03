@@ -29,10 +29,10 @@
      	background-color: orange;
     }
     .reser_event > *{
-     	background-color: green;
+     	background-color: #70DB8A;
     }
     .annual_event > *{
-     	background-color: red;
+     	background-color: #9368DC;
     }
     
     
@@ -50,7 +50,13 @@
 	.fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
 	  color: black;
 	}
-
+	
+	
+	.square {
+		margin-left : 10px;
+        width: 100px;
+        height: 15px;
+    }
 </style>
 </head>
 <body>
@@ -111,7 +117,8 @@
 						<div class="form-control" id="dtTitle"></div>
 					</div>
 					<label for="dtContent" class="col-form-label">일정 내용</label>
-					<div class="form-control" id="dtContent"></div>
+<!-- 					<div class="form-control" id="dtContent"></div> -->
+					<textarea rows="5" class="form-control" id="dtContent" readonly="readonly"></textarea>
 					<label for="dtStart" class="col-form-label">시작 날짜</label>
 					<div class="form-control" id="dtStart"></div>
 					<label for="dtEnd" class="col-form-label">종료 날짜</label>
@@ -183,22 +190,28 @@
 					style="background-color: #f2f2f2; height: 300px">
 					<div class="card-body">
 						<h2 class="card-title">조회 목록</h2>
-						<form>
 							<table>
 								<tr>
 									<td><input type="checkbox" id="showAllEvent" checked> 전체일정</td>
 								</tr>
 								<tr>
 									<td><input type="checkbox" id="showPrs" checked> 개인일정</td>
+									<td><div class="square" style="background-color: #39CEFA;"></div></td>
 								</tr>
 								<tr>
 									<td><input type="checkbox" id="showNct" checked> 전사일정</td>
+									<td><div class="square" style="background-color: orange;"></div></td>
 								</tr>
 								<tr>
 									<td><input type="checkbox" id="showRe" checked> 예약일정</td>
+									<td><div class="square" style="background-color: #70DB8A;"></div></td>
 								</tr>
 								<tr>
 									<td><input type="checkbox" id="showAn" checked> 휴가일정</td>
+									<td><div class="square" style="background-color: #9368DC;"></div></td>
+								</tr>
+								<tr>
+									<td><a href="./nctBoard.do">공지항으로 이동</a></td>
 								</tr>
 								<tr style="display: none">
 									<td><input type="text" id="user_auth" value="${loginVo.user_auth}"></td>
@@ -207,7 +220,6 @@
 									<td><input type="text" id="user_id" value="${loginVo.user_id}"></td>
 								</tr>
 							</table>
-						</form>
 					</div>
 				</div>
 

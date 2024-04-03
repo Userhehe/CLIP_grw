@@ -32,4 +32,12 @@ public interface IMemoDao {
 	public int ntcScheduleUpdate(Map<String, Object> map); // 전사일정 수정
 	
 	
+	//공지사항(전사)
+	public List<NtcVo> selectNtcBoard(); //전체 조회
+	
+	
+	//페이징 테스트
+	
+	
+	
 }
