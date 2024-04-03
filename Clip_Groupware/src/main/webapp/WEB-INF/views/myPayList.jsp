@@ -28,6 +28,7 @@
 		             </select>
 					<input style="width: 200px; display: unset;" id="searchInput"class="form-control" type="text" placeholder="제목을 입력해주세요.">
 					<button class="btn btn-primary rounded-pill" id="templateSearch">검색</button>
+					<button class="btn btn-warning rounded-pill" id="resetSearch">검색 초기화</button>
 				</div>
 				<table  class="table table-hover" style="margin-top: 10px;">
 						<thead>
@@ -35,20 +36,29 @@
 								<th>결재코드</th>
 								<th>제목</th>
 								<th>양식 종류</th>
-								<th>작성일</th>
+								<th>결재요청일</th>
 								<th>결재진행</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="vo" items="${lists}" varStatus="vs">
-								<tr>
-									<td>${vo.app_seq}</td>
-									<td>${vo.app_title}</td>
-									<td>${vo.gian_seq}</td>
-									<td>${vo.app_strdate}</td>
-									<td>${vo.pay_num}</td>
-								</tr>
-							</c:forEach>
+						<c:choose>
+					        <c:when test="${not empty lists}">
+					            <c:forEach var="vo" items="${lists}" varStatus="vs">
+					                <tr>
+					                    <td>${vo.app_seq}</td>
+					                    <td>${vo.app_title}</td>
+					                    <td>${vo.gian_seq}</td>
+					                    <td>${vo.app_strdate}</td>
+					                    <td>${vo.pay_num}</td>
+					                </tr>
+					            </c:forEach>
+					        </c:when>
+					        <c:otherwise>
+					            <tr>
+					                <td colspan="5" style="color: red; text-align: center;">요청하신 결재가 없습니다.</td>
+					            </tr>
+					        </c:otherwise>
+					    </c:choose>
 						</tbody>
 						<tfoot>
 							<tr>

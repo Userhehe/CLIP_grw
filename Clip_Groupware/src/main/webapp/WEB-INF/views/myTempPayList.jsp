@@ -31,18 +31,27 @@
 							<th>결재코드</th>
 							<th>제목</th>
 							<th>양식 종류</th>
-							<th>작성일</th>
+							<th>임시저장일</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="vo" items="${lists}" varStatus="vs">
+					<c:choose>
+						<c:when test="${not empty lists}">
+							<c:forEach var="vo" items="${lists}" varStatus="vs">
+								<tr>
+									<td>${vo.app_seq}</td>
+									<td>${vo.app_title}</td>
+									<td>${vo.gian_seq}</td>
+									<td>${vo.app_createdate}</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
 							<tr>
-								<td>${vo.app_seq}</td>
-								<td>${vo.app_title}</td>
-								<td>${vo.gian_seq}</td>
-								<td>${vo.app_createdate}</td>
-							</tr>
-						</c:forEach>
+					           <td colspan="5" style="color: red; text-align: center;">임시 저장하신 결재문서가 없습니다.</td>
+					        </tr>
+						</c:otherwise>
+					</c:choose>	
 					</tbody>
 					<tfoot>
 						<tr>

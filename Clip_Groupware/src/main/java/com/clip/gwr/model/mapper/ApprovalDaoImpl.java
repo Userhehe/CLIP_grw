@@ -137,14 +137,20 @@ public class ApprovalDaoImpl implements IApprovalDao {
 
 	//승인 처리시 실행
 	@Override
-	public int approvePay(String app_seq) {
-		log.info("approvePays 승인 처리 : {} {} {}",app_seq);
-		return sqlSession.update(NS+"approvePay",app_seq);
+	public int approvePay(String app_seq,String app_draft) {
+		log.info("approvePays 승인 처리 : {} {}", app_seq, app_draft);
+		    Map<String, Object> map = new HashMap<>();
+		    map.put("app_seq", app_seq);
+		    map.put("app_draft", app_draft);
+	    return sqlSession.update(NS + "approvePay", map);
 	}
 	@Override
-	public int approvePayLine(String app_seq) {
-		log.info("approvePayLine 승인 처리 : {} {} {}",app_seq);
-		return sqlSession.update(NS+"approvePayLine",app_seq);
+	public int approvePayLine(String app_seq,String pay_num) {
+		log.info("approvePayLine 승인 처리 : {} {}",app_seq,pay_num);
+		Map<String, Object> map = new HashMap<>();
+	    map.put("app_seq", app_seq);
+	    map.put("pay_num", pay_num);
+		return sqlSession.update(NS+"approvePayLine",map);
 	}
 
 
@@ -166,6 +172,18 @@ public class ApprovalDaoImpl implements IApprovalDao {
 	public ApprovalVo oneMyPayPause(String app_seq) {
 		log.info("oneMyPayPause 반려 했던거 불러오기 : {} ",app_seq);
 		return sqlSession.selectOne(NS+"oneMyPayPause",app_seq);
+	}
+
+
+	@Override
+	public int returnApproval(String app_seq) {
+		log.info("cancelApproval 결재상태 번경 :  {} ",app_seq);
+		return sqlSession.update(NS+"cancelApproval",app_seq);
+	}
+	@Override
+	public int returnPayLine(String app_seq) {
+		log.info("cancelPayLine 결재라인 번경 :{} ",app_seq);
+		return sqlSession.update(app_seq);
 	}
 
 

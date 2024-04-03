@@ -68,4 +68,10 @@ $(document).ready(function() {
 		            $("#noDataMessage").text("");
 		        }
 		    });
+		     $("#resetSearch").click(function(){
+		    	$("#searchInput").val("");
+		    	$("tbody tr").show();
+		    	$("#noDataMessage").text("");
+	   		 });
 		});
+		

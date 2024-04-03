@@ -40,15 +40,24 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="vo" items="${lists}" varStatus="vs">
-								<tr>
-									<td>${vo.app_seq}</td>
-									<td>${vo.app_title}</td>
-									<td>${vo.gian_seq}</td>
-									<td>${vo.app_createdate}</td>
-									<td>${vo.app_draft}</td>
-								</tr>
-							</c:forEach>
+							<c:choose>
+								<c:when test="${not empty lists}">
+									<c:forEach var="vo" items="${lists}" varStatus="vs">
+										<tr>
+											<td>${vo.app_seq}</td>
+											<td>${vo.app_title}</td>
+											<td>${vo.gian_seq}</td>
+											<td>${vo.app_createdate}</td>
+											<td>${vo.app_draft}</td>
+										</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<tr>
+							           <td colspan="5" style="color: red; text-align: center;">승인해야되는 결재가 없습니다.</td>
+							        </tr>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 					<!-- 페이징 -->
@@ -83,6 +92,8 @@
 									</div>
 									<div class="modal-body">
 										 <p id="modalContent1"></p>
+										 <input type="text" class="form-control" style="width:300px; display:none;" id="cancelContent"  placeholder="반려사유를 입력해주세요." >
+										 <button type="button" class="btn btn-danger" style="display:none;" id="rejectFinalBtn" data-appseq="">결재반려 승인</button>
 									</div>
 									<div class="modal-footer">
 										  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
@@ -110,15 +121,24 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="vo" items="${lists3}" varStatus="vs">
-							<tr>
-								<td>${vo.app_seq}</td>
-								<td>${vo.app_title}</td>
-								<td>${vo.gian_seq}</td>
-								<td>${vo.app_createdate}</td>
-								<td>${vo.app_draft}</td>
-							</tr>
-						</c:forEach>
+						<c:choose>
+							<c:when test="${not empty lists3}">
+								<c:forEach var="vo" items="${lists3}" varStatus="vs">
+									<tr>
+										<td>${vo.app_seq}</td>
+										<td>${vo.app_title}</td>
+										<td>${vo.gian_seq}</td>
+										<td>${vo.app_createdate}</td>
+										<td>${vo.app_draft}</td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tr>
+						           <td colspan="5" style="color: red; text-align: center;">반려처리하신 결재가 없습니다.</td>
+						        </tr>
+							</c:otherwise>	
+						</c:choose>
 					</tbody>
 				</table>
 				<!-- 페이징 -->
@@ -178,15 +198,24 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="vo" items="${lists2}" varStatus="vs">
-							<tr>
-								<td>${vo.app_seq}</td>
-								<td>${vo.app_title}</td>
-								<td>${vo.gian_seq}</td>
-								<td>${vo.app_createdate}</td>
-								<td>${vo.app_draft}</td>
-							</tr>
-						</c:forEach>
+						<c:choose>
+							<c:when test="${not empty lists2}">
+								<c:forEach var="vo" items="${lists2}" varStatus="vs">
+									<tr>
+										<td>${vo.app_seq}</td>
+										<td>${vo.app_title}</td>
+										<td>${vo.gian_seq}</td>
+										<td>${vo.app_createdate}</td>
+										<td>${vo.app_draft}</td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<tr>
+						           <td colspan="5" style="color: red; text-align: center;">승인한 결재문서가 없습니다.</td>
+						        </tr>
+							</c:otherwise>
+						</c:choose>
 					</tbody>	
 				</table>
 				<!-- 페이징 -->
