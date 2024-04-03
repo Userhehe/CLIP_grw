@@ -76,7 +76,14 @@ public class MemoDaoImpl implements IMemoDao {
 	
 	@Override
 	public int ntcScheduleUpdate(Map<String, Object> map) {
-		log.info("myScheduleDelete 전사 수정" );
+		log.info("ntcScheduleUpdate 전사 수정" );
 		return sqlSession.update(NS+"ntcScheduleUpdate", map);
+	}
+	
+	//공지사항(전사)
+	@Override
+	public List<NtcVo> selectNtcBoard() {
+		log.info("selectNtcBoard 공지사항(전사) 전체 조회" );
+		return sqlSession.selectList(NS+"selectNtcBoard");
 	}
 }

@@ -29,4 +29,8 @@ public interface IMemoService {
 	public int ntcScheduleDelete(String seq); // 전사일정 삭제
 	
 	public int ntcScheduleUpdate(Map<String, Object> map); // 전사일정 수정
+	
+
+	//공지사항(전사)
+	public List<NtcVo> selectNtcBoard(); //전체 조회
 }

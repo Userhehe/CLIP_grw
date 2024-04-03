@@ -89,8 +89,9 @@ $(document).ready(function() {
 function calendar(type){
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
+		locale: 'ko',
 		dayMaxEventRows: true,
-		height: 1000,
+		height: 800,
         initialView: 'dayGridMonth',
         droppable: false,
         editable: false,
@@ -114,7 +115,7 @@ function calendar(type){
 				var today = new Date();
 				var yesterday = new Date(today);
 				yesterday.setDate(today.getDate() - 1);
-			    if (clickedDate < yesterday) {
+			    if (clickedDate < yesterday && $('#user_auth').val() == 'ROLE_ADMIN') {
 			        return;
 			    }
 			    var year = clickedDate.getFullYear();
@@ -310,7 +311,7 @@ function calendarModalDetail(seq){ //seq가져와 내용 상세조회 하기
 			}else if("re_seq" in Scheduledata){
 				$("#calendarModalDetail").modal("show");
 		        $("#dtTitle").text(Scheduledata.re_title);
-		        $("#dtContent").text(Scheduledata.re_content+" 회의실 : "+Scheduledata.me_room+"번 회의실 참석자 : "+ Scheduledata.re_attend);
+		        $("#dtContent").text("회의 내용 : "+Scheduledata.re_content+"\n회의실 : "+Scheduledata.me_room+"번 \n회의실 참석자 : "+ Scheduledata.re_attend);
 		        $("#dtStart").text(Scheduledata.re_start);
 		        $("#dtEnd").text(Scheduledata.re_end);
 		        $("#dtSeq").val(Scheduledata.re_seq);

@@ -80,6 +80,7 @@ SELECT * FROM (
 		#{type1}
 		</foreach>
 		)
+	ORDER BY PRS_START ASC
 </select>
 
 
@@ -102,7 +103,7 @@ SELECT * FROM (
                               NTC_CREATE)
         VALUES('NTCSCHEDULE_' || TO_CHAR(ANSCHEDULE_SEQ.NEXTVAL, 'FM000'), #{user_id}, #{ntc_title}, 
                #{ntc_content}, TO_DATE(#{ntc_start}, 'YYYY-MM-DD HH24:MI'), TO_DATE(#{ntc_end}, 'YYYY-MM-DD HH24:MI'), 
-               TO_DATE(SYSDATE, 'YY-MM-DD HH24:MI'))
+               SYSDATE)
 </insert>
 
 <!-- 전사 삭제 -->
@@ -119,6 +120,21 @@ SELECT * FROM (
 			NTC_END=TO_DATE(#{ntc_end}, 'YYYY-MM-DD HH24:MI'), NTC_CREATE=TO_DATE(SYSDATE, 'YY-MM-DD HH24:MI')
 		WHERE NTC_SEQ=#{ntc_seq}
 </update>
+
+
+<!-- 공지사항(전사) 전체 조회 -->
+<select id="selectNtcBoard" resultType="NtcVo">
+	SELECT NTC_SEQ, USER_ID, NTC_TITLE, TO_CHAR(NTC_CREATE, 'YYYY-MM-DD') AS NTC_CREATE
+		FROM NTC_SCHEDULE
+		WHERE NTC_DELFLAG = 'N'
+		ORDER BY NTC_CREATE ASC
+</select>
+
+<!-- 페이징 테스트 -->
+<select id="selectNtcCount" resultType="java.lang.Integer">
+	SELECT COUNT(*)
+	FROM NTC_SCHEDULE
+</select>
 </mapper>
 
 
