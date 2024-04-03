@@ -30,7 +30,6 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/themes/default/style.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<script type="text/javascript" src="./js/reservation.js"></script>
 
 <style type="text/css">
 ul.jstree-container-ul>li>a>i.jstree-checkbox {
@@ -40,6 +39,15 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 .re_title:hover{
 	cursor: pointer;
 	color: orange;
+}
+
+.attre_title:hover{
+	cursor: pointer;
+	color: orange;
+}
+
+.vakata-context{
+ 	z-index: 1060; 
 }
 </style>
 
@@ -157,6 +165,80 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 <!-- 예약 상세보기&수정 모달 끝  -->
 
 
+<!-- 참석자로 등록된 예약 상세보기 모달 -->
+<div class="modal fade" id="attredetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">       
+    	<div class="modal-content">
+                <div class="modal-header">
+                	<div class="detailhidden" style="display: block;">
+                    	<h5 class="modal-title">회의실 예약 상세조회</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                <!--seq 값을 저장할 input -->
+                <div class="form-group">
+					<div id="hiddenDiv" style="display: none;">
+						<input type="text" id="atthiddenValue" name="re_seq">
+					</div>	        
+		        </div>
+		        
+               <div class="form-group">
+	                     <label for="title" class="col-form-label">회의실 번호</label>
+	                     <div class="detailhidden" style="display: block;">
+	                     	<input type="text" class="form-control" id="attderoomNum"  readonly="readonly" >
+	                     </div>
+	                     
+                     
+                     
+                     <label for="startDate" class="col-form-label">시작 날짜</label>
+                     <div class="detailhidden" style="display: block;">
+	                     <div class="input-group">
+	                        <input type="text" class="form-control"  id="attdestart" >
+	                     </div>
+                    </div>
+                    
+                    <!-- 종료날짜 -->
+                    <div id="nawarayo" style="display: none">
+								<label for="re_start_time" class="col-form-label">예약 시간을 선택해주세요.(회의 종료시간 = 시작 시간 + 1시간)</label>
+								<div class="input-group">
+									<span class="input-group-addon"> 
+										<input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="re_start_time">
+									</span> 
+									<span class="input-group-btn" style="margin-left: 20px;">
+										<input class="btn btn-secondary" type="button" value="예약 시간 선택 완료" onclick="reservationTime()">
+									</span>
+								</div>
+							</div>
+                    <!-- 종료날짜 끝 -->
+                    
+                     
+                     <div class="form-group">
+	                    <label for="title" class="col-form-label">회의 제목</label>
+	                     <div class="detailhidden" style="display: block;">
+	                    	<input type="text" class="form-control" id="attdetitle" readonly="readonly">
+                     	</div>
+	                   
+                     </div>
+                     
+	                 <label for="content" class="col-form-label">회의 내용</label>
+	                 	<div class="detailhidden" style="display: block;">
+	                 		<textarea class="form-control" rows="5" id="attdecontent" readonly="readonly"></textarea>
+	                 	</div>
+               </div>
+            </div>
+
+            
+            
+            
+             <div class="modal-footer">
+	            	<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
+             </div>   
+        </div>            
+    </div>
+</div>
+<!-- 참석자로 등록된 예약 상세보기 모달 끝 -->
+
+
 <!-- 회의 참여인원 설정 모달 -->
 		<div class="modal fade" id="reattmodalmodify" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
             
@@ -171,6 +253,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 			               
 		                </div>
 		                <div class="modal-body row">
+		                
 			                <div class="col-lg-6">
 			                	<div class="select_payline_area col-lg-12">
 			                		<div id="empChoice">
@@ -279,17 +362,17 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 									<th>예약번호</th>
 									<th>회의실 번호</th>
 									<th>회의 제목</th>
+									<th>예약 시간</th>
 									<th>예약일</th>
 								</tr>
 							</thead>
 							<tbody id="templateTableBody">
-								<c:forEach var="vo" items="${myReservationList}" varStatus="vs">
+								<c:forEach var="vo" items="${myAttReservationAll}" varStatus="vs">
 									<tr>
-										<td>${vo.re_seq}</td>
+										<td class="attre_seq">${vo.re_seq}</td>
 										<td>${vo.me_room}</td>
-										<td>
-											<a>${vo.re_title}</a>
-										</td>
+										<td class="attre_title">${vo.re_title}</td>
+										<td>${vo.re_start }</td>
 										<td>${vo.re_create}</td>
 									</tr>
 								</c:forEach>
@@ -301,4 +384,5 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 		</section>
 	</main>
 </body>
+<script type="text/javascript" src="./js/reservation.js"></script>
 </html>
