@@ -11,11 +11,11 @@ public interface ISignsDao {
 	public int insertPad(Map<String, Object> map) ;
 	
 	// 서명 삭제 
-	public int delPad(Map<String, Object> map);
+	public int delPad(String signs_seq);
 	
 	// 서명 상세 조회 
 	//public List<SignsVo> selectPad(String userId);
-	public SignsVo selectPad(String userId);
+	public SignsVo selectPad(String signs_seq);
 	
 	// 서명 전체 조회 
 	public List<SignsVo> AllselectPad();

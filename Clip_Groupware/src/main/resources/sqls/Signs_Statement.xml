@@ -5,7 +5,7 @@
     <!-- 서명 등록 -->
     <insert id="insertPad" parameterType="java.util.Map">
       INSERT INTO SIGNS (SIGNS_SEQ, USER_ID, SIGNS_IMAGE, SIGNS_NAME ,SIGNS_REGDATE)
-       VALUES ('SIGNS_' || TO_CHAR(SIGNS_SEQ.NEXTVAL, 'FM000'), #{user_id}, #{signs_image},#{signs_name},SYSTIMESTAMP)
+       VALUES ('SIGNS_' || TO_CHAR(SIGNS_SEQ.NEXTVAL), #{user_id}, #{signs_image},#{signs_name},SYSTIMESTAMP)
     </insert>
     
         <!-- 서명 전체 조회  -->
@@ -21,13 +21,14 @@
         SELECT SIGNS_SEQ, SIGNS_IMAGE, SIGNS_NAME, SIGNS_REGDATE 
 		FROM SIGNS
 		WHERE USER_ID = #{user_id,jdbcType=VARCHAR}
-      </select> -->      
-      
-      <select id="selectPad"  resultType="com.clip.gwr.vo.SignsVo">
-        SELECT SIGNS_SEQ,  SIGNS_NAME, SIGNS_REGDATE , SIGNS_IMAGE
-		FROM SIGNS
-		WHERE SIGNS_SEQ = #{signs_seq}
-      </select> 
+      </select> -->   
+         
+       <!-- 서명 조회 -->
+     <select id="selectPad" resultType="com.clip.gwr.vo.SignsVo">
+	    SELECT SIGNS_SEQ, SIGNS_NAME, SIGNS_REGDATE, SIGNS_IMAGE
+	    FROM SIGNS
+	    WHERE SIGNS_SEQ = #{signs_seq}
+	</select>
       
       <!-- 서명 삭제 -->
       <delete id="delPad" parameterType="java.util.Map">

@@ -1,3 +1,4 @@
+<%@page import="com.clip.gwr.vo.UserinfoVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,6 +11,9 @@
 <link href="./assets/css/myPage.css" rel="stylesheet">
 <script type="text/javascript" src="./js/myPage.js"></script>
 <body>
+<%
+UserinfoVo loginUserVo = (UserinfoVo)session.getAttribute("loginVo");
+%>
 	<main id="main" class="main" style="padding: 3.85% 9% 3.85% 9%;">
 		<input type="hidden" id="photoCheck" name="photoCheck" value="${checkPhotoUse}">
 		<c:forEach var="userDetailList" items="${userDetailList}" varStatus="vs">
@@ -60,9 +64,9 @@
 	                   		<button type="button" class="btn btn-dark btn-sm" onclick="window.location.href = './certiOfImpl.do'">재직증명서 다운로드</button>
 				        </div>
 				        
-				        <div class="card bgcolorTrans">
-	                   		<button type="button" class="btn btn-dark btn-sm">서명등록</button>
-				        </div>
+				        <div class="card bgcolorTrans" id="signatureButton">
+						    <button type="button" class="btn btn-dark btn-sm" onclick="window.location.href = './AllselectPad.do'">서명등록</button>
+						</div>
 		        	</div>
 		        	<div class="col-xl-8">
 			        	<div id="userInfoDetailCt" class="card">

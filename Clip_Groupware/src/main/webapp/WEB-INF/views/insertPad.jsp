@@ -1,3 +1,4 @@
+<%@page import="com.clip.gwr.vo.UserinfoVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,9 +12,13 @@
 <%@ include file="./header.jsp" %>
 </head>
 <body>
+<%
+UserinfoVo loginUserVo = (UserinfoVo)session.getAttribute("loginVo");
+%>
 <div id="container">
 	<div style="text-align: center;">
-	
+	<input type="hidden" id="userId" value="${user_id}">
+	<input type="hidden" id="userName" value="${user_name}">
 		<canvas id="signpad" width="500" height="400"></canvas><br>
 	     서명 제목 : <input type="text" name="signs_name" id="signs_name" placeholder="서명 제목을 입력하세요"><br>
 		<div>
@@ -21,9 +26,8 @@
 			<button class="btn btn-primary rounded-pill" id="clear">새로고침</button>
 			<button class="btn btn-primary rounded-pill" id="back">뒤로가기</button>
 		</div>
-		
-		<script type="text/javascript" src="./js/sign.js"></script> 
 	</div>	
 </div>
+<script type="text/javascript" src="./js/sign.js"></script> 
 </body>
 </html>

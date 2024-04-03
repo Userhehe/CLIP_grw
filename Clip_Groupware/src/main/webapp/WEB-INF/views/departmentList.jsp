@@ -6,23 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>부서관리</title>
     <style>
-        /* 수정 및 삭제 버튼을 오른쪽으로 정렬 */
+    
         .action-buttons {
             text-align: right;
         }
 
-        /* 오른쪽 정렬을 위한 스타일 */
+     
         .search-container {
             display: flex;
             justify-content: flex-end;
         }
 
-        /* 검색창과 버튼 간격 조정 */
+     
         .search-container > * {
             margin-left: 10px;
         }
         
-        /* 수정 및 삭제 버튼의 스타일 */
+      
         .action-buttons button {
             margin-left: 10px;
         }
@@ -69,7 +69,7 @@
                         <th>부서코드</th>
                         <th>부서명</th>
                         <th>등록일</th>
-                        <th class="action-buttons"></th> <!-- 수정 및 삭제 버튼을 담을 공간 -->
+                        <th class="action-buttons"></th>
                     </tr>
                 </thead>
                 <tbody id="deptTableBody">
@@ -80,7 +80,7 @@
                             <td class="dept_name">${lists.dept_name}</td> 
                             <td>${lists.dept_regdate}</td>
                            <td class="action-buttons">
-						    <button class="open-modal-btn" data-dept-seq="${lists.dept_seq}" data-dept-name="${lists.dept_name}">수정</button>
+						    <button class="open-modal-btn btn btn-info rounded-pill" data-dept-seq="${lists.dept_seq}" data-dept-name="${lists.dept_name}">수정</button>
 						    <button class="btn btn-danger rounded-pill delete-btn" data-dept-seq="${lists.dept_seq}" data-dept-name="${lists.dept_name}">삭제</button>
 						</td>
                         </tr>

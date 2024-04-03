@@ -29,3 +29,14 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 	});
 });
+
+ var signExist = false; // 예시: 사인이 없는 경우
+
+    // 사인이 없는 경우에만 버튼을 화면에 보이게 합니다.
+    if (!signExist) {
+        document.getElementById("signatureButton").style.display = "block";
+    } else {
+        document.getElementById("signatureButton").style.display = "none";
+    }
+
+
