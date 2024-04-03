@@ -26,4 +26,5 @@ public class ProjectsVo {
 	private String prj_progress		;
 	private String user_id			;
 	private String user_name        ;
+	private String work_site		;
 }

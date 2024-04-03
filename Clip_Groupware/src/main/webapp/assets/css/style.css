@@ -33,6 +33,14 @@ h6 {
   font-family: "Nunito", sans-serif;
 }
 
+@media (max-width: 768px) {
+.card-body {
+    max-width: 1520px;
+    width: 100%;
+    margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+}
+}
+
 
 /*--------------------------------------------------------------
 # Main
@@ -232,11 +240,11 @@ h6 {
   border-color: #ebeef4;
   background-color: #fff;
   color: #798eb3;
-  padding: 15px;
+  padding: 5px;
 }
 
 .card-title {
-  padding: 20px 0 15px 0;
+  padding: 20px 0 0px 0;
   font-size: 18px;
   font-weight: 500;
   color: #012970;

@@ -24,7 +24,7 @@
 						<h5 class="title"
 							style="margin-top: 30px; margin-bottom: 30px; text-align: center; font-weight: bolder; font-size: x-large;">새
 							클라이언트 추가</h5>
-						<form id="newClient" style="width: 100%; text-align: center;">
+						<form id="insertClient" style="width: 100%; text-align: center;">
 							<div class="row mb-3">
 								<label for="inputText" class="col-sm-2 col-form-label">고객사
 									이름</label>

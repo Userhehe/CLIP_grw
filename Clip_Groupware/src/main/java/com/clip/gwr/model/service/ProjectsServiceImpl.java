@@ -93,13 +93,17 @@ public class ProjectsServiceImpl implements IProjectsService {
 		String cliName = "";
 		// 프로젝트 인서트
 		cnt = dao.insertClient(map);
-		// 프로젝트 멤버도 인서트
 		return cnt;
 	}
 
 	@Override
 	public List<ProjectsVo> selectClientList() {
 		return dao.selectClientList();
+	}
+
+	@Override
+	public List<ProjectsVo> selectDetailList(String prjId) {
+		return dao.selectDetailList(prjId);
 	}
 
 

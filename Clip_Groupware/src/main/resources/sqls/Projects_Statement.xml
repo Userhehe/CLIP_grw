@@ -98,7 +98,33 @@
     	('PRM_' || PROJECTMEM_SEQ.NEXTVAL, 'PRJ_' || #{prj_id}, #{user_id})
 </insert>
 
-
-
+	<!-- 클라이언트 새로등록-->
+	<insert id="insertClient" parameterType="java.util.Map">
+	INSERT INTO CLIENT c
+		(CLI_NAME, CLI_CONTACT, CLI_ADDRESS,
+		CLI_PERSON, CLI_NOTE)
+	VALUES(
+		#{cliNm}, #{cliNumber}, #{cliAd},
+		#{cliMn}, #{cliMnDept})
+	</insert>
+	
+	<!-- 디테일 팝업 조회 -->
+	
+	<select id="selectDetailList" parameterType="java.lang.String" resultType="ProjectsVo">
+		SELECT p.PRJ_ID, p.WORK_SITE, p.PRJ_NAME, p.CLI_NAME, 
+		       TO_CHAR(p.PRJ_SDATE, 'YYYY-MM-DD') AS PRJ_SDATE, 
+		       TO_CHAR(p.PRJ_DDATE, 'YYYY-MM-DD') AS PRJ_DDATE,
+		       p.PRJ_STATUS, 
+		       (SELECT u.USER_NAME 
+		        FROM USERINFO u 
+		        WHERE u.USER_ID = p.PRJ_MANAGER) AS PRJ_MANAGER, 
+		       p.PRJ_PROGRESS, 
+		       pm.USER_ID, 
+		       u.USER_NAME
+		FROM PROJECTS p
+		JOIN PROJECT_MEM pm ON p.PRJ_ID = pm.PRJ_ID
+		JOIN USERINFO u ON pm.USER_ID = u.USER_ID
+		WHERE pm.PRJ_ID = #{prjId}
+	</select>
 </mapper>
 

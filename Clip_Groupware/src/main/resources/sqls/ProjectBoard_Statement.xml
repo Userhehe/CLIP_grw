@@ -2,11 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.grw.model.mapper.ProjectBoardDaoImpl">
     <!-- 프로젝트 게시글 추가 --><!--  -->
-    <insert id="insertProjectBoard" parameterType="ProjectBoard">
-        INSERT INTO PROJECT_BOARD
-        (PBO_SEQ, USER_ID, PBO_TITLE, PBO_CONTENT, PBO_DEPTH, PBO_REF, PBO_STEP, PBO_DELFLAG, PBO_REGDATE)
-        VALUES('PROJECTBOARD_' || TO_CHAR(PROJECTBOARD_SEQ.NEXTVAL, 'FM000'), #{userId}, #{title}, #{content}, 0,
-                (SELECT NVL(MAX(PBO_REF), 0)+1 FROM PROJECT_BOARD), 0, 'N', SYSDATE)
+    <insert id="insertProjectBoard" parameterType="java.util.Map">
+	INSERT INTO PROJECT_BOARD
+		(PBO_SEQ, USER_ID, PBO_TITLE,
+		PBO_CONTENT, PBO_REGDATE, PBO_PROGRESS,
+		PBO_DELFLAG)
+	VALUES(
+		'PROJECTBOARD_' || PROJECTBOARD_SEQ.NEXTVAL, #{cliNm}, #{cliNm}, #{cliNm}, TO_CHAR(SYSDATE, 'YYYY-MM-DD'), #{cliNm},
+	'N')
     </insert>
 
     <!-- 프로젝트 게시글 목록 조회 -->

@@ -46,6 +46,8 @@ public interface IProjectsDao {
 
 	public int insertClient(Map<String, Object> map);
 
+	public List<ProjectsVo> selectDetailList(String prjId);
+
 	// 프로젝트 삭제
 //	public int projectsDelete(String prj_id);
 	

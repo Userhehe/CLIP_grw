@@ -102,6 +102,11 @@ public class ProjectsDaoImpl implements IProjectsDao {
 		return sqlSession.insert(NS + "insertClient", map);
 	}
 
+	@Override
+	public List<ProjectsVo> selectDetailList(String prjId) {
+		return sqlSession.selectList(NS + "selectDetailList", prjId);
+	}
+
 
 	// 프로젝트 삭제
 

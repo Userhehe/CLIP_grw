@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -117,7 +118,15 @@ public class ProjectsController {
 //------------프로젝트 상세조회-----------------------//	
 	
 	@GetMapping(value = "/projectDetail.do")
-	public String projectDetail() {
+	public String projectDetail(HttpServletRequest request, Model model) {
+		
+		String prjId = request.getParameter("project_id");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<ProjectsVo> prjectDetail = service.selectDetailList(prjId);
+		/* map = service.selectDetailList(prjId); */
+		model.addAttribute("result", prjectDetail);
+
 		return "projectDetail";
 	}
 	
@@ -136,12 +145,21 @@ public class ProjectsController {
 	
 	// ------------클라이언트 추가 : 메인 화면 -----------------------//
 
+	@GetMapping(value = "/addClient.do")
+	public String addClient() {
+		log.info("PayController 최초 로딩된 프로젝트 페이지");
+
+		return "addClient";
+	}
+
 	@PostMapping(value = "/addClient.do")
 	@ResponseBody
-	public int addClient(@RequestParam Map<String, Object> map, HttpSession session) {
+	public int insertClient(@RequestParam Map<String, Object> map) {
 
-		log.info("담긴 map 내용 {} : " , map);
-		int isc = service.insertProject(map);
+		log.info("담긴 map 내용 {} : ", map);
+		int isc = service.insertClient(map);
 		return isc;
 	}
+
+
 }

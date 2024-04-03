@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
-    // 모달창 등록 버튼 추가
+    // 새 클라이언트 등록
     $("#cliInsertBtn").on("click", function(){
 
-        var formData = $('#newClient').serialize();
+        var formData = $('#insertClient').serialize();
 
         console.log("클라이언트 세이브세이브");
         console.log(formData);
@@ -15,11 +15,11 @@ $(document).ready(function() {
                 console.log(result);
                 if(result>0) {
                     console.log('등록성공!');
-                    //모달 닫기 대신 페이지 이동
-                    window.location.href = "./projectProgress.do";
+                    //페이지 이동
+                    window.location.href = "./projectsProgress.do";
                     selectProjectListAll();
                     //인풋칸 초기화해주는 구문 추가
-                    $("#newClient :input").each(function() {
+                    $("#insertClient :input").each(function() {
                         // 각 필드의 값을 빈 문자열로 설정합니다.
                         $(this).val("");
                     });

@@ -10,6 +10,7 @@
 <meta charset="utf-8">
 <title>Projects</title>
 <%@ include file="./header.jsp"%>
+<link href="assets/css/style.css" rel="stylesheet">
 <script type="text/javascript" src="./js/projects.js"></script>
 </head>
 <body>
@@ -166,31 +167,30 @@
 				<!-- 프로젝트 생성 모달창 끝 -->
 
 				<!-- 프로젝트 리스트창 시작 -->
-				<div class="container" style="margin-left: 5px;">
-					<div class="row" style="width: 119%; flex-wrap: wrap;">
-						<c:forEach var="projects" items="${lists}" varStatus="vs">
-							<div class="col-md-4" style="width: 20%; flex: 0 0 20%;">
-								<div class="card-body"
-									style="margin-top: 30px; background-color: white; height: 230px; width: 100%; border-radius: 20px;">
-									<div>
-										<div class="card-title">
-											<span style="font-weight: bold; font-size: 17px;">[${projects.cli_name}]</span><br>
-											<div style="margin-top: 5px;">${projects.prj_name}</div>
-										</div>
-									</div>
-									<div>
-										 <h5>참여자 : [${lists2[vs.index].user_name}]</h5>
-									</div>
-									<div style="text-align: right; margin-top: 20px;">
-										<button type="button" class="btn btn-secondary"
-											onclick="location.href='projectDetail.do?project_id=${project.PRJ_ID}'"
-											style="margin-right: 15px;">상세보기</button>
-									</div>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
-				</div>
+<div class="container" style="margin-left: 5px;">
+    <div class="row" style="width: 119%; flex-wrap: wrap;">
+        <c:forEach var="projects" items="${lists}" varStatus="vs">
+            <div class="col-md-4" style="width: 20%; flex: 0 0 20%;">
+                <div class="card-body"
+                     style="margin-top: 30px; background-color: white; height: 230px; width: 100%; border-radius: 20px; position: relative;">
+                    <div>
+                        <div class="card-title" style="margin-bottom: 0px;">
+                            <span style="font-weight: bold; font-size: 17px;">[${projects.cli_name}]</span><br>
+                            <div style="margin-top: 5px;">${projects.prj_name}</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 0px;">
+                        <h5>참여자 : [${lists2[vs.index].user_name}]</h5>
+                    </div>
+                    <button type="button" class="btn btn-secondary" style="text-align: right; margin-top: 15px; position: relative; right: 0; bottom: 0;"
+                            onclick="location.href='projectDetail.do?project_id=${project.PRJ_ID}'">상세보기
+                    </button>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
+
 				<!-- 프로젝트 리스트창 끝 -->
 
 			</div>

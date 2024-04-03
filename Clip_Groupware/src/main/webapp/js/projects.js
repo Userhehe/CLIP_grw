@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 	
 	
@@ -162,9 +163,10 @@ function selectProjectListAll() {
 			    var joinedUserNames = projectData.USER_NAME.join(", ");
 			    $participantName.text("참여자: " + joinedUserNames);
 			
-			    var $detailButton = $("<button>").addClass("btn btn-secondary").attr("type", "button").text("상세보기").css("margin-right", "15px").click(function() {
-			        location.href = 'projectDetail.do?project_id=' + prjId;
-			    });
+			    var $detailButton = $("<button>").addClass("btn btn-secondary").attr("type", "button").text("상세보기").css("margin-right", "15px")
+				    .click(function() {
+				        location.href = 'projectDetail.do?project_id=' + prjId;
+				    });
 			
 			    $cardTitle.append($clientNameSpan, "<br>", $projectNameDiv);
 			    $cardBody.append($cardTitle, $participantName, $detailButton);
@@ -255,7 +257,8 @@ function selectPrjProgressList() {
 				    var joinedUserNames = projectData.USER_NAME.join(", ");
 				    $participantName.text("참여자: " + joinedUserNames);
 				
-				    var $detailButton = $("<button>").addClass("btn btn-secondary").attr("type", "button").text("상세보기").css("margin-right", "15px").click(function() {
+				    var $detailButton = $("<button>").addClass("btn btn-secondary").attr("type", "button").text("상세보기").css("margin-right", "15px")
+				    .click(function() {
 				        location.href = 'projectDetail.do?project_id=' + prjId;
 				    });
 				
@@ -440,3 +443,10 @@ function selectPrjPeriod(startDate, endDate) {
 			}
 		});
 }
+
+
+
+
+   
+   
+   

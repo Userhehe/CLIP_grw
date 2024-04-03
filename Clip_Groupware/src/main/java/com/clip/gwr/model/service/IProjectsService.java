@@ -40,4 +40,6 @@ public interface IProjectsService {
 
 	int insertClient(Map<String, Object> map);
 
+	public List<ProjectsVo> selectDetailList(String prjId);
+
 }
