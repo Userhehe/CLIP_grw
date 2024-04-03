@@ -125,8 +125,11 @@ public class ReservationController {
 		log.info("ReservationController myReservation 회의실 예약 수정 화면 이동");
 		UserinfoVo id = (UserinfoVo) session.getAttribute("loginVo");
 		List<ReservationVo> myReservationList = service.myReservation(id.getUser_id());
+		List<ReservationVo> myAttReservationAll = service.myAttReservationAll(id.getUser_id());
 		model.addAttribute("myReservationList",myReservationList);
-		return "myReservation";
+		model.addAttribute("myAttReservationAll",myAttReservationAll);
+		
+		return null;
 	}
 
 	
@@ -153,7 +156,11 @@ public class ReservationController {
 
 		log.info("ReservationController selectPossibleMeRoom 예약가능시간 : {}", possibleMeRoomTimes);
 
-		return possibleMeRoomTimes;
+				if(possibleMeRoomTimes != null) {
+					return possibleMeRoomTimes;
+				}else {
+					return null;
+				}
 	}
 	
 
@@ -246,11 +253,26 @@ public class ReservationController {
 //			service.reModifyAtt(id);
 			return map;
 		}
+		
+		
 	//예약 참석자 수정하기 
-		public int reModifyAtt(int seq) {
+		@PostMapping(value="/reAttModify.do")
+		@ResponseBody
+		public int reModifyAtt(int seq, String id) {
 			log.info("ReservationController reModifyAtt 참석자를 수정한다.");
 			log.info("참석자가 초기화될 예약 seq :{}", seq);
 			 int isc = service.reModifyAtt(seq);
+			 int cnt =0;
+				String[] ids = id.split(",");
+				Map<String, Object> map = new HashMap<>();
+				for(String att: ids) {
+					map.put("user_id", att);
+					map.put("re_seq", seq);
+					service.attinsert(map);
+					cnt++;
+				}
+				System.out.println("총"+cnt+"명이 입력됨");
+			 
 			return isc;
 		}
 	

@@ -19,6 +19,9 @@ public interface IReservationService {
 	//내가 등록한 예약 조회(일정수정창)
 	public List<ReservationVo> myReservation (String user_id);
 	
+	//내가 참석되어있는 예약(일정수정창)
+	public List<ReservationVo> myAttReservationAll (String user_id);
+	
 	//회의실 목록
 	public List<MeeTingRoomVo> selectMeetingRoom();
 	

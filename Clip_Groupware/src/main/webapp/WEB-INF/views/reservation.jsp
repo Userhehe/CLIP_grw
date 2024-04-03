@@ -43,8 +43,6 @@
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/themes/default/style.min.css" />
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 <script type="text/javascript" src="./js/recalendar.js"></script>
-<script type="text/javascript" src="./js/reservation.js"></script>
-
 
 
 <style type="text/css">
@@ -175,7 +173,6 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 				
 				
 				
-		
 	<main id="main" class="main">
 		<div class="container">
 			<div class="row">
@@ -187,4 +184,5 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 		</div>
 	</main>
 </body>
+<script type="text/javascript" src="./js/reservation.js"></script>
 </html>

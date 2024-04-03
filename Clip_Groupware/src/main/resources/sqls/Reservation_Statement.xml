@@ -22,10 +22,11 @@
  	
  	<!-- 내가 참석한 회의 정보 조회 -->
  	<select id="myAttReservationAll" parameterType="java.lang.String" resultType="ReservationVo">
- 		SELECT r.RE_SEQ, r.USER_ID, r.RE_CONTENT, r.RE_START, r.RE_END, r.RE_CREATE, r.ME_ROOM
+ 		SELECT r.RE_SEQ, r.USER_ID,r.RE_TITLE, r.RE_CONTENT, r.RE_START, r.RE_END, r.RE_CREATE, r.ME_ROOM
 			FROM RESERVATION r
 			JOIN ATTENDS a ON r.RE_SEQ = a.RE_SEQ
 			WHERE a.USER_ID = #{user_id}
+			ORDER BY r.RE_SEQ DESC
  	</select>
  	
  	<!-- 예약 등록 -->
@@ -75,6 +76,7 @@
 		   	AND RE_DELFLAG ='N'
 	</select>
 	
+	
 	<!-- 회의실별 참석자 명단 조회 -->
 	<select id="reAttList" parameterType="java.lang.Integer" resultType="ReAttendsVo">
 		SELECT u.USER_NAME,r.RANKS_NAME
@@ -112,6 +114,9 @@
 			WHERE USER_ID = #{user_id} 
 			AND RE_SEQ = (SELECT MAX(RE_SEQ) FROM RESERVATION)
 	</select>
+	
+
+	
 	
 	<!-- 회의별 참석자 입력 -->
 	<insert id="attinsert" parameterType="java.util.Map">

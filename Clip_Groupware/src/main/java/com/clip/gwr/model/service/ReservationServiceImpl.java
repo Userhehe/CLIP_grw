@@ -106,6 +106,12 @@ public class ReservationServiceImpl implements IReservationService {
 		return dao.myReservation(user_id);
 	}
 
+	@Override
+	public List<ReservationVo> myAttReservationAll(String user_id) {
+		log.info("ReservationServiceImpl myAttReservationAll 내가 참석되어있는 회의실 조회");
+		return dao.myAttReservationAll(user_id);
+	}
+
 	
 	
 }

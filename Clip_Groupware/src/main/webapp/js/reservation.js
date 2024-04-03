@@ -1,6 +1,6 @@
 var empId = []; //참석자로 선택된 사원 배열
 
-$(document).ready(function() {
+
 	
 
    //현재 날짜 및 시간 가져오기
@@ -220,11 +220,13 @@ $(document).ready(function() {
  
     //예약 등록 버튼-----------------------------------
    $("#addReservation").click(function() {
+	  var dateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
       var me_room = document.getElementById("me_room").value;
       var re_start = document.getElementById("re_start").value;
       var re_start_time = document.getElementById("re_start_time").value;
       var re_title = document.getElementById("re_title").value;
       var re_content = document.getElementById("re_content").value;
+      console.log("re_srart:",re_start)
       
       if (me_room == null || me_room == "") {
          alert("회의실을 선택하세요.");
@@ -236,7 +238,9 @@ $(document).ready(function() {
          alert("회의 주제를 작성해주세요.");
       } else if (re_content == null || re_content == "") { 
          alert("회의 내용을 작성해주세요.");
-      } else {
+      } else if(!dateTimeRegex.test(re_start)){
+		 alert("<예약 시간 선택 완료> 버튼을 눌러주세요")
+	  } else{
          datata = $("#reservationForm").serialize();
          
          $.ajax({
@@ -276,7 +280,7 @@ $(document).ready(function() {
    
    
    
-   // 예약 상세보기 화면 모달창 및 값전달
+   // 등록한 예약 상세보기 화면 모달창 및 값전달
    $('.re_title').click(function() {
    var row = $(this).parent();
    console.log("row값:",row)
@@ -292,10 +296,14 @@ $(document).ready(function() {
          console.log("불러오기 성공.");
          $("#hiddenValue").val(data.seq);
          $("#deroomNum").val(data.roomNum);
+         $("#me_room").val(data.roomNum);
          $("#destart").val(data.start);
+         $("#re_start").val(data.start);
          $("#deend").val(data.end);
          $("#detitle").val(data.title);
+         $("#re_title").val(data.title);
          $("#decontent").val(data.content);
+         $("#re_content").val(data.content);
          $("#deattlist").val(data.attends);
          $("#count").val(data.count + "명");
          $("#redetail").modal("show");
@@ -308,7 +316,38 @@ $(document).ready(function() {
    
    });
    
-});
+   // 참석한 예약 상세보기 화면 모달창 및 값전달
+   $('.attre_title').click(function() {
+   var row = $(this).parent();
+   console.log("row값:",row)
+   var seq = row.find(".attre_seq").text();
+   console.log("seq의 값" + seq)
+   
+      $.ajax({
+      type:"get",
+      url:"./reDetail.do",
+      data:{seq:seq},
+      dataType:"json",
+      success:function(data){
+         console.log("불러오기 성공.:",data.start);
+         $("#hiddenValue").val(data.seq);
+         $("#attderoomNum").val(data.roomNum);
+         $("#attdestart").val(data.start);
+         $("#deend").val(data.end);
+         $("#attdetitle").val(data.title);
+         $("#attdecontent").val(data.content);
+         $("#deattlist").val(data.attends);
+         $("#count").val(data.count + "명");
+         $("#attredetail").modal("show");
+      },
+      
+      error: function() {
+         alert("서버요청 실패했음....");
+         }
+   })
+   
+   });
+   
 
 
 //참석자 이름 빼기
@@ -439,60 +478,6 @@ function clean() {
 
 
 
-//예약수정 모달창 히든 변경하기
-function modifyRev(){
-	var result = confirm("현재 예약 내용을 수정 하시겠습니까?");
-	if(result){
-		var mohidden = document.getElementsByClassName("modifyhidden");
-		var dehidden = document.getElementsByClassName("detailhidden");
-			for(var i =0; i<mohidden.length; i++){
-					mohidden[i].style.display = "block"
-			}
-			for(var i =0; i<dehidden.length; i++){
-					dehidden[i].style.display = "none"
-			}
-				
-		console.log("히든 변경됨")
-	}
-}
-
-//예약내용 수정하기
-$("#modifycon").click(function(){
-	var modify = $("#Revmodify").serialize(); //컨트롤러에서 requestparam으로 받아줘야함 
-	
-	$.ajax({
-		url:"./reModify.do",
-		type:"post",
-		data:modify,
-		dataType:"json",
-		success:function(data){
-//			alert("수정되었습니다. 확인해보소")
-			var result = confirm("참석자 명단을 수정하시겠습니까?");
-			if(result){
-				alert("참석자가 초기화되었습니다.");
-				modifyAtt();
-				$("#redetail").modal("hide");
-			}else{
-				location.reload();
-				alert("예약이 수정되었습니다. (o゜▽゜)o☆");
-//				$("#redetail").modal("hide");
-			}
-		},
-		error: function() {
-            alert("서버요청 실패했음....");
-            }
-	})
-	
-})
-
-
-//참석자 수정 모달창 열기
-function modifyAtt(){
-	console.log("참여자 수정모달 오쁜");
-	insertAddAtt();
-}	
-
-
 	
 }
 //dcoument ready 끝------------------------------------
@@ -540,15 +525,19 @@ function selPDate() {
       data: { "me_room": me_room, "re_start": re_start },
       success: function(data) {
          console.log("반환 값", data);
+         if(data.length!=0){
          $("#nawarayo").show();
-         
-         
          data.forEach(function(item) {
             console.log(item);
          });
          $("#re_start_time").datetimepicker({
             allowTimes: data
          });
+		}else{
+			alert("회의실 예약이 불가 합니다. 다른 날짜나 회의실을 선택해 주세요")
+			return false
+		}
+         
       }
    });
 }
@@ -572,15 +561,9 @@ function reservationModal(){
 }
 
 
-//모달창 닫기
-function redetailclose(){
-   console.log("모달창 닫기")
-   $("#redetail").modal("hide");
-   $("#reservationModal").modal("hide");
-   location.reload();
-   
-}
 
+
+//예약 취소
 function delRev(){
    var result = confirm("해당 예약을 취소 하시겠습니까?")
    var seq = $("#hiddenValue").val();
@@ -606,8 +589,61 @@ function delRev(){
 }
 
 
+//예약수정 모달창 히든 변경하기
+function modifyRev(){
+	var result = confirm("현재 예약 내용을 수정 하시겠습니까?");
+	if(result){
+		var mohidden = document.getElementsByClassName("modifyhidden");
+		var dehidden = document.getElementsByClassName("detailhidden");
+			for(var i =0; i<mohidden.length; i++){
+					mohidden[i].style.display = "block"
+			}
+			for(var i =0; i<dehidden.length; i++){
+					dehidden[i].style.display = "none"
+			}
+				
+		console.log("히든 변경됨")
+	}
+}
 
-// 배열로 만든 id값.들을 컨트롤러로 보내기
+//예약내용 수정하기
+	function modifycon(){
+	var modify = $("#Revmodify").serialize(); //컨트롤러에서 requestparam으로 받아줘야함 
+	
+	$.ajax({
+		url:"./reModify.do",
+		type:"post",
+		data:modify,
+		dataType:"json",
+		success:function(data){
+//			alert("수정되었습니다. 확인해보소")
+			var result = confirm("참석자 명단을 수정하시겠습니까?");
+			if(result){
+				alert("참석자가 초기화되었습니다.");
+				modifyAtt();
+				$("#redetail").modal("hide");
+			}else{
+				location.reload();
+				alert("예약이 수정되었습니다. (o゜▽゜)o☆");
+				$("#redetail").modal("hide");
+			}
+		},
+		error: function() {
+            alert("서버요청 실패했음....");
+            }
+	})
+	}
+
+
+//참석자 수정 모달창 열기
+function modifyAtt(){
+	console.log("참여자 수정모달 오쁜");
+	insertAddAtt();
+}
+
+
+
+// 배열로 만든 id값.들을 컨트롤러로 보내기 (등록, 수정 사용)
 function attmodify(){
 	var seq = $("#hiddenValue").val();
 	console.log("저장된 seq값",seq)
@@ -616,7 +652,7 @@ function attmodify(){
 	
 	$.ajax({
 		method:"post",
-		url:"./reModify.do",
+		url:"./reAttModify.do",
 		data:{seq:seq,id:strEmpId},
 		dataType:"json",
 		success:function(data){
@@ -629,4 +665,13 @@ function attmodify(){
         } 
 		
 	})
+}
+
+//모달창 닫기
+function redetailclose(){
+   console.log("모달창 닫기")
+   $("#redetail").modal("hide");
+   $("#attredetail").modal("hide");
+   $("#reservationModal").modal("hide");
+   
 }

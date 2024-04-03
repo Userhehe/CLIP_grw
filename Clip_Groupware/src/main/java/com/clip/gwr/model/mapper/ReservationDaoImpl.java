@@ -101,5 +101,11 @@ public class ReservationDaoImpl implements IReservationDao{
 		return sqlSession.selectList(NS+"myReservation", user_id);
 	}
 
+	@Override
+	public List<ReservationVo> myAttReservationAll(String user_id) {
+		log.info("##### 내가 참석되어있는 예약 불러오기 myAttReservationAll");
+		return sqlSession.selectList(NS+"myAttReservationAll",user_id);
+	}
+
 	
 }
