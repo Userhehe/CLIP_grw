@@ -12,11 +12,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clip.gwr.model.service.IAnnualService;
 import com.clip.gwr.model.service.IDeptService;
 import com.clip.gwr.model.service.IFileUploadService;
 import com.clip.gwr.model.service.IPositionsService;
@@ -48,6 +50,9 @@ public class UserController {
 	
 	@Autowired
 	private IFileUploadService fileUploadService;
+	
+	@Autowired
+	private IAnnualService annualService;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
@@ -94,7 +99,7 @@ public class UserController {
 			model.addAttribute("ranksLists", ranksLists);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "signUp";
+			return "accessError";
 		}
 		return "signUp";
 	}
@@ -106,6 +111,7 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
+	@Transactional
 	@PostMapping(value = "/signUp.do")
 	public String signUpDone(HttpSession session, HttpServletResponse response, HttpServletRequest request) {
 		String inputPhoneFirstnum = request.getParameter("inputPhoneFirstnum");
@@ -131,6 +137,7 @@ public class UserController {
 		String ranks_name = request.getParameter("ranksName");
 		String positions_name = request.getParameter("positionsName");
 		String user_auth = request.getParameter("userAuth");	
+		String user_regdate = request.getParameter("userRegdate");
 		
 		log.info("#### user_password : " + user_password);
 		log.info("#### user_name : " + user_name);
@@ -143,6 +150,7 @@ public class UserController {
 		log.info("#### ranks_name : " + ranks_name);
 		log.info("#### positions_name : " + positions_name);
 		log.info("#### user_auth : " + user_auth);
+		log.info("#### user_regdate : " + user_regdate);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user_password", user_password);
@@ -156,9 +164,12 @@ public class UserController {
 		map.put("ranks_name", ranks_name);
 		map.put("positions_name", positions_name);
 		map.put("user_auth", user_auth);
+		map.put("user_regdate", user_regdate);
 		try {
 			int signUp = userService.insertUserinfo(map);
 			log.info("####signUp : " + signUp);
+//			int insertAnn = annualService.insertAnn(map);
+//			log.info("####insertAnn : " + insertAnn);
 			response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script language='javascript'>");
@@ -168,7 +179,7 @@ public class UserController {
 			return "signUp";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "signUp";
+			return "accessError";
 		}
 	}
 	
@@ -235,24 +246,20 @@ public class UserController {
 	@GetMapping(value = "/searchUserList.do")
 	public String searchUserList(HttpServletRequest request, Model model) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
+		String searchName = request.getParameter("searchName");
+		String searchRanks = request.getParameter("searchRanks");
 		String searchDepts = request.getParameter("searchDepts");
 		String searchPositions = request.getParameter("searchPositions");
-		String searchRanks = request.getParameter("searchRanks");
-		String searchName = request.getParameter("searchName");
-		log.info("####startDate : " + startDate);
-		log.info("####endDate : " + endDate);
-		log.info("####searchDepts : " + searchDepts);
-		log.info("####searchPositions : " + searchPositions);
-		log.info("####searchRanks : " + searchRanks);
-		log.info("####searchName : " + searchName);
+		String user_status = request.getParameter("searchStatus");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
 		
         try {
 			map.put("user_name", searchName);
 			map.put("ranks_name", searchRanks);
 			map.put("dept_name", searchDepts);
 			map.put("positions_name", searchPositions);
+			map.put("user_status", user_status);
 			map.put("start_regdate", startDate);
 			map.put("end_regdate", endDate);
 			List<UserinfoVo> userList = userService.searchUserinfoList(map);
@@ -344,6 +351,7 @@ public class UserController {
 		String positions_name = request.getParameter("positionsName");
 		String user_auth = request.getParameter("userAuth");
 		String user_status = request.getParameter("userStatus");
+		String user_regdate = request.getParameter("userRegdate");
 		
 		log.info("#### user_id : " + user_id);
 		log.info("#### user_name : " + user_name);
@@ -371,9 +379,13 @@ public class UserController {
 		map.put("positions_name", positions_name);
 		map.put("user_auth", user_auth);
 		map.put("user_status", user_status);
+		map.put("user_regdate", user_regdate);
 		try {
 			int updateUserInfo = userService.updateUserinfo(map);
 			log.info("####updateUserInfo : " + updateUserInfo);
+			if(user_status == "N") {
+				response.sendRedirect("./userInfo.do");
+			}
 			response.sendRedirect("./userInfoUpdate.do?user_seq=" + user_id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -419,12 +431,6 @@ public class UserController {
 			int checkPhotoUse = fileUploadService.checkPhotoUse(user_id);
 			log.info("####checkPhotoUse : " + checkPhotoUse);
 			
-//			String fileStorename = "";
-//			for(FileVo file : fileList) {
-//				fileStorename = file.getFile_storename();
-//				log.info("####fileStorename : " + fileStorename);
-//				break;
-//			}
 			String fileStorename = fileUploadService.selectPhotoName(user_id);
 			log.info("####beforeSaveFileName : " + fileStorename);
 			
@@ -432,8 +438,6 @@ public class UserController {
 			model.addAttribute("userDetailList",userDetailList);
 			model.addAttribute("fileList",fileList);
 			model.addAttribute("checkPhotoUse",checkPhotoUse);
-//			response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-//			response.setHeader("Pragma", "no-cache");
 			return "myPage";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -441,6 +445,12 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * 재직증명서 조회
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@GetMapping(value = "/certiOfImpl.do")
 	public String certiOfImpl(HttpSession session, Model model) {
 		UserinfoVo loginVo = (UserinfoVo)session.getAttribute("loginVo");

@@ -4,6 +4,10 @@ body {
 	font-family: Arial, sans-serif; /* 폰트 지정 */
 }
 
+select {
+	height: 36px;
+}
+
 .container {
 	margin: 0 auto;
 	margin-top: 77px;
@@ -71,10 +75,6 @@ body {
 	margin-top: 250px;
 }
 
-select {
-	height: 36px;
-}
-
 .input-field {
 	width: 185px;
 	height: 36px;
@@ -88,18 +88,6 @@ select {
 
 .input-field input {
 	padding-left: 20px; /* 왼쪽에 10px의 패딩을 추가하여 텍스트를 왼쪽으로 이동 */
-}
-
-.button {
-	width: 126px;
-	height: 36px;
-	box-sizing: border-box;
-	color: white;
-	border: none;
-	padding: 10px;
-	cursor: pointer;
-	float: right;
-	font-size: 13px;
 }
 
 .wid100 {
@@ -124,6 +112,11 @@ select {
 
 .txt-center {
 	text-align: center;
+}
+
+.flex_end {
+	display: flex;
+	justify-content: flex-end;
 }
 
 /* 버튼 호버 효과 */

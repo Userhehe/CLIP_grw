@@ -59,6 +59,13 @@
 							</c:forEach>
 		                  </select>
 		                </div>
+		                <div class="col-md-2 pd1px">
+		                  <select  id="searchStatus" name="searchStatus" class="form-select" aria-label="Default select example">
+		                    <option value="">재직여부</option>
+								<option value="Y">Y</option>
+								<option value="N">N</option>
+		                  </select>
+		                </div>
 		                <div class="col-md-2 w140px pd1px">
 		                  <div class="col-sm-10">
 		                    <input type="text" id="searchName" name="searchName" class="form-control w133px" placeholder="이름 입력">

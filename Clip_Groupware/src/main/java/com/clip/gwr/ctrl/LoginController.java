@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -34,47 +35,60 @@ public class LoginController {
 	@PostMapping(value = "/loginForms.do") 
 	public String loginSession(HttpSession session,
 			HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
-		
 		String id = request.getParameter("username");
 	    String pw = request.getParameter("password");
 	    log.info("####pw: " + pw);
-		UserinfoVo user = service.userLogin(id);
-		
-		System.out.println("####user : " + user);
-		
-		if(user != null) {
-			// DB에서 가져온 사용자의 암호화된 비밀번호
-			String dbPw = user.getUser_password();
-			log.info("####dbPw : " + dbPw);
+	    
+		try {
+			UserinfoVo user = service.userLogin(id);
 			
-			// 사용자가 입력한 비밀번호와 DB에서 가져온 사용자의 암호화된 비밀번호를 비교
-	        if (passwordEncoder.matches(pw, dbPw)) {
-	            session.setAttribute("loginVo", user);
-	            response.setContentType("text/html; charset=UTF-8");
-	            PrintWriter out = response.getWriter();
-	            out.println("<script language='javascript'>");
-	            out.println("alert('로그인되었습니다')");
-	            out.println("</script>");
-	            out.flush();
-	            return "main";
-	        } else {
-	            response.setContentType("text/html; charset=UTF-8");
-	            PrintWriter out = response.getWriter();
-	            out.println("<script language='javascript'>");
-	            out.println("alert('아이디 또는 비밀번호를 확인해주세요')");
-	            out.println("</script>");
-	            out.flush();
-	            return "loginForm";
-	        } 
-		} else {
-	        response.setContentType("text/html; charset=UTF-8");
-	        PrintWriter out = response.getWriter();
-	        out.println("<script language='javascript'>");
-	        out.println("alert('아이디 또는 비밀번호를 확인해주세요')");
-	        out.println("</script>");
-	        out.flush();
-	        return "loginForm";
-	    }
+			System.out.println("####user : " + user);
+			
+			if(user != null) {
+				// DB에서 가져온 사용자의 암호화된 비밀번호
+				String dbPw = user.getUser_password();
+				log.info("####dbPw : " + dbPw);
+				
+				// 사용자가 입력한 비밀번호와 DB에서 가져온 사용자의 암호화된 비밀번호를 비교
+			    if (passwordEncoder.matches(pw, dbPw)) {
+			        session.setAttribute("loginVo", user);
+			        if (request.getSession().getAttribute("loginCookieAlert") == null) {
+			        	response.setContentType("text/html; charset=UTF-8");
+			        	PrintWriter out = response.getWriter();
+			        	out.println("<script language='javascript'>");
+			        	out.println("alert('로그인되었습니다')");
+			        	out.println("</script>");
+			        	out.flush();
+			        	
+			        	// 로그인 alert를 한번만 띄우기 위한 쿠키 세션에 추가
+			        	Cookie alertCookie = new Cookie("loginCookieAlert", "true");
+			            alertCookie.setMaxAge(60 * 60 * 24); // 쿠키 유효시간 1일
+			            response.addCookie(alertCookie);
+			            session.setAttribute("loginCookieAlert", true);
+			        }
+			        return "main";
+			    } else {
+			        response.setContentType("text/html; charset=UTF-8");
+			        PrintWriter out = response.getWriter();
+			        out.println("<script language='javascript'>");
+			        out.println("alert('아이디 또는 비밀번호를 확인해주세요')");
+			        out.println("</script>");
+			        out.flush();
+			        return "loginForm";
+			    } 
+			} else {
+			    response.setContentType("text/html; charset=UTF-8");
+			    PrintWriter out = response.getWriter();
+			    out.println("<script language='javascript'>");
+			    out.println("alert('아이디 또는 비밀번호를 확인해주세요')");
+			    out.println("</script>");
+			    out.flush();
+			    return "loginForm";
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "accessError";
+		}
 	}
 
 	@GetMapping(value = "/logout.do")

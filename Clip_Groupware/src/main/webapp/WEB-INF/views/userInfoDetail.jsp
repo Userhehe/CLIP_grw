@@ -19,8 +19,7 @@
             	
             	<h5 class="card-title">사용자 상세정보</h5>
 
-	            <!-- Table with hoverable rows -->
-	            <table class="table table-hover">
+	            <table class="table">
 	              <thead>
 	                <tr>
 	                  <th scope="col">구분</th>
