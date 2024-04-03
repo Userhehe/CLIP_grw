@@ -58,15 +58,36 @@
 	<!-- 나의 결재승인을 받아야하는 결재 리스트조회 (세션에서 사원번호 사용) -->
 	<select id="getMyPaycheck" resultType="ApprovalVo" parameterType="java.lang.String">
 		SELECT 
-		    a.APP_SEQ,  a.APP_TITLE, a.APP_DRAFT, p.PAY_NUM , p.PAY_USER ,p.PAY_REJECTREASON,
-		    g.GIAN_NAME AS GIAN_SEQ ,  TO_CHAR(a.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE 
-		FROM APPROVAL a 
-		JOIN GIAN g ON g.GIAN_SEQ = a.GIAN_SEQ 
-		JOIN PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ
-		WHERE a.APP_DRAFT IN ('결재대기','결재진행')
-		AND p.PAY_SIGN IN ('Y','N', 'D')
-		AND p.PAY_USER = #{user_id}
-		ORDER BY a.APP_CREATEDATE DESC
+		    a.APP_SEQ,  
+		    a.APP_TITLE, 
+		    a.APP_DRAFT, 
+		    p.PAY_NUM, 
+		    p.PAY_USER, 
+		    p.PAY_REJECTREASON, 
+		    g.GIAN_NAME AS GIAN_SEQ,  
+		    TO_CHAR(a.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE 
+		FROM 
+		    APPROVAL a 
+		JOIN 
+		    GIAN g ON g.GIAN_SEQ = a.GIAN_SEQ 
+		JOIN 
+		    PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ 
+		JOIN 
+		    (SELECT 
+		         APP_SEQ, 
+		         MIN(PAY_NUM) AS MIN_PAY_NUM 
+		     FROM 
+		         PAYMENTLINE 
+		     WHERE 
+		         PAY_SIGN = 'N' 
+		     GROUP BY 
+		         APP_SEQ) pp ON p.APP_SEQ = pp.APP_SEQ AND p.PAY_NUM = pp.MIN_PAY_NUM
+		WHERE 
+		    a.APP_DRAFT IN ('결재대기', '결재진행') 
+		    AND p.PAY_SIGN = 'N' 
+		    AND p.PAY_USER = #{user_id}
+		ORDER BY 
+		    a.APP_CREATEDATE DESC
 	</select>
 	
 	<!-- 나의 결재를 승인을 받아야하는 결재 상세보기  -->
@@ -243,8 +264,24 @@
 		    AND PAY_SIGN = 'N' AND PAY_NUM = #{pay_num}
 	</update>
 	
-	<!-- 승인시 쿼리 종료 -->
+	<!-- 결재반려시 쿼리 실행 -->
+	<update id="returnApproval" parameterType="ApprovalVo">
+	UPDATE APPROVAL 
+	SET 
+		APP_DRAFT  = '결재진행'
+	WHERE APP_SEQ = #{app_seq}
+	</update>
 	
+	<update id="returnPayLine" parameterType="ApprovalVo">
+	UPDATE PAYMENTLINE 
+	SET 
+	    PAY_SIGN = 'D', 
+	    PAY_ASIGNDATE = LOCALTIMESTAMP , 
+	    PAY_REJECTREASON = '프로젝트 투입으로 인해 휴가를 반려합니다.'
+	WHERE 
+	    APP_SEQ = #{app_seq} 
+	   	AND PAY_NUM = '1'
+	</update>
 	
 	<update id="cancelApproval" parameterType="ApprovalVo">
 	UPDATE APPROVAL SET APP_DRAFT ='결재취소'

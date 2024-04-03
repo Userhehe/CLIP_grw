@@ -51,8 +51,8 @@ public interface IApprovalDao {
 	public int tempDelete(String appSeq);
 	
 	//결재 승인 처리 
-	public int approvePay(String app_seq);
-	public int approvePayLine(String app_seq);
+	public int approvePay(String app_seq,String app_draft);
+	public int approvePayLine(String app_seq,String pay_num);
 	
 	//승인시 단건조회
 	public ApprovalVo oneMyPaycheck(String app_seq);
@@ -62,6 +62,9 @@ public interface IApprovalDao {
 	
 	//내가 반려했던거 단건조회
 	public ApprovalVo oneMyPayPause(String app_seq);
-
+	
+	//결재 반려 처리
+	public int returnApproval(String app_seq);
+	public int returnPayLine(String app_seq);
 	
 }

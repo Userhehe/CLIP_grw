@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.clip.gwr.model.service.IApprovalService;
 import com.clip.gwr.vo.ApprovalVo;
@@ -161,21 +162,50 @@ public class PayBoardController {
 		return vo;
 	}
 	
-	//본인 승인시 결재승인할 경우
-	@GetMapping(value="/okPay.do")
-	public String okPay(@RequestParam("app_seq")String app_seq, @RequestParam("pay_num")String pay_num, HttpSession session) {
-		log.info("okPay 승인자 승인해주는 경우 : {} {} ",app_seq, pay_num);
 
-		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
-		String user_id = loginUser.getUser_id();
-		System.out.println("사용자 ID:"+user_id);
-		
-		//int n = service.approvePays(app_seq);
-		return null;
-	}	
-	
+	//본인 승인시 결재승인할 경우
+	@PostMapping(value = "/okPay.do")
+	public String okPay(@RequestParam("app_seq") String app_seq, HttpSession session) {
+	    log.info("okPay 승인자 승인해주는 경우 : {}", app_seq);
+
+	    UserinfoVo loginUser = (UserinfoVo) session.getAttribute("loginVo");
+	    String user_id = loginUser.getUser_id();
+	    System.out.println("사용자 ID:" + user_id);
+
+	    // 결재 정보 확인
+	    ApprovalVo vo = service.oneMyPaycheck(app_seq);
+	    System.out.println("################결재라인 번호확인:" + vo.getPay_num());
+	    System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆결재라인 담당자확인:" + vo.getPay_user());
+	    System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆결재라인 서명:" + vo.getPay_sign());
+	    System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆결재코드 :" + vo.getApp_seq());
+	    
+	    String app_draft = vo.getApp_draft();
+	    String pay_num = null;
+
+	    if ("결재대기".equals(app_draft)) {
+	        app_draft = "결재진행";
+	        pay_num = "1";
+	    } else if ("결재진행".equals(app_draft) && "1".equals(vo.getPay_num())) {
+	        pay_num = "1";
+	    } else if ("결재진행".equals(app_draft) && "2".equals(vo.getPay_num())) {
+	        pay_num = "2";
+	    }else if ("결재진행".equals(app_draft) && "3".equals(vo.getPay_num())) {
+	        pay_num = "3";
+	    }else if ("결재진행".equals(app_draft) && "4".equals(vo.getPay_num())) {
+	        pay_num = "4";
+	    }else if ("결재진행".equals(app_draft) && "5".equals(vo.getPay_num())) {
+	        pay_num = "5";
+	    }else {
+	        return "redirect:/accessError.do";
+	    }
+
+	    service.approvePay(app_seq, app_draft);
+	    service.approvePayLine(app_seq, pay_num);
+	    return "redirect:/myAcceptPayList.do";
+	}
+
 	//본인 승인시 결재반려할 경우
-	@GetMapping(value="/rejectionPay.do")
+	@PostMapping(value="/rejectionPay.do")
 	public String rejectPay(@RequestParam("app_seq")String app_seq,HttpSession session){
 		log.info("rejectPay 내가 승인하는데 싫어서 결재 반려하는 경우 : {}",app_seq);
 		

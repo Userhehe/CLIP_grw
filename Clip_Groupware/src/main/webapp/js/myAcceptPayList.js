@@ -24,7 +24,7 @@ $(document).ready(function() {
 					$("#modalContent1").html("결재내용: " + data.app_content);				
 				}
 				
-				if(data.app_draft === "결재대기" || data.app_draft === "결재승인" ){
+				if(data.app_draft === "결재진행" || data.app_draft === "결재대기" ){
 					$("#editBtn").show();
 					$("#rejectBtn").show();
 				}else{
@@ -39,18 +39,55 @@ $(document).ready(function() {
 			}
 		});
 		
+		document.getElementById("rejectBtn").addEventListener("click", function() {
+    		document.getElementById("cancelContent").style.display = "inline-block";
+    		document.getElementById("rejectFinalBtn").style.display = "inline-block";
+		});
+		
+		$("#rejectFinalBtn").on("click", function() {
+			console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"+app_seq);
+		    var app_seq = $(this).attr("data-appseq");
+		    var cancelContent = $("#cancelContent").val();
+		    if(cancelContent.trim() === ""){
+				alert('반려시에는 반려사유를 반드시 입력하셔야됩니다.');
+			}else{
+	     		$.ajax({
+		            url: "./rejectionPay.do",
+		            method: "POST",
+		            data: { app_seq: app_seq,
+		            		cancelContent: cancelContent },
+		            success: function(response) {
+		                console.log("성공!! 결재코드:"+app_seq+",내용:"+cancelContent);
+		            },
+		            error: function(xhr, status, error) {
+		                alert("실패!!!!!!!! " + error);
+		            }
+		        }); 
+			}
+		  });
+		
 			$('#detailModal1').on('hidden.bs.modal', function (e) {
 				  location.reload();
 			});
 		
-		  $("#rejectBtn").on("click", function() {
-		    var appSeq = $(this).attr("data-appseq");
-     		window.location.href = "./rejectionPay.do?app_seq=" + appSeq; 
-		  });
-		   $("#editBtn").on("click", function() {
-		    var app_seq = $(this).attr("data-appseq");
-		   //window.location.href = "./okPay.do?app_seq=" + app_seq; 
-		  });
+		  $("#editBtn").on("click", function() {
+			    var app_seq = $(this).attr("data-appseq");
+			    console.log("결재코드:",app_seq);
+			    $.ajax({
+			        url: "./okPay.do?app_seq="+ app_seq,
+			        type: "POST",
+			        contentType: "application/json",
+					data: JSON.stringify({app_seq:app_seq}),
+			        success: function(data) {
+			            alert('결재가 정상적으로 승인되었습니다.');
+			            location.reload();
+			        },
+			        error: function(error) {
+			            alert("결재 승인에 실패하였습니다.");
+			        }
+			    });
+			});
+
 		  
 		  $.ajax({
 			url: "./myAcceptPayListPause.do?app_seq=" + requestData.app_seq,

@@ -33,15 +33,24 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="vo" items="${lists}" varStatus="vs">
-						<tr>
-							<td>${vo.app_seq}</td>
-							<td>${vo.app_title}</td>
-							<td>${vo.gian_seq}</td>
-							<td>${vo.app_createdate}</td>
-							<td>${vo.app_draft}</td>
-						</tr>
-					</c:forEach>
+					<c:choose>
+						<c:when test="${not empty lists}">
+							<c:forEach var="vo" items="${lists}" varStatus="vs">
+								<tr>
+									<td>${vo.app_seq}</td>
+									<td>${vo.app_title}</td>
+									<td>${vo.gian_seq}</td>
+									<td>${vo.app_createdate}</td>
+									<td>${vo.app_draft}</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+					       <tr>
+					          <td colspan="5" style="color: red; text-align: center;">참조된 결재가 없습니다.</td>
+					       </tr>
+					    </c:otherwise>
+					</c:choose>
 				</tbody>
 				<tfoot>
 					<tr>
