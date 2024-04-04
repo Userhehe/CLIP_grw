@@ -42,7 +42,7 @@ public interface IApprovalService {
 	public boolean reqDynamicDateApproval(ApprovalVo approvalVo, List<PaymentlineVo> list);
 	
 	//기안 결재 임시저장
-	public int saveTempApproval(ApprovalVo approvalVo);
+	public boolean saveTempApproval(ApprovalVo approvalVo, List<PaymentlineVo> list);
 	
 	//결재 취소
 	public int cancelApproval(String appSeq);

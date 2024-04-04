@@ -85,7 +85,7 @@
 				
 				<!-- 모달 시작 -->
 				<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-					<div class="modal-dialog">
+					<div class="modal-dialog modal-xl">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="modalLabel">상세 정보</h5>
@@ -98,7 +98,7 @@
 							<div class="modal-footer">
 								  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 			                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
-			                      <button type="button" class="btn btn-primary">결재 작성</button>
+			                      <button type="button" class="btn btn-primary" id="continueWrite">결재 작성</button>
 			                      <button type="button" id="tempDel" data-appseq="" class="btn btn-danger">삭제</button>
 							</div>
 						</div>

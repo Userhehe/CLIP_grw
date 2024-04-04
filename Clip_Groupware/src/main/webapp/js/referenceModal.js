@@ -3,7 +3,7 @@ $(document).ready(function() {
 	
 	
 	// 결재라인 모달에서 선택한 결재라인 화면에 입력하는 함수
-	var payButton = document.getElementById('applyPayLine');
+	var payButton = document.getElementById('applyReference');
 	payButton.addEventListener("click",
 	function(){
 	
@@ -27,9 +27,9 @@ $(document).ready(function() {
 						<table class="table table-bordered" style="display: table; vertical-align: middle;">
 						<tr>`; 
 						
-				for(let i = 0; i<pick_length; i++){
-					html += `<th>${i+1}차 결재자</th>`;
-				}
+//				for(let i = 0; i<pick_length; i++){
+					html += `<th>참조인</th>`;
+//				}
 				
 				html += `</tr><tr>`;
 				for(let i = 0; i<pick_length; i++){
@@ -55,7 +55,7 @@ $(document).ready(function() {
 				document.getElementById('selectedPayLine').innerHTML = '';
 			}
 
-			$('#paylinemodal').modal('hide');
+			$('#selectedRefermodal').modal('hide');
 		}
 	)
 	
@@ -67,7 +67,6 @@ $(document).ready(function() {
 		
 		var jstreeData = [];
 		
-		//나중에 동적으로 할거면 부서 정보 가져오는 아작스를 추가하여 반복문으로 페런트만 '#' 적용하고 가져온 값으로 노드 만들어서 넣기.
 		jstreeData.push({"id":"DEPT_1","parent":"#","text":"디자인","state":{"opened":false},"type":"parent"});
 		jstreeData.push({"id":"DEPT_2","parent":"#","text":"설계","state":{"opened":false},"type":"parent"});
 		jstreeData.push({"id":"DEPT_3","parent":"#","text":"공무","state":{"opened":false},"type":"parent"});
@@ -108,7 +107,7 @@ $(document).ready(function() {
 		
 		
 		//jstree 시작 
-		$('#payLine_box').jstree({
+		$('#reference_box').jstree({
 			
 			//jstree의 사용할 플러그인들.
 			plugins: ['search', 'contextmenu','types'],
@@ -145,19 +144,19 @@ $(document).ready(function() {
 							action: function() {	//클릭시 이벤트
 							
 								// 선택된 노드의 id 가져옴
-								var sel = $("#payLine_box").jstree('get_selected');
+								var sel = $("#reference_box").jstree('get_selected');
 	
 								//선택된 노드 숨김
-								$("#payLine_box").jstree('hide_node', sel);
+								$("#reference_box").jstree('hide_node', sel);
 	
 								//선택된 노드의 텍스트 내용을 가져옴
-								var selText = $("#payLine_box").jstree().get_text(sel);
+								var selText = $("#reference_box").jstree().get_text(sel);
 								console.log('텍스트 : ',selText, '노드 : ',sel);
 	
 								
 	
 								//선택리스트 창의 구조 가져오기
-								var htmlCode = $("#pickLine_box").html();
+								var htmlCode = $("#pickReference_box").html();
 								
 								
 								//직급 없애고 이름만 추출
@@ -169,40 +168,40 @@ $(document).ready(function() {
 								htmlCode += "<div class='apr_row'><div class='sel_apr'>" + selText 
 								+ "<span onclick='del(event)' class='bi bi-file-x-fill'></span></div><input type='hidden' name='user_id' value='"
 								+sel+"'><input type='hidden' name='emp_name' value='"+newSelText+"'><input id='chkPosi' type='hidden' name='" 
-								+ selText + "' value='" + $("#payLine_box").jstree().get_node(sel).original.id + "'></div>";
+								+ selText + "' value='" + $("#reference_box").jstree().get_node(sel).original.id + "'></div>";
 								
 								
-								//console.log($("#payLine_box").jstree().get_node(sel));
+								//console.log($("#reference_box").jstree().get_node(sel));
 	
-								$("#pickLine_box").html(htmlCode);
+								$("#pickReference_box").html(htmlCode);
 	
 	
 	
 	
 								//결재라인 직급 순서 로직 
 								
-								var jstree = $("#payLine_box").jstree();
+								var jstree = $("#reference_box").jstree();
 								
 								//직급의 순서 배열
 								var rankseq = ["사원", "주임", "대리", "과장", "차장", "부장", "이사", "부사장", "사장", "대표이사"];
 								
-								//가져온 노드의 텍스트
+								//가져온 노드의 텍스트 공백 지우기
 								var nodeText = jstree.get_node(sel).text;
 								console.log(nodeText, nodeText.indexOf(" "));
 								console.log(nodeText.substring(nodeText.indexOf(" "),nodeText.length).trim());
 //								var userRankName = userRank.substring()
 								//노드의 직급
-								var userRank = nodeText.substring(nodeText.indexOf(" "),nodeText.length).trim();
+//								var userRank = nodeText.substring(nodeText.indexOf(" "),nodeText.length).trim();
 								
 								//직급의 순서 번호
-								var rankIndex = rankseq.indexOf(userRank);
+//								var rankIndex = rankseq.indexOf(userRank);
 								
 								
-								console.log(rankIndex);
+//								console.log(rankIndex);
 	
 	
 								//선택된 노드 선택 해제하기
-								$("#payLine_box").jstree('deselect_node', sel);
+								$("#reference_box").jstree('deselect_node', sel);
 	
 								//jstree에서 트리에 있는 모든 노드의 정보를 가져와서 변수에 저장
 								//null : 첫 번째 매개변수는 가져올 노드의 ID, null을 사용하면 모든 노드를 가지고 오게 됨
@@ -210,24 +209,24 @@ $(document).ready(function() {
 								var allNodes = jstree.get_json(null, { flat: true });
 	
 								//모든 노드와 선택된 노드의 position_flag 비교 후 disable 해줌
-								for (var i = 0; i < allNodes.length; i++) {
-									//트리의 노드
-									var iNode = jstree.get_node(allNodes[i]);
-									
-									//구분 노드가 아닐 시 (리프노드일 시 )
-									if(iNode.parents != "#"){
-										//순서 노드의 텍스트
-										var iNodeText = iNode.text; 
-										//텍스트에서 가져온 직급
-										var iNodeRank= iNodeText.substring(iNodeText.indexOf(" "),iNodeText.length).trim();
-										//직급의 순위
-										var iRankIndex = rankseq.indexOf(iNodeRank);
-									
-										if (iRankIndex < rankIndex) {
-											$("#payLine_box").jstree('disable_node', iNode);
-										}
-									}
-								}
+//								for (var i = 0; i < allNodes.length; i++) {
+//									//트리의 노드
+//									var iNode = jstree.get_node(allNodes[i]);
+//									
+//									//구분 노드가 아닐 시 (리프노드일 시 )
+//									if(iNode.parents != "#"){
+//										//순서 노드의 텍스트
+//										var iNodeText = iNode.text; 
+//										//텍스트에서 가져온 직급
+//										var iNodeRank= iNodeText.substring(iNodeText.indexOf(" "),iNodeText.length).trim();
+//										//직급의 순위
+//										var iRankIndex = rankseq.indexOf(iNodeRank);
+//									
+//										if (iRankIndex < rankIndex) {
+//											$("#reference_box").jstree('disable_node', iNode);
+//										}
+//									}
+//								}
 							}
 						}
 					};
@@ -236,7 +235,7 @@ $(document).ready(function() {
 						items.put = false;
 					}
 	
-					var chkParent = $("#payLine_box").jstree().is_parent(node);
+					var chkParent = $("#reference_box").jstree().is_parent(node);
 					if (chkParent) {
 						items.put = false;
 					}
@@ -254,7 +253,7 @@ $(document).ready(function() {
 	
 	
 		// 트리를 처음부터 열린 상태로 보여줌
-	$('#payLine_box').on('ready.jstree', function() {
+	$('#reference_box').on('ready.jstree', function() {
 		$(this).jstree('open_all');
 	});
 
@@ -262,14 +261,14 @@ $(document).ready(function() {
 	//search 플러그인 설정
 	var searchTimer;
 
-	$('#search_input').keyup(function() {
+	$('#referSearch_input').keyup(function() {
 		// 이전에 설정된 타이머가 있다면 클리어
 		clearTimeout(searchTimer);
 
 		// 300 밀리초 후에 검색 수행
 		searchTimer = setTimeout(function() {
-			var v = $('#search_input').val().trim();
-			$('#payLine_box').jstree(true).search(v);
+			var v = $('#referSearch_input').val().trim();
+			$('#reference_box').jstree(true).search(v);
 		}, 300);
 	});
 	
@@ -278,7 +277,7 @@ $(document).ready(function() {
 	
 	paymodal();
 	
-	$("#payModalBtn").on("click", openModal);
+	$("#refModalBtn").on("click", openModal);
 	
 });
 
@@ -345,35 +344,35 @@ function del(event) {
 	//findTreeNodeByText function을 통해 childText와 같은 내용의 node 저장
 	var treeNode = findTreeNodeByText(childText);
 	if (treeNode) {
-		var jstree = $("#payLine_box").jstree();
+		var jstree = $("#reference_box").jstree();
 		var allNodes = jstree.get_json(null, { flat: true });
 		
 		//treeNode의 아이디로 hide 됐던 노드 다시 show 해주기
-		$("#payLine_box").jstree('show_node', treeNode.id);
+		$("#reference_box").jstree('show_node', treeNode.id);
 		
 		console.log('treeNode.id : ', treeNode.id);
 		
 		
 		
-		//#apr_chk div에 있던 것들이 삭제되면 다시 #jstree에서 직급에 따라 disable된것이 enable 처리
-		for (var i = 0; i < allNodes.length; i++) {
-         var iNode = jstree.get_node(allNodes[i]);
-         
-         //결재라인 맨 마지막에 있는 녀석의 직급을 파악하고 그놈보다 높거나 같은 직급은 활성화 시키는 로직
-	   	  if(iNode.parents != "#"){
-				//순서 노드의 텍스트
-				var iNodeText = iNode.text; 
-				//텍스트에서 가져온 직급
-				var iNodeRank= iNodeText.substring(iNodeText.indexOf(" "),iNodeText.length).trim();
-				//직급의 순위
-				var iRankIndex = rankseq.indexOf(iNodeRank);
-			
-				  if (iRankIndex >= rankIndex) {
-		            $("#payLine_box").jstree('enable_node', iNode);
-		         }
-			}
-			
-      }
+//		//#apr_chk div에 있던 것들이 삭제되면 다시 #jstree에서 직급에 따라 disable된것이 enable 처리
+//		for (var i = 0; i < allNodes.length; i++) {
+//         var iNode = jstree.get_node(allNodes[i]);
+//         
+//         //결재라인 맨 마지막에 있는 녀석의 직급을 파악하고 그놈보다 높거나 같은 직급은 활성화 시키는 로직
+//	   	  if(iNode.parents != "#"){
+//				//순서 노드의 텍스트
+//				var iNodeText = iNode.text; 
+//				//텍스트에서 가져온 직급
+//				var iNodeRank= iNodeText.substring(iNodeText.indexOf(" "),iNodeText.length).trim();
+//				//직급의 순위
+//				var iRankIndex = rankseq.indexOf(iNodeRank);
+//			
+//				  if (iRankIndex >= rankIndex) {
+//		            $("#reference_box").jstree('enable_node', iNode);
+//		         }
+//			}
+//			
+//      }
       
       
 	}
@@ -384,7 +383,7 @@ function del(event) {
 // jsTree의 삭제할 노드의 원래 트리의 위치를 찾는 함수
 function findTreeNodeByText(text) {
 
-	var jstree = $("#payLine_box").jstree();
+	var jstree = $("#reference_box").jstree();
 
 	//null : 첫 번째 매개변수는 가져올 노드의 ID, null을 사용하면 모든 노드를 가지고 오게 됨
 	//flat : 모든 노드가 트리 구조를 유지하면서 하나의 배열에 포함 됨
@@ -401,15 +400,15 @@ function findTreeNodeByText(text) {
 
 // jsTree의 초기화 버튼 기능
 function clean() {
-	var jstree = $("#payLine_box").jstree();
+	var jstree = $("#reference_box").jstree();
 	var allNodes = jstree.get_json(null, { flat: true });//jstree를 json 형태로 전체데이터를 가져온 것
-	$("#pickLine_box").html("<h4>지정된 결재인</h4><hr/>");
+	$("#pickReference_box").html("<h4>지정된 결재인</h4><hr/>");
 	//모든 노드 표시
-	$("#payLine_box").jstree('show_all');
+	$("#reference_box").jstree('show_all');
 	for (var i = 0; i < allNodes.length; i++) {
-		var iNode = $("#payLine_box").jstree().get_node(allNodes[i]);
+		var iNode = $("#reference_box").jstree().get_node(allNodes[i]);
 		//모든 노드 enable
-		$("#payLine_box").jstree('enable_node', iNode);
+		$("#reference_box").jstree('enable_node', iNode);
 	}
 }
 
@@ -418,7 +417,7 @@ function clean() {
 //모달 띄우는 함수
 var openModal = function openModal(){
 //	console.log("모달 나와라~");
-	$('#paylinemodal').modal('show');
+	$('#selectedRefermodal').modal('show');
 	
 }
 
