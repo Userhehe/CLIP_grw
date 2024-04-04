@@ -126,7 +126,7 @@ public class ReservationController {
 		model.addAttribute("myReservationList",myReservationList);
 		model.addAttribute("myAttReservationAll",myAttReservationAll);
 		
-		return null;
+		return "myReservation";
 	}
 
 	
