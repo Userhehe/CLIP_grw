@@ -99,5 +99,11 @@ public class AnnualDaoImpl implements IAnnualDao {
 		return sqlSession.update(NS+"applyUpdateAnn",user_id);
 	}
 
+	@Override
+	public AnnualVo myAnn(String user_id) {
+		log.info("##### 나의 연차 조회  myAnn #####");
+		return sqlSession.selectOne(NS+"myAnn",user_id);
+	}
+
 		
 }

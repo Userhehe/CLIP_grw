@@ -72,11 +72,11 @@ UserinfoVo loginUserVo = (UserinfoVo)session.getAttribute("loginVo");
                     </div>
                     
                     <div>
-                     <button type="button" class="btn btn-dark btn-sm" onclick="./" >나의 연차조회</button>
+                     <button type="button" class="btn btn-dark btn-sm" onclick="window.location.href = './myAnn.do'" >나의 연차조회</button>
                     </div>
                     
                     <div>
-                     <button type="button" class="btn btn-dark btn-sm" onclick="./" >나의 근태조회</button>
+                     <button type="button" class="btn btn-dark btn-sm" onclick="window.location.href = './myDailychk.do'" >나의 근태조회</button>
                     </div>
                 </div>
                 <div class="col-xl-8">

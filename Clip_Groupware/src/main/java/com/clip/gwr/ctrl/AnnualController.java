@@ -8,8 +8,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -73,6 +75,30 @@ public class AnnualController {
 
 		return "detailAnn";
 	}
+	
+	@GetMapping(value = "/myAnn.do")
+	public String myAnn(HttpServletRequest request, Model model, HttpSession session) {
+	    log.info("AnnualController myAnn 나의 연차조회");
+
+	    // 세션에서 사용자 아이디 가져오기
+	    UserinfoVo loginUserVo = (UserinfoVo) session.getAttribute("loginVo");
+	    String user_id = loginUserVo.getUser_id();
+
+	    log.info("####user_id : " + user_id);
+
+	    // DAO를 통해 연차 정보 조회
+	    AnnualVo myDetail = service.myAnn(user_id);
+	    log.info("####myDetail : " + myDetail);
+	    List<AnnualVo> myDetailList = new ArrayList<>();
+	    myDetailList.add(myDetail);
+
+	    model.addAttribute("myDetailList", myDetailList);
+	    log.info("####myDetailList : " + myDetailList);
+
+	    return "myAnn";
+	}
+
+
 
 	@GetMapping(value = "/updateAnn.do")
 	public String updateAnn(HttpServletRequest request, Model model) {
