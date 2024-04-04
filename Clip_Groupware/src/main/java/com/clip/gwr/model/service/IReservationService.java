@@ -44,7 +44,7 @@ public interface IReservationService {
 	public int reDel(int re_seq);
 	
 	//참석자 조회
-	public List<ReAttendsVo> reAttList(int seq);
+	public ReAttendsVo reAttList(int seq);
 	
 	//최신 예약내역 조회
 	public int cpRev(String user_id);
