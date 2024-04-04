@@ -34,7 +34,7 @@ var empId = []; //참석자로 선택된 사원 배열
 
    //dateTimePicker 시간-------------------------------------------------
       $("#re_start_time").datetimepicker({
-         format: "H:00",
+         format: "H:00:00",
       });
    //input 태그 클릭시 이벤트 처리
    $("#re_start_time").datetimepicker({
@@ -220,7 +220,7 @@ var empId = []; //참석자로 선택된 사원 배열
  
     //예약 등록 버튼-----------------------------------
    $("#addReservation").click(function() {
-	  var dateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/;
+	  var dateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
       var me_room = document.getElementById("me_room").value;
       var re_start = document.getElementById("re_start").value;
       var re_start_time = document.getElementById("re_start_time").value;
@@ -305,7 +305,7 @@ var empId = []; //참석자로 선택된 사원 배열
          $("#decontent").val(data.content);
          $("#re_content").val(data.content);
          $("#deattlist").val(data.attends);
-         $("#count").val(data.count + "명");
+//         $("#count").val(data.count + "명");
          $("#redetail").modal("show");
       },
       
@@ -315,6 +315,7 @@ var empId = []; //참석자로 선택된 사원 배열
    })
    
    });
+   
    
    // 참석한 예약 상세보기 화면 모달창 및 값전달
    $('.attre_title').click(function() {
@@ -336,8 +337,8 @@ var empId = []; //참석자로 선택된 사원 배열
          $("#deend").val(data.end);
          $("#attdetitle").val(data.title);
          $("#attdecontent").val(data.content);
-         $("#deattlist").val(data.attends);
-         $("#count").val(data.count + "명");
+         $("#attdeattlist").val(data.attends);
+//         $("#count").val(data.count + "명");
          $("#attredetail").modal("show");
       },
       
@@ -480,7 +481,6 @@ function clean() {
 
 	
 }
-//dcoument ready 끝------------------------------------
 
 // 배열로 만든 id값들을 컨트롤러로 보내기
 function attconfirm(){
@@ -671,7 +671,11 @@ function attmodify(){
 function redetailclose(){
    console.log("모달창 닫기")
    $("#redetail").modal("hide");
-   $("#attredetail").modal("hide");
    $("#reservationModal").modal("hide");
-   
+   location.reload();
+}
+
+function attredetailclose(){
+	$("#attredetail").modal("hide");
+
 }

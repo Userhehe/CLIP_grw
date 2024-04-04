@@ -1,9 +1,25 @@
-//function modify(){
-//   console.log("수정 modal 버튼 클릭");
-//  
-//  
-//}
+window.onload = function(){
+	
+	 var endDate = document.getElementById('endDate');
+	 endDate.addEventListener('change',checkDateorder);
+	 var endTime = document.getElementById('endTime');
+	 endTime.addEventListener('change',checkTimeOrder);
+	 
+	 
+	var gian1Modal = document.getElementById('previewGian');
+	var modalfoot1 = gian1Modal.querySelector('.modal-footer');
+//	console.log('modal : ',modalfoot1);
+	var submit1 = modalfoot1.getElementsByTagName('button')[1];
+//	console.log('submit1 : ',submit1);
+	submit1.addEventListener('click',draft_application);
+	
+	var tempBut1 = document.querySelector('#tempSave');
+	
+	tempBut1.addEventListener('click', saveApproval);
+	 
+}
 
+/**********1tap 구역**************/
 function half(event) {
 	
 	//휴가계 종류에 가져오기
@@ -35,8 +51,6 @@ function half(event) {
 	
     
 }
-
-
 
 function gatheringInfo(){
 	//세션에 저장된  값
@@ -131,13 +145,7 @@ function gatheringInfo(){
          paySpace.appendChild(cloneTable);
     }
     
-    
-    
-    
 	}
-	
-	
-	
 	
 	
 	//시작일 종료일
@@ -194,27 +202,6 @@ function gatheringInfo(){
 	
 	
 	
-}
-
-
-
-
-
-window.onload = function(){
-	
-	 var endDate = document.getElementById('endDate');
-	 endDate.addEventListener('change',checkDateorder);
-	 var endTime = document.getElementById('endTime');
-	 endTime.addEventListener('change',checkTimeOrder);
-	 
-	 
-	var gian1Modal = document.getElementById('previewGian');
-	var modalfoot1 = gian1Modal.querySelector('.modal-footer');
-//	console.log('modal : ',modalfoot1);
-	var submit1 = modalfoot1.getElementsByTagName('button')[1];
-//	console.log('submit1 : ',submit1);
-	submit1.addEventListener('click',draft_application);
-	 
 }
 
 
@@ -299,12 +286,12 @@ function draft_application(){
 //		생성된 객체 하나씩 배열에 넣기
 		paymentLine.push(pay);
 	}
-	console.log(paymentLine);
+//	console.log(paymentLine);
 	
 	var jsonForm = JSON.stringify({'ApprovalVo' : approval, 'PaymentlineVoList' : paymentLine});
 	
-	console.log('제이슨 형태로 만들어 보자 : ',jsonForm);
-	console.log('데이터 타입은? : ',typeof jsonForm);
+//	console.log('제이슨 형태로 만들어 보자 : ',jsonForm);
+//	console.log('데이터 타입은? : ',typeof jsonForm);
 //	var appro = JSON.stringify(approval); 
 
 	fetch('./myPayInsert.do', {
@@ -328,9 +315,6 @@ function draft_application(){
 	}).catch(error => {
 	    console.error('Error:', error);
 	});
-	
-	
-	
 	
 	
 }
@@ -375,5 +359,115 @@ function checkTimeOrder(){
 }
 
 
+//결재 임시저장
+function saveApproval(){
+	
+	//입력 내용들을 체크.
+	var modal = document.querySelector('#req_preview1');
+	
+	var dept = modal.getElementsByClassName('approval_user_dept')[0].textContent;
+	var name = modal.getElementsByClassName('approval_user_name')[0].textContent;
+	var reqUserName = modal.getElementsByClassName('create_user_name')[0].textContent;
+	
+	if(!(dept&&name&&reqUserName)){
+		alert('로그인 정보를 확인해 주세요.');
+		return;
+	}
+	
+	var payOp = modal.querySelector('.approval_va_opt').textContent;
+	
+	if(!payOp){
+		alert('연차 종류를 선택해주세요.');
+		return;
+	}
+	
+	var strDate = modal.querySelector('.vac_start_date').textContent;
+	var endDate = modal.querySelector('.vac_end_date').textContent;
+	
+	if(!(strDate&&endDate)){
+		alert('기간을 지정해주세요.');
+		return;
+	}
+	
+	var appContent = modal.querySelector('.approval_content').textContent;
+	if(!appContent){
+		alert('사유를 입력해주세요.');
+		return;
+	}
+	
+	var body = modal.querySelector('.modal-body');
+//	console.log(body);
+	var payTable = body.querySelectorAll('div')[1].querySelector('table')
+	if(!payTable){
+		alert('결재라인 지정은 필수 입니다.');
+		return;
+	}
 
+	//입력내용 체크 종료
+	
+	//요청을 보낼 데이터 모으기
+	
+	//전자결재 테이블 정보
+	var user_id = document.querySelector('[name = "user_id"]').value;
+	var app_title = document.querySelector('[name = "app_title"]').value;
+	var app_content = body.innerHTML;
+	var gian_seq = 'GIAN_1';
+
+	var approval = {
+		"user_id" : user_id,
+		"app_title" : app_title,
+		"app_content" : app_content,
+		"gian_seq" : gian_seq,
+	}
+	
+	console.log(approval);
+	
+	let paymentLine = [];
+//	지정한 결재인 만큼의 수를 반복하여 결재인 데이터 만들기.
+	var lineTable = document.querySelector('#selectedPayLine').querySelector('table');
+	var rows = lineTable.querySelectorAll('td');
+	for(let i = 0; rows.length > i; i++){
+		var pay_num = rows[i].getAttribute('name');
+		var pay_user = rows[i].getAttribute('value');
+		var pay = {"pay_num" : pay_num,
+					"pay_user" : pay_user};
+//		생성된 객체 하나씩 배열에 넣기
+		paymentLine.push(pay);
+	}
+	
+	var jsonForm = JSON.stringify({'ApprovalVo' : approval, 'PaymentlineVoList' : paymentLine});
+	
+//	console.log('제이슨 형태로 만들어 보자 : ',jsonForm);
+//	console.log('데이터 타입은? : ',typeof jsonForm);
+//	var appro = JSON.stringify(approval); 
+
+	fetch('./myTempInsert.do', {
+		method : 'POST',
+		headers : {'Content-Type' : 'application/json'},
+		body : jsonForm
+	}).then(response => {
+		if (!response.ok) {
+	        throw new Error('요청에 실패하였습니다!');
+	    }
+	    return response.text();
+	}).then(data => {
+		if(data === 'success'){
+		 console.log('Success:', data);
+		 alert('임시저장에 성공하였습니다.');
+		 location.reload();
+		 return;
+		 }
+		 alert('임시저장에 실패하였습니다. 다시 시도해주세요.');
+		 console.log('Fail:', data);
+	}).catch(error => {
+	    console.error('Error:', error);
+	});
+	
+	
+}
+
+
+
+
+/********** 1탭 끝*************/
 

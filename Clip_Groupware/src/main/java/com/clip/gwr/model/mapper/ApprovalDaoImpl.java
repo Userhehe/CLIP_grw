@@ -176,14 +176,23 @@ public class ApprovalDaoImpl implements IApprovalDao {
 
 
 	@Override
-	public int returnApproval(String app_seq) {
-		log.info("cancelApproval 결재상태 번경 :  {} ",app_seq);
-		return sqlSession.update(NS+"cancelApproval",app_seq);
+	public int returnApproval(String app_seq,String app_draft) {
+		log.info("cancelApproval 결재상태 번경 :  {} {}",app_seq,app_draft);
+		Map<String, Object> map = new HashMap<>();
+	    map.put("app_seq", app_seq);
+	    map.put("app_draft", app_draft);
+		return sqlSession.update(NS+"cancelApproval",map);
 	}
 	@Override
-	public int returnPayLine(String app_seq) {
-		log.info("cancelPayLine 결재라인 번경 :{} ",app_seq);
-		return sqlSession.update(app_seq);
+	public int returnPayLine(String app_seq,String pay_sign,String pay_rejectreason,String pay_num,String pay_user) {
+		log.info("cancelPayLine 결재라인 번경 :{} ",app_seq,pay_sign,pay_rejectreason,pay_num);
+		Map<String, Object> map = new HashMap<>();
+	    map.put("app_seq", app_seq);
+	    map.put("pay_sign", pay_sign);
+	    map.put("pay_rejectreason", pay_rejectreason);
+	    map.put("pay_num", pay_num);
+	    map.put("pay_user", pay_user);
+		return sqlSession.update(NS+"returnPayLine",map);
 	}
 
 

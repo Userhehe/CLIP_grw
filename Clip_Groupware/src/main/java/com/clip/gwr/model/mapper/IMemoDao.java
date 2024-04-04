@@ -37,7 +37,9 @@ public interface IMemoDao {
 	
 	
 	//페이징 테스트
+	public int selectNtcCount(); //전체 공지 게시글 수
 	
+	public List<NtcVo> selectNtcPage(Map<String, Object> map); //공지 페이징 구간별 게시글 가져오기
 	
 	
 }

@@ -42,7 +42,7 @@ public interface IApprovalService {
 	public boolean reqDynamicDateApproval(ApprovalVo approvalVo, List<PaymentlineVo> list);
 	
 	//기안 결재 임시저장
-	public int saveTempApproval(ApprovalVo approvalVo);
+	public boolean saveTempApproval(ApprovalVo approvalVo, List<PaymentlineVo> list);
 	
 	//결재 취소
 	public int cancelApproval(String appSeq);
@@ -64,6 +64,7 @@ public interface IApprovalService {
 	public ApprovalVo oneMyPayPause(String app_seq);
 	
 	//결재 반려 처리
-	public boolean returnPays(String app_seq);
+	public int returnApproval(String app_seq,String app_draft);
+	public int returnPayLine(String app_seq,String pay_sign,String pay_rejectreason,String pay_num,String pay_user);
 	
 }

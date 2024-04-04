@@ -13,6 +13,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ReAttendsVo {
 
-	private String ranks_name;
-	private String user_name ;
+	private String attendees;
 }

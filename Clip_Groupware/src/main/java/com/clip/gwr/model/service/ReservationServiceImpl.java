@@ -85,8 +85,8 @@ public class ReservationServiceImpl implements IReservationService {
 	}
 
 	@Override
-	public List<ReAttendsVo> reAttList(int seq) {
-		log.info("ReservationServiceImpl reAttList 선택된 예약 참석자 조회");
+	public ReAttendsVo reAttList(int seq) {
+		log.info("ReservationServiceImpl reAttList 선택된 예약의 참석자 조회");
 		return dao.reAttList(seq);
 	}
 

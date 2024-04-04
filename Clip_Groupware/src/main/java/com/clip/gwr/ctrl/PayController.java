@@ -92,7 +92,7 @@ public class PayController {
 	// 결재 요청
 	@PostMapping(value = "/myPayInsert.do")
 	@ResponseBody
-	public String myPayInsert(@RequestBody Map<String, Object> approvalVo, HttpServletResponse resp) throws IOException {
+	public String myPayInsert(@RequestBody Map<String, Object> approvalVo){
 		log.info("PayController myPayInsert 결재작성 post {}", approvalVo);
 
 		System.out.println(approvalVo.get("ApprovalVo"));
@@ -107,7 +107,7 @@ public class PayController {
 		reqApproval.setApp_strdate(appMap.get("app_strdate"));
 		reqApproval.setApp_enddate(appMap.get("app_enddate"));
 		
-		System.out.println(reqApproval);
+//		System.out.println(reqApproval);
 		
 		List<PaymentlineVo> payList = new ArrayList<PaymentlineVo>();
 		for (Map<String, String> obj : (List <Map<String, String>> ) approvalVo.get("PaymentlineVoList")) {
@@ -119,7 +119,7 @@ public class PayController {
 			payList.add(vo);
 		}
 		
-		System.out.println("지정된 결재인 : " + payList);
+//		System.out.println("지정된 결재인 : " + payList);
 
 		// 받은 json을 뜯고 서비스 돌리기
 		boolean result = approvalService.reqDynamicDateApproval(reqApproval, payList);
@@ -133,12 +133,43 @@ public class PayController {
 	}
 
 	// 임시저장
-	@PostMapping(value = "/tempSave.do")
-	public String tempSave() {
-		log.info("PayController tempSave 임시저장 post");
-		return "redirect:/myPaySelect.do";
+	@PostMapping(value = "/myTempInsert.do")
+	@ResponseBody
+	public String tempSave(@RequestBody Map<String, Object> jsonMap) {
+		
+		Map<String, String> appMap = (Map<String, String>) jsonMap.get("ApprovalVo");
+		ApprovalVo reqApproval = new ApprovalVo();
+		reqApproval.setUser_id(appMap.get("user_id"));
+		reqApproval.setApp_title(appMap.get("app_title"));
+		reqApproval.setApp_content(appMap.get("app_content"));
+		reqApproval.setGian_seq(appMap.get("gian_seq"));
+		
+
+		List<PaymentlineVo> payList = new ArrayList<PaymentlineVo>();
+		for (Map<String, String> obj : (List <Map<String, String>> ) jsonMap.get("PaymentlineVoList")) {
+			PaymentlineVo vo = new PaymentlineVo();
+			vo.setPay_num(Integer.parseInt(obj.get("pay_num")));
+			vo.setPay_user(obj.get("pay_user"));
+//			System.out.println(obj.get("pay_num"));
+//			System.out.println(obj.get("pay_user"));
+			payList.add(vo);
+		}
+		
+		boolean result = approvalService.saveTempApproval(reqApproval, payList);
+		if(result) {
+			return "success";
+		} else {
+			return "fail";
+		}
+		
+		
 	}
 
+	
+	
+	
+	
+	
 	@GetMapping(value = "/templateDelete.do")
 	public String gianDelete(HttpServletResponse resp, @RequestParam("gian_seq") String gian_seq) throws IOException {
 		log.info("PayController gianDelete POST:{}", gian_seq);

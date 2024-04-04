@@ -21,6 +21,7 @@ import com.clip.gwr.model.service.IMemoService;
 import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.MemoVo;
 import com.clip.gwr.vo.NtcVo;
+import com.clip.gwr.vo.PageVo;
 import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
 
@@ -188,12 +189,52 @@ public class ScheduleController {
 	}
 	
 	//공지 사항
+//	@GetMapping(value = "/nctBoard.do")
+//	public String nctBoard(Model model) {
+//		log.info("ScheduleController nctBoard 공지사항페이지 이동");
+//		List<NtcVo> lists = memoservice.selectNtcBoard();
+//		log.info("ScheduleController nctBoard 공지사항 내용 : {}",lists);
+//		model.addAttribute("selectNtcBoard", lists);
+//		return "nctBoard";
+//	}
+	
+	
 	@GetMapping(value = "/nctBoard.do")
-	public String nctBoard(Model model) {
-		log.info("ScheduleController nctBoard 공지사항페이지 이동");
-		List<NtcVo> lists = memoservice.selectNtcBoard();
-		log.info("ScheduleController nctBoard 공지사항 내용 : {}",lists);
-		model.addAttribute("selectNtcBoard", lists);
-		return "nctBoard";
+	public String nctBoard(Model model,
+	                        @RequestParam(required = false, defaultValue = "1") String page) {
+		
+	    log.info("nctBoard 현재페이지 : {}", page);
+	    
+	    // 페이징 정보 설정
+	    PageVo pVo = new PageVo();
+	    pVo.setCountList(5);
+	    
+	    // 현재 페이지 설정
+	    int selectPage = Integer.parseInt(page);
+	    
+	    // 페이징에 필요한 맵 생성
+	    Map<String, Object> map = new HashMap<String, Object>() {{
+	        put("first", selectPage * pVo.getCountList() - (pVo.getCountList() - 1));
+	        put("last", selectPage * pVo.getCountList());
+	    }};
+	    
+	    // 게시글 전체값 조회
+	    int totalCount = memoservice.selectNtcCount();
+	    pVo.setTotalCount(totalCount);
+	    pVo.setCountPage(5);
+	    pVo.setTotalPage(totalCount);
+	    pVo.setPage(selectPage);
+	    pVo.setStagePage(selectPage);
+	    pVo.setEndPage(pVo.getCountPage());
+	    
+	    // 게시글 페이지에 대한 정보 조회
+	    List<NtcVo> lists = memoservice.selectNtcPage(map);
+	    
+	    // 모델에 데이터 저장
+	    model.addAttribute("lists", lists);
+	    model.addAttribute("page", pVo);
+	    
+	    return "nctBoard";
 	}
+
 }

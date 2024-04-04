@@ -4,37 +4,20 @@ import java.util.List;
 import java.util.Map;
 
 import com.clip.gwr.vo.ProjectBoardVo;
+import com.clip.gwr.vo.ProjectsVo;
 
 public interface IProjectBoardDao {
 
-	//ROOT글입력   
-	public int insertBoard(ProjectBoardVo vo);
+	//보드글입력   
+	public int insertProjectBoard(Map<String, Object> map);
 	
-	//전체조회   
-	public List<ProjectBoardVo> selectAllBoard();
+	// 프로젝트보드 선택 조회
+	public List<ProjectBoardVo> getProjectBoard(Map<String, Object> map);
+
+	public int deletePrjDetailTop(Map<String, Object> map);
+
+	public int deletePrjDetailMem(Map<String, Object> map);
 	
-	//글상세   
-	public ProjectBoardVo selectDetailBoard(String seq);
-	
-	//답글업데이트   
-	public int replyUpdate(ProjectBoardVo vo);
-	
-	//답글입력   
-	public int replyInsert(ProjectBoardVo vo);
-	
-	//답글입력
-//	public int reply(ProjectBoardVo vo);/
-	
-	//글수정   
-	public int modifyBoard(Map<String, Object>map);
-	
-	//글삭제  deleteBoard
-	public int deleteBoard(String seq);
-	
-	//다중삭제 multideleteBoard
-//	public int multidelete(String[] seqs);
-	
-	//다중 글삭제
-	public int multideleteBoard(List<String> seqs);
+
 }	
 
