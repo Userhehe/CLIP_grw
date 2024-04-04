@@ -74,6 +74,8 @@
 	]]>
 	</update>
      
+     
+     <!-- 결재 요청 창 이동하면서 연차 정보를 가져오는 쿼리 -->
      <select id="chkAnn" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualUseVo">
      SELECT COUNT(*)
 	 FROM ANNUAL_USE 

@@ -52,6 +52,7 @@ public class PayController {
 	@Autowired
 	private IPaymentlineService paymentlineService;
 
+	//결재 신청 페이지 이동
 	@GetMapping(value = "/payRegister.do")
 	public String payRegister(HttpServletResponse resp, Model model, HttpSession session) throws IOException {
 		log.info("PayController payRegister 결재신청 페이지");
@@ -80,6 +81,8 @@ public class PayController {
 		model.addAttribute("vo3", vo3);
 		return "payRegister";
 	}
+
+	
 
 	@GetMapping(value = "/myPaySelect.do")
 	public String myPaySelect() {
@@ -162,6 +165,20 @@ public class PayController {
 			return "fail";
 		}
 		
+		
+	}
+	
+	//임시저장 결재 서류 이어 작성하기.
+	@GetMapping("/continuePay.do")
+	public String continuePay(Model model, String app_seq) {
+		log.info("PayController continuePay 임시저장서류 이어 작성하기 이동 {}", app_seq);
+		ApprovalVo approvalVo = approvalService.getOneApproval(app_seq);
+		List<PaymentlineVo> lineList = paymentlineService.getApprovalPayLine(app_seq);
+		
+		model.addAttribute("approvalVo", approvalVo);
+		model.addAttribute("lineList", lineList);
+		
+		return "continuePay";
 		
 	}
 
