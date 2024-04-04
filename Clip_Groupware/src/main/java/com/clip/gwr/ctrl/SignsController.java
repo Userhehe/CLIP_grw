@@ -1,20 +1,14 @@
 package com.clip.gwr.ctrl;
 
 
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.clip.gwr.model.service.ISignService;
 import com.clip.gwr.model.service.IUserService;
 import com.clip.gwr.vo.SignsVo;
 import com.clip.gwr.vo.UserinfoVo;
 import com.google.gson.Gson;
-
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,6 +46,16 @@ public class SignsController {
 		model.addAttribute("lists",lists);
 		return "signList" ;
 	}
+	
+//	@PostMapping("/checkPad.do")
+//	@ResponseBody
+//	public Map<String, Integer> checkPad(@RequestParam String userId) {
+//	    Map<String, Integer> response = new HashMap<>();
+//	    int count = service.checkPad(userId);
+//	    response.put("count", count);
+//	    return response;
+//	}
+	
 	/*
 	 * 서명 등록 
 	 */
@@ -127,5 +131,7 @@ public String delDept(@RequestParam("signs_seq") String signs_seq) {
         log.error("부서 삭제 중 오류 발생: {}", e.getMessage());
         return "error";
     }
+      
 }
+
 }
