@@ -76,44 +76,41 @@ public class ReservationController {
 	public Map<String, Object> reDetail(int seq, Model model) {
 		log.info("ReservationController reDetail 상세조회");
 		System.out.println("전달받은 re_seq값:" + seq);
-		List<ReAttendsVo> attlists = service.reAttList(seq);// 회의실 참석자 리스트
-		log.info("참석자 리스트:{}", attlists);
+		ReAttendsVo atts = service.reAttList(seq);// 회의실 참석자 리스트
+		log.info("참석자 명단:{}", atts.getAttendees());
 		List<MeeTingRoomVo> meeTingRoomVo = service.selectMeetingRoom(); //회의실 리스트
 		model.addAttribute("meeTingRoomVo", meeTingRoomVo);
 		log.info("meeTingRoomVo", meeTingRoomVo);
 		
-		int index=0;
-		String attends ="";
-		
-		int cnt=0;
-		if(attlists.size()>0) {
-			cnt=1;
-		}
-		
-		for(ReAttendsVo att : attlists) {
-			log.info("att : {}", att);
-			attends += att.getUser_name();
-			attends += " ";
-			attends += att.getRanks_name();
-			if(index < attlists.size()-1) {
-				attends +=",";
-				cnt++;
-			}
-			index++;
-		}
-		
-		Map<String, Object> map = new HashMap<>(); //예약한 회의실 내용을 담을 예정
+//		int index=0;
+//		String attends ="";
+//		int cnt=0;
+//		if(attlists.size()>0) {
+//			cnt=1;
+//		}
+//		for(ReAttendsVo att : attlists) {
+//			log.info("att : {}", att);
+//			attends += att.getUser_name();
+//			attends += " ";
+//			attends += att.getRanks_name();
+//			if(index < attlists.size()-1) {
+//				attends +=",";
+//				cnt++;
+//			}
+//			index++;
+//		}
+		Map<String, Object> map = new HashMap<>();
 		ReservationVo vo = service.reDetail(seq);
 		log.info("전달받은 seq의 내용 {}:" , vo);
-		log.info("전달받은 seq의 내용 {}:" , attlists);
+		log.info("전달받은 seq의 내용 {}:" , atts);
 		map.put("seq", vo.getRe_seq());
 		map.put("roomNum", vo.getMe_room()+"번");
 		map.put("title", vo.getRe_title());
 		map.put("content", vo.getRe_content());
 		map.put("start", vo.getRe_start());
 		map.put("end", vo.getRe_end());
-		map.put("attends", attends);
-		map.put("count", cnt);
+		map.put("attends", atts.getAttendees());
+//		map.put("count", cnt);
 		log.info("선택된 seq의 상세보기 내용: {}", map);
 		return map;
 	}

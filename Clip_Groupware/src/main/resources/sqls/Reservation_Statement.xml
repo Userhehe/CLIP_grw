@@ -36,8 +36,8 @@
 	                        	RE_CREATE, ME_ROOM)
 			VALUES(RESERVATION_SEQ.NEXTVAL, #{user_id}, #{re_title},
 					#{re_content},
-	        		TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI'),
-	        		TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI') + INTERVAL '1' HOUR, 
+	        		TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI:SS'),
+	        		TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI:SS') + INTERVAL '1' HOUR, 
 	        		SYSDATE, 
 	        		#{me_room})
 	</insert>
@@ -52,11 +52,11 @@
 	<select id="selectPossibleMeRoom" parameterType="java.util.Map" resultType="java.lang.String" >
 		SELECT TO_DATE(#{re_start}||' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 AS RE_TIME
 			FROM DUAL
-			CONNECT BY TO_DATE(#{re_start}||' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 &lt; TO_DATE(#{re_start}||' 17:00:00', 'YYYY-MM-DD HH24:MI:SS')
+			CONNECT BY TO_DATE(#{re_start}||' 09:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 &lt; TO_DATE(#{re_start}||' 17:00', 'YYYY-MM-DD HH24:MI:SS')
 			MINUS SELECT RE_START
 			FROM RESERVATION
 			WHERE ME_ROOM = #{me_room}
-			AND RE_START BETWEEN TO_DATE(#{re_start}||' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(#{re_start}||' 17:00:00', 'YYYY-MM-DD HH24:MI:SS')
+			AND RE_START BETWEEN TO_DATE(#{re_start}||' 09:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(#{re_start}||' 17:00', 'YYYY-MM-DD HH24:MI:SS')
 	</select>
 	
 	<!-- 참석자 jstree -->
@@ -79,22 +79,26 @@
 	
 	<!-- 회의실별 참석자 명단 조회 -->
 	<select id="reAttList" parameterType="java.lang.Integer" resultType="ReAttendsVo">
-		SELECT u.USER_NAME,r.RANKS_NAME
-			FROM ATTENDS a
-			JOIN USERINFO u ON a.USER_ID=u.USER_ID  
-			JOIN RANKS r ON r.RANKS_SEQ = u.RANKS_SEQ 
-			WHERE RE_SEQ = #{re_seq}
+		SELECT r.RE_SEQ,
+		       LISTAGG(d.DEPT_NAME || '팀 ' || a.USER_NAME || ' (' || a.RANKS_NAME || ')', ',  ') WITHIN GROUP (ORDER BY d.DEPT_SEQ, r2.RANKS_SEQ) AS ATTENDEES
+			FROM RESERVATION r
+			JOIN ATTENDS a ON r.RE_SEQ = a.RE_SEQ
+			JOIN RANKS r2 ON a.RANKS_NAME = r2.RANKS_NAME
+			JOIN USERINFO u ON a.USER_ID = u.USER_ID
+			JOIN DEPT d ON d.DEPT_SEQ = u.DEPT_SEQ
+			WHERE r.RE_SEQ = #{re_seq}
+		GROUP BY r.RE_SEQ, r.USER_ID
 	</select>
 	
 	<!-- 예약테이블 내용 수정하기 -->
 	<update id="reModifyRev" parameterType="java.util.Map">
 		UPDATE RESERVATION
-			SET RE_TITLE=#{re_title}, RE_CONTENT=#{re_content}, RE_START = TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI'), 
-				RE_END = TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI')+ INTERVAL '1' HOUR, ME_ROOM=#{me_room}
+			SET RE_TITLE=#{re_title}, RE_CONTENT=#{re_content}, RE_START = TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI:SS'), 
+				RE_END = TO_DATE(#{re_start}, 'YYYY-MM-DD HH24:MI:SS')+ INTERVAL '1' HOUR, ME_ROOM=#{me_room}
 			WHERE RE_SEQ=#{re_seq}
 	</update>
 	
-	<!-- 참석자 명단 수정하기 -->
+	<!-- 참석자 명단 수정하기 （참석자 전체 삭제 후 다시 입력）-->
 	<delete id="reModifyAtt">
 	DELETE FROM ATTENDS a 
   		WHERE RE_SEQ = #{re_seq}
@@ -115,9 +119,6 @@
 			AND RE_SEQ = (SELECT MAX(RE_SEQ) FROM RESERVATION)
 	</select>
 	
-
-	
-	
 	<!-- 회의별 참석자 입력 -->
 	<insert id="attinsert" parameterType="java.util.Map">
 		INSERT INTO ATTENDS (RE_SEQ, USER_ID, RANKS_NAME, USER_NAME)
@@ -132,7 +133,20 @@
 					WHERE USER_ID = #{user_id})	
 			)
 	</insert>
-	
+<!-- 	
+	예약별 참석자 현황 조회하기(테스트중)
+	<select id="reAttLists" parameterType="java.lang.Integer" resultType="">
+		SELECT r.RE_SEQ, d.DEPT_NAME, d.DEPT_SEQ, u.USER_NAME, r2.RANKS_NAME
+			FROM RESERVATION r
+			JOIN ATTENDS a ON r.RE_SEQ = a.RE_SEQ
+			JOIN RANKS r2 ON a.RANKS_NAME = r2.RANKS_NAME
+			JOIN USERINFO u ON a.USER_ID = u.USER_ID
+			JOIN DEPT d ON d.DEPT_SEQ = u.DEPT_SEQ
+			WHERE r.RE_SEQ = #{re_seq}
+			GROUP BY r.RE_SEQ,d.DEPT_NAME, u.USER_NAME, r2.RANKS_NAME, r2.RANKS_SEQ, d.DEPT_SEQ 
+			ORDER BY d.DEPT_SEQ, r2.RANKS_SEQ
+	</select>
+	 -->
 	
 	
 </mapper>
