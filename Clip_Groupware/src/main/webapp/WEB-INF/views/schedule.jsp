@@ -210,9 +210,6 @@
 									<td><input type="checkbox" id="showAn" checked> 휴가일정</td>
 									<td><div class="square" style="background-color: #9368DC;"></div></td>
 								</tr>
-								<tr>
-									<td><a href="./nctBoard.do">공지항으로 이동</a></td>
-								</tr>
 								<tr style="display: none">
 									<td><input type="text" id="user_auth" value="${loginVo.user_auth}"></td>
 								</tr>

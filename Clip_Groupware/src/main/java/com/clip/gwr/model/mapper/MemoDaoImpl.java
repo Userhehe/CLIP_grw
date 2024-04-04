@@ -86,4 +86,17 @@ public class MemoDaoImpl implements IMemoDao {
 		log.info("selectNtcBoard 공지사항(전사) 전체 조회" );
 		return sqlSession.selectList(NS+"selectNtcBoard");
 	}
+	
+	//페이징 테스트
+	@Override
+	public int selectNtcCount() {
+		log.info("selectNtcCount 공지사항 게시글 총 개수" );
+		return sqlSession.selectOne(NS+"selectNtcCount");
+	}
+	
+	@Override
+	public List<NtcVo> selectNtcPage(Map<String, Object> map) {
+		log.info("selectNtcPage 공지사항 페이징 구간별 게시글" );
+		return sqlSession.selectList(NS+"selectNtcPage",map);
+	}
 }

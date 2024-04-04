@@ -133,8 +133,19 @@ SELECT * FROM (
 <!-- 페이징 테스트 -->
 <select id="selectNtcCount" resultType="java.lang.Integer">
 	SELECT COUNT(*)
-	FROM NTC_SCHEDULE
+		FROM NTC_SCHEDULE
+		WHERE NTC_DELFLAG = 'N'
 </select>
+
+<select id="selectNtcPage" parameterType="java.util.Map" resultType="NtcVo">
+SELECT *  
+FROM (SELECT NTC_SEQ, NTC_TITLE, USER_ID, TO_CHAR(NTC_CREATE, 'YYYY-MM-DD') AS NTC_CREATE,
+           		ROW_NUMBER() OVER (ORDER BY NTC_CREATE DESC) AS rn
+    	FROM NTC_SCHEDULE
+    	WHERE NTC_DELFLAG = 'N') 
+	WHERE rn BETWEEN #{first} AND #{last}
+</select>
+
 </mapper>
 
 
