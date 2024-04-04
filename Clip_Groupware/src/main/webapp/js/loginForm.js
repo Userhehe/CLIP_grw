@@ -267,7 +267,7 @@ $(document).ready(function() {
 		var id = $('#id').val();
 		var password = $('#replacePassword').val();
 		var passwordCheck = $('#checkPassword').val();
-		var passwordRole = /^[a-zA-Z0-9]{8,16}$/; // 8~16자리 영문과 숫자조합 정규식
+		var passwordRole = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{8,16}$/; // 8~16자리 영문과 숫자조합 정규식
 		
 		if(!passwordRole.test(password)){
 			alert('비밀번호는 8~16자리의 영문 숫자 조합이어야합니다.');

@@ -47,22 +47,22 @@ public class MailController {
 	    	return 0;
 	    }
 
-	    return 1;
-//	    String setFrom = "dongin7767@naver.com";
-//	    MimeMessage message = javaMailSender.createMimeMessage();
+//	    return 1;
+	    String setFrom = "dongin7767@naver.com";
+	    MimeMessage message = javaMailSender.createMimeMessage();
 	    
-//	    try {
-//	        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-//	        messageHelper.setFrom(setFrom);
-//	        messageHelper.setTo(email);
-//	        messageHelper.setSubject("CLIP GROUPWARE 아이디 정보입니다.");
-//	        messageHelper.setText("입력하신 이메일에 대한 아이디 정보는 " + userVo.getUser_id() + "입니다.");
-//	        javaMailSender.send(message);
-//	        return 1;
-//	    } catch (MailException | MessagingException e) {
-//	        e.printStackTrace();
-//	        return 0;
-//	    }
+	    try {
+	        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+	        messageHelper.setFrom(setFrom);
+	        messageHelper.setTo(email);
+	        messageHelper.setSubject("CLIP GROUPWARE 아이디 정보입니다.");
+	        messageHelper.setText("입력하신 이메일에 대한 아이디 정보는 " + userVo.getUser_id() + "입니다.");
+	        javaMailSender.send(message);
+	        return 1;
+	    } catch (MailException | MessagingException e) {
+	        e.printStackTrace();
+	        return 0;
+	    }
 	}
 	
 //	@PostMapping(value = "/sendCertnum.do")

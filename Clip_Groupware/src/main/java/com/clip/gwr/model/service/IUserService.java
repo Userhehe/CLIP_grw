@@ -68,7 +68,7 @@ public interface IUserService {
 	 * 사원목록 전체조회
 	 * @return
 	 */
-	public List<UserinfoVo> selectUserinfoList();
+	public List<UserinfoVo> selectUserinfoList(Map<String, Object> map);
 	
 	/**
 	 * 사원목록 검색
@@ -102,4 +102,17 @@ public interface IUserService {
 	 * @return
 	 */
 	public String selectUserAuth(String user_id);
+	
+	/**
+	 * 사용자 수 카운트
+	 * @return
+	 */
+	public int selectUserInfoListCnt();
+	
+	/**
+	 * 사용자 검색 결과 수 카운트
+	 * @param map
+	 * @return
+	 */
+	public int selectSearchUserInfoListCnt(Map<String, Object> map);
 }

@@ -94,9 +94,9 @@ public class UserServiceImpl implements IUserService {
 	 * 사원목록 전체조회
 	 */
 	@Override
-	public List<UserinfoVo> selectUserinfoList() {
+	public List<UserinfoVo> selectUserinfoList(Map<String, Object> map) {
 		log.info("UserServiceImpl selectUserinfoList 사원목록전체조회");
-		return dao.selectUserinfoList();
+		return dao.selectUserinfoList(map);
 	}
 
 	/**
@@ -144,6 +144,24 @@ public class UserServiceImpl implements IUserService {
 	public String selectUserAuth(String user_id) {
 		log.info("UserServiceImpl selectUserAuth 사용자 권한 조회");
 		return dao.selectUserAuth(user_id);
+	}
+
+	/**
+	 * 사용자 수 카운트
+	 */
+	@Override
+	public int selectUserInfoListCnt() {
+		log.info("UserServiceImpl selectUserInfoListCnt 사용자 수 카운트");
+		return dao.selectUserInfoListCnt();
+	}
+
+	/**
+	 * 사용자 검색 결과 수 카운트
+	 */
+	@Override
+	public int selectSearchUserInfoListCnt(Map<String, Object> map) {
+		log.info("UserServiceImpl selectSearchUserInfoListCnt 사용자 검색 결과 수 카운트");
+		return dao.selectSearchUserInfoListCnt(map);
 	}
 
 }
