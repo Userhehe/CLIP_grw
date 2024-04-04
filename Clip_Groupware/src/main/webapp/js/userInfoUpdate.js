@@ -14,6 +14,18 @@ $(document).ready(function(){
 		event.preventDefault();
 	});
 	
+	// 카카오 주소찾기
+	window.onload = function() {
+		document.getElementById("userAddress").addEventListener("click",function(){
+			new daum.Postcode({
+				oncomplete: function(data) {
+					document.getElementById("userAddress").value = data.address;
+					document.querySelector("input[name=userAddress]").focus();
+				}
+			}).open();
+		});
+	}
+	
 	// 이메일 키보드 입력시 이메일 등록버튼 비활성화
 	var frontEmail = document.getElementById('frontEmail');
 	frontEmail.addEventListener('keyup', function(event) {

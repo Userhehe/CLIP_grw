@@ -1,4 +1,5 @@
 
+<%@page import="com.clip.gwr.vo.FileVo"%>
 <%@page import="com.clip.gwr.vo.UserinfoVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -35,7 +36,7 @@
 <!-- Favicons -->
 <link href="assets/img/favicon.png" rel="icon">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<!-- <script type="text/javascript" src="./js/header.js"></script> -->
+<script type="text/javascript" src="./js/header.js"></script>
 <!-- <script type="text/javascript" src="./js/calendar.js"></script> -->
 
 </head>
@@ -43,6 +44,7 @@
 <body>
 <%
 UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
+String fileStorename = (String)session.getAttribute("fileStorename");
 %>
 
 <!-- ======= START HEADER ======= -->
@@ -112,7 +114,7 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
                   </li>
                   
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item d-flex align-items-center" href="./logout.do">
+                  <li><a id="logout" class="dropdown-item d-flex align-items-center"> <!-- href="./logout.do" -->
                   <i class="bi bi-box-arrow-right"></i>
                   <span>Log Out</span>
                   </a>
@@ -142,7 +144,6 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
                   <li><a href="./organization.do"><i class="bi bi-circle"></i><span>조직도</span></a></li>
                   <li><a href="./ranksAll.do"><i class="bi bi-circle"></i><span>직급관리</span></a></li>
                   <li><a href="./deptAll.do"><i class="bi bi-circle"></i><span>부서관리</span></a></li>
-                  <li><a href="./access.do"><i class="bi bi-circle"></i><span>사용자 접속로그</span></a></li>
                </ul>
             </li>
 <!-- ======= END humanresource-nav ======= -->
@@ -168,7 +169,7 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
          </a>
             <ul id="project-Nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                <li><a href="./projectsProgress.do"> <i class="bi bi-circle"></i><span>프로젝트 조회</span></a></li>
-               <li><a href="tables-data.html"> <i class="bi bi-circle"></i><span>프로젝트 관리</span></a></li>
+               <li><a href="./addClient.do"> <i class="bi bi-circle"></i><span>새 클라이언트 추가</span></a></li>
             </ul>
          </li>
 <!-- ======= END project-nav ======= -->

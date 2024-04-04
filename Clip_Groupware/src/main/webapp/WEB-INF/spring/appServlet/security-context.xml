@@ -44,8 +44,12 @@
 	        <security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/>
 	    </security:session-management> -->
 	    <security:intercept-url pattern="/loginForm.do" access="permitAll"/>
+	    <security:intercept-url pattern="/logout.do" access="permitAll"/>
+	    <security:intercept-url pattern="/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
     	<security:intercept-url pattern="/user/**" access="hasAuthority('ROLE_USER')"/>
         <security:intercept-url pattern="/admin/**" access="hasAuthority('ROLE_ADMIN')" />
+<!--     	<security:intercept-url pattern="/user**.do" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" /> -->
+<!--     	<security:intercept-url pattern="/admin**.do" access="hasAnyRole('ROLE_ADMIN')" /> -->
 <!-- 	    <security:intercept-url pattern="/loginForm.do" access="permitAll"/> -->
 
 		<security:form-login 

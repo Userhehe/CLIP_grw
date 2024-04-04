@@ -14,6 +14,12 @@ function handleMessage(message) {
     }
 }
 
+var urlParams = new URLSearchParams(window.location.search);
+var message = urlParams.get('message');
+if (message) {
+    alert(message);
+}
+
 
 // 아이디 찾기 모달창 숨기기, 인증번호와 비밀번호 재설정 입력방지
 document.addEventListener('DOMContentLoaded', function(){
@@ -145,6 +151,36 @@ function certnumRequest() {
 
 $(document).ready(function() {
 	
+	$('#loginForm').submit(function(event) {
+		event.preventDefault();
+		var username = $('#username').val();
+		var password = $('#password').val();
+		
+		$.ajax({
+			url: './loginForms.do',
+			method: 'POST',
+			dataType: 'json',
+			data: { username:username, password:password},
+			success: function(response) {
+				console.log('로그인 성공!');
+				if(response === 1) {
+					alert('로그인 되었습니다.');
+					window.location.href="./main.do";
+				} else if(response === 2) {
+					alert('아이디 또는 비밀번호를 확인해주세요.');
+					window.location.href="./loginForm.do";
+				} else {
+					console.log('로그인 실패');
+					window.location.href="./accessError.do";
+				}
+			}, 
+			error: function(xhr, status, error) {
+				console.error('로그인 실패', xhr, status, error);
+				window.location.href="./accessError.do";
+			}
+		});
+	});
+	
 	// 아이디 찾기
     $('#idFindForm').submit(function(event) {
 	    event.preventDefault();
@@ -245,15 +281,15 @@ $(document).ready(function() {
 		$.ajax({
 			url: './updatePasswordForm.do',
 			method: 'POST',
-			data: { id:id, password:password },
 			dataType: 'json',
+			data: { id:id, password:password },
 			success: function(response) {
 				console.log("비밀번호업데이트");
 				alert(response.message);
 				location.href='./loginForm.do';
 			},
 			error: function(xhr, status, error) {
-				console.error('비밀번호업데이트실패', status, error);
+				console.error('비밀번호업데이트실패', xhr, status, error);
 			}
 		});
 	});

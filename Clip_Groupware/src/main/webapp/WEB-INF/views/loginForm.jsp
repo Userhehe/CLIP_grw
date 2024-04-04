@@ -94,7 +94,8 @@
 	<div class="container">
 		<img src="assets/img/loginlogo.png" class="additional-image" alt="loginlogo">
 <!-- 		<form action="./login" method="post"> -->
-		<form action="./loginForms.do" method="post">
+<!-- 		<form action="./loginForms.do" method="post"> -->
+		<form action="" id="loginForm" method="post">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="input-field">
 				<input type="text" id="username" name="username" class="input-field" placeholder="아이디를 입력해주세요" required="required">
