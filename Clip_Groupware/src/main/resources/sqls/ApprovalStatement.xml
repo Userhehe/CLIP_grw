@@ -12,6 +12,8 @@
 		    (
 		        CASE
 		        	WHEN a.APP_DRAFT = '결재취소' THEN '결재취소'
+		        	WHEN a.APP_DRAFT = '결재반려' THEN '결재반려'
+            		WHEN a.APP_DRAFT = '결재완료' THEN '결재완료'
 		            WHEN p.pay_num IS NOT NULL THEN
 		                CASE
 		                    WHEN p.pay_num = 1 THEN '1차 승인중'
@@ -107,7 +109,7 @@
 	
 	<!-- 내가 반려했던 결재 상세보기  -->
 	<select id="oneMyPayPause" resultType="ApprovalVo" parameterType="java.lang.String">
-		SELECT a.APP_CONTENT ,p.MIN_PAY_NUM
+		SELECT a.APP_CONTENT ,p.MIN_PAY_NUM ,a.APP_SEQ
 		FROM APPROVAL a
 		JOIN (
 		    SELECT APP_SEQ, MIN(PAY_NUM) AS MIN_PAY_NUM
@@ -121,17 +123,18 @@
 	
 	<!-- 내가 승인한거 조회하는 쿼~~~~~~~~~~~리  -->
 	<select id="oneMyPaychecked" resultType="ApprovalVo" parameterType="java.lang.String">
-		SELECT a.USER_ID ,a.APP_CONTENT, a.APP_DRAFT ,p.MIN_PAY_NUM, pl.PAY_USER , 
-				pl.PAY_SIGN , MIN_PAY_NUM AS PAY_NUM , pl.PAY_REJECTREASON  , pl.PAY_ASIGNDATE 
-		FROM APPROVAL a
-		JOIN (
-		    SELECT APP_SEQ, MAX(PAY_NUM) AS MIN_PAY_NUM
-		    FROM PAYMENTLINE
-		    WHERE PAY_SIGN = 'Y'
-		    GROUP BY APP_SEQ
-		) p ON a.APP_SEQ = p.APP_SEQ  
-		JOIN PAYMENTLINE pl ON pl.APP_SEQ = p.APP_SEQ AND pl.PAY_NUM = p.MIN_PAY_NUM
-		WHERE  a.APP_SEQ = #{app_seq} AND p.MIN_PAY_NUM IS NOT NULL
+		SELECT 
+		    a.APP_SEQ, 
+		    a.APP_TITLE, 
+		    a.APP_DRAFT,  a.APP_CONTENT  ,
+		    g.GIAN_NAME AS GIAN_SEQ ,  TO_CHAR(a.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE , p.PAY_REJECTREASON 
+		FROM APPROVAL a 
+		JOIN GIAN g ON g.GIAN_SEQ = a.GIAN_SEQ 
+		JOIN PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ
+		WHERE a.APP_DRAFT IN ('결재진행','결재완료','결재반려')
+		AND p.PAY_SIGN = 'Y' 
+		AND p.PAY_USER =  #{user_id}
+		ORDER BY p.PAY_ASIGNDATE DESC
 	</select>
 	
 	<!-- 나의 결재승인을 받아야하는 결재 아직 미처리한 리스트조회 (세션에서 사원번호 사용) -->
@@ -161,7 +164,7 @@
 		JOIN GIAN g ON g.GIAN_SEQ = a.GIAN_SEQ 
 		JOIN PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ
 		WHERE a.APP_DRAFT IN ('결재반려')
-		AND p.PAY_SIGN IN ('N', 'D')
+		AND p.PAY_SIGN = 'D' 
 		AND p.PAY_USER =  #{user_id}
 		ORDER BY p.PAY_ASIGNDATE DESC
    </select>
@@ -272,17 +275,17 @@
 	</update>
 	
 	<!-- 결재반려시 쿼리 실행 -->
-	<update id="returnApproval" parameterType="ApprovalVo">
+	<update id="banRuApproval" parameterType="ApprovalVo">
 	UPDATE APPROVAL 
 	SET 
-		APP_DRAFT  = #{app_draft}
+		APP_DRAFT  = '결재반려'
 	WHERE APP_SEQ = #{app_seq}
 	</update>
 	
-	<update id="returnPayLine" parameterType="ApprovalVo">
+	<update id="banRuPayLine" parameterType="ApprovalVo">
 	UPDATE PAYMENTLINE 
 	SET 
-	    PAY_SIGN = #{pay_sign}, 
+	    PAY_SIGN = 'D' , 
 	    PAY_ASIGNDATE = LOCALTIMESTAMP , 
 	    PAY_REJECTREASON = #{pay_rejectreason}
 	WHERE 
@@ -295,12 +298,5 @@
 	UPDATE APPROVAL SET APP_DRAFT ='결재취소'
                 WHERE APP_SEQ = #{app_seq}	
 	</update>
-	
-	
-	
-	
-	
-	
-	
 	
 </mapper>

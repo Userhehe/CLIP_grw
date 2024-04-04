@@ -141,9 +141,9 @@ public class ApprovalServiceImpl implements IApprovalService{
 	}
 
 	@Override
-	public ApprovalVo oneMyPaychecked(String app_seq) {
-		log.info("결재 단건 조회 : {}",app_seq);
-		return approvalDao.oneMyPaychecked(app_seq);
+	public ApprovalVo oneMyPaychecked(String user_id) {
+		log.info("결재 단건 조회 : {}",user_id);
+		return approvalDao.oneMyPaychecked(user_id);
 	}
 
 	@Override
@@ -154,9 +154,9 @@ public class ApprovalServiceImpl implements IApprovalService{
 
 	//승인시 
 	@Override
-	public int approvePay(String app_seq, String app_draft) {
-		log.info("결재 승인 결재상태 수정 : {}",app_seq,app_draft);
-		return approvalDao.approvePay(app_seq, app_draft);
+	public int approvePay(String app_draft,String app_seq) {
+		log.info("결재 승인 결재상태 수정 : {}",app_draft,app_seq);
+		return approvalDao.approvePay(app_draft, app_seq);
 	}
 
 	@Override
@@ -166,15 +166,15 @@ public class ApprovalServiceImpl implements IApprovalService{
 	}
 
 	@Override
-	public int returnApproval(String app_seq, String app_draft) {
-		log.info("결재 승인 결재상태 수정 : {} {}",app_seq,app_draft);
-		return approvalDao.returnApproval(app_seq,app_draft);
+	public int banRuApproval(String app_seq) {
+		log.info("결재 승인 결재상태 수정 : {}",app_seq);
+		return approvalDao.banRuApproval(app_seq);
 	}
 
 	@Override
-	public int returnPayLine(String app_seq, String pay_sign, String pay_rejectreason, String pay_num,String pay_user) {
-		log.info("결재 승인 결재상태 수정 : {} {} {} {} {}",app_seq,pay_sign,pay_rejectreason,pay_num,pay_user);
-		return approvalDao.returnPayLine(app_seq, pay_num,pay_sign,pay_rejectreason,pay_user);
+	public int banRuPayLine(String pay_rejectreason,String app_seq,String pay_num,String pay_user) {
+		log.info("결재 승인 결재상태 수정 : {} {} {} {}",pay_rejectreason, app_seq ,pay_num,pay_user);
+		return approvalDao.banRuPayLine(pay_rejectreason, app_seq ,pay_num,pay_user);
 	}
 
 	

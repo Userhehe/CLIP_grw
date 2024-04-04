@@ -46,7 +46,7 @@
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
-					       <tr>
+					       <tr onclick="event.preventDefault(); event.stopImmediatePropagation();">
 					          <td colspan="5" style="color: red; text-align: center;">참조된 결재가 없습니다.</td>
 					       </tr>
 					    </c:otherwise>
