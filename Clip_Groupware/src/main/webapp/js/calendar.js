@@ -189,7 +189,7 @@ function calendar(type){
 								var events = [];
 		                        data.forEach(function(event) {
 		                            var fcEvent = {
-		                                title: event.title,
+		                                title: (event.title.length>10)?event.title.substring(0, 10) + '...' : event.title,
 		                                start: event.start,
 		                                end: event.end,
 		                                seq: event.seq,
@@ -270,7 +270,9 @@ function modalclose(){
 	$("#calendarModal").modal("hide");
 	$("#calendarModalDetail").modal("hide");
 	$("#calendarModalUpdate").modal("hide");
-	document.getElementById('dtButtons').innerHTML = '';	
+	document.getElementById('dtButtons').innerHTML = '';
+	$("#attendDiv").css("display", "none");
+	$("#meRoomDiv").css("display", "none");	
 }
 // 모달 닫기 설정 끝----------------------------
 
@@ -308,13 +310,17 @@ function calendarModalDetail(seq){ //seq가져와 내용 상세조회 하기
 		        $("#dtStart").text(Scheduledata.ntc_start);
 		        $("#dtEnd").text(Scheduledata.ntc_end);
 		        $("#dtSeq").val(Scheduledata.ntc_seq);
-			}else if("re_seq" in Scheduledata){
+			}else if("rVo" in Scheduledata){
 				$("#calendarModalDetail").modal("show");
-		        $("#dtTitle").text(Scheduledata.re_title);
-		        $("#dtContent").text("회의 내용 : "+Scheduledata.re_content+"\n회의실 : "+Scheduledata.me_room+"번 \n회의실 참석자 : "+ Scheduledata.re_attend);
-		        $("#dtStart").text(Scheduledata.re_start);
-		        $("#dtEnd").text(Scheduledata.re_end);
-		        $("#dtSeq").val(Scheduledata.re_seq);
+		        $("#dtTitle").text(Scheduledata.rVo.re_title);
+		        $("#dtContent").text(Scheduledata.rVo.re_content);
+		        $("#dtStart").text(Scheduledata.rVo.re_start);
+		        $("#dtEnd").text(Scheduledata.rVo.re_end);
+		        $("#dtSeq").val(Scheduledata.rVo.re_seq);
+		        $("#meRoom").text(Scheduledata.rVo.me_room);
+		        $("#attends").text(Scheduledata.atts.attendees);
+		        $("#attendDiv").css("display", "block");
+				$("#meRoomDiv").css("display", "block");
 			}
 		}
 		
