@@ -8,6 +8,7 @@ $(document).ready(function() {
 		console.log('요청데이터:', requestData);
 		
 		$("#rejectBtn").attr("data-appseq", appSeq); 
+		$("#rejectFinalBtn").attr("data-appseq", appSeq); 
 		$("#editBtn").attr("data-appseq", appSeq); 
 		
 		$.ajax({
@@ -45,7 +46,6 @@ $(document).ready(function() {
 		});
 		
 		$("#rejectFinalBtn").on("click", function() {
-			console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"+app_seq);
 		    var app_seq = $(this).attr("data-appseq");
 		    var cancelContent = $("#cancelContent").val();
 		    if(cancelContent.trim() === ""){
@@ -55,12 +55,14 @@ $(document).ready(function() {
 		            url: "./rejectionPay.do",
 		            method: "POST",
 		            data: { app_seq: app_seq,
-		            		cancelContent: cancelContent },
+		            		pay_rejectreason: cancelContent },
 		            success: function(response) {
-		                console.log("성공!! 결재코드:"+app_seq+",내용:"+cancelContent);
+		                console.log("성공!! 결재코드:"+app_seq+",내용:"+Pay_rejectreason);
+		                alert("반려처리가 정상적으로 처리되었습니다.");
+		                location.reload();
 		            },
-		            error: function(xhr, status, error) {
-		                alert("실패!!!!!!!! " + error);
+		            error: function(error) {
+		                alert("서버오류로 인하여 실패하였습니다.");
 		            }
 		        }); 
 			}

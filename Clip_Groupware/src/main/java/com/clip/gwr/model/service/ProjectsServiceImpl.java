@@ -91,7 +91,7 @@ public class ProjectsServiceImpl implements IProjectsService {
 	public int insertClient(Map<String, Object> map) {
 		int cnt = 0;
 		String cliName = "";
-		// 프로젝트 인서트
+		// 클라이언트 인서트
 		cnt = dao.insertClient(map);
 		return cnt;
 	}

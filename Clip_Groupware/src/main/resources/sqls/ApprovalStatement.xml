@@ -236,14 +236,21 @@
 	</insert>
 
 
+
+
+
+
+
 	<!-- 결재파일 임시저장 (결재작성창 정보들 이용)-->
 	<insert id="saveTempApproval" parameterType="ApprovalVo">
 	INSERT INTO APPROVAL
 		(APP_SEQ, APP_TITLE, APP_CONTENT,
-		GIAN_SEQ, APP_DRAFT, APP_PAYLINE)
+		GIAN_SEQ, APP_DRAFT, USER_ID)
 	VALUES('APPROVAL_' || TO_CHAR(APPROVAL_SEQ.NEXTVAL), #{app_title}, #{app_content},
-			#{gian_seq}, '임시저장' , #{app_payline} )
+			#{gian_seq}, '임시저장', #{user_id})
 	</insert>
+	
+	
 	
 	<!-- 승인시 쿼리 시작 -->
 	<update id="approvePay" parameterType="ApprovalVo">
@@ -268,19 +275,20 @@
 	<update id="returnApproval" parameterType="ApprovalVo">
 	UPDATE APPROVAL 
 	SET 
-		APP_DRAFT  = '결재진행'
+		APP_DRAFT  = #{app_draft}
 	WHERE APP_SEQ = #{app_seq}
 	</update>
 	
 	<update id="returnPayLine" parameterType="ApprovalVo">
 	UPDATE PAYMENTLINE 
 	SET 
-	    PAY_SIGN = 'D', 
+	    PAY_SIGN = #{pay_sign}, 
 	    PAY_ASIGNDATE = LOCALTIMESTAMP , 
-	    PAY_REJECTREASON = '프로젝트 투입으로 인해 휴가를 반려합니다.'
+	    PAY_REJECTREASON = #{pay_rejectreason}
 	WHERE 
 	    APP_SEQ = #{app_seq} 
-	   	AND PAY_NUM = '1'
+	   	AND PAY_NUM = #{pay_num}
+	   	AND PAY_USER = #{pay_user}
 	</update>
 	
 	<update id="cancelApproval" parameterType="ApprovalVo">

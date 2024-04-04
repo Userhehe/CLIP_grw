@@ -94,7 +94,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
                      <label for="startDate" class="col-form-label">시작 날짜</label>
                      <div class="detailhidden" style="display: block;">
 	                     <div class="input-group">
-	                        <input type="text" class="form-control"  id="destart" >
+	                        <input type="text" class="form-control"  id="destart" readonly="readonly">
 	                     </div>
                     </div>
                     
@@ -141,6 +141,11 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 	                 	<div class="modifyhidden" style="display: none;">
 	                 		<textarea class="form-control" rows="5" id="re_content" name="re_content"></textarea>
 	                 	</div>
+	                 
+	                 <div class="detailhidden" style="display: block;">
+	                 	<label for="attend" class="col-form-label">참석자 명단</label>
+	                 	<textarea class="form-control" rows="5" id="deattlist" readonly="readonly"></textarea>
+	                 </div>	
                </div>
             </div>
            </form>
@@ -150,12 +155,12 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
             
              <div class="modal-footer">
              	<div class="detailhidden" style="display: block;">	
-             		<button type="button" class="btn btn-secondary" onclick="modifyRev()"> 수정 </button>
+             		<button type="button" class="btn btn-warning" onclick="modifyRev()"> 수정 </button>
 		            <button type="button" class="btn btn-danger" id="delRev" onclick="delRev()"> 삭제 </button>
 		            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
             	</div>
             	<div class="modifyhidden" style="display: none;">
-            		<button type="button" class="btn btn-secondary" onclick="modifycon()" id="modifycon"> 확인 </button>
+            		<button type="button" class="btn btn-info" onclick="modifycon()" id="modifycon"> 확인 </button>
 	            	<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
             	</div>
              </div>   
@@ -193,7 +198,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
                      <label for="startDate" class="col-form-label">시작 날짜</label>
                      <div class="detailhidden" style="display: block;">
 	                     <div class="input-group">
-	                        <input type="text" class="form-control"  id="attdestart" >
+	                        <input type="text" class="form-control"  id="attdestart" readonly="readonly" >
 	                     </div>
                     </div>
                     
@@ -224,6 +229,9 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 	                 	<div class="detailhidden" style="display: block;">
 	                 		<textarea class="form-control" rows="5" id="attdecontent" readonly="readonly"></textarea>
 	                 	</div>
+	                 	
+	                 <label for="attend" class="col-form-label">참석자 명단</label>
+	                 	<textarea class="form-control" rows="5" id="attdeattlist" readonly="readonly"></textarea>	
                </div>
             </div>
 
@@ -231,7 +239,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
             
             
              <div class="modal-footer">
-	            	<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
+	            	<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="attredetailclose()">취소</button>
              </div>   
         </div>            
     </div>
@@ -278,7 +286,6 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 	                    </div>
 	                    <div class=modal-footer>
 	                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
 	                      <button type="button" class="btn btn-warning" id="attconfirm" onclick="attmodify()">참석자 등록</button>
 	                    </div>
                     </div>

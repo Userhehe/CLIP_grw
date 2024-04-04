@@ -98,7 +98,7 @@
 							<div class="card recent-sales overflow-auto">
 								<div class="card-body">
 									<h5 class="card-title">
-										<a href="./schedule.do">공지사항 <span>| Notice</span></a>
+										<a href="./nctBoard.do">공지사항 <span>| Notice</span></a>
 									</h5>
 									<div class="mainContent">
 										<table class="table table-hover" style="margin-top: 10px;">

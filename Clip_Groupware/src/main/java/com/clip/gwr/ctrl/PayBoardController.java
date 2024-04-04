@@ -206,11 +206,103 @@ public class PayBoardController {
 
 	//본인 승인시 결재반려할 경우
 	@PostMapping(value="/rejectionPay.do")
-	public String rejectPay(@RequestParam("app_seq")String app_seq,HttpSession session){
+	public String rejectPay(@RequestParam("app_seq")String app_seq,@RequestParam("pay_rejectreason")String pay_rejectreason,HttpSession session){
 		log.info("rejectPay 내가 승인하는데 싫어서 결재 반려하는 경우 : {}",app_seq);
-		
-		
-		return "redirect:/myAcceptPayList.do";
+		 UserinfoVo loginUser = (UserinfoVo) session.getAttribute("loginVo");
+		 String user_id = loginUser.getUser_id();
+	     System.out.println("사용자 ID:" + user_id);
+	
+	     // 결재 정보 확인
+	     ApprovalVo vo = service.oneMyPaycheck(app_seq);
+	     System.out.println("################결재라인 번호확인:" + vo.getPay_num());
+	     System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆결재라인 담당자확인:" + vo.getPay_user());
+	     System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆결재라인 서명:" + vo.getPay_sign());
+	     System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆결재코드 :" + vo.getApp_seq());
+	     System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆거절사유 :" + pay_rejectreason);
+	     
+	     String app_draft = vo.getApp_draft();
+	     String pay_num = null;
+	     String pay_sign = null;
+	     String App_Seq = vo.getApp_seq(); 
+	     String pay_user = null;
+	     
+//	     if ("결재대기".equals(app_draft) || "결재진행".equals(app_draft)) {
+//	    	 	app_seq = App_Seq;
+//	    	 	app_draft = "결재반려";
+//		        pay_num = "1";
+//		        pay_sign= "D";
+//		        pay_rejectreason = pay_rejectreason2;
+//		        pay_user = vo.getPay_user();
+//		    } else if ("결재진행".equals(app_draft) && "2".equals(vo.getPay_num())) {
+//		    	app_seq = App_Seq;
+//		    	app_draft = "결재반려";
+//		    	pay_num = "2";
+//		    	pay_sign= "D";
+//		    	pay_user = vo.getPay_user();
+//		    	pay_rejectreason = pay_rejectreason2;
+//		    }else if ("결재진행".equals(app_draft) && "3".equals(vo.getPay_num())) {
+//		    	app_seq = App_Seq;
+//		    	app_draft = "결재반려";
+//		    	pay_num = "3";
+//		    	pay_sign= "D";
+//		    	pay_user = vo.getPay_user();
+//		    	pay_rejectreason = pay_rejectreason2;
+//		    }else if ("결재진행".equals(app_draft) && "4".equals(vo.getPay_num())) {
+//		    	app_seq = App_Seq;
+//		    	app_draft = "결재반려";
+//		    	pay_num = "4";
+//		    	pay_sign= "D";
+//		    	pay_user = vo.getPay_user();
+//		    	pay_rejectreason = pay_rejectreason2;
+//		    }else if ("결재진행".equals(app_draft) && "5".equals(vo.getPay_num())) {
+//		    	app_seq = App_Seq;
+//		    	app_draft = "결재반려";
+//		    	pay_num = "5";
+//		    	pay_sign= "D";
+//		    	pay_user = vo.getPay_user();
+//		    	pay_rejectreason = pay_rejectreason2;
+//		    }else {
+//		        return "redirect:/accessError.do";
+//		    }
+//	     
+//	     
+//		     service.returnApproval(app_seq, app_draft);
+//			 service.returnPayLine(app_seq, pay_num,pay_sign,pay_rejectreason,pay_user);
+	     
+	     if ("결재대기".equals(app_draft) || "결재진행".equals(app_draft)) {
+	    	    app_draft = "결재반려";
+	    	    pay_num = "1";
+	    	    pay_sign = "D";
+	    	    pay_user = vo.getPay_user();
+	    	} else if ("결재진행".equals(app_draft) && "2".equals(vo.getPay_num())) {
+	    	    app_draft = "결재반려";
+	    	    pay_num = "2";
+	    	    pay_sign = "D";
+	    	    pay_user = vo.getPay_user();
+	    	} else if ("결재진행".equals(app_draft) && "3".equals(vo.getPay_num())) {
+	    	    app_draft = "결재반려";
+	    	    pay_num = "3";
+	    	    pay_sign = "D";
+	    	    pay_user = vo.getPay_user();
+	    	} else if ("결재진행".equals(app_draft) && "4".equals(vo.getPay_num())) {
+	    	    app_draft = "결재반려";
+	    	    pay_num = "4";
+	    	    pay_sign = "D";
+	    	    pay_user = vo.getPay_user();
+	    	} else if ("결재진행".equals(app_draft) && "5".equals(vo.getPay_num())) {
+	    	    app_draft = "결재반려";
+	    	    pay_num = "5";
+	    	    pay_sign = "D";
+	    	    pay_user = vo.getPay_user();
+	    	} else {
+	    	    return "redirect:/accessError.do";
+	    	}
+
+	    	service.returnApproval(app_seq, app_draft);
+	    	service.returnPayLine(app_seq, pay_num, pay_sign, pay_rejectreason, pay_user);
+
+
+			 return "redirect:/myAcceptPayList.do";
 	}
 	
 	@GetMapping(value = "/myReferPayList.do")

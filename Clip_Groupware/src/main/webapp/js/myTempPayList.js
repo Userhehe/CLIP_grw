@@ -13,7 +13,10 @@ $(document).ready(function() {
 			data: JSON.stringify(requestData),
 			success: function(data) {
 				console.log(data);
-				$("#modalContent").html("결재코드:"+data.app_seq+"<br>결재요청일자: " + data.app_createdate + "<br>결재내용: " + data.app_content);
+				$("#modalContent").html(data.app_seq+ "<br>" + data.app_content);
+				$("#continueWrite").click(function(){
+					window.location.href = './continuePay.do?app_seq='+appSeq;
+				})
 				$("#tempDel").attr("data-appseq",appSeq);
 				var modal = new bootstrap.Modal($("#detailModal"));
 				modal.show();

@@ -78,9 +78,9 @@ public class ReservationDaoImpl implements IReservationDao{
 	}
 
 	@Override
-	public List<ReAttendsVo> reAttList(int seq) {
+	public ReAttendsVo reAttList(int seq) {
 		log.info("##### 참석자 리스트 조회 reAttList");
-		return sqlSession.selectList(NS+"reAttList",seq);
+		return sqlSession.selectOne(NS+"reAttList",seq);
 	}
 
 	@Override

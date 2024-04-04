@@ -74,4 +74,15 @@ public class MemoServiceImpl implements IMemoService{
 	public List<NtcVo> selectNtcBoard() {
 		return dao.selectNtcBoard();
 	}
+	
+	//페이징 테스트
+	@Override
+	public int selectNtcCount() {
+		return dao.selectNtcCount();
+	}
+	
+	@Override
+	public List<NtcVo> selectNtcPage(Map<String, Object> map) {
+		return dao.selectNtcPage(map);
+	}
 }
