@@ -16,7 +16,7 @@ $(document).ready(function() {
 			      data: JSON.stringify(requestData),
 			      success: function(data) {
 			    	console.log(data);
-			    	$("#modalContent").html("결재내용: " + data.app_content );
+			    	$("#modalContent").html(appSeq + data.app_content );
 			    	$("#cancelPayButton").attr("data-appseq", appSeq); // 버튼에 app_seq 값을 저장
 
                     // 결재 상태에 따라 결재 수정 및 취소 버튼 숨김 처리

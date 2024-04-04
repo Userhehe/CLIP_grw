@@ -112,9 +112,12 @@ public class ApprovalServiceImpl implements IApprovalService{
 
 	//기안 결재 임시저장
 	@Override
-	public int saveTempApproval(ApprovalVo approvalVo) {
+	public boolean saveTempApproval(ApprovalVo approvalVo, List<PaymentlineVo> list) {
+		boolean isc = false ; 
 		log.info("기안 결재 임시저장: {}",approvalVo);
-		return approvalDao.saveTempApproval(approvalVo);
+		int tempresult = approvalDao.saveTempApproval(approvalVo);
+		int payline = PaymentlineDao.putPayLine(list);
+		return isc = (tempresult>0 && payline>0) ? true:false;
 	}
 
 	//결재 취소

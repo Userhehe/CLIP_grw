@@ -10,6 +10,7 @@
 
 
 <script type="text/javascript" src="./js/paylineModal.js"></script>
+<!-- <script type="text/javascript" src="./js/referenceModal.js"></script> -->
 <style type="text/css">
 .form-control,.form-select{
 	width:15%;
@@ -85,6 +86,9 @@
 				</li>
 				
 			</ul>
+			
+			
+			
 			<div class="tab-content pt-2" id="myTabContent">
 				<div class="tab-pane fade show active" id="home" role="tabpanel"
 					aria-labelledby="home-tab">
@@ -114,6 +118,8 @@
 					    <input type="date" class="form-control" id="endDate" name="endDate">
 					    <input type="time" class="form-control" id="endTime" style="display: none;">
 					    
+					    <hr/>
+					    
 						<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal">
 							결재라인 지정
 		            	</a>
@@ -122,12 +128,106 @@
 		            		
 		            	</div>	
 		            	
+		            	<!-- 결재라인 모달 영역 -->
+						<div class="modal fade" id="paylinemodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
+				            
+				            	<div class="modal-dialog modal-lg">
+				            	
+				            		<div class="modal-content">
+						            	<div class="modal-header">
+							                <h4 class="modal-title">결재라인 지정</h4>
+							                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							               
+						                </div>
+						                <div class="modal-body row">
+							                <div class="col-lg-6">
+							                	<div class="select_payline_area col-lg-12">
+							                		<div id="search_box">
+														<input id="search_input" type="text" placeholder="사원 검색">
+													</div>
+													<hr/>
+													
+													<div id="payLine_box"></div>
+							                	</div>
+							                </div>
+							                
+							                <div class="col-lg-6">
+							                	<div class="select_payline_area col-lg-12" style="height: 100%">
+							                		<div id="pickLine_box">
+							                		<h4>지정된 결재인</h4>
+							                		<hr/>
+							                		</div>
+							                	</div>
+						                	</div>
+						                	
+						                	<hr>
+					                    </div>
+					                    <div class=modal-footer>
+					                      <button type="button" class="btn btn-warning" id="applyPayLine">결재라인 지정확인</button>
+					                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
+					                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+					                    </div>
+				                    </div>
+				                    
+				            	</div>
+				            
+				            </div>
+		            	
+		            	<hr/>
+		            	
+		            	
+		            	
+		            	<!-- 참조인 지정 영역 -->
+		            	<a id="refModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#selectedRefermodal">
+							참조인 지정
+		            	</a>
+		            	
+		            	
+		            	<!-- 참조인 모달 영역 -->
+						<div class="modal fade" id="selectedRefermodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
+				            	<div class="modal-dialog modal-lg">
+				            	
+				            		<div class="modal-content">
+						            	<div class="modal-header">
+							                <h4 class="modal-title">참조인 지정</h4>
+							                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							               
+						                </div>
+						                <div class="modal-body row">
+							                <div class="col-lg-6">
+							                	<div class="select_payline_area col-lg-12">
+							                		<div id="search_box">
+														<input id="referSearch_input" type="text" placeholder="사원 검색">
+													</div>
+													<hr/>
+													
+													<div id="reference_box"></div>
+							                	</div>
+							                </div>
+							                
+							                <div class="col-lg-6">
+							                	<div class="select_payline_area col-lg-12" style="height: 100%">
+							                		<div id="pickReference_box">
+							                		<h4>지정된 참조인</h4>
+							                		<hr/>
+							                		</div>
+							                	</div>
+						                	</div>
+						                	
+						                	<hr>
+					                    </div>
+					                    <div class=modal-footer>
+					                      <button type="button" class="btn btn-warning" id="applyReference">참조인 지정확인</button>
+					                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
+					                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+					                    </div>
+				                    </div>
+				            	</div>
+				            </div>
 					</div>
 					
-					<!-- gian_1 신청 -->
-					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewGian" onclick="gatheringInfo()">
-              				 미리보기
-		              	</button>
+					<!-- gian_1 신청 모달-->
+					
 		            	<div class="modal fade" id="previewGian" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
 			                <div class="modal-dialog modal-xl" id="req_preview1">
 			                  <div class="modal-content">
@@ -141,6 +241,7 @@
 			                    <div class="modal-footer">
 			                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 			                      <button type="button" class="btn btn-primary">결재 요청</button>
+			                      <button type= "button" id="tempSave" class="btn btn-warning">임시저장</button>
 			                    </div>
 			                  </div>
 			                </div>
@@ -152,18 +253,27 @@
 					<div class="form-group" style="margin-top:10px;">
 						<label for="reason">신청 사유</label>
 						<textarea name="gian_html" id="approvalContent"
-							style="width: 100%; height: 600px;"></textarea>
+							style="width: 100%; height: 400px;"></textarea>
+							
+							
 						<br> <br> <br>
 					</div>
 					<div style="text-align: center;">
-						<button id="sunbmitReq" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#reqPayment">미리보기/결재요청</button>
-						<button type="submit" id="tempSave"
-							class="btn btn-secondary rounded-pill">임시저장</button>
+<!-- 						<button id="sunbmitReq" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#reqPayment">미리보기/결재요청</button> -->
+<!-- 						<button type= "button" id="tempSave" class="btn btn-secondary rounded-pill">임시저장</button> -->
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewGian" onclick="gatheringInfo()">
+              				미리보기/결재요청
+		              	</button>
 					</div>
 				</div>
 				<!--  연차신청서탭 끝 -->
 				</div>
 			</div>
+			
+			
+			
+			
+			
 			<!--  지출결의서탭 시작 -->
 			<div class="tab-content pt-2" id="myTabContent">
 				<div class="tab-pane fade" id="profile" role="tabpanel"
@@ -201,6 +311,9 @@
 							<label for="position">문서내용 :</label>
 							<textarea name="payGian_html" id="smartEditor2"
 								style="width: 100%; height: 412px;">${vo2.gian_html}</textarea>
+							<div>
+							${vo2.gian_html}
+							</div>
 							<br>
 							<br>
 							<br>
@@ -225,6 +338,7 @@
 							<label for="position">문서내용 :</label>
 							<textarea name="outerGian_html" id="smartEditor3"
 								style="width: 100%; height: 412px;">${vo3.gian_html}</textarea>
+							<div>${vo3.gian_html}</div>
 							<br>
 							<br>
 							<br>
@@ -239,50 +353,7 @@
 			</div>
 		</section>
 		
-		<!-- 결재라인 모달 영역 -->
-		<div class="modal fade" id="paylinemodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
-            
-            	<div class="modal-dialog modal-lg">
-            	
-            		<div class="modal-content">
-		            	<div class="modal-header">
-			                <h4 class="modal-title">결재라인 지정</h4>
-			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			               
-		                </div>
-		                <div class="modal-body row">
-			                <div class="col-lg-6">
-			                	<div class="select_payline_area col-lg-12">
-			                		<div id="search_box">
-										<input id="search_input" type="text" placeholder="사원 검색">
-									</div>
-									<hr/>
-									
-									<div id="payLine_box"></div>
-			                	</div>
-			                </div>
-			                
-			                <div class="col-lg-6">
-			                	<div class="select_payline_area col-lg-12" style="height: 100%">
-			                		<div id="pickLine_box">
-			                		<h4>지정된 결재인</h4>
-			                		<hr/>
-			                		</div>
-			                	</div>
-		                	</div>
-		                	
-		                	<hr>
-	                    </div>
-	                    <div class=modal-footer>
-	                      <button type="button" class="btn btn-warning" id="applyPayLine">결재라인 지정확인</button>
-	                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
-	                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-	                    </div>
-                    </div>
-                    
-            	</div>
-            
-            </div>
+		
             
             
             
