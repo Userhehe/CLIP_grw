@@ -58,13 +58,13 @@ $(document).ready(function() {
 		//넘겨줘야할 데이터 prj id
 
 		Swal.fire({
-		  title: "Are you sure?",
-		  text: "You won't be able to revert this!",
+		  title: "프로젝트를 삭제하시겠습니까?",
+		  text: "삭제 후 모든 데이터는 사라집니다.",
 		  icon: "warning",
 		  showCancelButton: true,
 		  confirmButtonColor: "#3085d6",
 		  cancelButtonColor: "#d33",
-		  confirmButtonText: "Yes, delete it!"
+		  confirmButtonText: "프로젝트 삭제"
 		}).then((result) => {
 		  if (result.isConfirmed) {
 			
@@ -81,13 +81,13 @@ $(document).ready(function() {
 					    location.href = 'projectsProgress.do';
 					    
 					    Swal.fire({
-					      title: "Deleted!",
-					      text: "Your file has been deleted.",
+					      title: "프로젝트가 삭제되었습니다.",
+					      text: "프로젝트가 삭제되었습니다.",
 					      icon: "success"
 					    });
 		    
 					} else if(result < 0) {
-						console.log('삭제권한없음!');
+						console.log('삭제 할 권한이 없습니다.');
 					} else {
 						console.log('error!');
 					}
@@ -113,20 +113,47 @@ function selectBoardList() {
 	var pboProg =  $("#sales-tab").text();
 	
 		$.ajax({
-			url: "./getDetailBottomList.do",
 			type: "get",
-	        data : {prjId : prjId, pboProgress : pboProg},
+			url: "./getDetailBottomList.do",
             dataType:"json",
+	        data : {prjId : prjId, pboProgress : pboProg},
 			success: function(data) {
 				console.log(data);
-				if(data.length>0) {
-					var listData = data; // 받아온 데이터를 listData 변수에 저장합니다.   	
-					console.log('불러오기 성공!');
-					console.log(listData);
-					
-					//listData 가 정상적으로 나오면, 하단 tr td 태그를 생성하는 소스를 짜야함
-					
-	};
+				
+				var tableBody = $("#detailBottomList");
+				tableBody.empty();
+
+				for (var i = 0; i < Math.min(data.length, 11); i++) {
+					var projectTable = data[i];
+					var tr = $("<tr>").addClass("seq").attr("data-seq", projectTable.PBO_SEQ);
+					tr.append($("<td>").addClass("USER_ID").text(projectTable.USER_ID));
+					tr.append($("<td>").addClass("PBO_TITLE").text(projectTable.PBO_TITLE));
+					tr.append($("<td>").addClass("PBO_CONTENT").text(projectTable.PBO_CONTENT));
+					tr.append($("<td>").addClass("PBO_REGDATE").text(projectTable.PBO_REGDATE));
+
+					tableBody.append(tr);
+
+//					tr.click(function() {
+//						var seq = $(this).attr("data-seq");
+//						console.log("클릭한 시퀀스 값:", seq);
+//						calendarModalDetail(seq);
+//					});
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+
 }
 })
 }
