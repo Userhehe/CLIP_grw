@@ -77,6 +77,12 @@ public class DailyCheckServiceImpl implements IDailyCheckService {
 		log.info("DailyCheckServiceImpl selectDailyStatus 출퇴근상태 조회");
 		return dao.selectDailyStatus(daily_status);
 	}
+
+	@Override
+	public List<DailyCheckVo> myDailychk(String user_id) {
+		log.info("DailyCheckServiceImpl myDailychk 출퇴근상태 조회");
+		return dao.myDailychk(user_id);
+	}
 	
 	
 	

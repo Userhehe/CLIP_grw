@@ -44,6 +44,15 @@
     WHERE ac.USER_ID = #{user_id}
 	</select>
 	
+	<select id="myAnn" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualVo">
+	SELECT ac.USER_ID, u.USER_NAME, (ac.ANN_LEOV - au.ANNUSE_DAY) AS ANN_LEOV,
+             au.ANNUSE_DAY AS ANN_USEDAY
+    FROM ANNUAL_CT ac 
+    JOIN ANNUAL_USE au ON ac.USER_ID = au.USER_ID 
+    JOIN USERINFO u ON ac.USER_ID = u.USER_ID
+    WHERE ac.USER_ID = #{user_id}
+</select>
+	
 	<update id="updateAnn" parameterType="java.lang.String" >
     UPDATE ANNUAL_CT
     SET ANN_DAY = #{ann_day}, 

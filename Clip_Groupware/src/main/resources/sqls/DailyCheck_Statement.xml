@@ -46,7 +46,7 @@
     END AS DAILY_STATUS 
 	FROM DAILYCHECK d
 	WHERE  DAILY_MODIFY = 'N'
-            AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE);
+            AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE)
     ]]>
 	</select>
 	
@@ -63,6 +63,14 @@
         INNER JOIN RANKS r ON u.RANKS_SEQ = r.RANKS_SEQ
         INNER JOIN DEPT de ON u.DEPT_SEQ = de.DEPT_SEQ
         ORDER BY dc.DAILY_REGDATE DESC
+	</select>
+	
+	<!-- 나의 근태현황 조회 -->
+	<select id="myDailychk" resultType="com.clip.gwr.vo.DailyCheckVo">
+	SELECT USER_ID,DAILY_INTIME,DAILY_OUTTIME,DAILY_STATUS,DAILY_REGDATE
+	FROM DAILYCHECK
+	WHERE USER_ID =  #{user_id}
+	ORDER BY DAILY_REGDATE DESC
 	</select>
 	
 	<!-- 근태현황 검색 -->

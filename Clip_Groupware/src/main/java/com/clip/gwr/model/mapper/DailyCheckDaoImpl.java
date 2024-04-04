@@ -75,7 +75,13 @@ public class DailyCheckDaoImpl implements IDailyCheckDao {
 	@Override
 	public String selectDailyStatus(String daily_status) {
 		log.info("##### 출퇴근여부 등록 updateDailyCheckStatus #####");
-		return sqlSession.selectOne(daily_status);
+		return sqlSession.selectOne(NS+"selectDailyStatus",daily_status);
+	}
+
+	@Override
+	public List<DailyCheckVo> myDailychk(String user_id) {
+		log.info("##### 나의 연차조회  myDailychk #####");
+		return sqlSession.selectList(NS+"myDailychk",user_id);
 	}
 
 	
