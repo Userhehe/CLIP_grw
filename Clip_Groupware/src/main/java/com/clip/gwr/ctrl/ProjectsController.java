@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clip.gwr.model.service.IProjectBoardService;
 import com.clip.gwr.model.service.IProjectsService;
 import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.GianVo;
 import com.clip.gwr.vo.MemoVo;
+import com.clip.gwr.vo.ProjectBoardVo;
 import com.clip.gwr.vo.ProjectMemVo;
 import com.clip.gwr.vo.ProjectsVo;
 import com.clip.gwr.vo.UserinfoVo;
@@ -34,7 +36,10 @@ import lombok.extern.slf4j.Slf4j;
 public class ProjectsController {
 
 	@Autowired
-	private IProjectsService service;
+	private IProjectsService projectsService;
+	
+	@Autowired
+	private IProjectBoardService projectBoardService;
 
 //------------진행도별 프로젝트 조회 : 메인 화면 -----------------------//	
 	
@@ -45,7 +50,7 @@ public class ProjectsController {
 		int radioChk = 0;
 		model.addAttribute("radioChk", radioChk);
 		//발주처 select box 데이터 조회
-		List<ProjectsVo> clientList = service.selectClientList();
+		List<ProjectsVo> clientList = projectsService.selectClientList();
 		model.addAttribute("clientList", clientList);
 		return "projectsProgress";
 	}
@@ -75,7 +80,7 @@ public class ProjectsController {
 		UserinfoVo loginVo = (UserinfoVo)session.getAttribute("loginVo");
 		map.put("USER_ID",loginVo.getUser_id());
 				
-		List<ProjectsVo> lists = service.getProgressProjects(map);
+		List<ProjectsVo> lists = projectsService.getProgressProjects(map);
 		log.info("완료된프로젝트리스트:{}",lists);
 		JSONArray prjList = new JSONArray();
 	    for(ProjectsVo vo : lists) {
@@ -97,7 +102,7 @@ public class ProjectsController {
 	public String projectsPeriod(Model model) {
 		
 		//발주처 select box 데이터 조회
-		List<ProjectsVo> clientList = service.selectClientList();
+		List<ProjectsVo> clientList = projectsService.selectClientList();
 		model.addAttribute("clientList", clientList);
 
 		return "projectsPeriod";
@@ -109,7 +114,7 @@ public class ProjectsController {
 	public String projectClient(Model model) {
 		
 		//발주처 select box 데이터 조회
-		List<ProjectsVo> clientList = service.selectClientList();
+		List<ProjectsVo> clientList = projectsService.selectClientList();
 		model.addAttribute("clientList", clientList);
 		
 		return "projectClient";
@@ -123,11 +128,48 @@ public class ProjectsController {
 		String prjId = request.getParameter("project_id");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<ProjectsVo> prjectDetail = service.selectDetailList(prjId);
-		/* map = service.selectDetailList(prjId); */
-		model.addAttribute("result", prjectDetail);
+		
+		 List<ProjectsVo> prjectDetail = projectsService.selectDetailList(prjId);
+		 model.addAttribute("result", prjectDetail);
+
 
 		return "projectDetail";
+	}
+	
+	//-----------프로젝트 디테일 하단 목록 조회-----------------------//	
+	@GetMapping(value="/getDetailBottomList.do")
+	@ResponseBody
+	public JSONArray getDetailBottomList(String prjId, String pboProgress, HttpSession session) {
+		log.info("PayController 프로젝트 페이지"); 
+		// 필요한 인자값 :  prj_id pbo_progress  
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+    	map.put("prj_id",prjId);
+    	map.put("pbo_progress",pboProgress);
+    	log.info("맵에 뭐이써:{}",map);
+
+    	//여기에 데이터가 조회되지 않음
+    	List<ProjectBoardVo> prjectDetail = projectBoardService.getProjectBoard(map);
+
+		log.info("완료된프로젝트리스트:{}",prjectDetail);
+		JSONArray boardList = new JSONArray();
+	    for(ProjectBoardVo vo : prjectDetail) {
+	        JSONObject obj = new JSONObject();
+	        obj.put("PBO_SEQ", vo.getPbo_seq());
+	        obj.put("USER_ID", vo.getUser_id());
+	        obj.put("PBO_TITLE", vo.getPbo_title());
+	        obj.put("PBO_CONTENT", vo.getPbo_content());
+	        obj.put("PBO_PROGRESS", vo.getPbo_progress());
+	        obj.put("PBO_DELFLAG", vo.getPbo_delflag());
+	        obj.put("PBO_REGDATE", vo.getPbo_regdate());
+	        obj.put("PRJ_ID", vo.getPrj_id());
+	        
+	        boardList.add(obj);
+
+	    }
+	    System.out.println("넘겨줄 데이터"+boardList);
+
+	    return boardList;
 	}
 	
 //-----------프로젝트 추가-----------------------//	
@@ -139,7 +181,7 @@ public class ProjectsController {
 		map.put("user_id", id.getUser_id());
 
 		log.info("담긴 map 내용 {} : " , map);
-		int isc = service.insertProject(map);
+		int isc = projectsService.insertProject(map);
 		return isc;
 	}
 	
@@ -157,8 +199,49 @@ public class ProjectsController {
 	public int insertClient(@RequestParam Map<String, Object> map) {
 
 		log.info("담긴 map 내용 {} : ", map);
-		int isc = service.insertClient(map);
+		int isc = projectsService.insertClient(map);
 		return isc;
+	}
+	
+	// ------------프로젝트 보드 추가 : 디테일 화면 -----------------------//
+
+	@PostMapping(value = "/insertProjectBoard.do")
+	@ResponseBody
+	public int insertProjectBoard(@RequestParam Map<String, Object> map, HttpSession session) {
+
+		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
+		map.put("user_id", id.getUser_id());
+		log.info("담긴 map 내용 {} : ", map);
+		int isc = projectBoardService.insertProjectBoard(map);
+		return isc;
+	}
+
+	// ------------프로젝트 디테일 상단 삭제버튼 -----------------------//
+
+	
+	@GetMapping(value="/deletePrjDetailTop.do")
+	@ResponseBody
+	public int deletePrjDetailTop(String prjId, String prjManager, HttpSession session) {
+		log.info("deletePrjDetailTop 상단 삭제버튼");
+		
+		int cnt=0;
+		
+		// 삭제권한체크
+		UserinfoVo loginVo = (UserinfoVo)session.getAttribute("loginVo");
+		String loginId = loginVo.getUser_id();
+
+		if (!loginId.equals(prjManager)) {
+			cnt = -1;
+		} else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("PRJ_ID",prjId);
+			map.put("PRJ_MANAGER",prjManager);
+			
+			cnt = projectBoardService.deletePrjDetailTop(map);
+		}	
+		return cnt;
+
 	}
 
 

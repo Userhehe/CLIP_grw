@@ -15,14 +15,13 @@ import lombok.ToString;
 @NoArgsConstructor
 
 public class ProjectBoardVo {
-//
-	private String	pbo_seq		;
-	private String	user_id		;
-	private String	pbo_title	;
-	private String	pbo_content	;
-	private String	pbo_depth	;
-	private String	pbo_ref		;
-	private String	pbo_step	;
-	private String	pbo_delflag	;
-	private String	pbo_regdate	;
+
+	private String	pbo_seq			;
+	private String	user_id			;
+	private String	pbo_title		;
+	private String	pbo_content		;
+	private String	pbo_progress	;
+	private String	pbo_delflag		;
+	private String	pbo_regdate		;
+	private String  prj_id          ;
 }

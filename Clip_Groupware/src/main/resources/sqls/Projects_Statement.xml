@@ -118,6 +118,7 @@
 		       (SELECT u.USER_NAME 
 		        FROM USERINFO u 
 		        WHERE u.USER_ID = p.PRJ_MANAGER) AS PRJ_MANAGER, 
+		       p.PRJ_MANAGER AS PRJ_MANAGER_ID,
 		       p.PRJ_PROGRESS, 
 		       pm.USER_ID, 
 		       u.USER_NAME
