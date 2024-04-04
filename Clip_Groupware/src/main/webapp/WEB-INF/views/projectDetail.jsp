@@ -139,7 +139,8 @@
 							<button class="btn btn-warning" type="button" id="pboInsertBtn">등록</button>
 						</div>
 					</form>
-					<div>
+
+	<div>
 						<table class="table table-hover" style="margin-top: 25px;">
 							<thead>
 								<tr>
@@ -153,13 +154,13 @@
 									<!-- 새로운 열 추가 -->
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<th scope="row" style="width: 100px; text-align: center;">${project_board.PBO_SEQ}</th>
-									<td style="width: 200px; text-align: center;">${project_board.USER_ID}</td>
-									<td style="text-align: center; width: 300px;">${project_board.PBO_TITLE}</td>
-									<td style="text-align: center;">${project_board.PBO_CONTENT}</td>
-									<td style="width: 150px; text-align: center;">${project_board.PBO_REGDATE}</td>
+							<tbody id="detailBottomList">
+<%-- 								<tr>
+									<th scope="row" style="width: 100px; text-align: center;">${vo.getPbo_seq}</th>
+									<td style="width: 200px; text-align: center;">${vo.getUser_id}</td>
+									<td style="text-align: center; width: 300px;">${vo.getPbo_title}</td>
+									<td style="text-align: center;">${vo.getPbo_content}</td>
+									<td style="width: 150px; text-align: center;">${vo.getPbo_regdate}</td>
 									<td style="text-align: center; width: 60px;">
 										<button type="button" class="btn btn-outline-warning">
 											<i class="bi bi-pen"></i>
@@ -171,8 +172,8 @@
 										</button>
 									</td>
 									<!-- 버튼 열 추가 -->
-								</tr>
-								<!-- 다른 행들도 동일하게 추가 -->
+									</tr>
+								<!-- 다른 행들도 동일하게 추가 --> --%>
 							</tbody>
 						</table>
 					</div>

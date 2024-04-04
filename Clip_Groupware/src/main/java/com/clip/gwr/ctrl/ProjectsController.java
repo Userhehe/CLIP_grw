@@ -149,9 +149,9 @@ public class ProjectsController {
     	log.info("맵에 뭐이써:{}",map);
 
     	//여기에 데이터가 조회되지 않음
-    	List<ProjectBoardVo> prjectDetail = projectBoardService.getProjectBoard(map);
+    	List<ProjectBoardVo> prjectDetail = projectBoardService.getDetailBottomList(map);
 
-		log.info("완료된프로젝트리스트:{}",prjectDetail);
+		log.info("선택된 탭의 리스트 보드 값:{}",prjectDetail);
 		JSONArray boardList = new JSONArray();
 	    for(ProjectBoardVo vo : prjectDetail) {
 	        JSONObject obj = new JSONObject();

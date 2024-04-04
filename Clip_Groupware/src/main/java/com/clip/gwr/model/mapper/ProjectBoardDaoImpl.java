@@ -28,10 +28,6 @@ public class ProjectBoardDaoImpl implements IProjectBoardDao {
 		return sqlSession.insert(NS + "insertProjectBoard", map);
 	}
 
-	@Override
-	public List<ProjectBoardVo> getProjectBoard(Map<String, Object> map) {
-		return sqlSession.selectList(NS + "getProjectBoard", map);
-	}
 
 	@Override
 	public int deletePrjDetailTop(Map<String, Object> map) {
@@ -43,5 +39,8 @@ public class ProjectBoardDaoImpl implements IProjectBoardDao {
 		return sqlSession.delete(NS + "deletePrjDetailMem", map);
 	}
 	
-
+	@Override
+	public List<ProjectBoardVo> getDetailBottomList(Map<String, Object> map) {
+		return sqlSession.selectList(NS + "getDetailBottomList", map);
+	}
 }

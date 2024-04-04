@@ -11,15 +11,6 @@
 		#{pboContent}, TO_CHAR(SYSDATE, 'YYYY-MM-DD'), #{prjId})
     </insert>
 
-    <!-- 프로젝트 게시글 조회 -->
-	<select id="getProjectBoard" parameterType="java.util.Map" resultType="ProjectBoardVo">
-	SELECT pb.PBO_SEQ, pb.USER_ID, pb.PBO_TITLE,
-		pb.PBO_CONTENT, pb.PBO_PROGRESS, pb.PBO_DELFLAG,
-		pb.PBO_REGDATE, pb.PRJ_ID
-	FROM PROJECT_BOARD pb
-	WHERE pb.PRJ_ID = #{prj_id}
-	AND pb.PBO_PROGRESS = #{pbo_progress}
-	</select> 
 	
 	<delete id="deletePrjDetailTop" parameterType="java.util.Map">
 	DELETE FROM PROJECTS WHERE prj_id= #{PRJ_ID}
@@ -29,5 +20,13 @@
 	DELETE FROM PROJECT_MEM WHERE prj_id= #{PRJ_ID}
 	</delete>
 	
+	<!-- 프로젝트 하단보드 리스트 조회 -->
+	
+	<select id="getDetailBottomList" parameterType="java.util.Map" resultType="ProjectBoardVo">
+	SELECT pb.PBO_SEQ, pb.USER_ID, pb.PBO_TITLE,
+		pb.PBO_CONTENT, pb.PBO_PROGRESS, pb.PBO_DELFLAG,
+		pb.PBO_REGDATE, pb.PRJ_ID
+		FROM PROJECT_BOARD pb WHERE pb.PRJ_ID = #{prj_id} AND pb.PBO_PROGRESS = #{pbo_progress}
+	</select>
 
 </mapper>

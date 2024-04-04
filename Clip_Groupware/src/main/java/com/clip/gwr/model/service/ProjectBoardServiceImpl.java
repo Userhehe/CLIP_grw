@@ -27,11 +27,6 @@ public class ProjectBoardServiceImpl implements IProjectBoardService {
 		return cnt;
 	}
 
-	@Override
-	public List<ProjectBoardVo> getProjectBoard(Map<String, Object> map) {
-		log.info("ProjectBoardServiceImpl getProjectBoard 프로젝트 전체조회");
-		return dao.getProjectBoard(map);
-	}
 
 	@Override
 	public int deletePrjDetailTop(Map<String, Object> map) {
@@ -43,6 +38,11 @@ public class ProjectBoardServiceImpl implements IProjectBoardService {
 			dao.deletePrjDetailMem(map);
 		}
 		return daoCnt;
+	}
+	
+	@Override
+	public List<ProjectBoardVo> getDetailBottomList(Map<String, Object> map) {
+		return dao.getDetailBottomList(map);
 	}
 
 }
