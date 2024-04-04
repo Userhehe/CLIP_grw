@@ -2,9 +2,11 @@ $(document).ready(function() {
 	$("tbody tr").click(function() {
 		const appSeq = $(this).find('td:first-child').text();
 		console.log('appseq값:', appSeq);
+		
 		const requestData = {
 			app_seq: appSeq
 		};
+		
 		console.log('요청데이터:', requestData);
 		
 		$("#rejectBtn").attr("data-appseq", appSeq); 
@@ -20,9 +22,9 @@ $(document).ready(function() {
 				console.log(data);
 				
 				if(data.app_draft === "결재반려"){
-					$("#modalContent1").html("결재내용: " + data.app_content);
+					$("#modalContent1").html("문서번호 : "+data.app_seq + data.app_content);
 				}else{
-					$("#modalContent1").html("결재내용: " + data.app_content);				
+					$("#modalContent1").html("문서번호 : "+data.app_seq + data.app_content);				
 				}
 				
 				if(data.app_draft === "결재진행" || data.app_draft === "결재대기" ){
@@ -56,17 +58,17 @@ $(document).ready(function() {
 		            method: "POST",
 		            data: { app_seq: app_seq,
 		            		pay_rejectreason: cancelContent },
-		            success: function(response) {
-		                console.log("성공!! 결재코드:"+app_seq+",내용:"+Pay_rejectreason);
+		            success: function(data) {
+		                console.log("성공!! 결재코드:"+app_seq+",내용:"+cancelContent);
 		                alert("반려처리가 정상적으로 처리되었습니다.");
 		                location.reload();
 		            },
 		            error: function(error) {
-		                alert("서버오류로 인하여 실패하였습니다.");
+		                 alert("서버오류로 인하여 실패하였습니다.");  
 		            }
 		        }); 
-			}
-		  });
+		    }
+		});
 		
 			$('#detailModal1').on('hidden.bs.modal', function (e) {
 				  location.reload();
@@ -100,9 +102,9 @@ $(document).ready(function() {
 				console.log(data);
 				
 				if(data.app_draft === "결재반려"){
-					$("#modalContent2").html("결재내용: " + data.app_content);
+					$("#modalContent2").html("문서번호 : "+data.app_seq+ data.app_content);
 				}else{
-					$("#modalContent2").html("결재내용: " + data.app_content);				
+					$("#modalContent2").html("문서번호 : "+data.app_seq+ data.app_content);				
 				}
 				
 				if(data.app_draft === "결재대기" || data.app_draft === "결재승인" ){
@@ -133,9 +135,9 @@ $(document).ready(function() {
 				console.log(data);
 				
 				if(data.app_draft === "결재반려"){
-					$("#modalContent3").html("결재내용: " + data.app_content);
+					$("#modalContent3").html("문서번호 : "+data.app_seq+ data.app_content);
 				}else{
-					$("#modalContent3").html("결재내용: " + data.app_content);				
+					$("#modalContent3").html("문서번호 : "+data.app_seq+ data.app_content);				
 				}
 				
 				if(data.app_draft === "결재대기" || data.app_draft === "결재승인" ){

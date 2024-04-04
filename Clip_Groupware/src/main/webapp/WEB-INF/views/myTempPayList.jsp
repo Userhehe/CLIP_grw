@@ -47,7 +47,7 @@
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
-							<tr>
+							<tr onclick="event.preventDefault(); event.stopImmediatePropagation();">
 					           <td colspan="5" style="color: red; text-align: center;">임시 저장하신 결재문서가 없습니다.</td>
 					        </tr>
 						</c:otherwise>
@@ -96,7 +96,6 @@
 								 <p id="modalContent"></p>
 							</div>
 							<div class="modal-footer">
-								  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 			                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
 			                      <button type="button" class="btn btn-primary" id="continueWrite">결재 작성</button>
 			                      <button type="button" id="tempDel" data-appseq="" class="btn btn-danger">삭제</button>

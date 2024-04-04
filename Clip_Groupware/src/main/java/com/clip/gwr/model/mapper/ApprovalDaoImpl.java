@@ -137,11 +137,11 @@ public class ApprovalDaoImpl implements IApprovalDao {
 
 	//승인 처리시 실행
 	@Override
-	public int approvePay(String app_seq,String app_draft) {
-		log.info("approvePays 승인 처리 : {} {}", app_seq, app_draft);
+	public int approvePay(String app_draft,String app_seq) {
+		log.info("approvePays 승인 처리 : {} {}", app_draft, app_seq);
 		    Map<String, Object> map = new HashMap<>();
-		    map.put("app_seq", app_seq);
 		    map.put("app_draft", app_draft);
+		    map.put("app_seq", app_seq);
 	    return sqlSession.update(NS + "approvePay", map);
 	}
 	@Override
@@ -162,9 +162,9 @@ public class ApprovalDaoImpl implements IApprovalDao {
 
 
 	@Override
-	public ApprovalVo oneMyPaychecked(String app_seq) {
-		log.info("oneMyPaychecked 했던거 불러오기 : {} ",app_seq);
-		return sqlSession.selectOne(NS+"oneMyPaychecked",app_seq);
+	public ApprovalVo oneMyPaychecked(String user_id) {
+		log.info("oneMyPaychecked 했던거 불러오기 : {} ",user_id);
+		return sqlSession.selectOne(NS+"oneMyPaychecked",user_id);
 	}
 
 
@@ -176,23 +176,19 @@ public class ApprovalDaoImpl implements IApprovalDao {
 
 
 	@Override
-	public int returnApproval(String app_seq,String app_draft) {
-		log.info("cancelApproval 결재상태 번경 :  {} {}",app_seq,app_draft);
-		Map<String, Object> map = new HashMap<>();
-	    map.put("app_seq", app_seq);
-	    map.put("app_draft", app_draft);
-		return sqlSession.update(NS+"cancelApproval",map);
+	public int banRuApproval(String app_seq) {
+		log.info("banRuApproval 결재상태 번경 :  {} ",app_seq);
+		return sqlSession.update(NS+"banRuApproval",app_seq);
 	}
 	@Override
-	public int returnPayLine(String app_seq,String pay_sign,String pay_rejectreason,String pay_num,String pay_user) {
-		log.info("cancelPayLine 결재라인 번경 :{} ",app_seq,pay_sign,pay_rejectreason,pay_num);
+	public int banRuPayLine(String pay_rejectreason,String app_seq,String pay_num,String pay_user) {
+		log.info("banRuPayLine 결재라인 번경 :{} {} {} {}  ",pay_rejectreason,app_seq,pay_num,pay_user);
 		Map<String, Object> map = new HashMap<>();
+		map.put("pay_rejectreason", pay_rejectreason);
 	    map.put("app_seq", app_seq);
-	    map.put("pay_sign", pay_sign);
-	    map.put("pay_rejectreason", pay_rejectreason);
 	    map.put("pay_num", pay_num);
 	    map.put("pay_user", pay_user);
-		return sqlSession.update(NS+"returnPayLine",map);
+		return sqlSession.update(NS+"banRuPayLine",map);
 	}
 
 

@@ -13,7 +13,7 @@ $(document).ready(function() {
 			data: JSON.stringify(requestData),
 			success: function(data) {
 				console.log(data);
-				$("#modalContent").html(data.app_seq+ "<br>" + data.app_content);
+				$("#modalContent").html("문서번호 :"+data.app_seq+ "<br>" + data.app_content);
 				$("#continueWrite").click(function(){
 					window.location.href = './continuePay.do?app_seq='+appSeq;
 				})

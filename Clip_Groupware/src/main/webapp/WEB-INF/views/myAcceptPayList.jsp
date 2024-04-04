@@ -53,7 +53,7 @@
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
-									<tr>
+									<tr  onclick="event.preventDefault(); event.stopImmediatePropagation();">
 							           <td colspan="5" style="color: red; text-align: center;">승인해야되는 결재가 없습니다.</td>
 							        </tr>
 								</c:otherwise>
@@ -134,7 +134,7 @@
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-								<tr>
+								<tr onclick="event.preventDefault(); event.stopImmediatePropagation();">
 						           <td colspan="5" style="color: red; text-align: center;">반려처리하신 결재가 없습니다.</td>
 						        </tr>
 							</c:otherwise>	
@@ -211,7 +211,7 @@
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-								<tr>
+								<tr onclick="event.preventDefault(); event.stopImmediatePropagation();">
 						           <td colspan="5" style="color: red; text-align: center;">승인한 결재문서가 없습니다.</td>
 						        </tr>
 							</c:otherwise>
