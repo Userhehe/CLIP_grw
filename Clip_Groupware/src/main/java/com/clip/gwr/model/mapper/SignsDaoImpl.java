@@ -43,4 +43,10 @@ public class SignsDaoImpl implements ISignsDao {
 		return sqlSession.selectList(NS+"AllselectPad");
 	}
 
+	@Override
+	public int checkPad(String user_id) {
+		log.info("##### 서명 체크  checkPad #####");
+		return sqlSession.selectOne(NS+"checkPad", user_id);
+	}
+
 }

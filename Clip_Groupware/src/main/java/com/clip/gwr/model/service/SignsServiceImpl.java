@@ -37,9 +37,15 @@ public class SignsServiceImpl implements ISignService {
 		return dao.selectPad(signs_seq);
 	}
 
+	
 	@Override
 	public List<SignsVo> AllselectPad() {
 		return dao.AllselectPad();
+	}
+
+	@Override
+	public int checkPad(String user_id) {
+		return dao.checkPad(user_id);
 	}
 
 }

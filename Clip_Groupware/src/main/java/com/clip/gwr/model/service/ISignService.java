@@ -18,4 +18,7 @@ public interface ISignService {
 	
 	// 서명 전체 조회 
     public List<SignsVo> AllselectPad();
+    
+    // 서명 체크 
+ 	public int checkPad(String user_id);
 }

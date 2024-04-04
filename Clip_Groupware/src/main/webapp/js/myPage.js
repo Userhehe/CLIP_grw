@@ -30,13 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 });
 
- var signExist = false; // 예시: 사인이 없는 경우
-
-    // 사인이 없는 경우에만 버튼을 화면에 보이게 합니다.
-    if (!signExist) {
-        document.getElementById("signatureButton").style.display = "block";
+ document.addEventListener('DOMContentLoaded', function() {
+    var photoCheck = document.getElementById('padCheck').value;
+    console.log('padCheck : ' + padCheck);
+    padCheck = parseInt(padCheck);
+    console.log('padCheck typeof : ' + typeof padCheck);
+    if(photoCheck >= 1) {
+        document.getElementById('signatureButton').style.display='none'; // 등록한 사진이 있다면 수정, 삭제폼 숨기기
     } else {
-        document.getElementById("signatureButton").style.display = "none";
+        document.getElementById('signatureUse').style.display='none'; // 등록한 사진이 있다면 등록폼 숨기기
     }
-
-
+});

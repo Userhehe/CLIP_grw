@@ -23,6 +23,7 @@ import com.clip.gwr.model.service.IDeptService;
 import com.clip.gwr.model.service.IFileUploadService;
 import com.clip.gwr.model.service.IPositionsService;
 import com.clip.gwr.model.service.IRanksService;
+import com.clip.gwr.model.service.ISignService;
 import com.clip.gwr.model.service.IUserService;
 import com.clip.gwr.vo.DeptVo;
 import com.clip.gwr.vo.FileVo;
@@ -56,6 +57,9 @@ public class UserController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
+	
+	@Autowired
+	private ISignService signService;
 	
 //	@GetMapping(value = "/loginForm.do") 
 //	public String loginForm(String error, String logout, Model model) {
@@ -430,6 +434,8 @@ public class UserController {
 			log.info("####fileList : " + fileList);
 			int checkPhotoUse = fileUploadService.checkPhotoUse(user_id);
 			log.info("####checkPhotoUse : " + checkPhotoUse);
+			int checkPad = signService.checkPad(user_id);
+			log.info("####checkPad : " + checkPad);
 			
 			String fileStorename = fileUploadService.selectPhotoName(user_id);
 			log.info("####beforeSaveFileName : " + fileStorename);
@@ -439,6 +445,7 @@ public class UserController {
 			model.addAttribute("userDetailList",userDetailList);
 			model.addAttribute("fileList",fileList);
 			model.addAttribute("checkPhotoUse",checkPhotoUse);
+			model.addAttribute("checkPad", checkPad);
 			return "myPage";
 		} catch (Exception e) {
 			e.printStackTrace();
