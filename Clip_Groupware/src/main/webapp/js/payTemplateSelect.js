@@ -17,6 +17,9 @@ window.onload = function(){
 	
 	tempBut1.addEventListener('click', saveApproval);
 	 
+	 var savedHtml = document.querySelector("#beforeHtml")
+	 
+	 
 }
 
 /**********1tap 구역**************/
@@ -65,7 +68,7 @@ function gatheringInfo(){
 	//양식 미리보기 창 영역
 	var htmlmodal = document.getElementById("req_preview1");
 //	console.log(htmlmodal);
-	
+
 	//미리보기 창의 정보 입력 위치들
 	var deptSpace = htmlmodal.getElementsByClassName('approval_user_dept')[0];
 	var nameSpace = htmlmodal.getElementsByClassName('approval_user_name')[0];
