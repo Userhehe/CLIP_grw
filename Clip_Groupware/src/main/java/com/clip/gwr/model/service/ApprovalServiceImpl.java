@@ -148,15 +148,6 @@ public class ApprovalServiceImpl implements IApprovalService{
 		log.info("결재 단건 조회 : {}",app_seq);
 		return approvalDao.oneMyPayPause(app_seq);
 	}
-	
-	@Transactional
-	@Override
-	public boolean returnPays(String app_seq) {
-		log.info("결재 반려 승인 : {}",app_seq);
-		int returnApproval = approvalDao.returnApproval(app_seq);
-		int returnPayline = approvalDao.returnPayLine(app_seq);
-		return (returnApproval > 0 && returnPayline > 0);
-	}
 
 	//승인시 
 	@Override
@@ -169,6 +160,18 @@ public class ApprovalServiceImpl implements IApprovalService{
 	public int approvePayLine(String app_seq,String pay_num) {
 		log.info("결재 승인 결재라인수정 : {}",app_seq,pay_num);
 		return approvalDao.approvePayLine(app_seq,pay_num);
+	}
+
+	@Override
+	public int returnApproval(String app_seq, String app_draft) {
+		log.info("결재 승인 결재상태 수정 : {} {}",app_seq,app_draft);
+		return approvalDao.returnApproval(app_seq,app_draft);
+	}
+
+	@Override
+	public int returnPayLine(String app_seq, String pay_sign, String pay_rejectreason, String pay_num,String pay_user) {
+		log.info("결재 승인 결재상태 수정 : {} {} {} {} {}",app_seq,pay_sign,pay_rejectreason,pay_num,pay_user);
+		return approvalDao.returnPayLine(app_seq, pay_num,pay_sign,pay_rejectreason,pay_user);
 	}
 
 	

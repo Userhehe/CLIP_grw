@@ -268,19 +268,20 @@
 	<update id="returnApproval" parameterType="ApprovalVo">
 	UPDATE APPROVAL 
 	SET 
-		APP_DRAFT  = '결재진행'
+		APP_DRAFT  = #{app_draft}
 	WHERE APP_SEQ = #{app_seq}
 	</update>
 	
 	<update id="returnPayLine" parameterType="ApprovalVo">
 	UPDATE PAYMENTLINE 
 	SET 
-	    PAY_SIGN = 'D', 
+	    PAY_SIGN = #{pay_sign}, 
 	    PAY_ASIGNDATE = LOCALTIMESTAMP , 
-	    PAY_REJECTREASON = '프로젝트 투입으로 인해 휴가를 반려합니다.'
+	    PAY_REJECTREASON = #{pay_rejectreason}
 	WHERE 
 	    APP_SEQ = #{app_seq} 
-	   	AND PAY_NUM = '1'
+	   	AND PAY_NUM = #{pay_num}
+	   	AND PAY_USER = #{pay_user}
 	</update>
 	
 	<update id="cancelApproval" parameterType="ApprovalVo">
