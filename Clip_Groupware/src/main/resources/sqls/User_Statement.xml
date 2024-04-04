@@ -62,49 +62,90 @@
 	</select>
 	
 	<!-- 사원목록 전체조회 -->
-	<select id="selectUserinfoList" resultType="com.clip.gwr.vo.UserinfoVo">
-		SELECT U.USER_ID, U.USER_NAME, R.RANKS_NAME, 
-	        D.DEPT_NAME, PO.POSITIONS_NAME, U.PHOTO_SEQ,
-	        U.USER_AUTH, U.USER_STATUS, TO_CHAR(U.USER_REGDATE, 'YYYY-MM-DD') AS USER_REGDATE
-		FROM USERINFO U
-		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
-		INNER JOIN DEPT D ON U.DEPT_SEQ = D.DEPT_SEQ
-		INNER JOIN POSITIONS PO ON U.POSITIONS_SEQ = PO.POSITIONS_SEQ
-		WHERE USER_STATUS = 'Y'
-		ORDER BY USER_REGDATE DESC
+	<select id="selectUserinfoList" parameterType="java.util.Map" resultType="com.clip.gwr.vo.UserinfoVo">
+		SELECT USER_ID, USER_NAME, RANKS_NAME, 
+		       DEPT_NAME, POSITIONS_NAME, PHOTO_SEQ,
+		       USER_AUTH, USER_STATUS, USER_REGDATE
+			FROM (
+		    	SELECT U.USER_ID, U.USER_NAME, R.RANKS_NAME, 
+			           D.DEPT_NAME, PO.POSITIONS_NAME, U.PHOTO_SEQ,
+			           U.USER_AUTH, U.USER_STATUS, TO_CHAR(U.USER_REGDATE, 'YYYY-MM-DD') AS USER_REGDATE,
+			           ROW_NUMBER() OVER (ORDER BY U.USER_REGDATE DESC) AS RN
+				    FROM USERINFO U
+				    INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
+				    INNER JOIN DEPT D ON U.DEPT_SEQ = D.DEPT_SEQ
+				    INNER JOIN POSITIONS PO ON U.POSITIONS_SEQ = PO.POSITIONS_SEQ
+				    WHERE USER_STATUS = 'Y'
+				)
+				WHERE RN BETWEEN #{first} AND #{last}
+				ORDER BY USER_REGDATE DESC
 	</select>
 	
 	<!-- 사원목록 검색 -->
 	<select id="searchUserinfoList" parameterType="java.util.Map" resultType="com.clip.gwr.vo.UserinfoVo">
-		SELECT U.USER_ID, U.USER_NAME, R.RANKS_NAME, 
-        D.DEPT_SEQ, PO.POSITIONS_SEQ, U.PHOTO_SEQ,
-        D.DEPT_NAME, PO.POSITIONS_NAME, R.RANKS_SEQ,
-        U.USER_AUTH, TO_CHAR(U.USER_REGDATE, 'YYYY-MM-DD') AS USER_REGDATE
-			FROM USERINFO U
-		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
-		INNER JOIN DEPT D ON U.DEPT_SEQ = D.DEPT_SEQ
-		INNER JOIN POSITIONS PO ON U.POSITIONS_SEQ = PO.POSITIONS_SEQ
-		WHERE 1=1
-		<if test="user_name != null and user_name != ''">
-			AND U.USER_NAME LIKE '%' || #{user_name} || '%'
-		</if>
-		<if test="ranks_name != null and ranks_name != ''">
-			AND R.RANKS_NAME = #{ranks_name}
-		</if>
-		<if test="dept_name != null and dept_name != ''">
-			AND D.DEPT_NAME = #{dept_name}
-		</if>
-		<if test="positions_name != null and positions_name != ''">
-			AND PO.POSITIONS_NAME = #{positions_name}
-		</if>
-		<if test="user_status != null and user_status != ''">
-			AND U.USER_STATUS = #{user_status}
-		</if>
-		<if test="start_regdate != null and end_regdate != null and start_regdate != '' and end_regdate != ''">
-			AND U.USER_REGDATE BETWEEN TO_DATE(#{start_regdate}, 'YYYY-MM-DD') 
-			AND TO_DATE(#{end_regdate}, 'YYYY-MM-DD')
-		</if>
-		ORDER BY USER_REGDATE DESC
+<!-- 		SELECT U.USER_ID, U.USER_NAME, R.RANKS_NAME,  -->
+<!--         D.DEPT_SEQ, PO.POSITIONS_SEQ, U.PHOTO_SEQ, -->
+<!--         D.DEPT_NAME, PO.POSITIONS_NAME, R.RANKS_SEQ, -->
+<!--         U.USER_AUTH, TO_CHAR(U.USER_REGDATE, 'YYYY-MM-DD') AS USER_REGDATE -->
+<!-- 			FROM USERINFO U -->
+<!-- 		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ -->
+<!-- 		INNER JOIN DEPT D ON U.DEPT_SEQ = D.DEPT_SEQ -->
+<!-- 		INNER JOIN POSITIONS PO ON U.POSITIONS_SEQ = PO.POSITIONS_SEQ -->
+<!-- 		WHERE 1=1 -->
+<!-- 		<if test="user_name != null and user_name != ''"> -->
+<!-- 			AND U.USER_NAME LIKE '%' || #{user_name} || '%' -->
+<!-- 		</if> -->
+<!-- 		<if test="ranks_name != null and ranks_name != ''"> -->
+<!-- 			AND R.RANKS_NAME = #{ranks_name} -->
+<!-- 		</if> -->
+<!-- 		<if test="dept_name != null and dept_name != ''"> -->
+<!-- 			AND D.DEPT_NAME = #{dept_name} -->
+<!-- 		</if> -->
+<!-- 		<if test="positions_name != null and positions_name != ''"> -->
+<!-- 			AND PO.POSITIONS_NAME = #{positions_name} -->
+<!-- 		</if> -->
+<!-- 		<if test="user_status != null and user_status != ''"> -->
+<!-- 			AND U.USER_STATUS = #{user_status} -->
+<!-- 		</if> -->
+<!-- 		<if test="start_regdate != null and end_regdate != null and start_regdate != '' and end_regdate != ''"> -->
+<!-- 			AND U.USER_REGDATE BETWEEN TO_DATE(#{start_regdate}, 'YYYY-MM-DD')  -->
+<!-- 			AND TO_DATE(#{end_regdate}, 'YYYY-MM-DD') -->
+<!-- 		</if> -->
+<!-- 		ORDER BY USER_REGDATE DESC -->
+			SELECT * 
+			FROM (
+			SELECT U.USER_ID, U.USER_NAME, R.RANKS_NAME, 
+		        D.DEPT_SEQ, PO.POSITIONS_SEQ, U.PHOTO_SEQ,
+		        D.DEPT_NAME, PO.POSITIONS_NAME, R.RANKS_SEQ,
+		        U.USER_AUTH, TO_CHAR(U.USER_REGDATE, 'YYYY-MM-DD') AS USER_REGDATE,
+		        ROW_NUMBER() OVER (ORDER BY USER_REGDATE DESC) AS rn
+					FROM USERINFO U
+				INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
+				INNER JOIN DEPT D ON U.DEPT_SEQ = D.DEPT_SEQ
+				INNER JOIN POSITIONS PO ON U.POSITIONS_SEQ = PO.POSITIONS_SEQ
+				WHERE 1=1
+				<if test="user_name != null and user_name != ''">
+					AND U.USER_NAME LIKE '%' || #{user_name} || '%'
+				</if>
+				<if test="ranks_name != null and ranks_name != ''">
+					AND R.RANKS_NAME = #{ranks_name}
+				</if>
+				<if test="dept_name != null and dept_name != ''">
+					AND D.DEPT_NAME = #{dept_name}
+				</if>
+				<if test="positions_name != null and positions_name != ''">
+					AND PO.POSITIONS_NAME = #{positions_name}
+				</if>
+				<if test="user_status != null and user_status != ''">
+					AND U.USER_STATUS = #{user_status}
+				</if>
+				<if test="start_regdate != null and end_regdate != null and start_regdate != '' and end_regdate != ''">
+					AND U.USER_REGDATE BETWEEN TO_DATE(#{start_regdate}, 'YYYY-MM-DD') 
+					AND TO_DATE(#{end_regdate}, 'YYYY-MM-DD')
+				</if>
+				)
+				WHERE rn BETWEEN #{first} AND #{last}
+				ORDER BY USER_REGDATE DESC
 	</select>
 	
 	<!-- 사원정보 상세조회 -->
@@ -154,5 +195,42 @@
 		SELECT USER_AUTH 
 			FROM USERINFO u 
 			WHERE user_id = #{user_id}
+	</select>
+	
+	<!-- 사용자 수 카운트 -->
+	<select id="selectUserInfoListCnt" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM USERINFO
+			WHERE USER_STATUS = 'Y'
+	</select>
+	
+	<!-- 사용자 검색 결과 수 카운트 -->
+	<select id="selectSearchUserInfoListCnt" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM USERINFO U
+		INNER JOIN RANKS R ON U.RANKS_SEQ = R.RANKS_SEQ
+		INNER JOIN DEPT D ON U.DEPT_SEQ = D.DEPT_SEQ
+		INNER JOIN POSITIONS PO ON U.POSITIONS_SEQ = PO.POSITIONS_SEQ
+		WHERE 1=1
+		<if test="user_name != null and user_name != ''">
+			AND U.USER_NAME LIKE '%' || #{user_name} || '%'
+		</if>
+		<if test="ranks_name != null and ranks_name != ''">
+			AND R.RANKS_NAME = #{ranks_name}
+		</if>
+		<if test="dept_name != null and dept_name != ''">
+			AND D.DEPT_NAME = #{dept_name}
+		</if>
+		<if test="positions_name != null and positions_name != ''">
+			AND PO.POSITIONS_NAME = #{positions_name}
+		</if>
+		<if test="user_status != null and user_status != ''">
+			AND U.USER_STATUS = #{user_status}
+		</if>
+		<if test="start_regdate != null and end_regdate != null and start_regdate != '' and end_regdate != ''">
+			AND U.USER_REGDATE BETWEEN TO_DATE(#{start_regdate}, 'YYYY-MM-DD') 
+			AND TO_DATE(#{end_regdate}, 'YYYY-MM-DD')
+		</if>
+		ORDER BY USER_REGDATE DESC
 	</select>
 </mapper>

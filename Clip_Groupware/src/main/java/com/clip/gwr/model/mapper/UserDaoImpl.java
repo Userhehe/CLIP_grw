@@ -96,9 +96,9 @@ public class UserDaoImpl implements IUserDao {
 	 * 사원목록 전체조회
 	 */
 	@Override
-	public List<UserinfoVo> selectUserinfoList() {
+	public List<UserinfoVo> selectUserinfoList(Map<String, Object> map) {
 		log.info("##### 사원전체조회 selectUserinfoList #####");
-		return sqlSession.selectList(NS + "selectUserinfoList");
+		return sqlSession.selectList(NS + "selectUserinfoList", map);
 	}
 	
 	/**
@@ -144,6 +144,24 @@ public class UserDaoImpl implements IUserDao {
 	public String selectUserAuth(String user_id) {
 		log.info("##### 사용자 권한 조회 selectUserAuth #####");
 		return sqlSession.selectOne(NS + "selectUserAuth", user_id);
+	}
+
+	/**
+	 * 사용자 수 카운트
+	 */
+	@Override
+	public int selectUserInfoListCnt() {
+		log.info("##### 사용자 수 카운트 selectUserInfoListCnt #####");
+		return sqlSession.selectOne(NS + "selectUserInfoListCnt");
+	}
+
+	/**
+	 * 사용자 검색 결과 수 카운트
+	 */
+	@Override
+	public int selectSearchUserInfoListCnt(Map<String, Object> map) {
+		log.info("##### 사용자 검색 결과 수 카운트 selectSearchUserInfoListCnt #####");
+		return sqlSession.selectOne(NS + "selectSearchUserInfoListCnt", map);
 	}
 
 	

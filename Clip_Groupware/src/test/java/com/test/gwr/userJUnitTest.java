@@ -162,9 +162,11 @@ public class userJUnitTest {
 	/**
 	 * 사원목록 전체조회
 	 */
-//	@Test
-	public void selectUserinfoList() {
-		List<UserinfoVo> lists = usrService.selectUserinfoList();
+	@Test
+	public void selectUserinfoList(Map<String, Object> map) {
+		int first = 1;
+		int last = 5;
+		List<UserinfoVo> lists = usrService.selectUserinfoList(map);
 		System.out.println(lists);
 		assertNotNull(lists);
 	}
@@ -190,8 +192,8 @@ public class userJUnitTest {
 	 */
 //	@Test
 	public void selectUserinfoDetail() {
-		map.put("user_id","USER_001");
-		List<UserinfoVo> lists = usrService.selectUserinfoDetail(map);
+		String user_id = "USER_57";
+		List<UserinfoVo> lists = usrService.selectUserinfoDetail(user_id);
 		System.out.println(lists);
 		assertNotNull(lists);
 	}
@@ -399,6 +401,33 @@ public class userJUnitTest {
 		assertNotNull(duplicateRanks);
 	}
 	
+	/**
+	 * 사용자 수 카운트
+	 */
+//	@Test
+	public void selectUserInfoListCnt() {
+		int selectUserInfoListCnt = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.selectUserInfoListCnt");
+		System.out.println("##selectUserInfoListCnt : " + selectUserInfoListCnt);
+		assertNotNull(selectUserInfoListCnt);
+	}
+	
+	/**
+	 * 사용자 검색 결과 수 카운트
+	 */
+	@Test
+	public void selectSearchUserInfoListCnt() {
+		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("user_name","김");
+//		map.put("ranks_name","대리");
+//		map.put("dept_name","설계");
+//		map.put("positions_name","팀원");
+		map.put("user_status","Y");
+//		map.put("start_regdate","2024-03-01");
+//		map.put("end_regdate","2024-04-04");
+		int selectSearchUserInfoListCnt = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.selectSearchUserInfoListCnt", map);
+		System.out.println("##selectSearchUserInfoListCnt: " + selectSearchUserInfoListCnt);
+		assertNotNull(selectSearchUserInfoListCnt);
+	}
 }
 
 

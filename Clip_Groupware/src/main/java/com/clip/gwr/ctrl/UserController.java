@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IAnnualService;
@@ -27,6 +28,7 @@ import com.clip.gwr.model.service.ISignService;
 import com.clip.gwr.model.service.IUserService;
 import com.clip.gwr.vo.DeptVo;
 import com.clip.gwr.vo.FileVo;
+import com.clip.gwr.vo.PageVo;
 import com.clip.gwr.vo.PositionsVo;
 import com.clip.gwr.vo.RanksVo;
 import com.clip.gwr.vo.UserinfoVo;
@@ -193,15 +195,35 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping(value = "/userInfo.do")
-	public String userInfo(Model model) {
+	public String userInfo(Model model, 
+						@RequestParam(required = false, defaultValue = "1") String page) {
 		log.info("userInfo 이동");
 		
+		PageVo pVo = new PageVo();
+		pVo.setCountList(10);
+		
+		int selectPage = Integer.parseInt(page);
+		
+		int userCount = userService.selectUserInfoListCnt();
+		pVo.setTotalCount(userCount);
+	    pVo.setCountPage(5);
+	    pVo.setTotalPage(userCount);
+	    pVo.setPage(selectPage);
+	    pVo.setStagePage(selectPage);
+	    pVo.setEndPage(pVo.getCountPage());
+		
+		Map<String, Object> map = new HashMap<String, Object>() {{
+			put("first", selectPage * pVo.getCountList() - (pVo.getCountList() - 1));
+			put("last", selectPage * pVo.getCountList());
+		}};
+		
 		try {
-			List<UserinfoVo> userinfoList = userService.selectUserinfoList();
+			List<UserinfoVo> userinfoList = userService.selectUserinfoList(map);
 			List<DeptVo> deptLists = deptService.deptAll();
 			List<PositionsVo> positionsLists = positService.positionsAll();
 			List<RanksVo> ranksLists = ranksService.ranksAll();
 			
+			model.addAttribute("page",pVo);
 			model.addAttribute("userList", userinfoList);
 			model.addAttribute("deptLists", deptLists);
 			model.addAttribute("positionsLists", positionsLists);
@@ -248,30 +270,55 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping(value = "/searchUserList.do")
-	public String searchUserList(HttpServletRequest request, Model model) {
+	public String searchUserList(HttpServletRequest request, Model model
+									,@RequestParam(required = false, defaultValue = "1") String page) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+		PageVo pVo = new PageVo();
+		pVo.setCountList(10);
+		
+		int selectPage = Integer.parseInt(page);
+		
 		String searchName = request.getParameter("searchName");
 		String searchRanks = request.getParameter("searchRanks");
 		String searchDepts = request.getParameter("searchDepts");
 		String searchPositions = request.getParameter("searchPositions");
-		String user_status = request.getParameter("searchStatus");
+		String searchStatus = request.getParameter("searchStatus");
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		
+		map.put("user_name", searchName);
+		map.put("ranks_name", searchRanks);
+		map.put("dept_name", searchDepts);
+		map.put("positions_name", searchPositions);
+		map.put("searchStatus", searchStatus);
+		map.put("start_regdate", startDate);
+		map.put("end_regdate", endDate);
+		
+		map.put("first", selectPage * pVo.getCountList() - (pVo.getCountList() - 1));
+		map.put("last", selectPage * pVo.getCountList());
         try {
-			map.put("user_name", searchName);
-			map.put("ranks_name", searchRanks);
-			map.put("dept_name", searchDepts);
-			map.put("positions_name", searchPositions);
-			map.put("user_status", user_status);
-			map.put("start_regdate", startDate);
-			map.put("end_regdate", endDate);
 			List<UserinfoVo> userList = userService.searchUserinfoList(map);
 			log.info("####userList :: " + userList);
 			List<DeptVo> deptLists = deptService.deptAll();
 			List<PositionsVo> positionsLists = positService.positionsAll();
 			List<RanksVo> ranksLists = ranksService.ranksAll();
 			
+			int userSearchCount = userService.selectSearchUserInfoListCnt(map);
+			pVo.setTotalCount(userSearchCount);
+		    pVo.setCountPage(10);
+		    pVo.setTotalPage(userSearchCount);
+		    pVo.setPage(selectPage);
+		    pVo.setStagePage(selectPage);
+		    pVo.setEndPage(pVo.getCountPage());
+			model.addAttribute("page", pVo);
+			model.addAttribute("searchName",searchName);
+			model.addAttribute("searchRanks",searchRanks);
+			model.addAttribute("searchDepts",searchDepts);
+			model.addAttribute("searchPositions",searchPositions);
+			model.addAttribute("searchStatus",searchStatus);
+			model.addAttribute("startDate",startDate);
+			model.addAttribute("endDate",endDate);
 			model.addAttribute("deptLists", deptLists);
 			model.addAttribute("positionsLists", positionsLists);
 			model.addAttribute("ranksLists", ranksLists);
@@ -464,9 +511,14 @@ public class UserController {
 		UserinfoVo loginVo = (UserinfoVo)session.getAttribute("loginVo");
 		log.info("####loginVo : " + loginVo);
 		String user_id = loginVo.getUser_id();
-		List<UserinfoVo> jejicLists = userService.selectJejicDownload(user_id);
-		log.info("####jejicLists : " + jejicLists);
-		model.addAttribute("jejicLists",jejicLists);
-		return "certiOfImpl";
+		try {
+			List<UserinfoVo> jejicLists = userService.selectJejicDownload(user_id);
+			log.info("####jejicLists : " + jejicLists);
+			model.addAttribute("jejicLists",jejicLists);
+			return "certiOfImpl";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "accessError";
+		}
 	}
 }
