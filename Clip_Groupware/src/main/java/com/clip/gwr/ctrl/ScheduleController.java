@@ -22,6 +22,7 @@ import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.MemoVo;
 import com.clip.gwr.vo.NtcVo;
 import com.clip.gwr.vo.PageVo;
+import com.clip.gwr.vo.ReAttendsVo;
 import com.clip.gwr.vo.ReservationVo;
 import com.clip.gwr.vo.UserinfoVo;
 
@@ -90,12 +91,15 @@ public class ScheduleController {
 	//상세 조회
 	@PostMapping(value = "/calendarModalDetail.do") 
 	@ResponseBody
-	public Object memodetail(String seq) {
+	public Object memodetail(String seq, Model model) {
 		log.info("ScheduleController memodetail 메모상세조회");
 		log.info("화면에서 넘겨받은 seq값 {} : " , seq);
+		
 		MemoVo mVo = new MemoVo();
 		NtcVo nVo = new NtcVo();
 		ReservationVo rVo = new ReservationVo();
+		ReAttendsVo atts = new ReAttendsVo();
+		
 		if(seq.indexOf("USER") == 0) {
 			mVo = memoservice.myScheduleDetail(seq);
 			log.info("전달받은 개인seq의 메모 : {}" , mVo);
@@ -105,11 +109,16 @@ public class ScheduleController {
 			log.info("전달받은 전사seq의 메모 : {}" , nVo);
 			return nVo;
 		}else {
+			Map<String, Object> map = new HashMap<String, Object>();
 			String numSeq = seq.replaceAll("\\D+", "");
 	        int intSeq = Integer.parseInt(numSeq);
 			rVo = reservice.reDetail(intSeq);
+			atts = reservice.reAttList(intSeq);
+			map.put("rVo", rVo);
+			map.put("atts", atts);
 			log.info("전달받은 예약seq의 메모 : {}" , rVo);
-			return rVo;
+			log.info("전달받은 예약seq의 참석자 : {}" , atts);
+			return map;
 		}
 	}
 	
