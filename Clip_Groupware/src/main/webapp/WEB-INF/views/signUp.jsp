@@ -12,6 +12,7 @@
 <%@ include file="./header.jsp"%>
 <link href="./assets/css/signUp.css" rel="stylesheet">
 <script type="text/javascript" src="./js/signUp.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 	<main id="main" class="main">
@@ -116,7 +117,7 @@
 					<div class="row mb-3">
 						<label for="userAddress" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>주소</label>
 						<div class="col-sm-10">
-							<input type="text" id="userAddress" name="userAddress" class="form-control" required="required">
+							<input type="text" readonly id="userAddress" name="userAddress" class="form-control" required="required">
 						</div>
 					</div>
 

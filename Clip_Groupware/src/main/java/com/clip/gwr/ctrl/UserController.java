@@ -433,6 +433,7 @@ public class UserController {
 			
 			String fileStorename = fileUploadService.selectPhotoName(user_id);
 			log.info("####beforeSaveFileName : " + fileStorename);
+            session.setAttribute("fileStorename", fileStorename);
 			
 			model.addAttribute("fileStorename",fileStorename);
 			model.addAttribute("userDetailList",userDetailList);

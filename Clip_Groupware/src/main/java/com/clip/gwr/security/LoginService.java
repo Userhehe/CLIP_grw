@@ -1,12 +1,14 @@
 package com.clip.gwr.security;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 
 import com.clip.gwr.model.mapper.IUserDao;
 import com.clip.gwr.vo.UserinfoVo;
@@ -25,11 +27,34 @@ public class LoginService implements UserDetailsService {
 		log.info("####LoginService repository : {}", dao);
 		UserinfoVo userInfoVo = dao.userLogin(username);
 		log.info("####userInfoVo : {}", userInfoVo);
+//		if(userInfoVo != null) {
+//			return new User(username, userInfoVo.getUser_password(), AuthorityUtils.createAuthorityList(userInfoVo.getUser_auth()));
+//		}else { 
+//			log.info("#### userInfoVo가 널이야 ####");
+//			return null; 
+//		}
 		if(userInfoVo != null) {
-			return new User(username, userInfoVo.getUser_password(), AuthorityUtils.createAuthorityList(userInfoVo.getUser_auth()));
-		}else { 
-			log.info("#### userInfoVo가 널이야 ####");
-			return null; 
-		}
+	        // 사용자 정보로 UserDetails 객체 생성
+	        UserDetails userDetails = new User(username, userInfoVo.getUser_password(), AuthorityUtils.createAuthorityList(userInfoVo.getUser_auth()));
+	        
+	        // 추가 정보 설정
+	        Map<String, Object> additionalInfo = new HashMap<>();
+	        additionalInfo.put("deptSeq", userInfoVo.getDept_seq()); // 부서코드 추가
+	        additionalInfo.put("deptName", userInfoVo.getDept_name()); // 부서명 추가
+	        additionalInfo.put("ranksSeq", userInfoVo.getRanks_seq()); // 직급코드 추가
+	        additionalInfo.put("ranksName", userInfoVo.getRanks_name()); // 직급이름 추가
+	        additionalInfo.put("positionsSeq", userInfoVo.getPositions_seq()); // 직책코드 추가
+	        additionalInfo.put("positionsName", userInfoVo.getPositions_name()); // 직책이름 추가
+	        additionalInfo.put("userStatus", userInfoVo.getUser_status()); // 재직여부 추가
+	        additionalInfo.put("userRealname", userInfoVo.getUser_name()); // 이름 추가
+	        
+	        // 추가 정보를 포함한 UserDetails 객체 반환
+	        return new CustomUserDetails(userDetails, additionalInfo);
+	    } else { 
+	        log.info("#### userInfoVo가 널이야 ####");
+	        return null; 
+	    }
+		
+		
 	}
 }
