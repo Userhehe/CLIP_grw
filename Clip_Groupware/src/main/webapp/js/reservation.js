@@ -1,7 +1,143 @@
 var empId = []; //참석자로 선택된 사원 배열
 
+/*-------------------- FULL CALENDAR --------------------*/
+	var selectRevAll = true;
+	var selectRevAllDate = "";
+$(document).ready(function(){
+	calendar();
+});
 
+function calendar(){
+    var calendarEl = document.getElementById('recalendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      dayMaxEventRows: true,
+      height: 1000,
+        initialView: 'dayGridMonth',
+        droppable: false,
+        
+        editable: false,
+        displayEventTime: false,
+        customButtons: {
+            addEventButton: {
+                text: "예약 추가",
+                click: function() {
+                    calendarModal("");
+                },
+            }
+        },
+        headerToolbar: {
+            center: 'title',
+            left: 'dayGridMonth,timeGridWeek,timeGridDay,addEventButton'
+        },
+        titleFormat: function(date) {
+            return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
+        },
+        eventSources: [      {
+            id: "allEvents",
+            events: function(info, successCallback, failureCallback) {
+			if(selectRevAll == true){
+               var year = info.start.getFullYear();
+               var startMonth = info.start.getMonth();
+               var endMonth = info.end.getMonth();
+               var month = endMonth - startMonth;
+               
+               if(month<0){
+                  month+=12;
+               }
+               
+               var nextMonth = (startMonth + month)%12;
+               
+               if(nextMonth ===0){
+                  nextMonth = 12;
+               }
+               
+               if(nextMonth === 1&&month !==0){
+                  year+=1;
+               }
+               
+               var formattedNextMonth = ('0'+nextMonth).slice(-2);
+               var date = year + '-' + formattedNextMonth;
+               selectRevAllDate = date
+               console.log("날짜값 : ",date);
+                   $.ajax({
+                       type: "get",
+                       url: "./reList.do",
+                       data : {date:date},
+                       dataType:"json",
+                       success: function(data) {
+                     if(data.length == 0||data == null){
+                        console.log("조회내용 없음");
+                        successCallback(data);
+                     }else{
+                        var events = [];
+                              data.forEach(function(event) {
+                                  var fcEvent = {
+                                      title: event.title,
+                                      start: event.start,
+                                      end: event.end,
+                                      seq: event.seq,
+                                      className: 'reser_event'
+                                  };
+                                  events.push(fcEvent);
+                              });
+                              successCallback(events);
+                     }
+                           
+                       },
+                       error: function() {
+                           failureCallback();
+                           alert("일정을 불러오는데 실패했습니다.");
+                       }
+                   });
+            }else{
+				var date = selectRevAllDate;
+				console.log("날짜값",date);
+					$.ajax({
+                       type: "get",
+                       url: "./reList.do",
+                       data : {date:date},
+                       dataType:"json",
+                       success: function(data) {
+                     if(data.length == 0||data == null){
+                        console.log("조회내용 없음");
+                        successCallback(data);
+                     }else{
+                        var events = [];
+                              data.forEach(function(event) {
+                                  var fcEvent = {
+                                      title: event.title,
+                                      start: event.start,
+                                      end: event.end,
+                                      seq: event.seq,
+                                      className: 'reser_event'
+                                  };
+                                  events.push(fcEvent);
+                              });
+                              successCallback(events);
+                     }
+                           
+                       },
+                       error: function() {
+                           failureCallback();
+                           alert("일정을 불러오는데 실패했습니다.");
+                       }
+                   });
+				}
+            
+            }
+        }]
+        }); 
+ if(selectRevAll == true){
+        calendar.render();
+   }else{
+      calendar.changeView('dayGridMonth', selectRevAllDate);
+      selectRevAll = true;
+      calendar.render();
+   }
+};
 	
+/*-------------------- FULL CALENDAR END --------------------*/
+
 
    //현재 날짜 및 시간 가져오기
    var now = new Date();
@@ -9,7 +145,7 @@ var empId = []; //참석자로 선택된 사원 배열
    var curDate = now.toISOString().split('T')[0];
 
     
-   //dateTimePicker 날짜-------------------------------------------------
+   //dateTimePicker 날짜-----------------------------------------
    $("#re_start").datetimepicker({
       format: "Y-m-d",
    });
@@ -608,31 +744,56 @@ function modifyRev(){
 
 //예약내용 수정하기
 	function modifycon(){
-	var modify = $("#Revmodify").serialize(); //컨트롤러에서 requestparam으로 받아줘야함 
 	
-	$.ajax({
-		url:"./reModify.do",
-		type:"post",
-		data:modify,
-		dataType:"json",
-		success:function(data){
+	var modify = $("#Revmodify").serialize(); //컨트롤러에서 requestparam으로 받아줘야함 
+	var dateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+      var me_room = $("#me_room").val();
+      var re_start = $("#re_start").val();
+      var re_start_time = $("#re_start_time").val();
+      var re_title = $("#re_title").val();
+      var re_content = $("#re_content").val();
+      console.log("re_srart:",re_start)
+      
+       if (me_room == null || me_room == "") {
+         alert("회의실을 선택하세요.");
+      } else if (re_start == null || re_start == "") { 
+         alert("예약일을 선택하세요.");
+      } else if (re_start_time == null || re_start_time == "") { 
+         alert("예약시간을 선택하세요.");
+      }  else if (re_title == null || re_title == "") { 
+         alert("회의 주제를 작성해주세요.");
+      } else if (re_content == null || re_content == "") { 
+         alert("회의 내용을 작성해주세요.");
+      } else if(!dateTimeRegex.test(re_start)){
+		 alert("<예약 시간 선택 완료> 버튼을 눌러주세요")
+	  } else{
+         datata = $("#reservationForm").serialize();
+
+      
+		$.ajax({
+			url:"./reModify.do",
+			type:"post",
+			data:modify,
+			dataType:"json",
+			success:function(data){
 //			alert("수정되었습니다. 확인해보소")
-			var result = confirm("참석자 명단을 수정하시겠습니까?");
-			if(result){
-				alert("참석자가 초기화되었습니다.");
-				modifyAtt();
-				$("#redetail").modal("hide");
-			}else{
-				location.reload();
-				alert("예약이 수정되었습니다. (o゜▽゜)o☆");
-				$("#redetail").modal("hide");
-			}
-		},
-		error: function() {
-            alert("서버요청 실패했음....");
-            }
-	})
-	}
+				var result = confirm("참석자 명단을 수정하시겠습니까?");
+				if(result){
+					alert("참석자가 초기화되었습니다. (o゜▽゜)o☆");
+					modifyAtt();
+					$("#redetail").modal("hide");
+				}else{
+					location.reload();
+					alert("예약이 수정되었습니다. (o゜▽゜)o☆");
+					$("#redetail").modal("hide");
+				}
+			},
+			error: function() {
+	            alert("서버요청 실패했음....");
+	            }
+		})
+		}
+		}
 
 
 //참석자 수정 모달창 열기
@@ -677,5 +838,5 @@ function redetailclose(){
 
 function attredetailclose(){
 	$("#attredetail").modal("hide");
-
 }
+

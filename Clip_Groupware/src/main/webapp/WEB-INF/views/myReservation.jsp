@@ -49,6 +49,14 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 .vakata-context{
  	z-index: 1060; 
 }
+#home{
+	text-align: center;
+}
+#profile{
+	text-align: center;
+}
+
+
 </style>
 
 </head>
@@ -342,7 +350,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 										<td class="re_seq">${vo.re_seq}</td>
 										<td>${vo.me_room}</td>
 										<td class="re_title">${vo.re_title}</td>
-										<td>${vo.re_start }</td>
+										<td class="re_start">${vo.re_start } ~ ${vo.re_end }</td>
 										<td>${vo.re_create}</td>
 									</tr>
 								</c:forEach>

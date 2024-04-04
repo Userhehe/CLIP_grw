@@ -16,7 +16,7 @@
  	<select id="myReservation" parameterType="java.lang.String" resultType="ReservationVo">
 		SELECT RE_SEQ, USER_ID ,RE_TITLE, RE_CONTENT , RE_START , RE_END , RE_CREATE, ME_ROOM
 			FROM RESERVATION r 
-			WHERE USER_ID = #{user_id}
+			WHERE USER_ID = #{user_id} AND RE_DELFLAG = 'N'
 			ORDER BY RE_SEQ DESC
  	</select>
  	
@@ -25,7 +25,7 @@
  		SELECT r.RE_SEQ, r.USER_ID,r.RE_TITLE, r.RE_CONTENT, r.RE_START, r.RE_END, r.RE_CREATE, r.ME_ROOM
 			FROM RESERVATION r
 			JOIN ATTENDS a ON r.RE_SEQ = a.RE_SEQ
-			WHERE a.USER_ID = #{user_id}
+			WHERE a.USER_ID = #{user_id} AND r.RE_DELFLAG = 'N'
 			ORDER BY r.RE_SEQ DESC
  	</select>
  	
@@ -50,7 +50,7 @@
 	
 	<!-- 회의실 가능 시간 -->
 	<select id="selectPossibleMeRoom" parameterType="java.util.Map" resultType="java.lang.String" >
-		SELECT TO_DATE(#{re_start}||' 09:00:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 AS RE_TIME
+		SELECT TO_DATE(#{re_start}||' 09:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 AS RE_TIME
 			FROM DUAL
 			CONNECT BY TO_DATE(#{re_start}||' 09:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 &lt; TO_DATE(#{re_start}||' 17:00', 'YYYY-MM-DD HH24:MI:SS')
 			MINUS SELECT RE_START
