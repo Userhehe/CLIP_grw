@@ -3,6 +3,8 @@ package com.clip.gwr.ctrl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,14 +18,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.clip.gwr.model.service.IApprovalService;
 import com.clip.gwr.vo.ApprovalVo;
-import com.clip.gwr.vo.PaylineVo;
+import com.clip.gwr.vo.PageVo;
 import com.clip.gwr.vo.UserinfoVo;
-import com.google.gson.Gson;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -76,12 +75,37 @@ public class PayBoardController {
 	}
 	//임시저장 결재 파일 리스트 창 이동
 	@GetMapping(value = "/myTempPayList.do")
-	public String myTempPayList(Model model, HttpSession session) {
+	public String myTempPayList(Model model, HttpSession session,  @RequestParam(required = false, defaultValue = "1") String page) {
 		log.info("myTempPayList 나의 임시저장 결재파일 리스트 창");
 		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 		String user_id = loginUser.getUser_id();
-		List<ApprovalVo> lists = service.getTempApproval(user_id);
+		
+		//페이징 정보설정
+		PageVo pVo = new PageVo();
+		pVo.setCountList(5);
+		
+		// 현재 페이지 설정
+	    int selectPage = Integer.parseInt(page);
+	    
+	    // 페이징에 필요한 맵 생성
+	    Map<String, Object> map = new HashMap<String, Object>() {{
+	        put("first", selectPage * pVo.getCountList() - (pVo.getCountList() - 1));
+	        put("last", selectPage * pVo.getCountList());
+	        put("user_id",user_id);
+	    }};
+	    
+	 // 게시글 전체값 조회
+	    int totalCount = service.selectTempCount(user_id);
+	    pVo.setTotalCount(totalCount);
+	    pVo.setCountPage(5);
+	    pVo.setTotalPage(totalCount);
+	    pVo.setPage(selectPage);
+	    pVo.setStagePage(selectPage);
+	    pVo.setEndPage(pVo.getCountPage());
+		
+		List<ApprovalVo> lists = service.selectTempPage(map);
 		model.addAttribute("lists",lists);
+		model.addAttribute("page", pVo);
 		return "myTempPayList";
 	}
 	
@@ -151,7 +175,7 @@ public class PayBoardController {
 		log.info("내가 승인했던거 조회 : {} ",app_seq);
 		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 		String user_id = loginUser.getUser_id();
-		ApprovalVo vo =service.oneMyPaychecked(user_id);
+		ApprovalVo vo =service.oneMyPaychecked(app_seq);
 		return vo;
 	} 
 	

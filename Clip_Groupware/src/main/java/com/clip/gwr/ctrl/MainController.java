@@ -1,8 +1,18 @@
 package com.clip.gwr.ctrl;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.clip.gwr.model.service.IApprovalService;
+import com.clip.gwr.vo.ApprovalVo;
+import com.clip.gwr.vo.UserinfoVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,9 +20,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MainController {
 	 
+	@Autowired
+	private IApprovalService service;
+	
 	@GetMapping(value = "/main.do")
-	public String getMain() {
-		log.info("MainController main (GET)");
+	public String getMain(Model model,HttpSession session) {
+		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
+		String user_id = loginUser.getUser_id();
+		List<ApprovalVo> lists = service.getMyPaycheck(user_id);
+		model.addAttribute("lists",lists);
 		return "main";
 	}
 	
