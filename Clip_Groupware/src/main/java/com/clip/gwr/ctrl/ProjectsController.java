@@ -89,6 +89,9 @@ public class ProjectsController {
 	        obj.put("CLI_NAME", vo.getCli_name());
 	        obj.put("USER_NAME", vo.getUser_name());
 	        obj.put("PRJ_ID", vo.getPrj_id());
+	        obj.put("PRJ_STATUS", vo.getPrj_status());
+	        obj.put("PRJ_SDATE", vo.getPrj_sdate());
+	        obj.put("PRJ_DDATE", vo.getPrj_ddate());
 	        prjList.add(obj);
 	    }
 	    System.out.println("넘겨줄 데이터"+prjList);
@@ -172,7 +175,7 @@ public class ProjectsController {
 	    return boardList;
 	}
 	
-//-----------프로젝트 추가-----------------------//	
+	//-----------프로젝트 추가-----------------------//	
 	
 	@PostMapping(value = "/insertProject.do") 
 	@ResponseBody
@@ -183,6 +186,31 @@ public class ProjectsController {
 		log.info("담긴 map 내용 {} : " , map);
 		int isc = projectsService.insertProject(map);
 		return isc;
+	}
+	
+	//-----------디테일 최하단의 프로젝트 상태 업데이트 -----------------------//	
+	
+	@PostMapping(value = "/updatePrjStatus.do") 
+	@ResponseBody
+	public int updatePrjStatus(@RequestParam Map<String, Object> map, HttpSession session) {
+		
+		log.info("담긴 map 내용 {} : " , map);
+		int resultCnt = 0;
+		UserinfoVo id = (UserinfoVo)session.getAttribute("loginVo");
+		map.put("user_id", id.getUser_id());
+		
+		int checkPermission = 0;
+		checkPermission = projectBoardService.selectMyPriv(map);
+		
+		if(checkPermission > 0) {
+			// 등록가능
+			resultCnt = projectBoardService.updatePrjStatus(map);
+		} else {
+			// 등록불가
+			resultCnt = -1;
+		}
+
+		return resultCnt;
 	}
 	
 	// ------------클라이언트 추가 : 메인 화면 -----------------------//
@@ -244,5 +272,30 @@ public class ProjectsController {
 
 	}
 
+	
+	// ------------프로젝트 디테일 하단 삭제버튼 -----------------------//
+	
+	@GetMapping(value="/deletePrjDetailBottom.do")
+	@ResponseBody
+	public int deletePrjDetailBottom(String pboSeq, String regId, HttpSession session) {
+		log.info("deletePrjDetailTop 상단 삭제버튼");
+		
+		int cnt=0;
+		
+		// 삭제권한체크
+		UserinfoVo loginVo = (UserinfoVo)session.getAttribute("loginVo");
+		String loginId = loginVo.getUser_id();
+		
+		if (!loginId.equals(regId)) {
+			cnt = -1;
+		} else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("PBO_SEQ",pboSeq);
+			cnt = projectBoardService.deletePrjDetailBottom(map);
+		}	
+		return cnt;
+		
+	}
 
 }

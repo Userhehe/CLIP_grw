@@ -43,4 +43,24 @@ public class ProjectBoardDaoImpl implements IProjectBoardDao {
 	public List<ProjectBoardVo> getDetailBottomList(Map<String, Object> map) {
 		return sqlSession.selectList(NS + "getDetailBottomList", map);
 	}
+
+
+	@Override
+	public int deletePrjDetailBottom(Map<String, Object> map) {
+		return sqlSession.delete(NS + "deletePrjDetailBottom", map);
+	}
+
+
+	@Override
+	public int selectMyPriv(Map<String, Object> map) {
+		return sqlSession.selectOne(NS + "selectMyPriv", map);
+	}
+
+
+	@Override
+	public int updatePrjStatus(Map<String, Object> map) {
+		return sqlSession.update(NS + "updatePrjStatus", map);
+	}
+
+
 }

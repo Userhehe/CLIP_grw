@@ -4,11 +4,14 @@
     <!-- 프로젝트 게시글 추가 -->
     <insert id="insertProjectBoard" parameterType="java.util.Map">
 	INSERT INTO PROJECT_BOARD
-		(PBO_SEQ, USER_ID, PBO_TITLE,
-		PBO_CONTENT, PBO_REGDATE, PRJ_ID)
+		(PBO_SEQ, USER_ID, PBO_TITLE, 
+		PBO_CONTENT, PBO_REGDATE, PRJ_ID,
+		PBO_PROGRESS)
 	VALUES(
 		'PROJECTBOARD_' || PROJECTBOARD_SEQ.NEXTVAL, #{user_id}, #{pboTitle}, 
-		#{pboContent}, TO_CHAR(SYSDATE, 'YYYY-MM-DD'), #{prjId})
+		#{pboContent}, TO_CHAR(SYSDATE, 'YYYY-MM-DD'), #{prjId},
+		#{pboProgress}
+		)
     </insert>
 
 	
@@ -28,5 +31,27 @@
 		pb.PBO_REGDATE, pb.PRJ_ID
 		FROM PROJECT_BOARD pb WHERE pb.PRJ_ID = #{prj_id} AND pb.PBO_PROGRESS = #{pbo_progress}
 	</select>
+	
+	<delete id="deletePrjDetailBottom" parameterType="java.util.Map">
+	DELETE FROM PROJECT_BOARD WHERE PBO_SEQ= #{PBO_SEQ}
+	</delete>
+	
+	
+	<select id="selectMyPriv" parameterType="java.util.Map" resultType="java.lang.Integer">
+	SELECT count(*) FROM USERINFO u 
+	WHERE u.DEPT_SEQ = #{deptSeq}
+	AND u.POSITIONS_SEQ ='POSITIONS_1' 
+	AND u.USER_ID = #{user_id}
+	</select>
+
+
+	<update id="updatePrjStatus" parameterType="java.util.Map">
+	UPDATE PROJECTS
+	SET PRJ_PROGRESS=#{pboProgress}, 
+		PRJ_STATUS = #{prjStatus}
+	WHERE PRJ_ID = #{prjId}
+	</update>
+	
+	
 
 </mapper>
