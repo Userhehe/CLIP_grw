@@ -145,6 +145,15 @@ public class UserDaoImpl implements IUserDao {
 		log.info("##### 사용자 권한 조회 selectUserAuth #####");
 		return sqlSession.selectOne(NS + "selectUserAuth", user_id);
 	}
+	
+	/**
+	 * 대표 싸인 가져오기
+	 */
+	@Override
+	public String selectSignImage(String boss_name) {
+		log.info("##### 대표 싸인 가져오기 selectSignImage #####");
+		return sqlSession.selectOne(NS + "selectSignImage", boss_name);
+	}
 
 	/**
 	 * 사용자 수 카운트
@@ -164,5 +173,4 @@ public class UserDaoImpl implements IUserDao {
 		return sqlSession.selectOne(NS + "selectSearchUserInfoListCnt", map);
 	}
 
-	
 }

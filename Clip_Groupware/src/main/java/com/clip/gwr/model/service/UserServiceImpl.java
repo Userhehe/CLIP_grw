@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.clip.gwr.model.mapper.ISignsDao;
 import com.clip.gwr.model.mapper.IUserDao;
 import com.clip.gwr.vo.UserVo;
 import com.clip.gwr.vo.UserinfoVo;
@@ -145,6 +146,15 @@ public class UserServiceImpl implements IUserService {
 		log.info("UserServiceImpl selectUserAuth 사용자 권한 조회");
 		return dao.selectUserAuth(user_id);
 	}
+	
+	/**
+	 * 대표 싸인 가져오기
+	 */
+	@Override
+	public String selectSignImage(String boss_name) {
+		log.info(" selectSignImage 사용자 권한 조회");
+		return dao.selectSignImage(boss_name);
+	}
 
 	/**
 	 * 사용자 수 카운트
@@ -163,5 +173,4 @@ public class UserServiceImpl implements IUserService {
 		log.info("UserServiceImpl selectSearchUserInfoListCnt 사용자 검색 결과 수 카운트");
 		return dao.selectSearchUserInfoListCnt(map);
 	}
-
 }
