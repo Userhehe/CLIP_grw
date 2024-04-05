@@ -10,7 +10,6 @@
 
 
 <script type="text/javascript" src="./js/paylineModal.js"></script>
-<script type="text/javascript" src="./js/referenceModal.js"></script>
 <style type="text/css">
 .form-control,.form-select{
 	width:15%;
@@ -183,7 +182,7 @@
 		            	</a>
 		            	
 		            	
-		            	<!-- 참조인 모달 영역 -->
+<!-- 		            	참조인 모달 영역 -->
 						<div class="modal fade" id="selectedRefermodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
 				            	<div class="modal-dialog modal-lg">
 				            	
@@ -240,8 +239,8 @@
 			                    </div>
 			                    <div class="modal-footer">
 			                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-			                      <button type="button" class="btn btn-primary">결재 요청</button>
-			                      <button type= "button" id="tempSave" class="btn btn-warning">임시저장</button>
+			                      <button type="button" class="btn btn-primary" id="pushReq">결재 요청</button>
+			                      <button type= "button" id="tempSave" class="btn btn-warning" onclick="saveApproval()">임시저장</button>
 			                    </div>
 			                  </div>
 			                </div>
@@ -312,7 +311,7 @@
 							<textarea name="payGian_html" id="smartEditor2"
 								style="width: 100%; height: 412px;">${vo2.gian_html}</textarea>
 							<div>
-							${vo2.gian_html}
+<%-- 							${vo2.gian_html} --%>
 							</div>
 							<br>
 							<br>
@@ -338,7 +337,7 @@
 							<label for="position">문서내용 :</label>
 							<textarea name="outerGian_html" id="smartEditor3"
 								style="width: 100%; height: 412px;">${vo3.gian_html}</textarea>
-							<div>${vo3.gian_html}</div>
+<%-- 							<div>${vo3.gian_html}</div> --%>
 							<br>
 							<br>
 							<br>

@@ -44,6 +44,12 @@ public interface IApprovalService {
 	//기안 결재 임시저장
 	public boolean saveTempApproval(ApprovalVo approvalVo, List<PaymentlineVo> list);
 	
+	//0단계 결재 수정
+	public int fixWatingApproval(ApprovalVo approvalVo);
+	
+	//반려결재 수정
+	public int fixReqApproval(ApprovalVo approvalVo, String app_seq);
+	
 	//결재 취소
 	public int cancelApproval(String appSeq);
 	

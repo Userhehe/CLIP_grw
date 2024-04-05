@@ -120,6 +120,15 @@ public class ApprovalDaoImpl implements IApprovalDao {
 		log.info("ApprovalDaoImpl saveTempApproval 결재파일 임시저장");
 		return sqlSession.insert(NS+"saveTempApproval", approvalVo);
 	}
+	
+	
+	//기안 수정
+	@Override
+	public int fixReqApproval(ApprovalVo approvalVo) {
+		log.info("ApprovalDaoImpl fixReqApproval 결재파일 수정");
+		return sqlSession.update(NS+"fixReqApproval", approvalVo);
+	}
+	
 
 	//결재 취소
 	@Override

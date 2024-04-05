@@ -19,9 +19,14 @@
 		</foreach>
   	</update>
   	
+  
   	
-  	
-  	
+  	<!-- 반려결재 수정 재결재요청 시 반려했던 순서부터 다시 이어지게 반려위치 'N'으로 바꾸기 -->
+  	<update id="fixReqLine" parameterType="java.lang.String">
+  		UPDATE PAYMENTLINE 
+		SET PAY_SIGN = 'N'
+		WHERE APP_SEQ = #{app_seq} AND PAY_SIGN = 'D'
+  	</update>
   	
   	
   	

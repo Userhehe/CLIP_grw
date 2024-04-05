@@ -13,7 +13,6 @@
 
 
 <script type="text/javascript" src="./js/paylineModal.js"></script>
-<!-- <script type="text/javascript" src="./js/referenceModal.js"></script> -->
 <style type="text/css">
 .form-control,.form-select{
 	width:15%;
@@ -42,7 +41,7 @@
 
 
 </style>
-<script type="text/javascript" src="./js/payTemplateSelect.js"></script>
+
 
 <!-- SmartEditor2 라이브러리  -->
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js"
@@ -66,6 +65,7 @@
 				<input type="text" disabled="disabled" id="session_dept_name" value="${loginVo.dept_name}">
 				<input type="text" disabled="disabled" id="session_ranks_name" value="${loginVo.ranks_name}">
 				<input type="text" disabled="disabled" id="session_user_id" name="user_id" value="${loginVo.user_id}">
+				<input type="text" disabled="disabled" id="approvalVo_app_seq" name="app_seq" value="${approvalVo.app_seq}">
 				
 			</div>
 			
@@ -75,7 +75,18 @@
 		<div class="col-lg-10">
 			<div class="card">
 				<div class="card-body">
-					<h5 class="card-title">${loginVo.user_name}의 저장된 결재</h5>
+					<c:choose>
+                      	<c:when test="${approvalVo.app_draft eq '임시저장'}">
+	                     	<h5 class="card-title">${loginVo.user_name}의 저장된 결재</h5>
+                      	</c:when>
+                      	<c:when test="${approvalVo.app_draft eq '결재대기'}">
+	                   		<h5 class="card-title">${loginVo.user_name}의 요청한 결재 수정</h5>
+                      	</c:when>
+                      	<c:when test="${approvalVo.app_draft eq '결재반려'}">
+	                     	<h5 class="card-title">${loginVo.user_name}의 반려된 결재 수정</h5>
+                      	</c:when>
+                      </c:choose>
+					
 					<div class="container">
 					
 					<div class="form-group" style="margin-top:20px;">
@@ -102,10 +113,11 @@
 					    <input type="time" class="form-control" id="endTime" style="display: none;">
 					    
 					    <hr/>
-					    
-						<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal">
-							결재라인 지정
-		            	</a>
+					    <c:if test="${approvalVo.app_draft eq '임시저장'}">
+							<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal">
+								결재라인 지정
+			            	</a>
+					    </c:if>
 		            	<div id="selectedPayLine">
 		            		<label class="badge border-warning border-1 text-warning">결재라인</label>
 		            		<br/>
@@ -227,10 +239,13 @@
 			                      
 			                      <c:choose>
 			                      	<c:when test="${approvalVo.app_draft eq '임시저장'}">
-				                      <button type="button" class="btn btn-warning">결재 요청</button>
+				                      <button type="button" class="btn btn-warning" id="continuReq">결재 요청</button>
+			                      	</c:when>
+			                      	<c:when test="${approvalVo.app_draft eq '결재대기'}">
+				                      <button type="button" class="btn btn-warning" id="modifyReq" onclick="fixWating()">결재 수정</button>
 			                      	</c:when>
 			                      	<c:when test="${approvalVo.app_draft eq '결재반려'}">
-				                      <button type="button" class="btn btn-primary">결재 재요청</button>
+				                      <button type="button" class="btn btn-warning" id="fixReq" onclick="fixreq()">결재 재요청</button>
 			                      	</c:when>
 			                      </c:choose>
 			                      
@@ -287,45 +302,8 @@
 	</main>
 </body>
 
-<script type="text/javascript">
 
-window.onload = function() {
-
-	
-	var savedHtml = document.querySelector('#beforeHtml');
-	/* 이전 작성했던 글 내역 */
-	var savedText = savedHtml.querySelector('.approval_content').innerText;
-	document.querySelector('#approvalContent').value = savedText;
-	
-	/* 이전에 지정해 둔 결재라인 */
-	var payLine = savedHtml.querySelector('.table-bordered');
-	var tdList = payLine.querySelector("tr");
-	var cloneTr = tdList.cloneNode(true);
-	var len = tdList.querySelectorAll('td').length;
-	var payLineTable = document.createElement('table')
-	
-	var beforeTableHtml = '<tr>';
-	
-	for(let i = 0; len>i; i++){
-		beforeTableHtml += '<th>'+ (i + 1) + '차 결재자</th>' ;
-	}
-	beforeTableHtml += '</tr>';
-	
-	payLineTable.innerHTML = beforeTableHtml;
-	
-	
-	
-	
-	payLineTable.querySelector('tbody').appendChild(cloneTr);
-	payLineTable.setAttribute('class', 'table table-bordered');
-	payLineTable.setAttribute('style', 'display: table; vertical-align: middle');
-	document.querySelector('#selectedPayLine').appendChild(payLineTable);
-
-
-}
-
-</script>
-
+<script type="text/javascript" src="./js/payTemplateSelect.js"></script>
 </html>
 <!-- editor.js는  html 젤 아래에 넣어야 충돌이 발생 안됨. -->
 <script type="text/javascript" src="./js/payGian.js"></script> 

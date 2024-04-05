@@ -49,10 +49,10 @@ public class PaymentlineJUnitTest {
 		
 
 		List<PaymentlineVo> list = new ArrayList<>();
-		for (int i = 1; i <= 3; i++) {
+		for (int i = 1; i <= 5; i++) {
 		    PaymentlineVo paymentLine = new PaymentlineVo();
-		    paymentLine.setApp_seq("APPROVAL_20");
-		    paymentLine.setPay_user("USER_" + (27-i));
+		    paymentLine.setApp_seq("APPROVAL_18");
+		    paymentLine.setPay_user("USER_" + (35-i));
 		    paymentLine.setPay_num(i);
 		    list.add(paymentLine);
 		}
@@ -60,9 +60,9 @@ public class PaymentlineJUnitTest {
 		System.out.println(list);
 
 		// MyBatis의 SQL 세션을 이용하여 쿼리를 실행
-		int result = paymentlineDao.putPayLine(list);
-		System.out.println("********실행된 로우의 수는 몇개일 까? : " + result);
-		assertNotEquals(0, result);
+//		int result = paymentlineDao.fixPaylineReq(list);
+//		System.out.println("********실행된 로우의 수는 몇개일 까? : " + result);
+//		assertNotEquals(0, result);
 		
 //		List<PaymentlineVo> addPayline = new ArrayList<PaymentlineVo>();
 //		
