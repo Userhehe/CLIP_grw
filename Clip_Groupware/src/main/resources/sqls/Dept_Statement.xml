@@ -5,7 +5,7 @@
     <!-- 부서 전체 조회 -->
     <select id="deptAll" resultType="DeptVo">
 	 SELECT DEPT_SEQ , DEPT_NAME , DEPT_REGDATE   
-	 FROM DEPT  ORDER BY DEPT_SEQ
+	 FROM DEPT  ORDER BY DEPT_REGDATE
 	</select>
 	
 

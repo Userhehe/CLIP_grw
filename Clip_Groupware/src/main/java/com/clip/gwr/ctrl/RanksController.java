@@ -50,10 +50,9 @@ public class RanksController {
 	    try {
 	        List<DeptVo> deptLists = deptService.deptAll();
 	        List<RanksVo> ranksLists = ranksService.ranksAll();
-	        List<UserinfoVo> userLists = userService.selectUserinfoList();
+	       
 	        
 	        model.addAttribute("deptLists", deptLists);
-	        model.addAttribute("positionsLists", userLists);
 	        model.addAttribute("ranksLists", ranksLists);
 	    } catch (Exception e) {
 	        e.printStackTrace();
