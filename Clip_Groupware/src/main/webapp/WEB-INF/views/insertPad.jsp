@@ -19,7 +19,7 @@ UserinfoVo loginUserVo = (UserinfoVo)session.getAttribute("loginVo");
 	<div style="text-align: center;">
 	<input type="hidden" id="userId" value="${user_id}">
 	<input type="hidden" id="userName" value="${user_name}">
-		<canvas id="signpad" width="500" height="400"></canvas><br>
+		<canvas id="signpad" width="600" height="500"></canvas><br>
 	     서명 제목 : <input type="text" name="signs_name" id="signs_name" placeholder="서명 제목을 입력하세요"><br>
 		<div>
 			<button class="btn btn-primary rounded-pill" id="save">저장</button>

@@ -1,7 +1,7 @@
 var canvas = document.getElementById("signpad");
 var signature = new SignaturePad(canvas, {
-    minWidth: 2,
-    maxWidth: 2,
+    minWidth: 7,
+    maxWidth: 7,
     penColor: "rgb(0, 0, 0)"
 });
  
@@ -40,7 +40,7 @@ save.addEventListener("click", function() {
                 if (!response.ok) {
                     throw new Error("에러! :( ");
                 } else {
-                    location.href = "./AllselectPad.do"; // 서명 리스트 페이지로 이동
+                    location.href = "./myPage.do"; // 서명 리스트 페이지로 이동
                     return response.json();
                 }
             })

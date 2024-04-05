@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
     padCheck = parseInt(padCheck);
     console.log('padCheck typeof : ' + typeof padCheck);
     if(photoCheck >= 1) {
-        document.getElementById('signatureButton').style.display='none'; // 등록한 사진이 있다면 수정, 삭제폼 숨기기
+        document.getElementById('signatureButton').style.display='none'; 
     } else {
-        document.getElementById('signatureUse').style.display='none'; // 등록한 사진이 있다면 등록폼 숨기기
+        document.getElementById('signatureUse').style.display='none'; 
     }
 });

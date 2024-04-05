@@ -99,22 +99,22 @@ String fileStorename = (String)session.getAttribute("fileStorename");
                   <i class="bi bi-gear"></i>
                   <span>개인정보 수정</span></a>
                   </li>
-                  <li id="checkInButton">
-                      <a class="dropdown-item d-flex align-items-center" href="insertDailyCheckIntime.do" onclick="handleCheckInButtonClick()">
-                          <i class="bi bi-gear"></i>
-                          <span>출근</span>
-                      </a>
-                  </li>
+				<li id="checkInButton">
+    <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);" onclick="handleButtonClick('checkIn')">
+        <i class="bi bi-send-check"></i>
+        <span>출근</span>
+    </a>
+</li>
 
-                   <li id="checkOutButton" >
-                      <a class="dropdown-item d-flex align-items-center" href="updateDailyCheckOuttime.do" onclick="handleCheckOutButtonClick()">
-                          <i class="bi bi-gear"></i>
-                          <span>퇴근</span>
-                      </a>
-                  </li>
-                  
+<li id="checkOutButton" style="display: none;">
+    <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);" onclick="handleButtonClick('checkOut')">
+        <i class="bi bi-send-dash"></i>
+        <span>퇴근</span>
+    </a>
+</li>
+
                   <li><hr class="dropdown-divider"></li>
-                  <li><a id="logout" class="dropdown-item d-flex align-items-center"> <!-- href="./logout.do" -->
+                  <li><a id="logout" class="dropdown-item d-flex align-items-center"> 
                   <i class="bi bi-box-arrow-right"></i>
                   <span>Log Out</span>
                   </a>
@@ -140,6 +140,7 @@ String fileStorename = (String)session.getAttribute("fileStorename");
                <ul id="humanresource-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                   <li><a href="./userInfo.do"><i class="bi bi-circle"></i><span>인사 정보</span></a></li>
                   <li><a href="./selectDailyCheckList.do"><i class="bi bi-circle"></i><span>근태관리</span></a></li>
+                  <li><a href="./AllselectPad.do"><i class="bi bi-circle"></i><span>서명관리</span></a></li>
                   <li><a href="./annAll.do"><i class="bi bi-circle"></i><span>연차관리</span></a></li>
                   <li><a href="./organization.do"><i class="bi bi-circle"></i><span>조직도</span></a></li>
                   <li><a href="./ranksAll.do"><i class="bi bi-circle"></i><span>직급관리</span></a></li>

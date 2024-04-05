@@ -62,17 +62,17 @@ public class SignsController {
 	
 	@GetMapping(value = "/insertPad.do")
 	public String insertPad(HttpSession session) {
-	    log.info("insertPad.do");
+	    log.info("****** insertPad.do");
 	    UserinfoVo loginUserVo = (UserinfoVo) session.getAttribute("loginVo");
 	    if (loginUserVo != null) {
-	        // 세션에서 로그인 정보를 가져와서 필요한 처리 수행
+	       
 	        String user_id = loginUserVo.getUser_id();
 	        String user_name = loginUserVo.getUser_name();
 	        
 	        log.info("$$$$$$$$$$$$$$$$$user_id : " + user_id);
 	        log.info("$$$$$$$$$$$$$$$$$user_name : " + user_name);
 	    }
-	    return "insertPad"; // insertPad.jsp로 이동
+	    return "insertPad";
 	}
 
 	@PostMapping(value = "/insertPad.do")
