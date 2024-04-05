@@ -177,5 +177,16 @@ public class ApprovalServiceImpl implements IApprovalService{
 		return approvalDao.banRuPayLine(pay_rejectreason, app_seq ,pay_num,pay_user);
 	}
 
+	@Override
+	public int selectTempCount(String user_id) {
+		return approvalDao.selectTempCount(user_id);
+	}
+
+	@Override
+	public List<ApprovalVo> selectTempPage(Map<String, Object> map) {
+		return approvalDao.selectTempPage(map);
+	}
+
+
 	
 }
