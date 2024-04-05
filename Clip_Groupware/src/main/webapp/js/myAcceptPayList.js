@@ -165,6 +165,12 @@ $(document).ready(function() {
 		$("#rejectFinalBtn").attr("data-appseq", appSeq); 
 		$("#editBtn").attr("data-appseq", appSeq); 
 		
+		
+		var app_seq = $(this).attr("data-appseq");
+	
+	    
+	    
+		
 		$.ajax({
 			url: "./myAcceptPayList.do?app_seq=" + requestData.app_seq,
 			type: "POST",
@@ -174,9 +180,10 @@ $(document).ready(function() {
 				console.log(data);
 				
 				if(data.app_draft === "결재반려"){
-					$("#modalContent1").html("문서번호 : "+data.app_seq + data.app_content);
+					$("#modalContent1").html(data.app_content);
+					
 				}else{
-					$("#modalContent1").html("문서번호 : "+data.app_seq + data.app_content);				
+					$("#modalContent1").html(data.app_content);				
 				}
 				
 				if(data.app_draft === "결재진행" || data.app_draft === "결재대기" ){
@@ -188,6 +195,12 @@ $(document).ready(function() {
 				}
 				var modal = new bootstrap.Modal($("#detailModal1"));	
 				modal.show();
+				
+		    var gian = document.getElementById("modalContent1").parentNode;
+	    	console.log(gian);
+	    	console.log(gian.querySelector('.table-bordered'));
+				
+				
 			},
 			error: function(error) {
 				console.log('에러시러요');
@@ -226,8 +239,11 @@ $(document).ready(function() {
 			location.reload();
 		  });
 		
+		
+		
+		
 		  $("#editBtn").on("click", function() {
-			    var app_seq = $(this).attr("data-appseq");
+			    
 			    console.log("결재코드:",app_seq);
 			    $.ajax({
 			        url: "./okPay.do?app_seq="+ app_seq,
@@ -243,6 +259,8 @@ $(document).ready(function() {
 			        }
 			    });
 			});
+
+
 
 		  
 		  $.ajax({
@@ -268,6 +286,8 @@ $(document).ready(function() {
 				}
 				var modal = new bootstrap.Modal($("#detailModal2"));	
 				modal.show();
+				
+				
 			},
 			error: function(error) {
 				console.log('에러시러요');

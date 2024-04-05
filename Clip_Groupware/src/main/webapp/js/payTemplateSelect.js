@@ -6,19 +6,66 @@ window.onload = function(){
 	 endTime.addEventListener('change',checkTimeOrder);
 	 
 	 
+	 //이어작성 창에서 이전 값 가져오기
+	 var savedHtml = document.querySelector('#beforeHtml');
+	 
+	 if(savedHtml){
+		/* 이전 작성했던 글 내역 */
+		var savedText = savedHtml.querySelector('.approval_content').innerText;
+		document.querySelector('#approvalContent').value = savedText;
+		
+		/* 이전에 지정해 둔 결재라인 */
+		var payLine = savedHtml.querySelector('.table-bordered');
+		var tdList = payLine.querySelector("tr");
+		var cloneTr = tdList.cloneNode(true);
+		var len = tdList.querySelectorAll('td').length;
+		var payLineTable = document.createElement('table')
+		
+		var beforeTableHtml = '<tr>';
+		
+		for(let i = 0; len>i; i++){
+			beforeTableHtml += '<th>'+ (i + 1) + '차 결재자</th>' ;
+		}
+		beforeTableHtml += '</tr>';
+		
+		payLineTable.innerHTML = beforeTableHtml;
+		
+		
+		
+		
+		payLineTable.querySelector('tbody').appendChild(cloneTr);
+		payLineTable.setAttribute('class', 'table table-bordered');
+		payLineTable.setAttribute('style', 'display: table; vertical-align: middle');
+		document.querySelector('#selectedPayLine').appendChild(payLineTable);
+		
+		
+	var continuReq = document.querySelector('#continuReq');
+	continuReq.addEventListener('click',draft_application);
+	
+//	var fixReq = document.querySelector('#fixReq');
+//	/*반려 결재 수정하여 재요청하는 이벤트*/
+//	fixReq.addEventListener('click', fixreq);
+	
+	/*임시저장하는 이벤트*/	
+//	var tempBut1 = document.querySelector('#tempSave');
+//	tempBut1.addEventListener('click', saveApproval);
+	} 
+	 
+	 
+	 
+	 
 	var gian1Modal = document.getElementById('previewGian');
 	var modalfoot1 = gian1Modal.querySelector('.modal-footer');
 //	console.log('modal : ',modalfoot1);
-	var submit1 = modalfoot1.getElementsByTagName('button')[1];
+//	var submit1 = modalfoot1.getElementsByTagName('button')[1];
+	var pushReq = modalfoot1.querySelector('#pushReq');
 //	console.log('submit1 : ',submit1);
-	submit1.addEventListener('click',draft_application);
+	console.log('pushReq : ', pushReq);
 	
-	var tempBut1 = document.querySelector('#tempSave');
 	
-	tempBut1.addEventListener('click', saveApproval);
-	 
-	 var savedHtml = document.querySelector("#beforeHtml")
-	 
+	/*새 결재 요청하는 이벤트*/
+	pushReq.addEventListener('click',draft_application);
+	
 	 
 }
 
@@ -55,6 +102,7 @@ function half(event) {
     
 }
 
+//미리보기 창에 정보 입력하는 이벤트
 function gatheringInfo(){
 	//세션에 저장된  값
 	var name = document.getElementById("session_user_name").value;
@@ -226,6 +274,7 @@ function draft_application(){
 	
 //	var table = modal.querySelector('.ec-editable');
 	var payOp = modal.querySelector('.approval_va_opt').textContent;
+//	var payOp = document.querySelector('#vaSel').value;
 	
 	if(!payOp){
 		alert('연차 종류를 선택해주세요.');
@@ -234,8 +283,10 @@ function draft_application(){
 	
 	var strDate = modal.querySelector('.vac_start_date').textContent;
 	var endDate = modal.querySelector('.vac_end_date').textContent;
+//	var strDate = modal.querySelector('#startDate').value;
+//	var endDate = modal.querySelector('#endDate').value;
 	
-	if(!(strDate&&endDate)){
+	if(!(strDate&&endDate)||(strDate==''&&endDate=='')){
 		alert('기간을 지정해주세요.');
 		return;
 	}
@@ -377,20 +428,6 @@ function saveApproval(){
 		return;
 	}
 	
-	var payOp = modal.querySelector('.approval_va_opt').textContent;
-	
-	if(!payOp){
-		alert('연차 종류를 선택해주세요.');
-		return;
-	}
-	
-	var strDate = modal.querySelector('.vac_start_date').textContent;
-	var endDate = modal.querySelector('.vac_end_date').textContent;
-	
-	if(!(strDate&&endDate)){
-		alert('기간을 지정해주세요.');
-		return;
-	}
 	
 	var appContent = modal.querySelector('.approval_content').textContent;
 	if(!appContent){
@@ -457,7 +494,7 @@ function saveApproval(){
 		if(data === 'success'){
 		 console.log('Success:', data);
 		 alert('임시저장에 성공하였습니다.');
-		 location.reload();
+		 window.location.href='./myTempPayList.do';
 		 return;
 		 }
 		 alert('임시저장에 실패하였습니다. 다시 시도해주세요.');
@@ -469,6 +506,194 @@ function saveApproval(){
 	
 }
 
+//반려기안 수정신청 함수
+function fixreq(){
+	
+	//입력 내용들을 체크.
+	var modal = document.querySelector('#req_preview1');
+	
+	var dept = modal.getElementsByClassName('approval_user_dept')[0].textContent;
+	var name = modal.getElementsByClassName('approval_user_name')[0].textContent;
+	var reqUserName = modal.getElementsByClassName('create_user_name')[0].textContent;
+	
+	console.log(dept, name, reqUserName);
+	if(!(dept&&name&&reqUserName)){
+		alert('로그인 정보를 확인해 주세요.');
+		return;
+	}
+	
+//	var table = modal.querySelector('.ec-editable');
+	var payOp = modal.querySelector('.approval_va_opt').textContent;
+//	var payOp = document.querySelector('#vaSel').value;
+	
+	if(!payOp){
+		alert('연차 종류를 선택해주세요.');
+		return;
+	}
+	
+	var strDate = modal.querySelector('.vac_start_date').textContent;
+	var endDate = modal.querySelector('.vac_end_date').textContent;
+	
+	if(!(strDate&&endDate)||(strDate==''&&endDate=='')){
+		alert('기간을 지정해주세요.');
+		return;
+	}
+	
+	var appContent = modal.querySelector('.approval_content').textContent;
+	if(!appContent){
+		alert('사유를 입력해주세요.');
+		return;
+	}
+	
+	var body = modal.querySelector('.modal-body');
+
+	//입력내용 체크 종료
+	
+	//요청을 보낼 데이터 모으기
+	
+	//전자결재 테이블 정보
+	var user_id = document.querySelector('[name = "user_id"]').value;
+	var app_title = document.querySelector('[name = "app_title"]').value;
+	var app_seq = document.querySelector('[name = "app_seq"]').value;
+	var app_content = body.innerHTML;
+	var app_strdate = document.querySelector('#startDate').value;
+	var app_enddate = document.querySelector('#endDate').value;
+	var approval = {
+		"app_seq" : app_seq,
+		"user_id" : user_id,
+		"app_title" : app_title,
+		"app_content" : app_content,
+		"app_strdate" : app_strdate,
+		"app_enddate" : app_enddate
+	}
+	
+	console.log('전자결재 정보 : ',approval);
+	
+	
+	var jsonForm = JSON.stringify(approval);
+	
+//	console.log('제이슨 형태로 만들어 보자 : ',jsonForm);
+//	console.log('데이터 타입은? : ',typeof jsonForm);
+//	var appro = JSON.stringify(approval); 
+
+	fetch('./fixReq.do', {
+		method : 'POST',
+		headers : {'Content-Type' : 'application/json'},
+		body : jsonForm
+	}).then(response => {
+		if (!response.ok) {
+	        throw new Error('요청에 실패하였습니다!');
+	    }
+	    return response.text();
+	}).then(data => {
+		if(data === 'success'){
+		 console.log('Success:', data);
+		 alert('결재신청에 성공하였습니다.');
+		 window.location.href = './myPayList.do'
+		 return;
+		 }
+		 alert('결재신청에 실패하였습니다. 다시 시도해주세요.');
+		 console.log('Fail:', data);
+	}).catch(error => {
+	    console.error('Error:', error);
+	});
+	
+	
+}
+
+
+//0단계 결재 수정
+function fixWating(){
+	
+	//입력 내용들을 체크.
+	var modal = document.querySelector('#req_preview1');
+	
+	var dept = modal.getElementsByClassName('approval_user_dept')[0].textContent;
+	var name = modal.getElementsByClassName('approval_user_name')[0].textContent;
+	var reqUserName = modal.getElementsByClassName('create_user_name')[0].textContent;
+	
+	console.log(dept, name, reqUserName);
+	if(!(dept&&name&&reqUserName)){
+		alert('로그인 정보를 확인해 주세요.');
+		return;
+	}
+	
+	var payOp = modal.querySelector('.approval_va_opt').textContent;
+	
+	if(!payOp){
+		alert('연차 종류를 선택해주세요.');
+		return;
+	}
+	
+	var strDate = modal.querySelector('.vac_start_date').textContent;
+	var endDate = modal.querySelector('.vac_end_date').textContent;
+	
+	if(!(strDate&&endDate)||(strDate==''&&endDate=='')){
+		alert('기간을 지정해주세요.');
+		return;
+	}
+	
+	var appContent = modal.querySelector('.approval_content').textContent;
+	if(!appContent){
+		alert('사유를 입력해주세요.');
+		return;
+	}
+	
+	var body = modal.querySelector('.modal-body');
+
+	//입력내용 체크 종료
+	
+	//요청을 보낼 데이터 모으기
+	
+	//전자결재 테이블 정보
+	var user_id = document.querySelector('[name = "user_id"]').value;
+	var app_title = document.querySelector('[name = "app_title"]').value;
+	var app_seq = document.querySelector('[name = "app_seq"]').value;
+	var app_content = body.innerHTML;
+	var app_strdate = document.querySelector('#startDate').value;
+	var app_enddate = document.querySelector('#endDate').value;
+	var approval = {
+		"app_seq" : app_seq,
+		"user_id" : user_id,
+		"app_title" : app_title,
+		"app_content" : app_content,
+		"app_strdate" : app_strdate,
+		"app_enddate" : app_enddate
+	}
+	
+	console.log('전자결재 정보 : ',approval);
+	
+	
+	var jsonForm = JSON.stringify(approval);
+	
+//	console.log('제이슨 형태로 만들어 보자 : ',jsonForm);
+//	console.log('데이터 타입은? : ',typeof jsonForm);
+//	var appro = JSON.stringify(approval); 
+
+	fetch('./fixWating.do', {
+		method : 'POST',
+		headers : {'Content-Type' : 'application/json'},
+		body : jsonForm
+	}).then(response => {
+		if (!response.ok) {
+	        throw new Error('요청에 실패하였습니다!');
+	    }
+	    return response.text();
+	}).then(data => {
+		if(data === 'success'){
+		 console.log('Success:', data);
+		 alert('결재수정에 성공하였습니다.');
+		 window.location.href = './myPayList.do'
+		 return;
+		 }
+		 alert('결재수정에 실패하였습니다. 다시 시도해주세요.');
+		 console.log('Fail:', data);
+	}).catch(error => {
+	    console.error('Error:', error);
+	});
+	
+	
+}
 
 
 

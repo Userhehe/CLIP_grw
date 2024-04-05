@@ -240,11 +240,6 @@
 	</insert>
 
 
-
-
-
-
-
 	<!-- 결재파일 임시저장 (결재작성창 정보들 이용)-->
 	<insert id="saveTempApproval" parameterType="ApprovalVo">
 	INSERT INTO APPROVAL
@@ -253,6 +248,25 @@
 	VALUES('APPROVAL_' || TO_CHAR(APPROVAL_SEQ.NEXTVAL), #{app_title}, #{app_content},
 			#{gian_seq}, '임시저장', #{user_id})
 	</insert>
+	
+	
+	
+	<!-- 결재 수정하는 업데이트 문 -->
+	<update id="fixReqApproval" parameterType="ApprovalVo">
+		UPDATE APPROVAL 
+		SET APP_TITLE = #{app_title}, 
+			APP_CONTENT = #{app_content},
+			<choose>
+				<when test="app_draft == null">
+					APP_DRAFT = '결재진행',
+				</when>
+				<otherwise>
+					APP_DRAFT = '결재대기',
+				</otherwise>
+			</choose>
+			APP_MODDATE =LOCALTIMESTAMP
+		WHERE APP_SEQ = #{app_seq}
+	</update>
 	
 	
 	

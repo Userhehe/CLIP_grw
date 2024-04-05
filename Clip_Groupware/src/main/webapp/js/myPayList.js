@@ -72,13 +72,27 @@ $(document).ready(function() {
 			    	console.log(data);
 			    	$("#modalContent").html("문서번호 : "+appSeq + data.app_content );
 			    	$("#cancelPayButton").attr("data-appseq", appSeq); // 버튼에 app_seq 값을 저장
+					
+					
+//					console.log(data.app_draft);
 
+					$("#editPayButton").on("click", function() {
+					    window.location.href = "./continuePay.do?app_seq=" + data.app_seq; 
+					  });
                     // 결재 상태에 따라 결재 수정 및 취소 버튼 숨김 처리
                   	if (data.app_draft === "결재대기") {
 	                	$("#editPayButton").show();
+	                	$("#editPayButton").text('결재 수정');
 					    $("#cancelPayButton").show();
- 					} else {
-					 $("#editPayButton").hide();
+ 					}
+ 					//반려시에는 재작성만 뜨게끔
+ 					if(data.app_draft === "결재반려"){
+						$("#editPayButton").show();
+						$("#editPayButton").text('재작성');
+					    $("#cancelPayButton").hide();
+					} 
+ 					if(data.app_draft != "결재반려" && data.app_draft != "결재대기") {
+						 $("#editPayButton").hide();
 						 $("#cancelPayButton").hide();
  					}
 			    	
@@ -96,9 +110,9 @@ $(document).ready(function() {
 			    var appSeq = $(this).attr("data-appseq");
 			    window.location.href = "./cancelPay.do?app_seq=" + appSeq; 
 			  });
-			});
+//			});
 		//검색기능
-		$(document).ready(function() {
+//		$(document).ready(function() {
 		    $("#templateSearch").click(function() {
 		        var searchText = $("#searchInput").val().toLowerCase(); // 입력된 검색어를 소문자로 변환
 		        var searchOption = $("#statusSelect").val(); //선택된 옵션 가져옴.
