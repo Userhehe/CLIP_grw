@@ -2,5 +2,9 @@
 
 .paging {
 	display: flex;
-    justify-content: center;
+    justify-content: center;  
 }
+
+#searchButton{
+	float: right;
+	}  
