@@ -9,6 +9,10 @@
 <head>
 <meta charset="UTF-8">
 <title>내 요청 결재 리스트</title>
+<!-- pdf다운로드를 위한 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 <%@ include file="./header.jsp"%>
 </head>
 <body>
@@ -48,7 +52,7 @@
 					                    <td>${vo.app_seq}</td>
 					                    <td>${vo.app_title}</td>
 					                    <td>${vo.gian_seq}</td>
-					                    <td>${vo.app_strdate}</td>
+					                    <td>${vo.app_createdate}</td>
 					                    <td>${vo.pay_num}</td>
 					                </tr>
 					            </c:forEach>
@@ -98,11 +102,13 @@
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
-								<div class="modal-body">
+								<div class="modal-body" >
+									<div id="saveZone">
 									 <p id="modalContent"></p>
+									</div> 
 								</div>
 								<div class="modal-footer">
-									 <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
+									 <a id="savePdf"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 				                     <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
 				                     <button type="button" id="editPayButton" class="btn btn-primary" data-appseq="">결재 수정</button>
 				                     <button type="button" id="cancelPayButton" class="btn btn-danger" data-appseq="">결재 취소</button>

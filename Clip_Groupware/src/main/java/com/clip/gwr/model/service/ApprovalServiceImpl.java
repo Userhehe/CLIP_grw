@@ -198,6 +198,15 @@ public class ApprovalServiceImpl implements IApprovalService{
 	}
 
 
+	@Override
+	public int selectTempCount(String user_id) {
+		return approvalDao.selectTempCount(user_id);
+	}
+
+	@Override
+	public List<ApprovalVo> selectTempPage(Map<String, Object> map) {
+		return approvalDao.selectTempPage(map);
+	}
 
 
 	

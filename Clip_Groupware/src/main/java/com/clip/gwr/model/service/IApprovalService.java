@@ -73,4 +73,9 @@ public interface IApprovalService {
 	public int banRuApproval(String app_seq);
 	public int banRuPayLine(String pay_rejectreason,String app_seq,String pay_num,String pay_user);
 	
+	//페이징 테스트
+	public int selectTempCount(String user_id); //전체 공지 게시글 수
+			
+	public List<ApprovalVo> selectTempPage(Map<String, Object> map); //공지 페이징 구간별 게시글 가져오기
+	
 }
