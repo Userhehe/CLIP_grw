@@ -94,6 +94,14 @@
 						</div>
 
 
+
+
+						<!-- ======= 아래 건들지 마세요. ======= -->
+					</div>
+				</div>
+
+				<!-- ======= 위로 일정, 공지 ## 아래로 전자, 프젝 ======= -->
+				<div class="col-lg-6">
 						<div class="col-12">
 							<div class="card recent-sales overflow-auto">
 								<div class="card-body">
@@ -116,15 +124,8 @@
 								</div>
 							</div>
 						</div>
-
-						<!-- ======= 아래 건들지 마세요. ======= -->
-					</div>
-				</div>
-
-				<!-- ======= 위로 일정, 공지 ## 아래로 전자, 프젝 ======= -->
-				<div class="col-lg-6">
-					<div class="row">
-						<!-- ======= 위에 건들지 마세요. ======= -->
+					<!-- <div class="row">
+						======= 위에 건들지 마세요. =======
 
 						<div class="col-12">
 							<div class="card recent-sales overflow-auto">
@@ -149,8 +150,8 @@
 							</div>
 						</div>
 
-						<!-- ======= 아래 건들지 마세요. ======= -->
-					</div>
+						======= 아래 건들지 마세요. =======
+					</div> -->
 				</div>
 
 				<!-- ======= row 끝 ======= -->

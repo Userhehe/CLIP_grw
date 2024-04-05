@@ -15,17 +15,21 @@ $(document).ready(function() {
     function updateDailyCheckStatus() {
         var dailyReasonModify = $('#daily_reasonmodify').val();
         var dailySeq = $('#daily_seq').val();
+        var dailystatus = $("#daily_status").val();
+        console.log("dailystatus",dailystatus);
         
         $.ajax({
             type: "POST",
             url: "./updateDailyCheckStatus.do",
-            data: {daily_reasonmodify: dailyReasonModify, daily_seq: dailySeq},
+            data: {daily_reasonmodify: dailyReasonModify, daily_seq: dailySeq, daily_status:dailystatus},
             success: function(response) {
                 console.log("수정된 내용이 서버에 전송되었습니다.");
                 $("#dailyCheckModal").modal("hide");
-                var $row = $("tr").find(`.daily_seq:contains('${dailySeq}')`).closest("tr");
-                $row.find(".daily_modify").text('Y');
-                $row.find(".daily_reasonmodify").text(dailyReasonModify); // 수정된 내용 표시
+                location.reload();
+//                var $row = $("tr").find(`.daily_seq:contains('${dailySeq}')`).closest("tr");
+//                $row.find(".daily_modify").text('Y');
+//                $row.find(".daily_reasonmodify").text(dailyReasonModify); // 수정된 내용 표시
+                
             },
             error: function(xhr, status, error) {
                 console.error("서버에 수정된 내용을 전송하는 중 오류가 발생했습니다.");

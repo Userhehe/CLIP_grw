@@ -162,10 +162,12 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
             
             
              <div class="modal-footer">
-             	<div class="detailhidden" style="display: block;">	
+             	<div id="timebtn" class="detailhidden" style="display: block;">	
              		<button type="button" class="btn btn-warning" onclick="modifyRev()"> 수정 </button>
 		            <button type="button" class="btn btn-danger" id="delRev" onclick="delRev()"> 삭제 </button>
-		            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
+            	</div>
+            	<div  class="detailhidden" style="display: block;">
+            		<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="redetailclose()">취소</button>
             	</div>
             	<div class="modifyhidden" style="display: none;">
             		<button type="button" class="btn btn-info" onclick="modifycon()" id="modifycon"> 확인 </button>
@@ -325,14 +327,15 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 				<!-- 예약한 회의실 현황 리스트 -->	
 	            <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
 	            <div class="row">
-					<div style="margin-left: 560px;">
+	            
+					<!-- <div style="margin-left: 560px;">
 						<select style="width: 10%; display: unset;" class="form-select" name="gian_search">
 							<option value="">구분</option>
 							<option value="gian_name">회의 제목</option>
 							<option value="gian_modifier">회의실 번호</option>
 						</select> <input style="width: 250px; display: unset;" id="gian_name" class="form-control" type="text" placeholder="검색어를 입력해주세요.">
 						<button class="btn btn-primary rounded-pill" id="templateSearch">검색</button>
-					</div>
+					</div> -->
 					
 						<table class="table table-hover" style="margin-top: 10px;">
 							<thead>
