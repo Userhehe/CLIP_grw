@@ -365,14 +365,14 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 				<!-- 내가 참석자에 포함된 예약 리스트 -->
 				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 	            <div class="row">
-					<div style="margin-left: 560px;">
+					<!-- <div style="margin-left: 560px;">
 						<select style="width: 10%; display: unset;" class="form-select" name="gian_search">
 							<option value="">구분</option>
 							<option value="gian_name">회의 제목</option>
 							<option value="gian_modifier">회의실 번호</option>
 						</select> <input style="width: 250px; display: unset;" id="gian_name" class="form-control" type="text" placeholder="검색어를 입력해주세요.">
 						<button class="btn btn-primary rounded-pill" id="templateSearch">검색</button>
-					</div>
+					</div> -->
 					
 						<table class="table table-hover" style="margin-top: 10px;">
 							<thead>
