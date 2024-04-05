@@ -44,6 +44,12 @@ public interface IApprovalService {
 	//기안 결재 임시저장
 	public boolean saveTempApproval(ApprovalVo approvalVo, List<PaymentlineVo> list);
 	
+	//0단계 결재 수정
+	public int fixWatingApproval(ApprovalVo approvalVo);
+	
+	//반려결재 수정
+	public int fixReqApproval(ApprovalVo approvalVo, String app_seq);
+	
 	//결재 취소
 	public int cancelApproval(String appSeq);
 	
@@ -66,5 +72,10 @@ public interface IApprovalService {
 	//결재 반려 처리
 	public int banRuApproval(String app_seq);
 	public int banRuPayLine(String pay_rejectreason,String app_seq,String pay_num,String pay_user);
+	
+	//페이징 테스트
+	public int selectTempCount(String user_id); //전체 공지 게시글 수
+			
+	public List<ApprovalVo> selectTempPage(Map<String, Object> map); //공지 페이징 구간별 게시글 가져오기
 	
 }

@@ -23,95 +23,119 @@
 		        <form action="./searchUserList.do" id="searchUserList" class="form-inline" method="GET">
 		        	<div id="flex_center" class="row">
 			        	<div class="col-md-2 w140px">
-		                  <!-- <label for="startDate" class="col-sm-2 col-form-label">시작일</label> -->
-		                  <div class="col-sm-10">
-		                  	<c:choose>
-		                  		<c:when test="${startDate eq null}">
-				                    <input type="date" id="startDate" name="startDate" class="form-control w133px">
-		                  		</c:when>
-		                  		<c:otherwise>
-		                  			<input type="date" id="startDate" name="startDate" value="${startDate}" class="form-control w133px">
-		                  		</c:otherwise>
-		                  	</c:choose>
-		                  </div>
+		                  	<!-- <label for="startDate" class="col-sm-2 col-form-label">시작일</label> -->
+		                  	<div class="col-sm-10">
+		                  		<c:choose>
+		                  			<c:when test="${startDate eq null}">
+				                    	<input type="date" id="startDate" name="startDate" class="form-control w133px">
+		                  			</c:when>
+		                  			<c:otherwise>
+		                  				<input type="date" id="startDate" name="startDate" value="${startDate}" class="form-control w133px">
+		                  			</c:otherwise>
+		                  		</c:choose>
+		                  	</div>
 		                </div>
 		                <div class="col-md-2 w140px">
-		                  <!-- <label for="lastDate" class="col-sm-2 col-form-label">종료일</label> -->
-		                  <div class="col-sm-10">
-		                  	<c:choose>
-		                  		<c:when test="${endDate eq null}">
-				                    <input type="date" id="endDate" name="endDate" class="form-control w133px">
-		                  		</c:when>
-		                  		<c:otherwise>
-		                  			<input type="date" id="endDate" name="endDate" value="${endDate}" class="form-control w133px">
-		                  		</c:otherwise>
-		                  	</c:choose>
-		                  </div>
+		                	<!-- <label for="lastDate" class="col-sm-2 col-form-label">종료일</label> -->
+		                 	<div class="col-sm-10">
+		                  		<c:choose>
+		                  			<c:when test="${endDate eq null}">
+				                    	<input type="date" id="endDate" name="endDate" class="form-control w133px">
+		                  			</c:when>
+		                  			<c:otherwise>
+		                  				<input type="date" id="endDate" name="endDate" value="${endDate}" class="form-control w133px">
+		                  			</c:otherwise>
+		                  		</c:choose>
+		                  	</div>
 		                </div>
 		                &nbsp;&nbsp;
 		                <div class="col-md-2 pd1px">
-		                  <select id="searchDepts" name="searchDepts" class="form-select" aria-label="Default select example">
-		                  	<c:choose>
-		                  		<c:when test="${searchDepts eq null}">
-			                  		<option value="">부서선택</option>
-		                  		</c:when>
-		                  		<c:otherwise>
-		                  			<option value="${searchDepts}">${searchDepts}</option>
-		                  		</c:otherwise>
-		                  	</c:choose>
-		                    <c:forEach var="deptLists" items="${deptLists}" varStatus="vs">
-								<option value="${deptLists.dept_name}">${deptLists.dept_name}</option>
-							</c:forEach>
-		                  </select>
+		                	<select  id="searchRanks" name="searchRanks" class="form-select" aria-label="Default select example">
+			                    <c:choose>
+			                  		<c:when test="${searchRanks eq null or searchRanks eq ''}">
+				                  		<option value="" selected>직급선택</option>
+				                  		<c:forEach var="ranksLists" items="${ranksLists}" varStatus="vs">
+											<option value="${ranksLists.ranks_name}">${ranksLists.ranks_name}</option>
+										</c:forEach>
+			                  		</c:when>
+			                  		<c:otherwise>
+			                  			<option value="">직급선택</option>
+			                  			<c:forEach var="ranksLists" items="${ranksLists}" varStatus="vs">
+			                  				<c:if test="${searchRanks eq ranksLists.ranks_name}">
+			                  					<option value="${ranksLists.ranks_name}" selected>${ranksLists.ranks_name}</option>
+			                  				</c:if>
+			                  				<c:if test="${searchRanks ne ranksLists.ranks_name}">
+			                  					<option value="${ranksLists.ranks_name}">${ranksLists.ranks_name}</option>
+			                  				</c:if>
+										</c:forEach>
+			                  		</c:otherwise>
+			                  	</c:choose>
+	                  		</select>
 		                </div>
 		                <div class="col-md-2 pd1px">
-		                  <select id="searchPositions" name="searchPositions" class="form-select" aria-label="Default select example">
-		                    <c:choose>
-		                  		<c:when test="${searchPositions eq null}">
-			                  		<option value="">직책선택</option>
-		                  		</c:when>
-		                  		<c:otherwise>
-		                  			<option value="${searchPositions}">${searchPositions}</option>
-		                  		</c:otherwise>
-		                  	</c:choose>
-		                    <c:forEach var="positLists" items="${positionsLists}" varStatus="vs">
-								<option value="${positLists.positions_name}">${positLists.positions_name}</option>
-							</c:forEach>
-		                  </select>
+		                	<select id="searchPositions" name="searchPositions" class="form-select" aria-label="Default select example">
+		                    	<c:choose>
+		                  			<c:when test="${searchPositions eq null or searchPositions eq ''}">
+			                  			<option value="" selected>직책선택</option>
+			                  			<c:forEach var="positLists" items="${positionsLists}" varStatus="vs">
+			                  				<option value="${positLists.positions_name}">${positLists.positions_name}</option>
+			                  			</c:forEach>
+		                  			</c:when>
+		                  			<c:otherwise>
+		                  				<option value="">직책선택</option>
+		                  				<c:forEach var="positLists" items="${positionsLists}" varStatus="vs">
+			                  				<c:if test="${searchPositions eq positLists.positions_name}">
+				                  				<option value="${positLists.positions_name}" selected>${positLists.positions_name}</option>
+			                  				</c:if>
+			                  				<c:if test="${searchPositions ne positLists.positions_name}">
+			                  					<option value="${positLists.positions_name}">${positLists.positions_name}</option>
+			                  				</c:if>
+		                  				</c:forEach>
+		                  			</c:otherwise>
+		                  		</c:choose>
+		                  	</select>
 		                </div>
 		                <div class="col-md-2 pd1px">
-		                  <select  id="searchRanks" name="searchRanks" class="form-select" aria-label="Default select example">
-		                    <c:choose>
-		                  		<c:when test="${searchRanks eq null}">
-			                  		<option value="">직급선택</option>
-		                  		</c:when>
-		                  		<c:otherwise>
-		                  			<option value="${searchRanks}">${searchRanks}</option>
-		                  		</c:otherwise>
-		                  	</c:choose>
-		                    <c:forEach var="ranksLists" items="${ranksLists}" varStatus="vs">
-								<option value="${ranksLists.ranks_name}">${ranksLists.ranks_name}</option>
-							</c:forEach>
-		                  </select>
+	                  		<select id="searchDepts" name="searchDepts" class="form-select" aria-label="Default select example">
+		                  		<c:choose>
+		                  			<c:when test="${searchDepts eq null or searchDepts eq ''}">
+			                  			<option value="" selected>부서선택</option>
+			                  			<c:forEach var="deptLists" items="${deptLists}" varStatus="vs">
+			                  				<option value="${deptLists.dept_name}">${deptLists.dept_name}</option>
+			                  			</c:forEach>
+		                  			</c:when>
+		                  			<c:otherwise>
+		                  				<option value="">부서선택</option>
+		                  				<c:forEach var="deptLists" items="${deptLists}" varStatus="vs">
+			                  				<c:if test="${searchDepts eq deptLists.dept_name}">
+				                  				<option value="${deptLists.dept_name}" selected>${deptLists.dept_name}</option>
+			                  				</c:if>
+			                  				<c:if test="${searchDepts ne deptLists.dept_name}">
+			                  					<option value="${deptLists.dept_name}">${deptLists.dept_name}</option>
+			                  				</c:if>
+		                  				</c:forEach>
+		                  			</c:otherwise>
+		                  		</c:choose>
+		                  	</select>
 		                </div>
 		                <div class="col-md-2 pd1px">
-		                  <select  id="searchStatus" name="searchStatus" class="form-select" aria-label="Default select example">
-		                    <option value="">재직여부</option>
-		                    <c:choose>
-		                  		<c:when test="${searchStatus eq null}">
-			                  		<option value="Y">Y</option>
-									<option value="N">N</option>
-		                  		</c:when>
-		                  		<c:when test="${searchStatus eq Y}">
-			                  		<option value="Y">Y</option>
-									<option value="N">N</option>
-		                  		</c:when>
-		                  		<c:otherwise>
-									<option value="N">N</option>
+	                  		<select  id="searchStatus" name="searchStatus" class="form-select" aria-label="Default select example">
+	                  	  		<c:if test="${searchStatus eq null or searchStatus eq ''}">
+	                  				<option value="" selected>재직여부</option>
 		                  			<option value="Y">Y</option>
-		                  		</c:otherwise>
-		                  	</c:choose>
-		                  </select>
+									<option value="N">N</option>
+	                  			</c:if>
+	                  			<c:if test="${searchStatus eq 'Y'}">
+	                  				<option value="">재직여부</option>
+		                  			<option value="Y" selected>Y</option>
+									<option value="N">N</option>
+	                  			</c:if>
+	                  			<c:if test="${searchStatus eq 'N'}">
+	                  				<option value="">재직여부</option>
+	                  				<option value="Y">Y</option>
+									<option value="N" selected>N</option>
+	                  			</c:if>
+	                  		</select>
 		                </div>
 		                <div class="col-md-2 w140px pd1px">
 		                  <div class="col-sm-10">
@@ -167,37 +191,71 @@
 			        <ul class="pagination justify-content-center">
 			            <!-- 첫 페이지로 이동 버튼 -->
 			            <li class="page-item <c:if test="${page.page == 1}">disabled</c:if>">
-			                <a class="page-link" href="${pageContext.request.contextPath}/userInfo.do?page=1" aria-label="First">
-			                    <span aria-hidden="true">&lt;&lt;</span>
-			                </a>
+			            	<c:if test="${searchChk == 1}">
+			            		<a class="page-link" href="${pageContext.request.contextPath}/searchUserList.do?page=1?startDate=${startDate}&endDate=${endDate}&searchDepts=${searchDepts}&searchPositions=${searchPositions}&searchRanks=${searchRanks}&searchStatus=${searchStatus}&searchName=${searchName}" aria-label="First">
+			            			<span aria-hidden="true">&lt;&lt;</span>
+			                	</a>
+			            	</c:if>
+			            	<c:if test="${searchChk != 1}">
+			            		<a class="page-link" href="${pageContext.request.contextPath}/userInfo.do?page=1" aria-label="First">
+			            			<span aria-hidden="true">&lt;&lt;</span>
+			                	</a>
+			            	</c:if>
 			            </li>
 			
 			            <!-- 이전 페이지로 이동 버튼 -->
 			            <li class="page-item <c:if test="${page.page <= 5}">disabled</c:if>">
-			                <a class="page-link" href="${pageContext.request.contextPath}/userInfo.do?page=${page.stagePage - 1}" aria-label="Previous">
-			                    <span aria-hidden="true">&lt;</span>
-			                </a>
+			            	<c:if test="${searchChk == 1}">
+			            		<a class="page-link" href="${pageContext.request.contextPath}/searchUserList.do?page=${page.stagePage - 1}&startDate=${startDate}&endDate=${endDate}&searchDepts=${searchDepts}&searchPositions=${searchPositions}&searchRanks=${searchRanks}&searchStatus=${searchStatus}&searchName=${searchName}" aria-label="Previous">
+			                    	<span aria-hidden="true">&lt;</span>
+			                	</a>
+			            	</c:if>
+			            	<c:if test="${searchChk != 1}">
+			            		<a class="page-link" href="${pageContext.request.contextPath}/userInfo.do?page=${page.stagePage - 1}" aria-label="Previous">
+			                    	<span aria-hidden="true">&lt;</span>
+			               		</a>
+			            	</c:if>
 			            </li>
 			
 			            <!-- 페이지 번호 링크 -->
 			            <c:forEach begin="${page.stagePage}" end="${page.endPage}" var="i">
 			                <li class="page-item <c:if test="${i == page.page}">active</c:if>">
-			                    <a class="page-link" href="${pageContext.request.contextPath}/userInfo.do?page=${i}">${i}</a>
+			                	<c:if test="${searchChk == 1}">
+			                		<a class="page-link" href="${pageContext.request.contextPath}/searchUserList.do?page=${i}&startDate=${startDate}&endDate=${endDate}&searchDepts=${searchDepts}&searchPositions=${searchPositions}&searchRanks=${searchRanks}&searchStatus=${searchStatus}&searchName=${searchName}">${i}</a>
+			                	</c:if>
+			                	<c:if test="${searchChk != 1}">
+			                		<a class="page-link" href="${pageContext.request.contextPath}/userInfo.do?page=${i}">${i}</a>
+			                	</c:if>
 			                </li>
+			                
 			            </c:forEach>
 			
 			            <!-- 다음 페이지로 이동 버튼 -->
 			            <li class="page-item <c:if test="${page.stagePage+4 >= page.totalPage}">disabled</c:if>">
-			                <a class="page-link" href="${pageContext.request.contextPath}/userInfo.do?page=${page.endPage + 1}" aria-label="Next">
-			                    <span aria-hidden="true">&gt;</span>
-			                </a>
+			            	<c:if test="${searchChk == 1}">
+			            		<a class="page-link" href="${pageContext.request.contextPath}/searchUserList.do?page=${page.endPage + 1}&startDate=${startDate}&endDate=${endDate}&searchDepts=${searchDepts}&searchPositions=${searchPositions}&searchRanks=${searchRanks}&searchStatus=${searchStatus}&searchName=${searchName}" aria-label="Next">
+				                    <span aria-hidden="true">&gt;</span>
+				                </a>
+			            	</c:if>
+			            	<c:if test="${searchChk != 1}">
+			            		<a class="page-link" href="${pageContext.request.contextPath}/userInfo.do?page=${page.endPage + 1}" aria-label="Next">
+				                    <span aria-hidden="true">&gt;</span>
+				                </a>
+			            	</c:if>
 			            </li>
 			
 			            <!-- 마지막 페이지로 이동 버튼 -->
 			            <li class="page-item <c:if test="${page.page == page.totalPage}">disabled</c:if>">
-			                <a class="page-link" href="${pageContext.request.contextPath}/userInfo.do?page=${page.totalPage}" aria-label="Last">
-			                    <span aria-hidden="true">&gt;&gt;</span>
-			                </a>
+			                <c:if test="${searchChk == 1}">
+			                	<a class="page-link" href="${pageContext.request.contextPath}/searchUserList.do?page=${page.totalPage}&startDate=${startDate}&endDate=${endDate}&searchDepts=${searchDepts}&searchPositions=${searchPositions}&searchRanks=${searchRanks}&searchStatus=${searchStatus}&searchName=${searchName}" aria-label="Last">
+				                    <span aria-hidden="true">&gt;&gt;</span>
+				                </a>
+			                </c:if>
+			                <c:if test="${searchChk != 1}">
+			                	<a class="page-link" href="${pageContext.request.contextPath}/userInfo.do?page=${page.totalPage}" aria-label="Last">
+				                    <span aria-hidden="true">&gt;&gt;</span>
+				                </a>
+			                </c:if>
 			            </li>
 			        </ul>
 			    </nav>

@@ -119,6 +119,26 @@ public class ApprovalServiceImpl implements IApprovalService{
 		int payline = PaymentlineDao.putPayLine(list);
 		return isc = (tempresult>0 && payline>0) ? true:false;
 	}
+	
+	//승인대기중인 결재 수정 
+	@Override
+	public int fixWatingApproval(ApprovalVo approvalVo) {
+		log.info("승인 대기중인 결재 수정: {}",approvalVo);
+		int result = approvalDao.fixReqApproval(approvalVo);
+		return (result != 0) ? 1 : 0;
+	}
+	
+	//반려결재 수정
+	@Transactional
+	@Override
+	public int fixReqApproval(ApprovalVo approvalVo,String app_seq) {
+		log.info("기안 결재 임시저장: {}",approvalVo);
+		int fixResult = approvalDao.fixReqApproval(approvalVo);
+		int fixPaylineSign = PaymentlineDao.fixReqLine(app_seq);
+		
+		return (fixResult>0 && fixPaylineSign>0)? 1 : 0;
+	}
+	
 
 	//결재 취소
 	@Override
@@ -176,6 +196,18 @@ public class ApprovalServiceImpl implements IApprovalService{
 		log.info("결재 승인 결재상태 수정 : {} {} {} {}",pay_rejectreason, app_seq ,pay_num,pay_user);
 		return approvalDao.banRuPayLine(pay_rejectreason, app_seq ,pay_num,pay_user);
 	}
+
+
+	@Override
+	public int selectTempCount(String user_id) {
+		return approvalDao.selectTempCount(user_id);
+	}
+
+	@Override
+	public List<ApprovalVo> selectTempPage(Map<String, Object> map) {
+		return approvalDao.selectTempPage(map);
+	}
+
 
 	
 }

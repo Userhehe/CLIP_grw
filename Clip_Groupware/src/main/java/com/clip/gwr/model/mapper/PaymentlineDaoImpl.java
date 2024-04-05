@@ -31,4 +31,12 @@ public class PaymentlineDaoImpl implements IPaymentlineDao {
 		return sqlSession.insert(NS+"putPayLine", list);
 	}
 
+	
+	@Override
+	public int fixReqLine(String app_seq) {
+		log.info("PaymentlineDaoImpl fixReqLine 반려결재 수정후 요청결재상황 변경 : {}", app_seq);
+		return sqlSession.update(NS+"fixReqLine",app_seq);
+	}
+
+
 }

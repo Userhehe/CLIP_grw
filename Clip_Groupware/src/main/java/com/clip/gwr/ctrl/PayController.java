@@ -35,6 +35,7 @@ import com.google.gson.GsonBuilder;
 
 import aj.org.objectweb.asm.Type;
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @Slf4j
@@ -181,7 +182,53 @@ public class PayController {
 		return "continuePay";
 		
 	}
+	
+	//결재대기중인 결재 수정
+	@PostMapping(value = "/fixWating.do")
+	@ResponseBody
+	public String fixWating(@RequestBody String jsonMap) {
+		log.info("PayController fixReq 반려서류 수정하여 재요청 {}", jsonMap);
+		
+		
+		Gson gson = new GsonBuilder().create();
+		ApprovalVo approvalVo = gson.fromJson(jsonMap, ApprovalVo.class);
+		
+		int result = approvalService.fixWatingApproval(approvalVo);
+		
+		System.out.println("json에서 객체로 : " + approvalVo);
+		
+		if(result == 1) {
+			return "success";
+		}
+		else{
+			return "fail";
+		}
+	}
 
+
+	//반려 결재 수정 
+	@PostMapping(value = "/fixReq.do")
+	@ResponseBody
+	public String fixReq(@RequestBody String jsonMap) {
+		log.info("PayController fixReq 반려서류 수정하여 재요청 {}", jsonMap);
+		
+		
+		Gson gson = new GsonBuilder().create();
+		ApprovalVo approvalVo = gson.fromJson(jsonMap, ApprovalVo.class);
+		String seq = approvalVo.getApp_seq();
+		
+		System.out.println("받은 데이터에서 GSON으로 객체로 변환한 것 : " + approvalVo);
+		
+		int result = approvalService.fixReqApproval(approvalVo, seq);
+		
+		if(result == 1) {
+			return "success";
+		}
+		else{
+			return "fail";
+		}
+		
+	}
 	
 	
 	

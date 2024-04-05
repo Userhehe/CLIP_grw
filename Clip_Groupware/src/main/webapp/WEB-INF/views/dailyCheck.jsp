@@ -121,7 +121,7 @@
                 <td class="daily_modify">${list.daily_modify}</td>      
                 <td class="daily_reasonmodify">${list.daily_reasonmodify}</td> 
                 <td>
-                    <button class="open-modal-btn">수정</button>
+                    <button class="open-modal-btn btn btn-info rounded-pill">수정</button>
                 </td>
             </tr>
         </c:forEach>

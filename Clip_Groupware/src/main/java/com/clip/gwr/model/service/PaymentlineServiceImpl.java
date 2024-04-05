@@ -23,4 +23,10 @@ public class PaymentlineServiceImpl implements IPaymentlineService {
 		return 0;
 	}
 
+	@Override
+	public int fixReqLine(String app_seq) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

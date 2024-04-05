@@ -5,7 +5,7 @@
     <!-- 직급 전체 조회 -->
      <select id="ranksAll" resultType="RanksVo">
 	 SELECT RANKS_SEQ , RANKS_NAME , RANKS_REGDATE   
-	 FROM RANKS  ORDER BY RANKS_SEQ
+	 FROM RANKS  ORDER BY RANKS_REGDATE
 	</select>
  
 	 <!-- 직급등록 -->

@@ -116,23 +116,6 @@
 											<textarea class="form-control" style="height: 100px" name="prjNote"></textarea>
 										</div>
 									</div>
-
-									<ul class="col-sm-10">
-										<h5>필요 제출목록</h5>
-										<li class="form-check"><input class="form-check-input"
-											type="checkbox" id="gridCheck1"> <label
-											class="form-check-label" for="gridCheck1"> 최종이미지 </label></li>
-										<li class="form-check"><input class="form-check-input"
-											type="checkbox" id="gridCheck2" checked=""> <label
-											class="form-check-label" for="gridCheck2"> 견적서 </label></li>
-										<li class="form-check"><input class="form-check-input"
-											type="checkbox" id="gridCheck2" checked=""> <label
-											class="form-check-label" for="gridCheck2"> 제안서 </label></li>
-										<li class="form-check"><input class="form-check-input"
-											type="checkbox" id="gridCheck2" checked=""> <label
-											class="form-check-label" for="gridCheck2"> 도면 </label></li>
-
-									</ul>
 								</form>
 							</div>
 						</div>

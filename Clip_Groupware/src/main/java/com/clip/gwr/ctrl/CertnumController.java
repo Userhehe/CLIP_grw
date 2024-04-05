@@ -56,8 +56,6 @@
 //		String email = userVo.getUser_email();
 //		String key = "certnum_" + id; // Redis에 저장할 키 생성
 //		ValueOperations<String, Integer> valueOps = redisTemplate.opsForValue();
-////        Integer redisCertnum = valueOps.get(key);
-////        log.info("####redisCertnum : " + redisCertnum);
 //        
 //        valueOps.set(key, ranNum); // Redis에 랜덤한 값 저장
 //        redisTemplate.expire(key, 60, TimeUnit.SECONDS); // 키값 1분 뒤 만료
@@ -72,6 +70,7 @@
 //	        messageHelper.setTo(userVo.getUser_email());
 //	        messageHelper.setSubject("CLIP GROUPWARE 인증번호입니다.");
 //	        messageHelper.setText("인증번호는 " + ranNum + "입니다.");
+//	        log.info("####ranNum : " + ranNum);
 //	        javaMailSender.send(message);
 //	        return 1;
 //	    } catch (MailException | MessagingException e) {

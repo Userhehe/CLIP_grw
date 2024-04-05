@@ -7,5 +7,5 @@
 // * extends만 해주면 Spring 세션 구성을 자동으로 설정해주고 생성자를 통해 추가적인 설정을 구성할 수 있다 
 // */
 //public class SessionInitializer extends AbstractHttpSessionApplicationInitializer{
-//
+//	
 //}

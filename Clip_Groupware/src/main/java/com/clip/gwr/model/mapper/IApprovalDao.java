@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.clip.gwr.vo.ApprovalVo;
+import com.clip.gwr.vo.NtcVo;
 
 public interface IApprovalDao {
 
@@ -44,6 +45,10 @@ public interface IApprovalDao {
 	//기안 결재 임시저장
 	public int saveTempApproval(ApprovalVo approvalVo);
 	
+	//기안 수정
+	public int fixReqApproval(ApprovalVo approvalVo);
+	
+	
 	//결재 취소
 	public int cancelApproval(String appSeq);
 	
@@ -66,5 +71,10 @@ public interface IApprovalDao {
 	//결재 반려 처리
 	public int banRuApproval(String app_seq);
 	public int banRuPayLine(String pay_rejectreason,String app_seq,String pay_num,String pay_user);
+	
+	//페이징 테스트
+	public int selectTempCount(String user_id); //전체 공지 게시글 수
+		
+	public List<ApprovalVo> selectTempPage(Map<String, Object> map); //공지 페이징 구간별 게시글 가져오기
 	
 }

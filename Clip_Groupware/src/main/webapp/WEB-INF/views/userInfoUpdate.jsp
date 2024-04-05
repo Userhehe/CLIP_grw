@@ -92,12 +92,20 @@
 							    </div>
 					  		</div>
 						</div>
+<!-- 						<div class="row mb-3"> -->
+<!-- 							<label for="userBirthday" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>생년월일</label> -->
+<!-- 							<div class="col-sm-10"> -->
+<%-- 								<input type="number" id="userBirthday" name="userBirthday" class="form-control" maxlength="8" value="${fn:replace(userDetailList.user_birthday, '-', '')}" placeholder="생년월일8자리 ex)19980423" required="required"> --%>
+<!-- 							</div> -->
+<!-- 						</div> -->
+						
 						<div class="row mb-3">
 							<label for="userBirthday" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>생년월일</label>
 							<div class="col-sm-10">
-								<input type="number" id="userBirthday" name="userBirthday" class="form-control" maxlength="8" value="${fn:replace(userDetailList.user_birthday, '-', '')}" placeholder="생년월일8자리 ex)19980423" required="required">
+								<input type="date" id="userBirthday" name="userBirthday" class="form-control" value="${userDetailList.user_birthday}" required="required">
 							</div>
 						</div>
+						
 						<div class="row mb-3">
 							<label for="inputEmail" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>연락처</label>
 							<div class="col-sm-10">

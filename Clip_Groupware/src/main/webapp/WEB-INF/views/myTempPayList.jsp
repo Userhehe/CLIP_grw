@@ -62,25 +62,46 @@
 						</tr>
 					</tfoot>
 				</table>
-				<!-- 페이징 -->
-				<div style="margin-left: 450px;">
-				<nav aria-label="Page navigation example">
-			            <ul class="pagination">
-			              <li class="page-item">
-			                <a class="page-link" href="#" aria-label="Previous">
-			                  <span aria-hidden="true">«</span>
-			                </a>
-			              </li>
-			              <li class="page-item"><a class="page-link" href="#">1</a></li>
-			              <li class="page-item"><a class="page-link" href="#">2</a></li>
-			              <li class="page-item"><a class="page-link" href="#">3</a></li>
-			              <li class="page-item">
-			                <a class="page-link" href="#" aria-label="Next">
-			                  <span aria-hidden="true">»</span>
-			                </a>
-			              </li>
-			            </ul>
-			          </nav>
+				<!-- 페이지 링크 표시 -->
+				<div class="datatable-bottom paging">
+				    <nav aria-label="Page navigation">
+				        <ul class="pagination justify-content-center">
+				            <!-- 첫 페이지로 이동 버튼 -->
+				            <li class="page-item <c:if test="${page.page == 1}">disabled</c:if>">
+				                <a class="page-link" href="${pageContext.request.contextPath}/myTempPayList.do?page=1" aria-label="First">
+				                    <span aria-hidden="true">&lt;&lt;</span>
+				                </a>
+				            </li>
+				
+				            <!-- 이전 페이지로 이동 버튼 -->
+				            <li class="page-item <c:if test="${page.page <= 5}">disabled</c:if>">
+				                <a class="page-link" href="${pageContext.request.contextPath}/myTempPayList.do?page=${page.stagePage - 1}" aria-label="Previous">
+				                    <span aria-hidden="true">&lt;</span>
+				                </a>
+				            </li>
+				
+				            <!-- 페이지 번호 링크 -->
+				            <c:forEach begin="${page.stagePage}" end="${page.endPage}" var="i">
+				                <li class="page-item <c:if test="${i == page.page}">active</c:if>">
+				                    <a class="page-link" href="${pageContext.request.contextPath}/myTempPayList.do?page=${i}">${i}</a>
+				                </li>
+				            </c:forEach>
+				
+				            <!-- 다음 페이지로 이동 버튼 -->
+				            <li class="page-item <c:if test="${page.stagePage+4 >= page.totalPage}">disabled</c:if>">
+				                <a class="page-link" href="${pageContext.request.contextPath}/myTempPayList.do?page=${page.endPage + 1}" aria-label="Next">
+				                    <span aria-hidden="true">&gt;</span>
+				                </a>
+				            </li>
+				
+				            <!-- 마지막 페이지로 이동 버튼 -->
+				            <li class="page-item <c:if test="${page.page == page.totalPage}">disabled</c:if>">
+				                <a class="page-link" href="${pageContext.request.contextPath}/myTempPayList.do?page=${page.totalPage}" aria-label="Last">
+				                    <span aria-hidden="true">&gt;&gt;</span>
+				                </a>
+				            </li>
+				        </ul>
+				    </nav>
 				</div>
 				
 				<!-- 모달 시작 -->

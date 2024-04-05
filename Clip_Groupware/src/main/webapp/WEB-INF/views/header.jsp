@@ -95,10 +95,11 @@ String fileStorename = (String)session.getAttribute("fileStorename");
 				  	</a>
 				  </li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                  <i class="bi bi-gear"></i>
-                  <span>개인정보 수정</span></a>
-                  </li>
+
+<!--                   <li><a class="dropdown-item d-flex align-items-center" href="users-profile.html"> -->
+<!--                   <i class="bi bi-gear"></i> -->
+<!--                   <span>개인정보 수정</span></a> -->
+<!--                   </li> -->
                   <li id="checkInButton">
                       <a class="dropdown-item d-flex align-items-center" href="insertDailyCheckIntime.do" onclick="handleCheckInButtonClick()">
                           <i class="bi bi-gear"></i>
@@ -106,15 +107,11 @@ String fileStorename = (String)session.getAttribute("fileStorename");
                       </a>
                   </li>
 
-                   <li id="checkOutButton" >
-                      <a class="dropdown-item d-flex align-items-center" href="updateDailyCheckOuttime.do" onclick="handleCheckOutButtonClick()">
-                          <i class="bi bi-gear"></i>
-                          <span>퇴근</span>
-                      </a>
-                  </li>
-                  
+
                   <li><hr class="dropdown-divider"></li>
-                  <li><a id="logout" class="dropdown-item d-flex align-items-center"> <!-- href="./logout.do" -->
+
+                  <li><a id="logout" style="cursor: pointer;" class="dropdown-item d-flex align-items-center"> <!-- href="./logout.do" -->
+
                   <i class="bi bi-box-arrow-right"></i>
                   <span>Log Out</span>
                   </a>
@@ -130,22 +127,32 @@ String fileStorename = (String)session.getAttribute("fileStorename");
    <aside id="sidebar" class="sidebar">
       <ul class="sidebar-nav" id="sidebar-nav">
          <li class="mainlogo">
-            <a href="./main.do" class="logo d-flex align-items-center"> <img src="assets/img/logo.png" alt=""></a>
+            <a href="./main.do" style="margin-top: 35%; margin-left: 18%;" class="logo d-flex align-items-center"> <img src="assets/img/logo.png" alt=""></a>
          </li>
 <!-- ======= START humanresource-nav ======= -->
-            <li class="nav-item" style="margin-top: 200px">
-            <a class="nav-link collapsed" data-bs-target="#humanresource-nav" data-bs-toggle="collapse" href="#">
-               <i class="bi bi-file-earmark-person"></i><span>인사관리</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-               <ul id="humanresource-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                  <li><a href="./userInfo.do"><i class="bi bi-circle"></i><span>인사 정보</span></a></li>
-                  <li><a href="./selectDailyCheckList.do"><i class="bi bi-circle"></i><span>근태관리</span></a></li>
-                  <li><a href="./annAll.do"><i class="bi bi-circle"></i><span>연차관리</span></a></li>
-                  <li><a href="./organization.do"><i class="bi bi-circle"></i><span>조직도</span></a></li>
-                  <li><a href="./ranksAll.do"><i class="bi bi-circle"></i><span>직급관리</span></a></li>
-                  <li><a href="./deptAll.do"><i class="bi bi-circle"></i><span>부서관리</span></a></li>
-               </ul>
+			<li class="nav-item" style="margin-top: 100px">
+	            <a class="nav-link collapsed" data-bs-target="#jojic-nav" data-bs-toggle="collapse" href="#">
+	               <i class="bi bi-file-earmark-person"></i><span>조직도</span><i class="bi bi-chevron-down ms-auto"></i>
+	            </a>
+                <ul id="jojic-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                   <li><a href="./organization.do"><i class="bi bi-circle"></i><span>조직도</span></a></li>
+                </ul>
+
             </li>
+			<c:if test="${loginVo.user_auth eq 'ROLE_ADMIN'}">
+	            <li class="nav-item">
+	            <a class="nav-link collapsed" data-bs-target="#humanresource-nav" data-bs-toggle="collapse" href="#">
+	               <i class="bi bi-file-earmark-person"></i><span>인사관리</span><i class="bi bi-chevron-down ms-auto"></i>
+	            </a>
+	               <ul id="humanresource-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+	                  <li><a href="./userInfo.do"><i class="bi bi-circle"></i><span>인사 정보</span></a></li>
+	                  <li><a href="./selectDailyCheckList.do"><i class="bi bi-circle"></i><span>근태관리</span></a></li>
+	                  <li><a href="./annual.do"><i class="bi bi-circle"></i><span>연차관리</span></a></li>
+	                  <li><a href="./ranksAll.do"><i class="bi bi-circle"></i><span>직급관리</span></a></li>
+	                  <li><a href="./deptAll.do"><i class="bi bi-circle"></i><span>부서관리</span></a></li>
+	               </ul>
+	            </li>
+			</c:if>
 <!-- ======= END humanresource-nav ======= -->
 
 <!-- ======= START ework-nav ======= -->

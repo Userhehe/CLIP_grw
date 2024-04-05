@@ -70,6 +70,7 @@ button {
 #content {
 	border: 1px solid black;
 	height: 810px;
+	position: relative;
 }
 
 #textContent {
@@ -99,4 +100,13 @@ button {
 
 #bossName {
 	margin-left: 20px;
+}
+
+#signImage {
+	width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 730px;
+    left: 737px;
+    z-index: 999;
 }

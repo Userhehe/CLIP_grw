@@ -130,29 +130,6 @@
 												<textarea class="form-control" style="height: 100px" name="prjNote"></textarea>
 											</div>
 										</div>
-<!-- 										<div class="row mb-3">
-											<label for="inputNumber" class="col-sm-2 col-form-label">발주서
-												첨부</label>
-											<div class="col-sm-10">
-												<input class="form-control" type="file" id="formFile">
-											</div>
-										</div> -->
-										<ul class="col-sm-10">
-											<h5>필요 제출목록</h5>
-											<li class="form-check"><input class="form-check-input"
-												type="checkbox" id="gridCheck1"> <label
-												class="form-check-label" for="gridCheck1"> 최종이미지 </label></li>
-											<li class="form-check"><input class="form-check-input"
-												type="checkbox" id="gridCheck2" checked=""> <label
-												class="form-check-label" for="gridCheck2"> 견적서 </label></li>
-											<li class="form-check"><input class="form-check-input"
-												type="checkbox" id="gridCheck3" checked=""> <label
-												class="form-check-label" for="gridCheck3"> 제안서 </label></li>
-											<li class="form-check"><input class="form-check-input"
-												type="checkbox" id="gridCheck4" checked=""> <label
-												class="form-check-label" for="gridCheck4"> 도면 </label></li>
-
-										</ul>
 									</form>
 								</div>
 							</div>
@@ -180,6 +157,7 @@
                         </div>
                     </div>
                     <div style="margin-top: 0px;">
+                        <h5>참여자 : ${projects.prj_status}</h5>
                         <h5>참여자 : [${lists2[vs.index].user_name}]</h5>
                     </div>
                     <button type="button" class="btn btn-secondary" style="text-align: right; margin-top: 15px; position: relative; right: 0; bottom: 0;"

@@ -1,5 +1,5 @@
 function checkDuplicate() {
-    var ranksName = $('#ranks_name').val();
+    var ranksName = $('#ranks_name').val().replace(/\s+/g, ''); // 앞, 뒤 및 중간 공백 제거
     $.ajax({
         url: './duplicateRanks.do',
         type: 'POST',

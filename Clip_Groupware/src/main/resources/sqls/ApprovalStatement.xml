@@ -7,7 +7,7 @@
 	<select id="getAllApproval" resultType="ApprovalVo" parameterType="java.lang.String">
      	SELECT
 		    a.APP_SEQ, a.APP_TITLE, a.APP_CONTENT,
-		    TO_CHAR(a.APP_STRDATE, 'YYYY"년"MM"월"DD"일"') AS APP_STRDATE , a.APP_ENDDATE,
+		    TO_CHAR(a.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE , a.APP_ENDDATE,
 		    a.APP_MODDATE, g.GIAN_NAME AS GIAN_SEQ, a.APP_DRAFT,
 		    (
 		        CASE
@@ -109,15 +109,15 @@
 	
 	<!-- 내가 반려했던 결재 상세보기  -->
 	<select id="oneMyPayPause" resultType="ApprovalVo" parameterType="java.lang.String">
-		SELECT a.APP_CONTENT ,p.MIN_PAY_NUM ,a.APP_SEQ
+		SELECT a.APP_CONTENT, p.MIN_PAY_NUM, p.PAY_REJECTREASON, a.APP_SEQ 
 		FROM APPROVAL a
 		JOIN (
-		    SELECT APP_SEQ, MIN(PAY_NUM) AS MIN_PAY_NUM
+		    SELECT APP_SEQ, MIN(PAY_NUM) AS MIN_PAY_NUM, PAY_REJECTREASON
 		    FROM PAYMENTLINE
 		    WHERE PAY_SIGN = 'D'
-		    GROUP BY APP_SEQ
+		    GROUP BY APP_SEQ, PAY_REJECTREASON 
 		) p ON a.APP_SEQ = p.APP_SEQ  
-		WHERE  a.APP_SEQ = #{app_seq} AND p.MIN_PAY_NUM IS NOT NULL
+		WHERE a.APP_SEQ = #{app_seq} AND p.MIN_PAY_NUM IS NOT NULL
 	</select>
 	
 	
@@ -127,19 +127,19 @@
 		    a.APP_SEQ, 
 		    a.APP_TITLE, 
 		    a.APP_DRAFT,  a.APP_CONTENT  ,
-		    g.GIAN_NAME AS GIAN_SEQ ,  TO_CHAR(a.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE , p.PAY_REJECTREASON 
+		    g.GIAN_NAME AS GIAN_SEQ ,  TO_CHAR(a.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE 
 		FROM APPROVAL a 
 		JOIN GIAN g ON g.GIAN_SEQ = a.GIAN_SEQ 
 		JOIN PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ
-		WHERE a.APP_DRAFT IN ('결재진행','결재완료','결재반려')
+		WHERE a.APP_DRAFT IN ('결재진행','결재완료')
 		AND p.PAY_SIGN = 'Y' 
-		AND p.PAY_USER =  #{user_id}
+		AND p.APP_SEQ =  #{app_seq}
 		ORDER BY p.PAY_ASIGNDATE DESC
 	</select>
 	
 	<!-- 나의 결재승인을 받아야하는 결재 아직 미처리한 리스트조회 (세션에서 사원번호 사용) -->
 	<select id="getMyUnprocessedPaycheck" resultType="ApprovalVo" parameterType="java.lang.String">
-		SELECT 
+		SELECT  
 		    a.APP_SEQ, 
 		    a.APP_TITLE, 
 		    a.APP_DRAFT, 
@@ -176,6 +176,7 @@
 	        WHERE APP_SEQ = #{app_seq} 
 	</select>	
 
+	
 	<!-- 결재 조건별검색 전체리스트 조회 (옵션태그에서 선택한 태그의 밸류 사용) -->
 	<select id="conditionSearchApproval" resultType="ApprovalVo" parameterType="java.util.Map">
     SELECT APP_SEQ, APP_TITLE, APP_CONTENT,
@@ -239,11 +240,6 @@
 	</insert>
 
 
-
-
-
-
-
 	<!-- 결재파일 임시저장 (결재작성창 정보들 이용)-->
 	<insert id="saveTempApproval" parameterType="ApprovalVo">
 	INSERT INTO APPROVAL
@@ -252,6 +248,25 @@
 	VALUES('APPROVAL_' || TO_CHAR(APPROVAL_SEQ.NEXTVAL), #{app_title}, #{app_content},
 			#{gian_seq}, '임시저장', #{user_id})
 	</insert>
+	
+	
+	
+	<!-- 결재 수정하는 업데이트 문 -->
+	<update id="fixReqApproval" parameterType="ApprovalVo">
+		UPDATE APPROVAL 
+		SET APP_TITLE = #{app_title}, 
+			APP_CONTENT = #{app_content},
+			<choose>
+				<when test="app_draft == null">
+					APP_DRAFT = '결재진행',
+				</when>
+				<otherwise>
+					APP_DRAFT = '결재대기',
+				</otherwise>
+			</choose>
+			APP_MODDATE =LOCALTIMESTAMP
+		WHERE APP_SEQ = #{app_seq}
+	</update>
 	
 	
 	
@@ -298,5 +313,29 @@
 	UPDATE APPROVAL SET APP_DRAFT ='결재취소'
                 WHERE APP_SEQ = #{app_seq}	
 	</update>
+	
+	<!-- 임시저장 페이징 테스트 -->
+	<select id="selectTempCount" parameterType="ApprovalVo" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+			FROM APPROVAL
+			WHERE APP_DRAFT = '임시저장' AND  USER_ID = #{user_id, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectTempPage" parameterType="java.util.Map" resultType="ApprovalVo">
+	SELECT *  
+	FROM (
+	    SELECT 
+	        p.APP_SEQ,
+	        p.APP_TITLE,
+	        p.APP_CONTENT,
+	        g.GIAN_NAME AS GIAN_SEQ,
+	        TO_CHAR(p.APP_CREATEDATE, 'YYYY"년"MM"월"DD"일"') AS APP_CREATEDATE,
+	        ROW_NUMBER() OVER (ORDER BY p.APP_CREATEDATE DESC) AS rn
+	    FROM APPROVAL p
+	    JOIN GIAN g ON p.GIAN_SEQ = g.GIAN_SEQ
+	    WHERE USER_ID = #{user_id} AND APP_DRAFT = '임시저장'
+	) 
+	WHERE rn BETWEEN #{first} AND #{last} 
+	</select>
 	
 </mapper>
