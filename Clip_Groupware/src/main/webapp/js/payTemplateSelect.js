@@ -46,9 +46,7 @@ window.onload = function(){
 //	/*반려 결재 수정하여 재요청하는 이벤트*/
 //	fixReq.addEventListener('click', fixreq);
 	
-	/*임시저장하는 이벤트*/	
-//	var tempBut1 = document.querySelector('#tempSave');
-//	tempBut1.addEventListener('click', saveApproval);
+
 	} 
 	 
 	 
@@ -428,6 +426,13 @@ function saveApproval(){
 		return;
 	}
 	
+	var app_title = document.querySelector('[name = "app_title"]').value;
+	if(!app_title){
+		alert('제목을 입력해주세요.');
+		return;
+	}
+	
+	
 	
 	var appContent = modal.querySelector('.approval_content').textContent;
 	if(!appContent){
@@ -449,7 +454,7 @@ function saveApproval(){
 	
 	//전자결재 테이블 정보
 	var user_id = document.querySelector('[name = "user_id"]').value;
-	var app_title = document.querySelector('[name = "app_title"]').value;
+	
 	var app_content = body.innerHTML;
 	var gian_seq = 'GIAN_1';
 

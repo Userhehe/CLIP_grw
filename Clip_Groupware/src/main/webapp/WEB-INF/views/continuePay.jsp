@@ -33,9 +33,9 @@
 	margin-left: 10px;
 }
 
-.btn-warning, .btn-warning:hover{
-	color:#fff;
-}
+/* .btn-warning, .btn-warning:hover{ */
+/* 	color:#fff; */
+/* } */
 
 
 
@@ -114,7 +114,7 @@
 					    
 					    <hr/>
 					    <c:if test="${approvalVo.app_draft eq '임시저장'}">
-							<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal">
+							<a id="payModalBtn" class="btn btn-warning" data-toggle="modal" data-target="#paylinemodal">
 								결재라인 지정
 			            	</a>
 					    </c:if>
@@ -160,7 +160,7 @@
 					                    </div>
 					                    <div class=modal-footer>
 					                      <button type="button" class="btn btn-warning" id="applyPayLine">결재라인 지정확인</button>
-					                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
+					                      <input type="button" class="btn btn-danger" value="초기화" onclick="clean()">
 					                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
 					                    </div>
 				                    </div>
@@ -174,7 +174,7 @@
 		            	
 		            	
 		            	<!-- 참조인 지정 영역 -->
-		            	<a id="refModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#selectedRefermodal">
+		            	<a id="refModalBtn" class="btn btn-warning" data-toggle="modal" data-target="#selectedRefermodal">
 							참조인 지정
 		            	</a>
 		            	
@@ -214,7 +214,7 @@
 					                    </div>
 					                    <div class=modal-footer>
 					                      <button type="button" class="btn btn-warning" id="applyReference">참조인 지정확인</button>
-					                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
+					                      <input type="button" class="btn btn-danger" value="초기화" onclick="clean()">
 					                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
 					                    </div>
 				                    </div>
@@ -279,7 +279,7 @@
 					<div style="text-align: center;">
 <!-- 						<button id="sunbmitReq" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#reqPayment">미리보기/결재요청</button> -->
 <!-- 						<button type= "button" id="tempSave" class="btn btn-secondary rounded-pill">임시저장</button> -->
-						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewGian" onclick="gatheringInfo()">
+						<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewGian" onclick="gatheringInfo()">
               				미리보기/결재요청
 		              	</button>
 					</div>
