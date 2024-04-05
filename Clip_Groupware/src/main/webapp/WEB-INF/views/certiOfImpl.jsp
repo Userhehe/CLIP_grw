@@ -69,6 +69,7 @@
 							<div>대표이사</div>
 							<div id="bossName">${jejicLists.boss_name}(인)</div>
 						</div>
+						<img id="signImage" alt="서명" src="${signImage}">
 					</div>
 				</c:forEach>
 			</div>

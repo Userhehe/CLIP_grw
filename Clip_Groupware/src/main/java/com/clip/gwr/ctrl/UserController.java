@@ -31,6 +31,7 @@ import com.clip.gwr.vo.FileVo;
 import com.clip.gwr.vo.PageVo;
 import com.clip.gwr.vo.PositionsVo;
 import com.clip.gwr.vo.RanksVo;
+import com.clip.gwr.vo.SignsVo;
 import com.clip.gwr.vo.UserinfoVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -291,7 +292,7 @@ public class UserController {
 		map.put("ranks_name", searchRanks);
 		map.put("dept_name", searchDepts);
 		map.put("positions_name", searchPositions);
-		map.put("searchStatus", searchStatus);
+		map.put("user_status", searchStatus);
 		map.put("start_regdate", startDate);
 		map.put("end_regdate", endDate);
 		
@@ -303,6 +304,8 @@ public class UserController {
 			List<DeptVo> deptLists = deptService.deptAll();
 			List<PositionsVo> positionsLists = positService.positionsAll();
 			List<RanksVo> ranksLists = ranksService.ranksAll();
+			
+			int searchChk = 1;
 			
 			int userSearchCount = userService.selectSearchUserInfoListCnt(map);
 			pVo.setTotalCount(userSearchCount);
@@ -323,6 +326,7 @@ public class UserController {
 			model.addAttribute("positionsLists", positionsLists);
 			model.addAttribute("ranksLists", ranksLists);
 			model.addAttribute("userList",userList);
+			model.addAttribute("searchChk",searchChk);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -513,8 +517,17 @@ public class UserController {
 		String user_id = loginVo.getUser_id();
 		try {
 			List<UserinfoVo> jejicLists = userService.selectJejicDownload(user_id);
+			
+			String boss_name = "";
+			for(UserinfoVo vo : jejicLists) {
+				boss_name = vo.getBoss_name();
+			}
+			log.info("####boss : " + boss_name);
 			log.info("####jejicLists : " + jejicLists);
+			String signImage = userService.selectSignImage(boss_name);
+			log.info("####signImage : " + signImage);
 			model.addAttribute("jejicLists",jejicLists);
+			model.addAttribute("signImage",signImage);
 			return "certiOfImpl";
 		} catch (Exception e) {
 			e.printStackTrace();

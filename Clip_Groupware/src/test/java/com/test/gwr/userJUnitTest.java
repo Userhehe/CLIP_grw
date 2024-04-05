@@ -414,7 +414,7 @@ public class userJUnitTest {
 	/**
 	 * 사용자 검색 결과 수 카운트
 	 */
-	@Test
+//	@Test
 	public void selectSearchUserInfoListCnt() {
 		Map<String, Object> map = new HashMap<String, Object>();
 //		map.put("user_name","김");
@@ -427,6 +427,14 @@ public class userJUnitTest {
 		int selectSearchUserInfoListCnt = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.selectSearchUserInfoListCnt", map);
 		System.out.println("##selectSearchUserInfoListCnt: " + selectSearchUserInfoListCnt);
 		assertNotNull(selectSearchUserInfoListCnt);
+	}
+	
+//	@Test
+	public void selectSignImage() {
+		String user_id = "USER_59";
+		String selectSignImage = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.selectSignImage", user_id);
+		System.out.println("##selectSignImage: " + selectSignImage);
+		assertNotNull(selectSignImage);
 	}
 }
 

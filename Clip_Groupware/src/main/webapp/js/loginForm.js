@@ -1,25 +1,24 @@
 // 페이지가 캐시된 상태인지 확인하는 함수
-function isPageCached() {
-    return window.performance.getEntriesByType("navigation")[0].type === "back_forward";
-}
+//function isPageCached() {
+//    return window.performance.getEntriesByType("navigation")[0].type === "back_forward";
+//}
 
 // 메시지 수신 시 처리하는 함수
-function handleMessage(message) {
-    if (!isPageCached()) {
-        // 페이지가 캐시된 상태가 아니면 메시지 처리
-        console.log("Received message:", message);
-    } else {
-        // 페이지가 캐시된 상태이면 경고 메시지 표시
-        console.warn("Message received while page is cached. Ignoring message.");
-    }
-}
+//function handleMessage(message) {
+//    if (!isPageCached()) {
+//        // 페이지가 캐시된 상태가 아니면 메시지 처리
+//        console.log("Received message:", message);
+//    } else {
+//        // 페이지가 캐시된 상태이면 경고 메시지 표시
+//        console.warn("Message received while page is cached. Ignoring message.");
+//    }
+//}
 
 var urlParams = new URLSearchParams(window.location.search);
 var message = urlParams.get('message');
 if (message) {
     alert(message);
 }
-
 
 // 아이디 찾기 모달창 숨기기, 인증번호와 비밀번호 재설정 입력방지
 document.addEventListener('DOMContentLoaded', function(){
@@ -66,7 +65,7 @@ function openPwModal() {
 // 비밀번호 재설정 모달창 비활성화
 function closePwModal() {
 	var modal = document.getElementById("replacePwModal");
-	certnumRequest();
+	certnumReload();
 	modal.style.display = "none";
 }
 
@@ -76,6 +75,14 @@ function passwordUpdateInputActive() {
 	document.getElementById('checkPassword').disabled = false;
 	document.getElementById('replacePasswordBtn').disabled = false;
 	document.getElementById('replacePasswordBtn').style.backgroundColor = '#ECB53B';
+}
+
+// 인증번호 입력란 비활성화
+function certnumInputDisabled() {
+	stopTimer();
+	document.getElementById('certnum').disabled = true;
+	document.getElementById('checkCertnumBtn').disabled = true;
+	document.getElementById('checkCertnumBtn').style.backgroundColor = 'lightgrey';
 }
 
 // 비밀번호 재설정 - 비밀번호 입력란 비활성화
@@ -102,11 +109,13 @@ function checkCertnumActive() {
 	document.getElementById('checkCertnumBtn').style.backgroundColor = '#ECB53B';
 }
 
+var timerInterval;
+var timeLeft = 0;
+
 // 인증번호 타이머설정
 function startTimer() {
-    var timeLeft = 60; // 60초 설정
-
-    var timerInterval = setInterval(function() {
+	timeLeft = 60;
+    timerInterval = setInterval(function() {
         var minutes = Math.floor(timeLeft / 60);
         var seconds = timeLeft % 60;
 
@@ -124,11 +133,16 @@ function startTimer() {
             alert('인증번호가 만료되었습니다. 인증번호를 다시 발급해주세요.');
         }
     }, 1000); // 1초마다 실행
+    return timerInterval;
 }
 
-// 인증번호 재요청
-function certnumRequest() {
-	
+function stopTimer() {
+	clearInterval(timerInterval);
+}
+
+// 초기화
+function certnumReload() {
+	stopTimer();
 	document.getElementById('id').disabled = false;
 	document.getElementById('id').value = "";
 	document.getElementById('sendCertnumBtn').disabled = false;
@@ -149,8 +163,12 @@ function certnumRequest() {
 	document.getElementById('replacePasswordBtn').style.backgroundColor = 'lightgrey';
 }
 
+function certnumRequest() {
+	stopTimer();
+	$('#sendCertnumForm').submit(); 
+}
+
 $(document).ready(function() {
-	
 	$('#loginForm').submit(function(event) {
 		event.preventDefault();
 		var username = $('#username').val();
@@ -248,6 +266,8 @@ $(document).ready(function() {
 				if(response === 1) {
 					console.log("인증번호 일치");
 					passwordUpdateInputActive();
+					certnumInputDisabled();
+					stopTimer();
 					alert('인증번호가 일치합니다.');
 				} else {
 					console.log("인증번호 불일치")

@@ -84,7 +84,8 @@
 			        </form>
            		</div>
 	        	<div class="modal-footer">
-        			<button type="submit" class="btn btn-secondary white_bg" onclick="certnumRequest()" data-bs-dismiss="modal">인증번호재요청</button>
+	        		<button type="submit" id="certnumReload" class="btn btn-secondary orange_bg" onclick="certnumReload()" data-bs-dismiss="modal">초기화</button>
+        			<button type="submit" id="certnumRequest" class="btn btn-secondary white_bg" onclick="certnumRequest()" data-bs-dismiss="modal">인증번호재요청</button>
 	            	<button type="button" class="btn btn-secondary" onclick="closePwModal()" data-bs-dismiss="modal">Close</button>
 	        	</div>
         	</div>
@@ -105,10 +106,10 @@
 			</div>
 			<input type="submit" id="login_btn" class="button" value="Login"/>
 			
-			<div class="form-check" style="display: flex;">
-				<input type="checkbox" id="remember" class="form-check-input" name="remember-me">							
-				<label for="remember" class="form-check-label">자동 로그인</label>
-			</div>
+<!-- 			<div class="form-check" style="display: flex;"> -->
+<!-- 				<input type="checkbox" id="remember" class="form-check-input" name="remember-me">							 -->
+<!-- 				<label for="remember" class="form-check-label">자동 로그인</label> -->
+<!-- 			</div> -->
 		</form>
 		
 		<div class="links">

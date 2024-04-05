@@ -64,11 +64,20 @@
 		<filter-name>accessLogFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
+	
+<!-- 	<filter-mapping> -->
+<!-- 	    <filter-name>accessLogFilter</filter-name> -->
+<!-- 	    <url-pattern>!/loginForm.jsp</url-pattern> -->
+<!-- 	</filter-mapping> -->
+<!-- 	<filter-mapping> -->
+<!--     <filter-name>accessLogFilter</filter-name> -->
+<!-- 	    <url-pattern>/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+	
 	<!-- 세션만료 시간설정 -->
-	<session-config>
-		<session-timeout>60</session-timeout>
-	</session-config>
+<!-- 	<session-config> -->
+<!-- 		<session-timeout>60</session-timeout> -->
+<!-- 	</session-config> -->
 
 <!-- 	<filter> -->
 <!-- 		<filter-name>springSecurityFilterChain</filter-name> -->

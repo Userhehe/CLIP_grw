@@ -104,6 +104,14 @@ public interface IUserService {
 	public String selectUserAuth(String user_id);
 	
 	/**
+	 * 대표 싸인 가져오기
+	 * @param boss_name
+	 * @return
+	 */
+	public String selectSignImage(String boss_name);
+	
+	
+	/**
 	 * 사용자 수 카운트
 	 * @return
 	 */
