@@ -94,7 +94,7 @@
 	<update id="updateDailyCheckStatus" parameterType="java.util.Map">
 		UPDATE DAILYCHECK
 		SET 
-		DAILY_MODIFY = #{daily_modify} , DAILY_REASONMODIFY = #{daily_reasonmodify}
+		DAILY_MODIFY = #{daily_modify} , DAILY_REASONMODIFY = #{daily_reasonmodify} , DAILY_STATUS = #{daily_status}
 		WHERE DAILY_SEQ = #{daily_seq}
 	</update>
 	

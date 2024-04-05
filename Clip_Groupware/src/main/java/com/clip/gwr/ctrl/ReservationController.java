@@ -240,13 +240,11 @@ public class ReservationController {
 			UserinfoVo vo = (UserinfoVo) session.getAttribute("loginVo");
 			log.info("vo의 값:{}",vo);
 			String id = vo.getUser_id();
-
 			
 			map.put("user_id", id);
 			log.info("사용자 아이디:{}",id);
 			log.info("map값:{}",map);
 			service.reModifyRev(map);
-			
 //			service.reModifyAtt(id);
 			return map;
 		}

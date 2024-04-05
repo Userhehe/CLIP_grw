@@ -219,13 +219,16 @@ public class DailyCheckController {
 	@ResponseBody
 	public String updateDailyCheckStatus(//@RequestParam("daily_seq") String daily_seq,@RequestParam("daily_reasonmodify") 
 	                                     String daily_reasonmodify,
-	                                     String daily_seq) {
+	                                     String daily_seq,
+	                                     String daily_status) {
 		log.info("daily_reasonmodify  :" + daily_reasonmodify);
 		log.info("daily_seq  :" + daily_seq);
+		log.info("daily_status :" + daily_status);
 	    Map<String, Object> map = new HashMap<>();
 	    map.put("daily_seq", daily_seq);
 	    map.put("daily_modify", "Y");
 	    map.put("daily_reasonmodify", daily_reasonmodify);
+	    map.put("daily_status", daily_status);
         
 	    log.info("map 확인:{}",map);
 	    service.updateDailyCheckStatus(map);

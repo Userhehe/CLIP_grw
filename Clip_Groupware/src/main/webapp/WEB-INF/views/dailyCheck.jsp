@@ -27,6 +27,11 @@
 						</div>						
 						<div class="modal-body">
 							<textarea class="form-control mt-2" id="daily_reasonmodify" name="re_content" rows="5" placeholder="수정사유을 입력해주세요."></textarea>
+						
+	                    	<select class="form-control mt-2" id="daily_status">
+									<option value="정상근무">정상근무</option>
+									<option value="결근">결근</option>
+							</select> 
 						</div>
 						<div class="modal-footer">
 							<input class="btn btn-secondary" type="submit" value="수정완료" id="addDailyCheck"> 
