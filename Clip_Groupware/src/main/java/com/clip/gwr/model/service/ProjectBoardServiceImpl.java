@@ -45,4 +45,22 @@ public class ProjectBoardServiceImpl implements IProjectBoardService {
 		return dao.getDetailBottomList(map);
 	}
 
+
+	@Override
+	public int deletePrjDetailBottom(Map<String, Object> map) {
+		return dao.deletePrjDetailBottom(map);
+	}
+
+
+	@Override
+	public int selectMyPriv(Map<String, Object> map) {
+		return dao.selectMyPriv(map);
+	}
+
+
+	@Override
+	public int updatePrjStatus(Map<String, Object> map) {
+		return dao.updatePrjStatus(map);
+	}
+
 }

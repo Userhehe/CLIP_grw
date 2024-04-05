@@ -128,6 +128,7 @@ function selectProjectListAll() {
 			$.each(listData, function(index, data) {
 			    var prjId = data.PRJ_ID;
 			    var userName = data.USER_NAME;
+			    var prjStatus = data.PRJ_STATUS;
 			
 			    // PRJ_ID를 키로 사용하여 기존의 프로젝트 정보를 관리합니다.
 			    if (existingProjects.hasOwnProperty(prjId)) {
@@ -163,6 +164,8 @@ function selectProjectListAll() {
 			    var joinedUserNames = projectData.USER_NAME.join(", ");
 			    $participantName.text("참여자: " + joinedUserNames);
 			
+/*			    var $projectStatus = $("<div>").text("상태: " + projectData.PRJ_STATUS); // 프로젝트 상태 추가
+*/
 			    var $detailButton = $("<button>").addClass("btn btn-secondary").attr("type", "button").text("상세보기").css("margin-right", "15px")
 				    .click(function() {
 				        location.href = 'projectDetail.do?project_id=' + prjId;
@@ -170,7 +173,9 @@ function selectProjectListAll() {
 			
 			    $cardTitle.append($clientNameSpan, "<br>", $projectNameDiv);
 			    $cardBody.append($cardTitle, $participantName, $detailButton);
-			    $projectItem.append($cardBody);
+
+/*			    $cardBody.append($cardTitle, $participantName, $projectStatus, $detailButton);
+*/			    $projectItem.append($cardBody);
 			    $listContainer.append($projectItem);
 			});
 
@@ -257,13 +262,15 @@ function selectPrjProgressList() {
 				    var joinedUserNames = projectData.USER_NAME.join(", ");
 				    $participantName.text("참여자: " + joinedUserNames);
 				
+					var $projectStatus = $("<div>").text("상태: " + projectData.PRJ_STATUS); // 프로젝트 상태 추가
+					
 				    var $detailButton = $("<button>").addClass("btn btn-secondary").attr("type", "button").text("상세보기").css("margin-right", "15px")
 				    .click(function() {
 				        location.href = 'projectDetail.do?project_id=' + prjId;
 				    });
 				
 				    $cardTitle.append($clientNameSpan, "<br>", $projectNameDiv);
-				    $cardBody.append($cardTitle, $participantName, $detailButton);
+				    $cardBody.append($cardTitle, $participantName, $projectStatus, $detailButton);
 				    $projectItem.append($cardBody);
 				    $listContainer.append($projectItem);
 				});
@@ -282,6 +289,7 @@ function selectPrjProgressList() {
 
 }
 
+// 발주처별 프로젝트
 function selectClientList(clientNm) {
 		  	// 이벤트 처리 등 추가 작업 가능
 		$.ajax({
@@ -337,7 +345,7 @@ function selectClientList(clientNm) {
 				    // 참여자 정보를 콤마로 구분하여 합칩니다.
 				    var joinedUserNames = projectData.USER_NAME.join(", ");
 				    $participantName.text("참여자: " + joinedUserNames);
-				
+				    
 				    var $detailButton = $("<button>").addClass("btn btn-secondary").attr("type", "button").text("상세보기").css("margin-right", "15px").click(function() {
 				        location.href = 'projectDetail.do?project_id=' + prjId;
 				    });
@@ -400,36 +408,43 @@ function selectPrjPeriod(startDate, endDate) {
 				});
 				
 				// 기존의 프로젝트 정보를 기반으로 HTML을 생성합니다.
-				$.each(existingProjects, function(prjId, projectData) {
-				    var $projectItem = $("<div>").addClass("col-md-4").css("width", "20%");
-				    var $cardBody = $("<div>").addClass("card-body").css({
-				        "margin-top": "30px",
-				        "background-color": "white",
-				        "height": "230px",
-				        "width": "100%",
-				        "border-radius": "20px"
-				    });
-				    var $cardTitle = $("<div>").addClass("card-title");
-				    var $clientNameSpan = $("<span>").text("[" + projectData.CLI_NAME + "]").css({
-				        "font-weight": "bold",
-				        "font-size": "17px"
-				    });
-				    var $projectNameDiv = $("<div>").text(projectData.PRJ_NAME).css("margin-top", "5px");
-				    var $participantName = $("<div>").addClass("participant").css("margin-top", "5px");
-				
-				    // 참여자 정보를 콤마로 구분하여 합칩니다.
-				    var joinedUserNames = projectData.USER_NAME.join(", ");
-				    $participantName.text("참여자: " + joinedUserNames);
-				
-				    var $detailButton = $("<button>").addClass("btn btn-secondary").attr("type", "button").text("상세보기").css("margin-right", "15px").click(function() {
-				        location.href = 'projectDetail.do?project_id=' + prjId;
-				    });
-				
-				    $cardTitle.append($clientNameSpan, "<br>", $projectNameDiv);
-				    $cardBody.append($cardTitle, $participantName, $detailButton);
-				    $projectItem.append($cardBody);
-				    $listContainer.append($projectItem);
-				});
+$.each(existingProjects, function(prjId, projectData) {
+    var $projectItem = $("<div>").addClass("col-md-4").css("width", "20%");
+    var $cardBody = $("<div>").addClass("card-body").css({
+        "margin-top": "30px",
+        "background-color": "white",
+        "height": "230px",
+        "width": "100%",
+        "border-radius": "20px"
+    });
+    var $cardTitle = $("<div>").addClass("card-title");
+    var $clientNameSpan = $("<span>").text("[" + projectData.CLI_NAME + "]").css({
+        "font-weight": "bold",
+        "font-size": "17px"
+    });
+    var $projectNameDiv = $("<div>").text(projectData.PRJ_NAME).css("margin-top", "5px");
+    
+    // 프로젝트의 기간을 표시하는 부분 추가
+    var projectStartDate = projectData.PRJ_SDATE.substring(0, 10);
+    var projectEndDate = projectData.PRJ_DDATE.substring(0, 10);
+    var $projectPeriodDiv = $("<div>").text("기간: " + projectStartDate + " ~ " + projectEndDate).css("margin-top", "5px");
+    
+    var $participantName = $("<div>").addClass("participant").css("margin-top", "5px");
+
+    // 참여자 정보를 콤마로 구분하여 합칩니다.
+    var joinedUserNames = projectData.USER_NAME.join(", ");
+    $participantName.text("참여자: " + joinedUserNames);
+
+    var $detailButton = $("<button>").addClass("btn btn-secondary").attr("type", "button").text("상세보기").css("margin-right", "15px").click(function() {
+        location.href = 'projectDetail.do?project_id=' + prjId;
+    });
+
+    $cardTitle.append($clientNameSpan, "<br>", $projectNameDiv);
+    $cardBody.append($cardTitle, $projectPeriodDiv, $participantName, $detailButton); // 기간을 참여자 정보 위에 표시
+    $projectItem.append($cardBody);
+    $listContainer.append($projectItem);
+});
+
 
 				} else {
 					// 리스트 컨테이너를 초기화합니다.

@@ -29,11 +29,8 @@
 								<div>[${result[0].cli_name}] ${result[0].prj_name}</div>
 								<div
 									style="margin-left: 10px; display: flex; align-items: center;">
-									<button type="button" class="btn btn-outline-warning"
-										style="width: 35px; height: 35px; display: flex; align-items: center; justify-content: center;">
-										<i class="bi bi-pen"></i>
-									</button>
-									<button type="button" class="btn btn-outline-danger" id="deletePrjTopBtn"
+									<button type="button" class="btn btn-outline-danger"
+										id="deletePrjTopBtn"
 										style="width: 35px; height: 35px; margin-left: 5px; display: flex; align-items: center; justify-content: center;">
 										<i class="bi bi-trash"></i>
 									</button>
@@ -45,7 +42,8 @@
 								style="margin-top: 10px; font-size: large; font-weight: 300;">현장주소
 								: ${result[0].work_site}</div>
 							<div style="margin-top: 5px; font-size: large; font-weight: 200;">프로젝트
-								기간 : ${result[0].prj_sdate}~${result[0].prj_ddate}</div>
+								기간 :<br>
+								 ${result[0].prj_sdate}~${result[0].prj_ddate}</div>
 						</div>
 					</div>
 
@@ -84,36 +82,36 @@
 			<div class="col-md-1"
 				style="margin-left: 20px; margin-top: 10px; margin-bottom: 9px; width: calc(100% - 40px); max-width: 1520px;">
 				<div class="card-body"
-					style="margin-top: 5px; background-color: white; height: 660px; border-radius: 20px;">
-					<ul class="nav nav-tabs" id="teamTabs" role="tablist"
+					style="margin-top: 5px; background-color: white; border-radius: 20px;">
+					<ul class="nav nav-tabs" id="teamTabs" role="tablist" 
 						style="margin-top: 10px;">
 						<li class="nav-item" role="presentation" style="margin-top: 10px;">
-							<button class="nav-link active" id="sales-tab"
+							<button class="nav-link active" id="tab1" onclick="settingTab()" 
 								data-bs-toggle="tab" data-bs-target="#sales" type="button"
 								role="tab" aria-controls="sales" aria-selected="true">영업팀</button>
 						</li>
 						<li class="nav-item" role="presentation" style="margin-top: 10px;">
-							<button class="nav-link " id="profile-tab" data-bs-toggle="tab"
+							<button class="nav-link " id="tab2" data-bs-toggle="tab" onclick="settingTab()" 
 								data-bs-target="#profile" type="button" role="tab"
 								aria-controls="profile" aria-selected="false" tabindex="-1">디자인팀</button>
 						</li>
 						<li class="nav-item" role="presentation" style="margin-top: 10px;">
-							<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+							<button class="nav-link" id="tab3" data-bs-toggle="tab" onclick="settingTab()" 
 								data-bs-target="#contact" type="button" role="tab"
 								aria-controls="contact" aria-selected="false" tabindex="-1">설계팀</button>
 						</li>
 						<li class="nav-item" role="presentation" style="margin-top: 10px;">
-							<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+							<button class="nav-link" id="tab4" data-bs-toggle="tab" onclick="settingTab()" 
 								data-bs-target="#contact" type="button" role="tab"
 								aria-controls="contact" aria-selected="false" tabindex="-1">공무팀</button>
 						</li>
 						<li class="nav-item" role="presentation" style="margin-top: 10px;">
-							<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+							<button class="nav-link" id="tab5" data-bs-toggle="tab" onclick="settingTab()" 
 								data-bs-target="#contact" type="button" role="tab"
 								aria-controls="contact" aria-selected="false" tabindex="-1">시공팀</button>
 						</li>
 						<li class="nav-item" role="presentation" style="margin-top: 10px;">
-							<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+							<button class="nav-link" id="tab6" data-bs-toggle="tab" onclick="settingTab()" 
 								data-bs-target="#contact" type="button" role="tab"
 								aria-controls="contact" aria-selected="false" tabindex="-1">관리팀</button>
 						</li>
@@ -121,17 +119,18 @@
 
 					<form id="insertProjectBoard"
 						style="width: 100%; text-align: center;">
-						<input type="hidden" name="prjId" id="prjId" value = "${result[0].prj_id}">
-						<input type="hidden" name="prjManager" id="prjManager" value = "${result[0].prj_manager_id}">	
-						<input type="hidden" name="loginUserId" id="loginUserId" value = "${loginVo.user_id}">													
+						<input type="hidden" name="prjId" id="prjId" value="${result[0].prj_id}"> 
+						<input type="hidden" name="prjManager" id="prjManager" value="${result[0].prj_manager_id}"> 
+						<input type="hidden" name="loginUserId" id="loginUserId" value="${loginVo.user_id}">
+						<input type="hidden" name="pboProgress" id="pboProgress">
 						<div>
-							<input type="text" name="pboTitle" class="form-control"
+							<input type="text" name="pboTitle" class="form-control" id="pboTitle" 
 								style="width: 1480px; max-width: 100%; margin-top: 15px; text-align: center; margin: 15px auto; display: block;"
 								placeholder="제목을 입력하세요">
 						</div>
 						<div>
-							<textarea class="form-control" name="pboContent"
-								style="height: 250px; margin-top: 5px; text-align: center;"
+							<textarea class="form-control" name="pboContent" id="pboContent"
+								style="height: 200px; margin-top: 5px; text-align: center;"
 								placeholder="내용을 입력하세요"></textarea>
 						</div>
 
@@ -139,51 +138,38 @@
 							<button class="btn btn-warning" type="button" id="pboInsertBtn">등록</button>
 						</div>
 					</form>
-
-	<div>
-						<table class="table table-hover" style="margin-top: 25px;">
-							<thead>
-								<tr>
-									<th scope="col" style="width: 100px; text-align: center;">순번</th>
-									<th scope="col" style="width: 200px; text-align: center;">작성자</th>
-									<th scope="col" style="text-align: center; width: 300px;">제목</th>
-									<th scope="col" style="text-align: center;">내용</th>
-									<th scope="col" style="width: 150px; text-align: center;">등록일</th>
-									<th scope="col" style="text-align: center; width: 60px;">수정</th>
-									<th scope="col" style="text-align: center; width: 60px;">삭제</th>
-									<!-- 새로운 열 추가 -->
-								</tr>
-							</thead>
-							<tbody id="detailBottomList">
-<%-- 								<tr>
-									<th scope="row" style="width: 100px; text-align: center;">${vo.getPbo_seq}</th>
-									<td style="width: 200px; text-align: center;">${vo.getUser_id}</td>
-									<td style="text-align: center; width: 300px;">${vo.getPbo_title}</td>
-									<td style="text-align: center;">${vo.getPbo_content}</td>
-									<td style="width: 150px; text-align: center;">${vo.getPbo_regdate}</td>
-									<td style="text-align: center; width: 60px;">
-										<button type="button" class="btn btn-outline-warning">
-											<i class="bi bi-pen"></i>
-										</button>
-									</td>
-									<td style="text-align: center; width: 60px;">
-										<button type="button" class="btn btn-outline-danger">
-											<i class="bi bi-trash"></i>
-										</button>
-									</td>
-									<!-- 버튼 열 추가 -->
-									</tr>
-								<!-- 다른 행들도 동일하게 추가 --> --%>
-							</tbody>
-						</table>
-					</div>
-
-
-
 				</div>
-			</div>
+				<div>
+					<div class="col-md-1"
+						style="margin-left: 20px; margin-top: 10px; margin-bottom: 9px; width: calc(100% - 40px); max-width: 1520px;">
+						<div class="card-body"
+							style="margin-top: 5px; background-color: white; border-radius: 20px; max-height: 270px; overflow-y: auto;">
+							<table class="table table-hover" id="customTable"
+								style="margin-top: 25px;">
+								<thead>
+									<tr>
+										<th scope="col" style="width: 100px;">순번</th>
+										<th scope="col" style="width: 200px;">작성자</th>
+										<th scope="col" style="width: 300px;">제목</th>
+										<th scope="col">내용</th>
+										<th scope="col" style="width: 150px;">등록일</th>
+										<th scope="col" style="width: 60px;">수정</th>
+										<!-- 새로운 열 추가 -->
+									</tr>
+								</thead>
+								<tbody id="detailBottomList">
+								</tbody>
+							</table>
+						</div>
+							<div class="d-grid gap-2 mt-3">
+								<button class="btn btn-secondary" type="button"
+									id="statusUpdateBtn">팀 프로세스 완료</button>
+							</div>
+					</div>
+				</div>
 
-		</div>
+
+			</div>
 	</main>
 </body>
 </html>

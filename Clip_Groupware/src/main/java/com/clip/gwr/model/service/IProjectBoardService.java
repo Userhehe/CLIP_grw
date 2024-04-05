@@ -16,4 +16,13 @@ public interface IProjectBoardService {
 	public int deletePrjDetailTop(Map<String, Object> map);
 	
 	public List<ProjectBoardVo> getDetailBottomList(Map<String, Object> map);
+
+
+	public int deletePrjDetailBottom(Map<String, Object> map);
+
+
+	public int selectMyPriv(Map<String, Object> map);
+
+
+	public int updatePrjStatus(Map<String, Object> map);
 }
