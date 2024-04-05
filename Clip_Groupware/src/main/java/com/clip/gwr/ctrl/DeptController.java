@@ -61,16 +61,22 @@ public class DeptController {
 	    try {
 	        List<DeptVo> deptLists = deptService.deptAll();
 	        List<RanksVo> ranksLists = ranksService.ranksAll();
-	        List<UserinfoVo> userLists = userService.selectUserinfoList();
+	        
+	        
+//	        Map<String, Object> map = new HashMap<>();
+//	        map.put("user_id", user_id);
+//	        
+//	        // UserService의 selectUserinfoList 메서드 호출 시 Map 매개변수를 전달
+//	        List<UserinfoVo> userLists = userService.selectUserinfoList(map);
 	        
 	        model.addAttribute("deptLists", deptLists);
-	        model.addAttribute("positionsLists", userLists);
+//	        model.addAttribute("positionsLists", userLists); // 수정된 부분
 	        model.addAttribute("ranksLists", ranksLists);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return "error";
 	    }
-	    return "insertDept"; // 부서 등록 페이지로 이동
+	    return "insertDept"; 
 	}
 
 	@PostMapping("/insertDept.do")

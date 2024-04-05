@@ -8,6 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>내가 참조된 결재 리스트</title>
+<!-- pdf다운로드를 위한 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 <%@ include file="./header.jsp"%>
 <script type="text/javascript" src="./js/myReferPayList.js"></script>
 </head>
@@ -46,7 +50,7 @@
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
-					       <tr>
+					       <tr onclick="event.preventDefault(); event.stopImmediatePropagation();">
 					          <td colspan="5" style="color: red; text-align: center;">참조된 결재가 없습니다.</td>
 					       </tr>
 					    </c:otherwise>
@@ -92,11 +96,11 @@
 								<button type="button" class="btn-close" data-bs-dismiss="modal"
 									aria-label="Close"></button>
 							</div>
-							<div class="modal-body">
+							<div class="modal-body" id="saveZone">
 								 <p id="modalContent"></p>
 							</div>
 							<div class="modal-footer">
-								  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
+								  <a id="savePdf"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 			                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
 							</div>
 						</div>

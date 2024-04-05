@@ -8,49 +8,32 @@
         SELECT DAILYCHECK_SEQ.NEXTVAL AS DAILYCHECK_SEQ FROM DUAL
     </selectKey>
     INSERT INTO DAILYCHECK (DAILY_SEQ, USER_ID, DAILY_INTIME, DAILY_REGDATE)
-    VALUES ('DAILYCHECK_' || TO_CHAR(DAILYCHECK_SEQ.NEXTVAL, 'FM000'),
+    VALUES ('DAILYCHECK_' || TO_CHAR(DAILYCHECK_SEQ.NEXTVAL),
     #{user_id, jdbcType=VARCHAR}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 	</insert>
 	
 	
-	<!-- 퇴근 -->
-	<update id="updateDailyCheckOuttime" parameterType="java.util.Map">
-    UPDATE DAILYCHECK
-    SET DAILY_OUTTIME = #{current_time}, DAILY_REGDATE = CURRENT_DATE
-    WHERE USER_ID = #{user_id, jdbcType=VARCHAR} 
-    AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE)
-	</update>
-	
-	<!-- 출퇴근여부 등록 -->
-	  <select id="selectDailyStatus" resultType="com.clip.gwr.vo.DailyCheckVo">
+	<!-- 퇴근 등록 -->
+<update id="updateDailyCheckOuttime" parameterType="java.util.Map">
     <![CDATA[
-    SELECT
-    USER_ID,
-    CASE
-        -- 출근시간이 오전 9시 이전이고 퇴근시간이 오후 6시 이후인 경우
-        WHEN TO_CHAR(DAILY_INTIME, 'HH24:MI:SS') < '09:30:00' AND TO_CHAR(DAILY_OUTTIME, 'HH24:MI:SS') >= '17:00:00' THEN '정상근무'   
-        -- 출근시간이 12시에서 13시 사이일 때 퇴근시간이 16시 이후인 경우
-        WHEN TO_CHAR(DAILY_INTIME, 'HH24') BETWEEN '12' AND '13' AND TO_CHAR(DAILY_OUTTIME, 'HH24') >= '16' THEN '조퇴'
-        -- 출근시간이 12시에서 13시 사이일 때 퇴근시간이 16시 이전인 경우
-        WHEN TO_CHAR(DAILY_INTIME, 'HH24') BETWEEN '12' AND '13' AND TO_CHAR(DAILY_OUTTIME, 'HH24') < '16' THEN '결근'
-        -- 출근시간이 12시 이전이면서 출근시간으로부터 퇴근시간이 5시간 이후인 경우
-        WHEN TO_CHAR(DAILY_INTIME, 'HH24') < '12' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 >= 5 THEN '조퇴'
-        -- 출근시간이 12시 이전이면서 출근시간으로부터 퇴근시간이 5시간 이전인 경우
-        WHEN TO_CHAR(DAILY_INTIME, 'HH24') < '12' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 < 5 THEN '결근'
-        -- 출근시간이 13시 이후이면서 출근시간으로부터 퇴근시간이 4시간 이후인 경우
-        WHEN TO_CHAR(DAILY_INTIME, 'HH24') >= '13' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 >= 4 THEN '지각'
-        -- 출근시간이 13시 이후이면서 출근시간으로부터 퇴근시간이 4시간 이전인 경우
-        WHEN TO_CHAR(DAILY_INTIME, 'HH24') >= '13' AND (DAILY_OUTTIME - DAILY_INTIME) * 24 < 4 THEN '결근'
-        -- 출근시간 또는 퇴근시간 또는 출근시간 퇴근시간이 둘다 없는 경우
-        ELSE '결근'
-    END AS DAILY_STATUS 
-	FROM DAILYCHECK d
-	WHERE  DAILY_MODIFY = 'N'
-            AND TRUNC(DAILY_REGDATE) = TRUNC(CURRENT_DATE);
+    UPDATE DAILYCHECK
+    SET DAILY_OUTTIME = CAST(CURRENT_TIMESTAMP AS TIMESTAMP), 
+        DAILY_REGDATE = CAST(CURRENT_TIMESTAMP AS TIMESTAMP),
+        DAILY_STATUS = CASE
+                            WHEN DAILY_OUTTIME IS NULL OR TRUNC(DAILY_OUTTIME) = TRUNC(DAILY_REGDATE) THEN
+                                CASE
+                                    WHEN (EXTRACT(DAY FROM (CURRENT_TIMESTAMP - DAILY_INTIME)) * 24 * 60 + EXTRACT(HOUR FROM (CURRENT_TIMESTAMP - DAILY_INTIME)) * 60 + EXTRACT(MINUTE FROM (CURRENT_TIMESTAMP - DAILY_INTIME))) < 120 THEN '결근'
+                                    ELSE '정상근무'
+                                END
+                            ELSE DAILY_STATUS 
+                       END
+    WHERE USER_ID = 'USER_59' 
+    AND TRUNC(DAILY_REGDATE) = TRUNC(SYSDATE)
     ]]>
-	</select>
+</update>
+
 	
-	
+		
 	<!-- 근태현황 조회 -->
 	<select id="selectDailyCheckList"  resultType="com.clip.gwr.vo.DailyCheckVo">
 		SELECT dc.DAILY_SEQ, dc.USER_ID, u.USER_NAME, p.POSITIONS_NAME, 
@@ -63,6 +46,14 @@
         INNER JOIN RANKS r ON u.RANKS_SEQ = r.RANKS_SEQ
         INNER JOIN DEPT de ON u.DEPT_SEQ = de.DEPT_SEQ
         ORDER BY dc.DAILY_REGDATE DESC
+	</select>
+	
+	<!-- 나의 근태현황 조회 -->
+	<select id="myDailychk" resultType="com.clip.gwr.vo.DailyCheckVo">
+	SELECT USER_ID,DAILY_INTIME,DAILY_OUTTIME,DAILY_STATUS,DAILY_REGDATE
+	FROM DAILYCHECK
+	WHERE USER_ID =  #{user_id}
+	ORDER BY DAILY_REGDATE DESC
 	</select>
 	
 	<!-- 근태현황 검색 -->

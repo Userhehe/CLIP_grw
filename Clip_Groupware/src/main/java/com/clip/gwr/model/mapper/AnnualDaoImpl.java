@@ -69,6 +69,9 @@ public class AnnualDaoImpl implements IAnnualDao {
 		return sqlSession.selectList(NS+"searchAnnual",map);
 	}
 
+	
+	
+//	전자결재 신청 로직시 추가
 	@Override
 	public int chkAnn(String user_id) {
 		log.info("##### 연차 데이터 존재 유무 확인 chkAnn #####");
@@ -94,9 +97,20 @@ public class AnnualDaoImpl implements IAnnualDao {
 	}
 
 	@Override
-	public int applyUpdateAnn(String user_id) {
+	public int applyUpdateAnn(Map<String, Object> map) {
 		log.info("##### 연차신정(update) applyUpdateAnn #####");
-		return sqlSession.update(NS+"applyUpdateAnn",user_id);
+		return sqlSession.update(NS+"applyUpdateAnn",map);
+	}
+	
+//	전자결재 끗
+	
+	
+	
+	
+	@Override
+	public AnnualVo myAnn(String user_id) {
+		log.info("##### 나의 연차 조회  myAnn #####");
+		return sqlSession.selectOne(NS+"myAnn",user_id);
 	}
 
 		

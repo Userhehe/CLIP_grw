@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.clip.gwr.vo.ApprovalVo;
+import com.clip.gwr.vo.NtcVo;
 
 public interface IApprovalDao {
 
@@ -44,6 +45,10 @@ public interface IApprovalDao {
 	//기안 결재 임시저장
 	public int saveTempApproval(ApprovalVo approvalVo);
 	
+	//기안 수정
+	public int fixReqApproval(ApprovalVo approvalVo);
+	
+	
 	//결재 취소
 	public int cancelApproval(String appSeq);
 	
@@ -51,20 +56,25 @@ public interface IApprovalDao {
 	public int tempDelete(String appSeq);
 	
 	//결재 승인 처리 
-	public int approvePay(String app_seq,String app_draft);
+	public int approvePay(String app_draft,String app_seq);
 	public int approvePayLine(String app_seq,String pay_num);
 	
 	//승인시 단건조회
 	public ApprovalVo oneMyPaycheck(String app_seq);
 	
 	//승인했던거 단건조회
-	public ApprovalVo oneMyPaychecked(String app_seq);
+	public ApprovalVo oneMyPaychecked(String user_id);
 	
 	//내가 반려했던거 단건조회
 	public ApprovalVo oneMyPayPause(String app_seq);
 	
 	//결재 반려 처리
-	public int returnApproval(String app_seq,String app_draft);
-	public int returnPayLine(String app_seq,String pay_sign,String pay_rejectreason,String pay_num,String pay_user);
+	public int banRuApproval(String app_seq);
+	public int banRuPayLine(String pay_rejectreason,String app_seq,String pay_num,String pay_user);
+	
+	//페이징 테스트
+	public int selectTempCount(String user_id); //전체 공지 게시글 수
+		
+	public List<ApprovalVo> selectTempPage(Map<String, Object> map); //공지 페이징 구간별 게시글 가져오기
 	
 }

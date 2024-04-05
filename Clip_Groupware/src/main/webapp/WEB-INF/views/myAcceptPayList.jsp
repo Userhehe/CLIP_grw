@@ -8,6 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>내 승인대기 결재</title>
+<!-- pdf다운로드를 위한 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 <%@ include file="./header.jsp"%>
 <script type="text/javascript" src="./js/myAcceptPayList.js"></script>
 </head>
@@ -39,7 +43,7 @@
 								<th>결재현황</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="payBoardTableBody">
 							<c:choose>
 								<c:when test="${not empty lists}">
 									<c:forEach var="vo" items="${lists}" varStatus="vs">
@@ -53,7 +57,7 @@
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
-									<tr>
+									<tr  onclick="event.preventDefault(); event.stopImmediatePropagation();">
 							           <td colspan="5" style="color: red; text-align: center;">승인해야되는 결재가 없습니다.</td>
 							        </tr>
 								</c:otherwise>
@@ -90,13 +94,13 @@
 										<button type="button" class="btn-close" data-bs-dismiss="modal"
 											aria-label="Close"></button>
 									</div>
-									<div class="modal-body">
-										 <p id="modalContent1"></p>
+									<div class="modal-body" id="saveZone">
+										 <p id="modalContent1"></p>										
 										 <input type="text" class="form-control" style="width:300px; display:none;" id="cancelContent"  placeholder="반려사유를 입력해주세요." >
 										 <button type="button" class="btn btn-danger" style="display:none;" id="rejectFinalBtn" data-appseq="">결재반려 승인</button>
 									</div>
 									<div class="modal-footer">
-										  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
+										  <a id="savePdf"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 					                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
 					                      <button type="button" class="btn btn-primary" id="editBtn" data-appseq="">결재승인</button>	
 					                      <button type="button" class="btn btn-danger" id="rejectBtn" data-appseq="">결재반려</button>
@@ -134,7 +138,7 @@
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-								<tr>
+								<tr onclick="event.preventDefault(); event.stopImmediatePropagation();">
 						           <td colspan="5" style="color: red; text-align: center;">반려처리하신 결재가 없습니다.</td>
 						        </tr>
 							</c:otherwise>	
@@ -171,11 +175,11 @@
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
-								<div class="modal-body">
+								<div class="modal-body" id="saveZone2">
 									 <p id="modalContent2"></p>
 								</div>
 								<div class="modal-footer">
-									  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
+									  <a id="savePdf2"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 				                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
 								</div>
 							</div>
@@ -211,7 +215,7 @@
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-								<tr>
+								<tr onclick="event.preventDefault(); event.stopImmediatePropagation();">
 						           <td colspan="5" style="color: red; text-align: center;">승인한 결재문서가 없습니다.</td>
 						        </tr>
 							</c:otherwise>
@@ -248,11 +252,11 @@
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
-								<div class="modal-body">
+								<div class="modal-body" id="saveZone3">
 									 <p id="modalContent3"></p>
 								</div>
 								<div class="modal-footer">
-									  <a href="#"><img alt="PDF.img" src="./images/pdfImg.png"></a>
+									  <a id="savePdf3"><img alt="PDF.img" src="./images/pdfImg.png"></a>
 				                      <button type="button" class="btn btn-warning" data-bs-dismiss="modal">확인</button>
 								</div>
 							</div>

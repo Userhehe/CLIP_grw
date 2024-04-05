@@ -106,23 +106,37 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">상세 내용 입니다.</h5>
+					<h5 class="modal-title">상세 내용</h5>
 				</div>
 				
 				<div class="modal-body">
 					<input type="text" style="display: none" id="dtSeq">
+					
+					<div id="meRoomDiv" style="display: none;">
+						<label for="meRoom" class="col-form-label">회의실 번호</label>
+						<div class="form-group">
+							<div class="form-control" id="meRoom"></div>
+						</div>
+					</div>
+					
 					<div class="form-group">
 					<label for="dtTitle" class="col-form-label">일정 제목</label>
 					<div class="form-group">
 						<div class="form-control" id="dtTitle"></div>
 					</div>
+					
+					
 					<label for="dtContent" class="col-form-label">일정 내용</label>
-<!-- 					<div class="form-control" id="dtContent"></div> -->
 					<textarea rows="5" class="form-control" id="dtContent" readonly="readonly"></textarea>
 					<label for="dtStart" class="col-form-label">시작 날짜</label>
 					<div class="form-control" id="dtStart"></div>
 					<label for="dtEnd" class="col-form-label">종료 날짜</label>
 					<div class="form-control" id="dtEnd"></div>
+					</div>
+					
+					<div id="attendDiv" style="display: none;">
+						<label for="attends" class="col-form-label">참석자 명단</label>
+						<textarea rows="5" class="form-control" id="attends" readonly="readonly"></textarea>
 					</div>
 				</div>
 

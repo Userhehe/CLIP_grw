@@ -3,6 +3,8 @@ package com.clip.gwr.ctrl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,14 +18,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.clip.gwr.model.service.IApprovalService;
 import com.clip.gwr.vo.ApprovalVo;
-import com.clip.gwr.vo.PaylineVo;
+import com.clip.gwr.vo.PageVo;
 import com.clip.gwr.vo.UserinfoVo;
-import com.google.gson.Gson;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -76,12 +75,37 @@ public class PayBoardController {
 	}
 	//임시저장 결재 파일 리스트 창 이동
 	@GetMapping(value = "/myTempPayList.do")
-	public String myTempPayList(Model model, HttpSession session) {
+	public String myTempPayList(Model model, HttpSession session,  @RequestParam(required = false, defaultValue = "1") String page) {
 		log.info("myTempPayList 나의 임시저장 결재파일 리스트 창");
 		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 		String user_id = loginUser.getUser_id();
-		List<ApprovalVo> lists = service.getTempApproval(user_id);
+		
+		//페이징 정보설정
+		PageVo pVo = new PageVo();
+		pVo.setCountList(5);
+		
+		// 현재 페이지 설정
+	    int selectPage = Integer.parseInt(page);
+	    
+	    // 페이징에 필요한 맵 생성
+	    Map<String, Object> map = new HashMap<String, Object>() {{
+	        put("first", selectPage * pVo.getCountList() - (pVo.getCountList() - 1));
+	        put("last", selectPage * pVo.getCountList());
+	        put("user_id",user_id);
+	    }};
+	    
+	 // 게시글 전체값 조회
+	    int totalCount = service.selectTempCount(user_id);
+	    pVo.setTotalCount(totalCount);
+	    pVo.setCountPage(5);
+	    pVo.setTotalPage(totalCount);
+	    pVo.setPage(selectPage);
+	    pVo.setStagePage(selectPage);
+	    pVo.setEndPage(pVo.getCountPage());
+		
+		List<ApprovalVo> lists = service.selectTempPage(map);
 		model.addAttribute("lists",lists);
+		model.addAttribute("page", pVo);
 		return "myTempPayList";
 	}
 	
@@ -131,7 +155,7 @@ public class PayBoardController {
 		model.addAttribute("lists",lists);
 		model.addAttribute("lists2",lists2);
 		model.addAttribute("lists3",lists3);
-		return "myAcceptPayList";
+		return "myAcceptPayList";	
 	}
 	
 	//내 승인대기 결재 상세페이지로 이동.
@@ -147,8 +171,10 @@ public class PayBoardController {
 	//내 승인대기 결재 상세페이지로 이동.
 	@PostMapping(value="/myAcceptPayListChecked.do")
 	@ResponseBody
-	public ApprovalVo myPayCheckList(@RequestParam("app_seq") String app_seq) {
-		log.info("내가 승인했던거 조회 : {}",app_seq);
+	public ApprovalVo myPayCheckList(@RequestParam("app_seq") String app_seq,HttpSession session) {
+		log.info("내가 승인했던거 조회 : {} ",app_seq);
+		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
+		String user_id = loginUser.getUser_id();
 		ApprovalVo vo =service.oneMyPaychecked(app_seq);
 		return vo;
 	} 
@@ -182,10 +208,8 @@ public class PayBoardController {
 	    String app_draft = vo.getApp_draft();
 	    String pay_num = null;
 
-	    if ("결재대기".equals(app_draft)) {
+	    if ("결재대기".equals(app_draft) && "1".equals(vo.getPay_num())) {
 	        app_draft = "결재진행";
-	        pay_num = "1";
-	    } else if ("결재진행".equals(app_draft) && "1".equals(vo.getPay_num())) {
 	        pay_num = "1";
 	    } else if ("결재진행".equals(app_draft) && "2".equals(vo.getPay_num())) {
 	        pay_num = "2";
@@ -199,12 +223,12 @@ public class PayBoardController {
 	        return "redirect:/accessError.do";
 	    }
 
-	    service.approvePay(app_seq, app_draft);
-	    service.approvePayLine(app_seq, pay_num);
+	    service.approvePay(app_draft,app_seq);
+	    service.approvePayLine(app_seq,pay_num);
 	    return "redirect:/myAcceptPayList.do";
 	}
 
-	//본인 승인시 결재반려할 경우
+	//본인 승인시 결재반려할 경우//
 	@PostMapping(value="/rejectionPay.do")
 	public String rejectPay(@RequestParam("app_seq")String app_seq,@RequestParam("pay_rejectreason")String pay_rejectreason,HttpSession session){
 		log.info("rejectPay 내가 승인하는데 싫어서 결재 반려하는 경우 : {}",app_seq);
@@ -221,85 +245,30 @@ public class PayBoardController {
 	     System.out.println("◆◆◆◆◆◆◆◆◆◆◆◆◆◆거절사유 :" + pay_rejectreason);
 	     
 	     String app_draft = vo.getApp_draft();
-	     String pay_num = null;
-	     String pay_sign = null;
-	     String App_Seq = vo.getApp_seq(); 
+	     String pay_num = vo.getPay_num();
 	     String pay_user = null;
-	     
-//	     if ("결재대기".equals(app_draft) || "결재진행".equals(app_draft)) {
-//	    	 	app_seq = App_Seq;
-//	    	 	app_draft = "결재반려";
-//		        pay_num = "1";
-//		        pay_sign= "D";
-//		        pay_rejectreason = pay_rejectreason2;
-//		        pay_user = vo.getPay_user();
-//		    } else if ("결재진행".equals(app_draft) && "2".equals(vo.getPay_num())) {
-//		    	app_seq = App_Seq;
-//		    	app_draft = "결재반려";
-//		    	pay_num = "2";
-//		    	pay_sign= "D";
-//		    	pay_user = vo.getPay_user();
-//		    	pay_rejectreason = pay_rejectreason2;
-//		    }else if ("결재진행".equals(app_draft) && "3".equals(vo.getPay_num())) {
-//		    	app_seq = App_Seq;
-//		    	app_draft = "결재반려";
-//		    	pay_num = "3";
-//		    	pay_sign= "D";
-//		    	pay_user = vo.getPay_user();
-//		    	pay_rejectreason = pay_rejectreason2;
-//		    }else if ("결재진행".equals(app_draft) && "4".equals(vo.getPay_num())) {
-//		    	app_seq = App_Seq;
-//		    	app_draft = "결재반려";
-//		    	pay_num = "4";
-//		    	pay_sign= "D";
-//		    	pay_user = vo.getPay_user();
-//		    	pay_rejectreason = pay_rejectreason2;
-//		    }else if ("결재진행".equals(app_draft) && "5".equals(vo.getPay_num())) {
-//		    	app_seq = App_Seq;
-//		    	app_draft = "결재반려";
-//		    	pay_num = "5";
-//		    	pay_sign= "D";
-//		    	pay_user = vo.getPay_user();
-//		    	pay_rejectreason = pay_rejectreason2;
-//		    }else {
-//		        return "redirect:/accessError.do";
-//		    }
-//	     
-//	     
-//		     service.returnApproval(app_seq, app_draft);
-//			 service.returnPayLine(app_seq, pay_num,pay_sign,pay_rejectreason,pay_user);
-	     
-	     if ("결재대기".equals(app_draft) || "결재진행".equals(app_draft)) {
-	    	    app_draft = "결재반려";
+	    
+	     if (("결재대기".equals(app_draft) || "결재진행".equals(app_draft)) && "1".equals(vo.getPay_num())) {
 	    	    pay_num = "1";
-	    	    pay_sign = "D";
 	    	    pay_user = vo.getPay_user();
 	    	} else if ("결재진행".equals(app_draft) && "2".equals(vo.getPay_num())) {
-	    	    app_draft = "결재반려";
 	    	    pay_num = "2";
-	    	    pay_sign = "D";
 	    	    pay_user = vo.getPay_user();
 	    	} else if ("결재진행".equals(app_draft) && "3".equals(vo.getPay_num())) {
-	    	    app_draft = "결재반려";
 	    	    pay_num = "3";
-	    	    pay_sign = "D";
 	    	    pay_user = vo.getPay_user();
 	    	} else if ("결재진행".equals(app_draft) && "4".equals(vo.getPay_num())) {
-	    	    app_draft = "결재반려";
 	    	    pay_num = "4";
-	    	    pay_sign = "D";
 	    	    pay_user = vo.getPay_user();
 	    	} else if ("결재진행".equals(app_draft) && "5".equals(vo.getPay_num())) {
-	    	    app_draft = "결재반려";
 	    	    pay_num = "5";
-	    	    pay_sign = "D";
 	    	    pay_user = vo.getPay_user();
 	    	} else {
 	    	    return "redirect:/accessError.do";
 	    	}
 
-	    	service.returnApproval(app_seq, app_draft);
-	    	service.returnPayLine(app_seq, pay_num, pay_sign, pay_rejectreason, pay_user);
+	    	service.banRuApproval(app_seq);
+	    	service.banRuPayLine(pay_rejectreason, app_seq, pay_num, pay_user);
 
 
 			 return "redirect:/myAcceptPayList.do";

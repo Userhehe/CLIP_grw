@@ -44,6 +44,15 @@
     WHERE ac.USER_ID = #{user_id}
 	</select>
 	
+	<select id="myAnn" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualVo">
+	SELECT ac.USER_ID, u.USER_NAME, (ac.ANN_LEOV - au.ANNUSE_DAY) AS ANN_LEOV,
+             au.ANNUSE_DAY AS ANN_USEDAY
+    FROM ANNUAL_CT ac 
+    JOIN ANNUAL_USE au ON ac.USER_ID = au.USER_ID 
+    JOIN USERINFO u ON ac.USER_ID = u.USER_ID
+    WHERE ac.USER_ID = #{user_id}
+</select>
+	
 	<update id="updateAnn" parameterType="java.lang.String" >
     UPDATE ANNUAL_CT
     SET ANN_DAY = #{ann_day}, 
@@ -74,24 +83,29 @@
 	]]>
 	</update>
      
+     
+     <!-- 결재 요청 창 이동하면서 연차 사용 정보를 가져오는 쿼리 -->
      <select id="chkAnn" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualUseVo">
      SELECT COUNT(*)
 	 FROM ANNUAL_USE 
 	 WHERE USER_ID =#{user_id}
      </select>
      
+     <!-- 연차 사용 테이블을 조회했는데 없을 시 연차 사용 테이블에서 남은연차 일수 조회 -->
     <select id="selAnnLe" parameterType="java.lang.String" resultType="com.clip.gwr.vo.AnnualVo">
     SELECT ANN_LEOV 
 	FROM ANNUAL_CT 
 	WHERE USER_ID = #{user_id}
     </select>
      
+    <!-- 연차 사용 테이블을 조회했을때 연차사용 테이블에 없으면 추가하기. -->
     <insert id="applyAnn" parameterType="java.util.Map">
     INSERT INTO ANNUAL_USE
 	(ANNUSE_SEQ, USER_ID, ANNUSE_STARTDATE, ANNUSE_ENDDATE, ANNUSE_DAY, ANNUSE_DATE)
 	VALUES(('ANNUSE_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL)),#{user_id},#{annuse_startdate},#{annuse_enddate},#{annuse_day},SYSDATE)
     </insert>
      
+     <!-- 연차 경험이 있는 사람의 사용가능일수 조회 -->
      <select id="selAvaliday" resultType="com.clip.gwr.vo.AnnualVo">
      SELECT (ac.ANN_LEOV-au.ANNUSE_DAY) AS ANN_LEOV
 	 FROM ANNUAL_CT ac LEFT JOIN ANNUAL_USE au 
@@ -99,10 +113,11 @@
 	 WHERE ac.USER_ID =#{user_id}
      </select>
      
-     <update id="applyUpdateAnn" parameterType="java.lang.String">
+     <!-- 연차 사용해본 사람의 연차 사용테이블에 사용일 수 만큼 추가 -->
+     <update id="applyUpdateAnn" parameterType="java.util.Map">
      UPDATE ANNUAL_USE
 	 SET USER_ID=#{user_id}, ANNUSE_STARTDATE=#{annuse_startdate}, ANNUSE_ENDDATE=#{annuse_enddate}, 
-	 ANNUSE_DAY=(SELECT ANNUSE_DAY FROM ANNUAL_USE WHERE USER_ID =#{user_id})+1, ANNUSE_DATE=SYSDATE 
+	 ANNUSE_DAY=(SELECT ANNUSE_DAY FROM ANNUAL_USE WHERE USER_ID =#{user_id})+{#use_date}, ANNUSE_DATE=SYSDATE 
 	 WHERE USER_ID =#{user_id}
      </update>
      

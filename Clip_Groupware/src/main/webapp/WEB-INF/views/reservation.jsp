@@ -42,7 +42,6 @@
 <!-- <link rel="stylesheet" href="//static.jstree.com/3.3.15/assets/bootstrap/css/bootstrap.min.css" /> -->
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.15/themes/default/style.min.css" />
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<script type="text/javascript" src="./js/recalendar.js"></script>
 
 
 <style type="text/css">
@@ -162,7 +161,6 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 	                    </div>
 	                    <div class=modal-footer>
 	                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
 	                      <button type="button" class="btn btn-warning" id="attconfirm" onclick="attconfirm()">참석자 등록</button>
 	                    </div>
                     </div>

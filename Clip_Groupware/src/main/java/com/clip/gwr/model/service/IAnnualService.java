@@ -19,6 +19,9 @@ public interface IAnnualService {
 			// 연차 상세 조회
 			public AnnualVo detailAnn(String user_id);
 			
+			// 나의 연차 조회 
+			public AnnualVo myAnn(String user_id);
+			
 			// 연차 수정 
 			public int updateAnn(Map<String, Object> map);
 			
@@ -43,7 +46,7 @@ public interface IAnnualService {
 	        public int selAvaliday(String user_id);
 	        
 	        //연차신정(update)
-	        public int applyUpdateAnn(String user_id);
+	        public int applyUpdateAnn(Map<String, Object> map);
 	        
 	        // 연차 검색 
 	        public List<AnnualVo> searchAnnual(Map<String, Object> map);

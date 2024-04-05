@@ -119,6 +119,26 @@ public class ApprovalServiceImpl implements IApprovalService{
 		int payline = PaymentlineDao.putPayLine(list);
 		return isc = (tempresult>0 && payline>0) ? true:false;
 	}
+	
+	//승인대기중인 결재 수정 
+	@Override
+	public int fixWatingApproval(ApprovalVo approvalVo) {
+		log.info("승인 대기중인 결재 수정: {}",approvalVo);
+		int result = approvalDao.fixReqApproval(approvalVo);
+		return (result != 0) ? 1 : 0;
+	}
+	
+	//반려결재 수정
+	@Transactional
+	@Override
+	public int fixReqApproval(ApprovalVo approvalVo,String app_seq) {
+		log.info("기안 결재 임시저장: {}",approvalVo);
+		int fixResult = approvalDao.fixReqApproval(approvalVo);
+		int fixPaylineSign = PaymentlineDao.fixReqLine(app_seq);
+		
+		return (fixResult>0 && fixPaylineSign>0)? 1 : 0;
+	}
+	
 
 	//결재 취소
 	@Override
@@ -141,9 +161,9 @@ public class ApprovalServiceImpl implements IApprovalService{
 	}
 
 	@Override
-	public ApprovalVo oneMyPaychecked(String app_seq) {
-		log.info("결재 단건 조회 : {}",app_seq);
-		return approvalDao.oneMyPaychecked(app_seq);
+	public ApprovalVo oneMyPaychecked(String user_id) {
+		log.info("결재 단건 조회 : {}",user_id);
+		return approvalDao.oneMyPaychecked(user_id);
 	}
 
 	@Override
@@ -154,9 +174,9 @@ public class ApprovalServiceImpl implements IApprovalService{
 
 	//승인시 
 	@Override
-	public int approvePay(String app_seq, String app_draft) {
-		log.info("결재 승인 결재상태 수정 : {}",app_seq,app_draft);
-		return approvalDao.approvePay(app_seq, app_draft);
+	public int approvePay(String app_draft,String app_seq) {
+		log.info("결재 승인 결재상태 수정 : {}",app_draft,app_seq);
+		return approvalDao.approvePay(app_draft, app_seq);
 	}
 
 	@Override
@@ -166,16 +186,28 @@ public class ApprovalServiceImpl implements IApprovalService{
 	}
 
 	@Override
-	public int returnApproval(String app_seq, String app_draft) {
-		log.info("결재 승인 결재상태 수정 : {} {}",app_seq,app_draft);
-		return approvalDao.returnApproval(app_seq,app_draft);
+	public int banRuApproval(String app_seq) {
+		log.info("결재 승인 결재상태 수정 : {}",app_seq);
+		return approvalDao.banRuApproval(app_seq);
 	}
 
 	@Override
-	public int returnPayLine(String app_seq, String pay_sign, String pay_rejectreason, String pay_num,String pay_user) {
-		log.info("결재 승인 결재상태 수정 : {} {} {} {} {}",app_seq,pay_sign,pay_rejectreason,pay_num,pay_user);
-		return approvalDao.returnPayLine(app_seq, pay_num,pay_sign,pay_rejectreason,pay_user);
+	public int banRuPayLine(String pay_rejectreason,String app_seq,String pay_num,String pay_user) {
+		log.info("결재 승인 결재상태 수정 : {} {} {} {}",pay_rejectreason, app_seq ,pay_num,pay_user);
+		return approvalDao.banRuPayLine(pay_rejectreason, app_seq ,pay_num,pay_user);
 	}
+
+
+	@Override
+	public int selectTempCount(String user_id) {
+		return approvalDao.selectTempCount(user_id);
+	}
+
+	@Override
+	public List<ApprovalVo> selectTempPage(Map<String, Object> map) {
+		return approvalDao.selectTempPage(map);
+	}
+
 
 	
 }

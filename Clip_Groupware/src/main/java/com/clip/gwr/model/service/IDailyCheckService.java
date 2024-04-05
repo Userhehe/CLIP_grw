@@ -36,6 +36,11 @@ public interface IDailyCheckService {
 	public List<DailyCheckVo> selectDailyCheckList(Map<String, Object> map);
 	
 	/**
+	 * 나의 근태 조회 
+	 */
+	public List<DailyCheckVo> myDailychk(String user_id);
+	
+	/**
 	 * 근태현황 검색
 	 * @param map
 	 * @return
@@ -49,7 +54,9 @@ public interface IDailyCheckService {
 	 */
 	public int updateDailyCheckStatus(Map<String, Object> map);
 	
-	//출퇴근 현황 조회 
+	
+	
+	    //출퇴근 현황 조회 
 		public String selectDailyStatus(String daily_status);
 
 	

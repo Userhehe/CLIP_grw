@@ -18,6 +18,9 @@ public interface IAnnualDao {
 		// 연차 전체 조회 
 		public List<AnnualVo> annAll();
 		
+		// 나의 연차 조회 
+		public AnnualVo myAnn(String user_id);
+		
 		// 연차 상세 조회
 		public AnnualVo detailAnn(String user_id);
 		
@@ -32,6 +35,8 @@ public interface IAnnualDao {
 		
        // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 여기서 부터 연차 신청      
  		
+		
+		
 		//  연차 데이터 존재 유무 확인
 		public int chkAnn(String user_id);
 		
@@ -45,7 +50,10 @@ public interface IAnnualDao {
         public int selAvaliday(String user_id);
         
         //연차신정(update)
-        public int applyUpdateAnn(String user_id);
+        public int applyUpdateAnn(Map<String, Object> map);
+        
+        
+        
         
         // 연차 검색 
         public List<AnnualVo> searchAnnual(Map<String, Object> map);

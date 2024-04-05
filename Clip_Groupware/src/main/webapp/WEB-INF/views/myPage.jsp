@@ -65,18 +65,18 @@ UserinfoVo loginUserVo = (UserinfoVo)session.getAttribute("loginVo");
                         <button type="button" class="btn btn-dark btn-sm" onclick="window.location.href = './certiOfImpl.do'">재직증명서 다운로드</button>
                     </div>
                     <div class="card bgcolorTrans" id="signatureButton" >
-                     <button type="button" class="btn btn-dark btn-sm" onclick="window.location.href = './AllselectPad.do'">서명등록</button>
+                     <button type="button" class="btn btn-dark btn-sm" onclick="window.location.href = './insertPad.do'">서명등록</button>
                     </div>
                     
                     <div class="card bgcolorTrans" id="signatureUse" >                    
                     </div>
                     
-                    <div>
-                     <button type="button" class="btn btn-dark btn-sm" onclick="./" >나의 연차조회</button>
+                    <div class="card bgcolorTrans">
+                     <button type="button" class="btn btn-dark btn-sm" onclick="window.location.href = './myAnn.do'" >나의 연차조회</button>
                     </div>
                     
-                    <div>
-                     <button type="button" class="btn btn-dark btn-sm" onclick="./" >나의 근태조회</button>
+                    <div class="card bgcolorTrans">
+                     <button type="button" class="btn btn-dark btn-sm" onclick="window.location.href = './myDailychk.do'" >나의 근태조회</button>
                     </div>
                 </div>
                 <div class="col-xl-8">

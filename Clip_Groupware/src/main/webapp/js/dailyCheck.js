@@ -43,4 +43,39 @@ $(document).ready(function() {
         event.preventDefault(); // 기본 이벤트 제거
         $("#searchForm").submit(); // 폼 제출
     });
+    
+    
+ //////////////////////////////////////////////////////////////////////////////////////////////////////   
+    
+// DOM이 로드된 후 실행되는 함수
+document.addEventListener("DOMContentLoaded", function() {
+    // 출퇴근 상태 가져오는 함수
+    function getDailyStatus() {
+        fetch('/selectDailyStatus.do')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('출퇴근 상태:', data);
+                // 여기서 가져온 데이터를 화면에 표시
+                document.querySelectorAll('#dailyCheckTable tbody tr').forEach(row => {
+                    const statusCell = row.querySelector('.daily_status');
+                    if (statusCell) {
+                        statusCell.textContent = data; // 데이터를 해당 셀에 표시
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+            });
+    }
+
+    // 페이지 로드 시 출퇴근 상태 가져오기
+    getDailyStatus();
+});
+
+
 });

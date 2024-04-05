@@ -74,31 +74,27 @@ public class DailyCheckController {
 	public void insertDailyCheckIntime(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException  {
 
 	    String apiUrl = "https://api64.ipify.org?format=text";
-	    // RestTemplate 객체 생성
 	    RestTemplate restTemplate = new RestTemplate();
 
-	    // API 호출 및 응답 받기
 	    String clientIp = restTemplate.getForObject(apiUrl, String.class);
 
 	    log.info("#################################clientIp:" + clientIp);
 
-	    // 허용된 IP 주소 목록 설정
-	    List<String> allowedIpAddresses = Arrays.asList("14.36.141.71"); // 여기에 허용된 IP 주소 목록을 추가
+	    List<String> allowedIpAddresses = Arrays.asList("14.36.141.71");
 
-	    // 클라이언트의 IP 주소가 허용된 목록에 있는지 확인
 	    if (!allowedIpAddresses.contains(clientIp)) {
-	        response.sendRedirect(clientIp); // 허용되지 않은 IP 주소로 접근한 경우 에러 메시지 반환
+	        response.sendRedirect(clientIp); 
 	    }
 
 	    UserinfoVo loginVo = (UserinfoVo) session.getAttribute("loginVo");
-	    String userId = loginVo != null ? loginVo.getUser_id() : null; // 사용자 ID가 NULL이 아닌지 확인
+	    String userId = loginVo != null ? loginVo.getUser_id() : null; 
 
 	    log.info("####################### user_id :" + userId);
 	    log.info("################# loginVo :" + loginVo);
 
 	    
 	    Map<String, Object> insertMap = new HashMap<>();
-	    insertMap.put("user_id", userId); // 맵에 사용자 ID 추가
+	    insertMap.put("user_id", userId); 
 	    log.info("%%%%%%%%%%%********************** insertMap"+insertMap);
 	    
 
@@ -152,7 +148,7 @@ public class DailyCheckController {
 		    
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        return "dailyCheck"; // 에러가 발생한 경우에도 화면을 그대로 유지하도록 변경
+	        return "dailyCheck";
 	    }
 	    
 	    return "dailyCheck";
@@ -160,52 +156,64 @@ public class DailyCheckController {
 
 	
 	@GetMapping(value = "/updateDailyCheckOuttime.do")
-	public void updateDailyCheckOuttime(HttpServletRequest request, HttpSession session,HttpServletResponse response) throws IOException {
-	    String apiUrl2 = "https://api64.ipify.org?format=text";
+	public void updateDailyCheckOuttime(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
+	    // 클라이언트 IP 확인
+	    String apiUrl = "https://api64.ipify.org?format=text";
+	    RestTemplate restTemplate = new RestTemplate();
+	    String clientIp = restTemplate.getForObject(apiUrl, String.class);
+	    log.info("Client IP: " + clientIp);
 
-	    // RestTemplate 객체 생성
-	    RestTemplate restTemplate2 = new RestTemplate();
+	    // 허용된 IP 목록
+	    List<String> allowedIpAddresses = Arrays.asList("14.36.141.71");
 
-	    // API 호출 및 응답 받기
-	    String clientIp = restTemplate2.getForObject(apiUrl2, String.class);
-
-	    log.info("#################################clientIp:" + clientIp);
-
-	    // 허용된 IP 주소 목록 설정
-	    List<String> allowedIpAddresses = Arrays.asList("14.36.141.71"); // 여기에 허용된 IP 주소 목록을 추가
-
-	    // 클라이언트의 IP 주소가 허용된 목록에 있는지 확인
+	    // IP 접근 제어
 	    if (!allowedIpAddresses.contains(clientIp)) {
-	    	response.sendRedirect("./accessError.do"); // 허용되지 않은 IP 주소로 접근한 경우 에러 메시지 반환
+	        response.sendRedirect("./accessError.do");
+	        return; // IP가 허용되지 않았으므로 함수 종료
 	    }
 
-	    UserinfoVo loginVo2 = (UserinfoVo) session.getAttribute("loginVo");
-	    String userId2 = loginVo2 != null ? loginVo2.getUser_id() : null; // 사용자 ID가 NULL이 아닌지 확인
+	    // 세션에서 사용자 정보 가져오기
+	    UserinfoVo loginVo = (UserinfoVo) session.getAttribute("loginVo");
+	    String userId = loginVo != null ? loginVo.getUser_id() : null;
+	    log.info("User ID: " + userId);
 
-	    log.info("####################### user_id :" + userId2);
-	    log.info("################# loginVo :" + loginVo2);
-
-	    if (userId2 == null) {
-	    	response.sendRedirect("./accessError.do");
+	    // 로그인 여부 확인
+	    if (userId == null) {
+	        response.sendRedirect("./accessError.do");
+	        return; // 로그인되지 않았으므로 함수 종료
 	    }
 
+	    // dailyStatus 계산
+	    // 요청 파라미터에서 dailyStatus 가져오기
+	    String dailyStatus = request.getParameter("daily_status");
+	    // dailyStatus 계산하는 부분은 생략하고, 요청 파라미터에서 가져오도록 유지합니다.
+
+	    // 현재 시간 가져오기
+	    Date currentTime = new Date();
+
+	    // 출퇴근 정보를 Map에 담기
 	    Map<String, Object> updateMap = new HashMap<>();
-	    updateMap.put("user_id", userId2); // 맵에 사용자 ID 추가
-	    updateMap.put("current_time", new Date()); // 현재 시간을 맵에 추가
+	    updateMap.put("user_id", userId);
+	    updateMap.put("current_time", currentTime);
+	    updateMap.put("daily_status", dailyStatus);
 
 	    try {
+	        // 서비스를 호출하여 출퇴근 정보 업데이트
 	        int updateRows = service.updateDailyCheckOuttime(updateMap);
-	        log.info("#############insertRows : " + updateRows);
+	        log.info("Rows Updated: " + updateRows);
 	        if (updateRows > 0) {
-	        	 response.sendRedirect("./main.do");
+	            response.sendRedirect("./main.do");
 	        } else {
-	        	response.sendRedirect("./accessError.do");
+	            response.sendRedirect("./accessError.do");
 	        }
 	    } catch (DataIntegrityViolationException e) {
 	        e.printStackTrace();
 	        response.sendRedirect("./accessError.do");
 	    }
 	}
+
+
+
 	
 	@PostMapping("/updateDailyCheckStatus.do")
 	@ResponseBody
@@ -222,23 +230,37 @@ public class DailyCheckController {
 	    log.info("map 확인:{}",map);
 	    service.updateDailyCheckStatus(map);
 
-	    // 수정된 내용을 반영한 후 해당 JSP 페이지로 이동
-	    return "dailyCheck"; // 이동할 JSP 페이지의 이름을 반환
+	    
+	    return "dailyCheck"; 
 	}
 	
-	@GetMapping(value = "/getDailyStatus.do")
+	@GetMapping(value = "/selectDailyStatus.do")
 	@ResponseBody
-	public String getDailyStatus() {
+	public String selectDailyStatus(HttpServletRequest request) {
 	    log.info("##### 출퇴근여부 가져오기 #####");
-	    String dailyStatus = "";
-	    try {
-	        dailyStatus = service.selectDailyStatus("selectDailyStatus");
-	        log.info("출퇴근여부: " + dailyStatus);
-	    } catch (Exception e) {
-	        log.error("출퇴근여부를 가져오는 도중 오류 발생: " + e.getMessage());
-	    }
+	    
+	    HttpSession session = request.getSession();
+	    String userId = (String) session.getAttribute("user_id");
+
+	    String dailyStatus = service.selectDailyStatus(userId);
+
 	    return dailyStatus;
 	}
+
+	
+	@GetMapping(value = "/myDailychk.do")
+	public String myDailychk(Model model, HttpSession session) {
+	    UserinfoVo loginUserVo = (UserinfoVo) session.getAttribute("loginVo");
+	    String user_id = loginUserVo.getUser_id();
+
+	    List<DailyCheckVo> lists = service.myDailychk(user_id);
+
+	    model.addAttribute("lists", lists);
+
+	    return "myDailychk";
+	}
+
+	
 }
 
 

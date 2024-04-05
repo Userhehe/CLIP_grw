@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.clip.gwr.model.mapper.ISignsDao;
 import com.clip.gwr.model.mapper.IUserDao;
 import com.clip.gwr.vo.UserVo;
 import com.clip.gwr.vo.UserinfoVo;
@@ -94,9 +95,9 @@ public class UserServiceImpl implements IUserService {
 	 * 사원목록 전체조회
 	 */
 	@Override
-	public List<UserinfoVo> selectUserinfoList() {
+	public List<UserinfoVo> selectUserinfoList(Map<String, Object> map) {
 		log.info("UserServiceImpl selectUserinfoList 사원목록전체조회");
-		return dao.selectUserinfoList();
+		return dao.selectUserinfoList(map);
 	}
 
 	/**
@@ -145,5 +146,31 @@ public class UserServiceImpl implements IUserService {
 		log.info("UserServiceImpl selectUserAuth 사용자 권한 조회");
 		return dao.selectUserAuth(user_id);
 	}
+	
+	/**
+	 * 대표 싸인 가져오기
+	 */
+	@Override
+	public String selectSignImage(String boss_name) {
+		log.info(" selectSignImage 사용자 권한 조회");
+		return dao.selectSignImage(boss_name);
+	}
 
+	/**
+	 * 사용자 수 카운트
+	 */
+	@Override
+	public int selectUserInfoListCnt() {
+		log.info("UserServiceImpl selectUserInfoListCnt 사용자 수 카운트");
+		return dao.selectUserInfoListCnt();
+	}
+
+	/**
+	 * 사용자 검색 결과 수 카운트
+	 */
+	@Override
+	public int selectSearchUserInfoListCnt(Map<String, Object> map) {
+		log.info("UserServiceImpl selectSearchUserInfoListCnt 사용자 검색 결과 수 카운트");
+		return dao.selectSearchUserInfoListCnt(map);
+	}
 }

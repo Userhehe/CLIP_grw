@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +41,7 @@
 
 
 </style>
-<script type="text/javascript" src="./js/payTemplateSelect.js"></script>
+
 
 <!-- SmartEditor2 라이브러리  -->
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js"
@@ -57,46 +60,38 @@
 <body>
 	<main id="main" class="main">
 		<div class="container">
-		<section class="section dashboard">
 			<div style="display: none">
 				<input type="text" disabled="disabled" id="session_user_name" value="${loginVo.user_name}">
 				<input type="text" disabled="disabled" id="session_dept_name" value="${loginVo.dept_name}">
 				<input type="text" disabled="disabled" id="session_ranks_name" value="${loginVo.ranks_name}">
 				<input type="text" disabled="disabled" id="session_user_id" name="user_id" value="${loginVo.user_id}">
+				<input type="text" disabled="disabled" id="approvalVo_app_seq" name="app_seq" value="${approvalVo.app_seq}">
 				
 			</div>
-			<h5 class="card-title">${user_name}님 결재신청하실 기안서를 선택해주세요.</h5>
-			<ul class="nav nav-tabs" id="myTab" role="tablist">
-				<li class="nav-item" role="presentation">
-					<button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-						data-bs-target="#home" type="button" role="tab"
-						aria-controls="home" aria-selected="true" >연차 신청서</button>
-				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link " id="profile-tab" data-bs-toggle="tab"
-						data-bs-target="#profile" type="button" role="tab"
-						aria-controls="profile" aria-selected="true">지출 결의서</button>
-				</li>
-				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-						data-bs-target="#contact" type="button" role="tab"
-						aria-controls="contact" aria-selected="false" tabindex="-1">출장
-						보고서</button>
-				</li>
-				
-			</ul>
 			
-			
-			
-			<div class="tab-content pt-2" id="myTabContent">
-				<div class="tab-pane fade show active" id="home" role="tabpanel"
-					aria-labelledby="home-tab">
-					<!--  연차신청서탭 시작 -->
-					<div class="container" >
+	<section class="section">
+		
+	<div class="row">
+		<div class="col-lg-10">
+			<div class="card">
+				<div class="card-body">
+					<c:choose>
+                      	<c:when test="${approvalVo.app_draft eq '임시저장'}">
+	                     	<h5 class="card-title">${loginVo.user_name}의 저장된 결재</h5>
+                      	</c:when>
+                      	<c:when test="${approvalVo.app_draft eq '결재대기'}">
+	                   		<h5 class="card-title">${loginVo.user_name}의 요청한 결재 수정</h5>
+                      	</c:when>
+                      	<c:when test="${approvalVo.app_draft eq '결재반려'}">
+	                     	<h5 class="card-title">${loginVo.user_name}의 반려된 결재 수정</h5>
+                      	</c:when>
+                      </c:choose>
+					
+					<div class="container">
 					
 					<div class="form-group" style="margin-top:20px;">
 						<label for="app_title">결재 제목</label>
-						<input type="text" id="app_title" class="form-control" name="app_title" placeholder="제목을 입력하세요." style="width:90%">			
+						<input type="text" id="app_title" class="form-control" name="app_title" value="${approvalVo.app_title}" style="width:90%">			
 					</div>
 				
 					<div class="form-group" style="margin-top:10px;">
@@ -118,12 +113,14 @@
 					    <input type="time" class="form-control" id="endTime" style="display: none;">
 					    
 					    <hr/>
-					    
-						<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal">
-							결재라인 지정
-		            	</a>
+					    <c:if test="${approvalVo.app_draft eq '임시저장'}">
+							<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal">
+								결재라인 지정
+			            	</a>
+					    </c:if>
 		            	<div id="selectedPayLine">
-		            		
+		            		<label class="badge border-warning border-1 text-warning">결재라인</label>
+		            		<br/>
 		            		
 		            	</div>	
 		            	
@@ -182,7 +179,7 @@
 		            	</a>
 		            	
 		            	
-<!-- 		            	참조인 모달 영역 -->
+		            	<!-- 참조인 모달 영역 -->
 						<div class="modal fade" id="selectedRefermodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
 				            	<div class="modal-dialog modal-lg">
 				            	
@@ -235,12 +232,23 @@
 			                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			                    </div>
 			                    <div class="modal-body">
-									${vo1.gian_html}
+									${approvalVo.app_content}
 			                    </div>
 			                    <div class="modal-footer">
 			                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-			                      <button type="button" class="btn btn-primary" id="pushReq">결재 요청</button>
-			                      <button type= "button" id="tempSave" class="btn btn-warning" onclick="saveApproval()">임시저장</button>
+			                      
+			                      <c:choose>
+			                      	<c:when test="${approvalVo.app_draft eq '임시저장'}">
+				                      <button type="button" class="btn btn-warning" id="continuReq">결재 요청</button>
+			                      	</c:when>
+			                      	<c:when test="${approvalVo.app_draft eq '결재대기'}">
+				                      <button type="button" class="btn btn-warning" id="modifyReq" onclick="fixWating()">결재 수정</button>
+			                      	</c:when>
+			                      	<c:when test="${approvalVo.app_draft eq '결재반려'}">
+				                      <button type="button" class="btn btn-warning" id="fixReq" onclick="fixreq()">결재 재요청</button>
+			                      	</c:when>
+			                      </c:choose>
+			                      
 			                    </div>
 			                  </div>
 			                </div>
@@ -257,6 +265,17 @@
 							
 						<br> <br> <br>
 					</div>
+					
+					<c:choose>
+						<c:when test="${approvalVo.gian_seq eq GIAN_2 or approvalVo.gian_seq eq GIAN_3}">
+							<div class="form-group">
+									<label for="position">지출 증빙자료:</label>
+									<div class="dropzone" id="fileDropzone"></div>
+									<br/>
+							</div>
+						</c:when>
+					</c:choose>
+					
 					<div style="text-align: center;">
 <!-- 						<button id="sunbmitReq" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#reqPayment">미리보기/결재요청</button> -->
 <!-- 						<button type= "button" id="tempSave" class="btn btn-secondary rounded-pill">임시저장</button> -->
@@ -264,103 +283,27 @@
               				미리보기/결재요청
 		              	</button>
 					</div>
-				</div>
-				<!--  연차신청서탭 끝 -->
-				</div>
-			</div>
-			
-			
-			
-			
-			
-			<!--  지출결의서탭 시작 -->
-			<div class="tab-content pt-2" id="myTabContent">
-				<div class="tab-pane fade" id="profile" role="tabpanel"
-					aria-labelledby="profile-tab">
-					<div class="container" >
-					<form id="payTemplate" action="./" method="post">
-						<div class="form-group">
-							<label for="applicantName">신청자 이름</label> <input type="text"
-								class="form-control" id="applicantName" value="${user_name}"
-								name="applicantName" readonly="readonly">
-						</div>
-						<div class="form-group">
-							<label for="department">부서</label> <input type="text"
-								id="department" class="form-control" value="${dept_name}"
-								name="department" readonly="readonly">
-						</div>
-						<div class="form-group">
-							<label for="position">직책</label> <input type="text" id="position"
-								class="form-control" value="${ranks_name}" name="position"
-								readonly="readonly">
-						</div>
-						<div class="form-group">
-							<label for="position">총 지출금액:</label> <input type="number"
-								id="spendPay" class="form-control" name="position">
-						</div>
-						<div class="form-group">
-							<label for="position">제목 :</label> <input type="text"
-								id="payTitle" class="form-control" name="position">
-						</div>
-						<div class="form-group">
-							<label for="position">지출 증빙자료:</label>
-							<div class="dropzone" id="fileDropzone"></div>
-						</div>
-						<div class="form-group">
-							<label for="position">문서내용 :</label>
-							<textarea name="payGian_html" id="smartEditor2"
-								style="width: 100%; height: 412px;">${vo2.gian_html}</textarea>
-							<div>
-<%-- 							${vo2.gian_html} --%>
-							</div>
-							<br>
-							<br>
-							<br>
-						</div>
-						<div style="text-align: center;">
-							<button type="submit" class="btn btn-primary rounded-pill">결재요청</button>
-							<button type="submit" id="tempSave"
-								class="btn btn-secondary rounded-pill">임시저장</button>
-						</div>
-					</form>
 					
-					</div>	
-				</div>
-			</div>
-			<!-- 출장 보고서 탭 시작 -->
-			<div class="tab-content pt-2" id="myTabContent">
-				<div class="tab-pane fade" id="contact" role="tabpanel"
-					aria-labelledby="contact-tab">
-					<div class="container" >
-					<form>
-						<div class="form-group">
-							<label for="position">문서내용 :</label>
-							<textarea name="outerGian_html" id="smartEditor3"
-								style="width: 100%; height: 412px;">${vo3.gian_html}</textarea>
-<%-- 							<div>${vo3.gian_html}</div> --%>
-							<br>
-							<br>
-							<br>
-						</div>
-						<div style="text-align: center;">
-							<button type="submit" class="btn btn-primary rounded-pill">결재요청</button>
-							<button type="submit" id="tempSave" class="btn btn-secondary rounded-pill">임시저장</button>
-						</div>
-					</form>
+					<div id="beforeHtml" style="display: none;">
+						${approvalVo.app_content}
 					</div>
+					
 				</div>
+					
+				</div>
+			
 			</div>
-		</section>
-		
-		
-            
-            
-            
-         
+		</div>
+	</div>
+
+	</section>
 			
 		</div>
 	</main>
 </body>
+
+
+<script type="text/javascript" src="./js/payTemplateSelect.js"></script>
 </html>
 <!-- editor.js는  html 젤 아래에 넣어야 충돌이 발생 안됨. -->
 <script type="text/javascript" src="./js/payGian.js"></script> 

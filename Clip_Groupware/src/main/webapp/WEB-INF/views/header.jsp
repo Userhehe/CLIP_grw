@@ -95,6 +95,7 @@ String fileStorename = (String)session.getAttribute("fileStorename");
 				  	</a>
 				  </li>
                   <li><hr class="dropdown-divider"></li>
+
 <!--                   <li><a class="dropdown-item d-flex align-items-center" href="users-profile.html"> -->
 <!--                   <i class="bi bi-gear"></i> -->
 <!--                   <span>개인정보 수정</span></a> -->
@@ -106,15 +107,11 @@ String fileStorename = (String)session.getAttribute("fileStorename");
                       </a>
                   </li>
 
-                   <li id="checkOutButton" >
-                      <a class="dropdown-item d-flex align-items-center" href="updateDailyCheckOuttime.do" onclick="handleCheckOutButtonClick()">
-                          <i class="bi bi-gear"></i>
-                          <span>퇴근</span>
-                      </a>
-                  </li>
-                  
+
                   <li><hr class="dropdown-divider"></li>
+
                   <li><a id="logout" style="cursor: pointer;" class="dropdown-item d-flex align-items-center"> <!-- href="./logout.do" -->
+
                   <i class="bi bi-box-arrow-right"></i>
                   <span>Log Out</span>
                   </a>
@@ -140,6 +137,7 @@ String fileStorename = (String)session.getAttribute("fileStorename");
                 <ul id="jojic-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                    <li><a href="./organization.do"><i class="bi bi-circle"></i><span>조직도</span></a></li>
                 </ul>
+
             </li>
 			<c:if test="${loginVo.user_auth eq 'ROLE_ADMIN'}">
 	            <li class="nav-item">
