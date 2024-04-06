@@ -14,10 +14,6 @@
 	margin-top: 30px;
 }
 
-#profileCt {
-	
-}
-
 #userInfoDetailCt {
 	margin-left: 120px;
 }
@@ -32,4 +28,12 @@
 
 #title {
 	font-size: 30px;	
+}
+
+#profilePhotoUpdateBtn {
+	width: 100%
+}
+
+#profilePhotoDelBtn {
+	width: 100%;
 }

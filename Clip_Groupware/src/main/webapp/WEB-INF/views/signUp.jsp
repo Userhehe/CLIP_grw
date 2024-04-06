@@ -18,8 +18,10 @@
 	<main id="main" class="main">
 		<div class="container" style="margin: 0;">
 			<div class="card-body w661_5px">
-				<h5 class="card-title font20">회원정보 등록</h5>
-				<div class="fc_red font12">&nbsp;&nbsp;* 값은 필수값입니다</div>
+				<div id="cardTitleCt">
+					<h5 id="userUpdateTitle" class="card-title font20">회원정보 등록</h5>
+					<div class="fc_red font12">&nbsp;&nbsp;* 값은 필수값입니다</div>
+				</div>
 				<form action="./signUp.do" method="post">
 					<div class="row mb-3">
 						<label for="userName" class="col-sm-2 col-form-label font12"><span class="fc_red">*&nbsp;</span>성명</label>

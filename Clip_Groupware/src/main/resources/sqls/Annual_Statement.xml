@@ -11,7 +11,7 @@
 <!-- 	VALUES(('ANN_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL)), #{user_id}, 0,SYSDATE, 0) -->
 	   INSERT INTO ANNUAL_CT
 		(ANN_SEQ, USER_ID, ANN_DAY, ANN_DATE, ANN_LEOV)
-		VALUES(('ANN_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL)), 'USER_' || TO_CHAR(USER_SEQ.NEXTVAL-1), 0,SYSDATE, 0)
+		VALUES('ANN_' || TO_CHAR(ANNUALCT_SEQ.NEXTVAL), 'USER_' || TO_CHAR(USER_SEQ.CURRVAL-1), 0,SYSDATE, 0)
   </insert>
   
   <update id="insertAnnualup" parameterType="java.util.Map">
