@@ -44,52 +44,59 @@
 	<main id="main" class="main">
 		<div class="card-body">
 			<h5 class="card-title">근태 정보 조회</h5>
+			<br>
 			<div class="search-form">
-				<form action="./searchDailyCheckList.do" method="GET"
-					class="form-inline" id="searchForm">
-					<div class="row">
-						<div class="col-md-2">
-							<label for="startDate" class="mr-2">검색 시작일</label> 
-							<input type="date" class="form-control" id="startDate" name="startDate">
-						</div>
-						<div class="col-md-2">
-							<label for="lastDate" class="mr-2">검색 종료일</label> <input type="date" class="form-control" id="lastDate" name="lastDate">
-						</div>
-						<div class="col-md-2">
-							<label for="userName" class="mr-2">이름</label> <input type="text" class="form-control" id="userName" name="userName">
-						</div>
-						<div class="col-md-2">
-							<label for="positions" class="mr-2">직책</label> <select
-								class="form-control" id="positions" name="positions">
-								<option value="">선택</option>
-								<c:forEach var="position" items="${positionsList}">
-									<option value="${position.positions_name}">${position.positions_name}</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="col-md-2">
-							<label for="ranks" class="mr-2">직급</label> <select
-								class="form-control" id="ranks" name="ranks">
-								<option value="">선택</option>
-								<c:forEach var="rank" items="${ranksList}">
-									<option value="${rank.ranks_name}">${rank.ranks_name}</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="col-md-2">
-							<label for="dept" class="mr-2">부서</label> <select
-								class="form-control" id="dept" name="dept">
-								<option value="">선택</option>
-								<c:forEach var="dept" items="${deptList}">
-									<option value="${dept.dept_name}">${dept.dept_name}</option>
-								</c:forEach>
-							</select>
-						</div>
-					</div>
-					<button type="submit" class="btn btn-primary mt-2"
-						id="searchButton">검색</button>
-				</form>
-			</div>
+    <form action="./searchDailyCheckList.do" method="GET" class="form-inline" id="searchForm">
+        <div class="row">
+            <div class="col-md-2">
+                <label for="startDate" class="mr-2">검색 시작일</label> 
+                <input type="date" class="form-control" id="startDate" name="startDate">
+            </div>
+            <div class="col-md-2">
+                <label for="lastDate" class="mr-2">검색 종료일</label> 
+                <input type="date" class="form-control" id="lastDate" name="lastDate">
+            </div>
+            <div class="col-md-2">
+                <label for="userName" class="mr-2">이름</label> 
+                <input type="text" class="form-control" id="userName" name="userName">
+            </div>
+            <div class="col-md-2">
+                <label for="positions" class="mr-2">직책</label> 
+                <select class="form-control" id="positions" name="positions">
+                    <option value="">선택</option>
+                    <c:forEach var="position" items="${positionsList}">
+                        <option value="${position.positions_name}">${position.positions_name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="ranks" class="mr-2">직급</label> 
+                <select class="form-control" id="ranks" name="ranks">
+                    <option value="">선택</option>
+                    <c:forEach var="rank" items="${ranksList}">
+                        <option value="${rank.ranks_name}">${rank.ranks_name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="dept" class="mr-2">부서</label> 
+                <select class="form-control" id="dept" name="dept">
+                    <option value="">선택</option>
+                    <c:forEach var="dept" items="${deptList}">
+                        <option value="${dept.dept_name}">${dept.dept_name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-info" id="searchButton">검색</button>
+            </div>
+        </div>
+        <br>
+    </form>
+</div>
+
 			<table class="table table-hover" id="dailyCheckTable">
     		<thead>
         <tr>
@@ -121,16 +128,13 @@
                 <td class="daily_modify">${list.daily_modify}</td>      
                 <td class="daily_reasonmodify">${list.daily_reasonmodify}</td> 
                 <td>
-                    <button class="open-modal-btn btn btn-info rounded-pill">수정</button>
+                    <button class="open-modal-btn btn btn-warning rounded-pill">수정</button>
                 </td>
             </tr>
         </c:forEach>
     </tbody>
 </table>
 		</div>
-		<div class="datatable-bottom paging">
-			    <nav class="datatable-pagination"><ul class="datatable-pagination-list"><li class="datatable-pagination-list-item datatable-hidden datatable-disabled"><button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">‹</button></li><li class="datatable-pagination-list-item datatable-active"><button data-page="1" class="datatable-pagination-list-item-link" aria-label="Page 1">1</button></li><li class="datatable-pagination-list-item"><button data-page="2" class="datatable-pagination-list-item-link" aria-label="Page 2">2</button></li><li class="datatable-pagination-list-item"><button data-page="3" class="datatable-pagination-list-item-link" aria-label="Page 3">3</button></li><li class="datatable-pagination-list-item"><button data-page="4" class="datatable-pagination-list-item-link" aria-label="Page 4">4</button></li><li class="datatable-pagination-list-item"><button data-page="5" class="datatable-pagination-list-item-link" aria-label="Page 5">5</button></li><li class="datatable-pagination-list-item"><button data-page="6" class="datatable-pagination-list-item-link" aria-label="Page 6">6</button></li><li class="datatable-pagination-list-item"><button data-page="7" class="datatable-pagination-list-item-link" aria-label="Page 7">7</button></li><li class="datatable-pagination-list-item datatable-ellipsis datatable-disabled"><button class="datatable-pagination-list-item-link">…</button></li><li class="datatable-pagination-list-item"><button data-page="10" class="datatable-pagination-list-item-link" aria-label="Page 10">10</button></li><li class="datatable-pagination-list-item"><button data-page="2" class="datatable-pagination-list-item-link" aria-label="Page 2">›</button></li></ul></nav>
-			</div>
 	</main>
 </body>
 </html>

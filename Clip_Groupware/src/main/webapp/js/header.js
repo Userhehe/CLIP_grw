@@ -23,20 +23,7 @@ $(document).ready(function() {
 	});
 });
 
-function handleButtonClick(buttonType) {
-    var checkInButton = document.getElementById("checkInButton");
-    var checkOutButton = document.getElementById("checkOutButton");
 
-    if (buttonType === 'checkIn') {
-        // 출근 버튼 클릭 시 처리
-        checkInButton.style.display = 'none';
-        checkOutButton.style.display = 'block';
-    } else if (buttonType === 'checkOut') {
-        // 퇴근 버튼 클릭 시 처리
-        checkOutButton.style.display = 'none';
-        checkInButton.style.display = 'block';
-    }
-}
 
 
 

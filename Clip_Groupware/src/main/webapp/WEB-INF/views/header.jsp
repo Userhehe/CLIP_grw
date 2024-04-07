@@ -100,14 +100,14 @@ String fileStorename = (String)session.getAttribute("fileStorename");
                   <span>개인정보 수정</span></a>
                   </li>
 				<li id="checkInButton">
-				    <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);" onclick="handleButtonClick('checkIn')">
+				    <a class="dropdown-item d-flex align-items-center" href="insertDailyCheckIntime.do" onclick="handleButtonClick('checkIn')">
 				        <i class="bi bi-send-check"></i>
 				        <span>출근</span>
 				    </a>
 				</li>
 				
-				<li id="checkOutButton" style="display: none;">
-				    <a class="dropdown-item d-flex align-items-center" href="javascript:void(0);" onclick="handleButtonClick('checkOut')">
+				<li id="checkOutButton" >
+				    <a class="dropdown-item d-flex align-items-center" href="updateDailyCheckOuttime.do" onclick="handleButtonClick('checkOut')">
 				        <i class="bi bi-send-dash"></i>
 				        <span>퇴근</span>
 				    </a>
