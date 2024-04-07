@@ -54,7 +54,7 @@
 	
 	.square {
 		margin-left : 10px;
-        width: 100px;
+        width: 15px;
         height: 15px;
     }
 </style>
@@ -201,10 +201,10 @@
 		<section class="section dashboard">
 			<div class="row">
 				<div class="col-lg-2"
-					style="background-color: #f2f2f2; height: 300px">
-					<div class="card-body">
-						<h2 class="card-title">조회 목록</h2>
-							<table>
+					style="background-color: #f2f2f2; height: 280px; margin-top: 90px;">
+					<div class="card-body" style="margin-top: 25px;">
+						<h2 class="card-title" style="font-size: x-large; font-weight: bold; margin-bottom: 20px; text-align: center; margin-top: 0px;">조회 목록</h2>
+							<table style="margin-left: 30px;">
 								<tr>
 									<td><input type="checkbox" id="showAllEvent" checked> 전체일정</td>
 								</tr>
@@ -234,7 +234,7 @@
 					</div>
 				</div>
 
-				<div class="card-body">
+				<div class="card-body" style="margin-top: 25px;">
 					<div id="calendar"></div>
 				</div>
 
