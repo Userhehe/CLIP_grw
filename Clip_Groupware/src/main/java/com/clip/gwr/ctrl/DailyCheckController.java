@@ -80,7 +80,7 @@ public class DailyCheckController {
 
 	    log.info("#################################clientIp:" + clientIp);
 
-	    List<String> allowedIpAddresses = Arrays.asList("14.36.141.71");
+	    List<String> allowedIpAddresses = Arrays.asList("112.171.104.102");  /*"14.36.141.71"*/
 
 	    if (!allowedIpAddresses.contains(clientIp)) {
 	        response.sendRedirect(clientIp); 
@@ -164,7 +164,7 @@ public class DailyCheckController {
 	    log.info("Client IP: " + clientIp);
 
 	    // 허용된 IP 목록
-	    List<String> allowedIpAddresses = Arrays.asList("14.36.141.71");
+	    List<String> allowedIpAddresses = Arrays.asList("112.171.104.102"); /*14.36.141.71*/
 
 	    // IP 접근 제어
 	    if (!allowedIpAddresses.contains(clientIp)) {

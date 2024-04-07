@@ -26,6 +26,17 @@
         .action-buttons button {
             margin-left: 10px;
         }
+        
+        .add-dept-btn-container {
+            text-align: right;
+            margin-top: 10px; /* 버튼과 테이블 사이 간격 조정 */
+            margin-right: 30px;
+        }
+        
+           section.dashboard {
+            margin-top: 50px;
+        }
+        
     </style>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -80,14 +91,16 @@
                             <td class="dept_name">${lists.dept_name}</td> 
                             <td>${lists.dept_regdate}</td>
                            <td class="action-buttons">
-						    <button class="open-modal-btn btn btn-info rounded-pill" data-dept-seq="${lists.dept_seq}" data-dept-name="${lists.dept_name}">수정</button>
+						    <button class="open-modal-btn btn btn-secondary rounded-pill" data-dept-seq="${lists.dept_seq}" data-dept-name="${lists.dept_name}">수정</button>
 						    <button class="btn btn-danger rounded-pill delete-btn" data-dept-seq="${lists.dept_seq}" data-dept-name="${lists.dept_name}">삭제</button>
 						</td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            <a href="./insertDept.do"><button class="btn btn-primary rounded-pill">부서 추가</button></a>
+            <div class="add-dept-btn-container">
+            <a href="./insertDept.do"><button class="btn btn-secondary">부서 추가</button></a>
+            </div>
         </section>
     </main>
 </body>

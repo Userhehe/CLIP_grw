@@ -11,6 +11,20 @@
 <title>나의 연차정보</title>
 <%@ include file="./header.jsp" %>
 <link href="./assets/css/userBoard.css" rel="stylesheet">
+<style type="text/css">
+  .card {
+            margin-top: 200px;
+        }
+
+        /* 화면을 70%로 줄이기 */
+        @media (min-width: 768px) {
+            body {
+                width: 80%;
+                margin: 0 auto;
+            }
+        }
+
+</style>
 </head>
 <body>
 <%
@@ -21,7 +35,7 @@ UserinfoVo loginUserVo = (UserinfoVo)session.getAttribute("loginVo");
             <div class="card-body">
             	
             	<h5 class="card-title">나의 연차정보</h5>
-
+                <br>
 	            <table class="table table-hover">
 	              <thead>
 	                <tr>

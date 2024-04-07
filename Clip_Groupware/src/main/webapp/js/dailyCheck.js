@@ -1,4 +1,10 @@
 $(document).ready(function() {
+	
+	  // 모달에서 뒤로가기 버튼을 누를 때 모달이 닫히도록 설정
+    $("#addDailyCheckCancel").click(function() {
+        $("#dailyCheckModal").modal("hide");
+    });
+    
     $(".open-modal-btn").click(function() {
         var $row = $(this).closest("tr");
         var $dailySeqElement = $row.find(".daily_seq");
