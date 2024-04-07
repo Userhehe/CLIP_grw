@@ -19,8 +19,10 @@
 	<main id="main" class="main">
 		<div class="container" style="margin: 0;">
 			<div class="card-body w661_5px">
-				<h5 class="card-title font20">회원정보 수정</h5>
-				<div class="fc_red font12">&nbsp;&nbsp;* 값은 필수값입니다</div>
+				<div id="cardTitleCt">
+					<h5 id="userUpdateTitle" class="card-title font20">회원정보 수정</h5>
+					<div class="fc_red font12">&nbsp;&nbsp;* 값은 필수값입니다</div>
+				</div>
 				<form action="./userInfoUpdateData.do" method="post">
 					<input type="hidden" name="userId" value="${param.user_seq}"/>
 					<c:forEach var='userDetailList' items="${userDetailList}" varStatus="vs">

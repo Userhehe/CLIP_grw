@@ -21,7 +21,7 @@
 	<div class="card">
 		<div class="card-body">
 			<div>
-				<h4 class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님 요청 결재리스트</h4>
+				<h4 style="font-size: x-large;" class="card-title"><span class="card-title" style="color: skyblue;">${loginVo.user_name}</span> 님 요청 결재리스트</h4>
 				<div style="margin-left: 560px;">
 					<select  id="statusSelect"  style="width: 15%; display: unset;" class="form-select " aria-label="Default select example">
 		                      <option value="all" selected="selected" >전체 검색</option>
@@ -31,8 +31,8 @@
 		                      <option value="결재완료">결재완료</option>
 		             </select>
 					<input style="width: 200px; display: unset;" id="searchInput"class="form-control" type="text" placeholder="제목을 입력해주세요.">
-					<button class="btn btn-primary rounded-pill" id="templateSearch">검색</button>
-					<button class="btn btn-warning rounded-pill" id="resetSearch">검색 초기화</button>
+					<button class="btn btn-warning " id="templateSearch">검색</button>
+					<button class="btn btn-secondary " id="resetSearch">검색 초기화</button>
 				</div>
 				<table  class="table table-hover" style="margin-top: 10px;">
 						<thead>
@@ -75,7 +75,7 @@
 						</tfoot>
 					</table>
 					<!-- 페이징 -->
-					<div style="margin-left: 450px;">
+					<div style="margin-left:85%;">
 					<nav aria-label="Page navigation example">
 		                <ul class="pagination">
 		                  <li class="page-item">

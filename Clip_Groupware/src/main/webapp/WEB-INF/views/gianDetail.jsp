@@ -12,20 +12,34 @@
 <!-- SmartEditor2 라이브러리  -->
 <script type="text/javascript" src="se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<style type="text/css">
+.form-control{
+	width:30%;
+}
+</style>
 </head>
 <body>
 	<main id="main" class="main">
 		<section class="section dashboard">
 			<div class="row">
-				기안서 코드:<input type="text" class="form-control" value="${vo.gian_seq}" readonly="readonly"><br>
-				기안서 구분 :<input type="text" class="form-control" value="${vo.gian_gubun}" readonly="readonly"><br>
-				작성자 :<input type="text" class="form-control" value="${vo.gian_modifier}" readonly="readonly"><br>
-				등록일 :<input type="text" class="form-control" value="${vo.gian_regdate}" readonly="readonly"><br>
-				기안서 내용 :<textarea name="gian_html" id="smartEditor" style="width: 100%; height: 412px;">${vo.gian_html}</textarea>	
+				<div style="display: flex;">
+				<p>기안서 코드 &nbsp;&nbsp;&nbsp;&nbsp;</p>
+				<input type="text" class="form-control" value="${vo.gian_seq}" readonly="readonly">
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;기안서 구분 &nbsp;&nbsp;&nbsp;&nbsp;</p>
+				<input type="text" class="form-control" value="${vo.gian_gubun}" readonly="readonly">
+				</div>
+				<div style="display: flex; margin-top: 10px;">
+				<p>작성자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+				<input type="text" class="form-control" value="${vo.gian_modifier}" readonly="readonly">
+				<p>&nbsp;&nbsp;&nbsp;&nbsp;등록일&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+				<input type="text" class="form-control" value="${vo.gian_regdate}" readonly="readonly">
+				</div>
+				<p style="text-align: center; padding-top: 20px;">기안서 내용 </p>
+				<textarea name="gian_html" id="smartEditor" style="width: 100%; height: 412px;">${vo.gian_html}</textarea>	
 			<div style="margin-top:40px;">
-				<a href="./gianModify.do?gian_seq=${vo.gian_seq}"><button class="btn btn-primary rounded-pill">양식수정</button></a>
-				<a href="./templateDelete.do?gian_seq=${vo.gian_seq}"><button class="btn btn-danger rounded-pill">양식삭제</button></a>
-				<a href="./paytemplate.do"><button class="btn btn-primary rounded-pill">목록으로</button></a>
+				<a href="./gianModify.do?gian_seq=${vo.gian_seq}"><button class="btn btn-warning ">양식수정</button></a>
+				<a href="./templateDelete.do?gian_seq=${vo.gian_seq}"><button class="btn btn-danger ">양식삭제</button></a>
+				<a href="./paytemplate.do"><button class="btn btn-warning ">목록으로</button></a>
 			</div>
 		</section>
 	</main>

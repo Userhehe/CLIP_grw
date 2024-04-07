@@ -10,9 +10,10 @@ $(document).ready(function(){
 function calendar(){
     var calendarEl = document.getElementById('recalendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
+      locale: 'ko',
       dayMaxEventRows: true,
       height: 1000,
-        initialView: 'dayGridMonth',
+        initialView: 'timeGridWeek',
         droppable: false,
         editable: false,
         displayEventTime: true,
@@ -93,7 +94,7 @@ function calendar(){
                         var events = [];
                               data.forEach(function(event) {
                                   var fcEvent = {
-                                      title: event.title,
+                                      title: event.title +"(" + event.meroom + "번 회의실)",
                                       start: event.start,
                                       end: event.end,
                                       seq: event.seq,
@@ -126,7 +127,7 @@ function calendar(){
                         var events = [];
                               data.forEach(function(event) {
                                   var fcEvent = {
-                                      title: event.title,
+                                      title: event.title +"(" + event.meroom + "번 회의실)",
                                       start: event.start,
                                       end: event.end,
                                       seq: event.seq,

@@ -13,11 +13,10 @@
 <link href="./assets/css/userBoard.css" rel="stylesheet">
 </head>
 <body>
-	<main id="main" class="main">
-		<div class="card">
-            <div class="card-body">
-            	
-            	<h5 class="card-title">사용자 상세정보</h5>
+	<main id="main" class="main flexCenter">
+		<div id="card" class="card">
+            <div id="userCardBody" class="card-body">
+            	<h5 id="userCardTitle" class="card-title">사용자 상세정보</h5>
 
 	            <table class="table">
 	              <thead>

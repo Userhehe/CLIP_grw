@@ -1,6 +1,10 @@
 // 페이지가 로드될 때 jstree를 초기화합니다.
 $(document).ready(function() {
 	
+	//확인 누를 시 참조인들이 들어오는 함수
+	 $('#applyReference').on('click', printRefer);
+	$('#cleanReferCheck').on('click', cleanRefer);
+	 
 	
 	// 결재라인 모달에서 선택한 결재라인 화면에 입력하는 함수
 	var payButton = document.getElementById('applyPayLine');
@@ -22,7 +26,7 @@ $(document).ready(function() {
 //		var payseq = ['first','second','third'];
 		
 		if(pick_length > 0){
-			let html = `<label class="badge border-warning border-1 text-warning" >결재라인</label>
+			let html = `<label class="badge border-warning border-1 text-warning" style="font-size: large;" >결재라인</label>
 						<br/>
 						<table class="table table-bordered" style="display: table; vertical-align: middle;">
 						<tr>`; 
@@ -68,14 +72,27 @@ $(document).ready(function() {
 		var jstreeData = [];
 		
 		//나중에 동적으로 할거면 부서 정보 가져오는 아작스를 추가하여 반복문으로 페런트만 '#' 적용하고 가져온 값으로 노드 만들어서 넣기.
-		jstreeData.push({"id":"DEPT_1","parent":"#","text":"디자인","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_2","parent":"#","text":"설계","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_3","parent":"#","text":"공무","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_4","parent":"#","text":"시공","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_5","parent":"#","text":"영업","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_6","parent":"#","text":"관리","state":{"opened":false},"type":"parent"});
-		jstreeData.push({"id":"DEPT_7","parent":"#","text":"인사","state":{"opened":false},"type":"parent"});
+//		jstreeData.push({"id":"DEPT_1","parent":"#","text":"디자인","state":{"opened":false},"type":"parent"});
+//		jstreeData.push({"id":"DEPT_2","parent":"#","text":"설계","state":{"opened":false},"type":"parent"});
+//		jstreeData.push({"id":"DEPT_3","parent":"#","text":"공무","state":{"opened":false},"type":"parent"});
+//		jstreeData.push({"id":"DEPT_4","parent":"#","text":"시공","state":{"opened":false},"type":"parent"});
+//		jstreeData.push({"id":"DEPT_5","parent":"#","text":"영업","state":{"opened":false},"type":"parent"});
+//		jstreeData.push({"id":"DEPT_6","parent":"#","text":"관리","state":{"opened":false},"type":"parent"});
+//		jstreeData.push({"id":"DEPT_7","parent":"#","text":"인사","state":{"opened":false},"type":"parent"});
 	
+	//부서정보 가져오는 아작스
+		$.get('./getParentTree.do', function(deptData){
+		  deptData.forEach(function(dept) {
+	        var deptNode = {
+	          id: dept.dept_seq,
+	          parent: '#',
+	          text: dept.dept_name,
+	          state: { opened: true },
+	          type:"parent"
+	        };
+			jstreeData.push(deptNode);
+			
+		})}, 'json');
 		
 		$.ajax({
 					url : './getTree.do',
@@ -119,8 +136,8 @@ $(document).ready(function() {
 			},
 			//검색 플러그인 설정 값
 			search : {
-							'case_insensitive': true,
-							'show_only_matches': true
+					'case_insensitive': true,
+					'show_only_matches': true
 			},
 			
 			//노드의 이미지 설정...
@@ -184,7 +201,7 @@ $(document).ready(function() {
 								var jstree = $("#payLine_box").jstree();
 								
 								//직급의 순서 배열
-								var rankseq = ["사원", "주임", "대리", "과장", "차장", "부장", "이사", "부사장", "사장", "대표이사"];
+								var rankseq = ["사원", "주임", "대리", "과장", "차장", "부장", "이사", "부사장", "사장", "대표"];
 								
 								//가져온 노드의 텍스트
 								var nodeText = jstree.get_node(sel).text;
@@ -305,7 +322,7 @@ function del(event) {
 	console.log("남은 row 개수", chkDiv_len)
 
 	//삭제한 선택 라인의 사원의 직급을 파악하는 작업
-	var rankseq = ["사원", "주임", "대리", "과장", "차장", "부장", "이사", "부사장", "사장", "대표이사"];
+	var rankseq =  ["사원", "주임", "대리", "과장", "차장", "부장", "이사", "부사장", "사장", "대표"];
 
 	if (chkDiv_len !== 0) {
 		
@@ -414,7 +431,6 @@ function clean() {
 }
 
 
-
 //모달 띄우는 함수
 var openModal = function openModal(){
 //	console.log("모달 나와라~");
@@ -422,5 +438,166 @@ var openModal = function openModal(){
 	
 }
 
+
+
+
+
+//---------------------------------참조자 JSTree 생성 -------------------------------
+
+
+
+var loadRefer = true;
+
+function openReferModal(){
+	$('#Refermodal').modal('show');
+	
+	if(loadRefer){
+		fetchData();
+		loadRefer = false;
+	}
+}
+
+
+function fetchData(){
+	$.get('./getTree.do',function(userData){
+		$.get('./getParentTree.do',function(deptData){
+//			console.log('---------------userData : ',userData);
+//			console.log('---------------deptData : ',deptData);
+
+		var treeCombineData = combineData(deptData, userData);
+		
+		console.log
+		('---------반복문으로 배열에 정리해놓은 데이터! :', treeCombineData);
+		generateTree(treeCombineData);
+		
+		}, 'json');
+	}, 'json');
+}
+
+
+ function combineData(deptData, userData) {
+      // dept_num을 기반으로 데이터 결합
+      var combinedDataList = [];
+      var myId = document.querySelector('#session_user_id').value;
+      deptData.forEach(function(dept) {
+        var deptNode = {
+          id: dept.dept_seq,
+          parent: '#',
+          text: dept.dept_name,
+          state: { opened: true },
+        };
+        combinedDataList.push(deptNode);
+        userData.forEach(function(user) {
+          if (user.dept_seq === dept.dept_seq && myId != user.user_id) {
+            var userNode = {
+              id: user.user_id,
+              parent: dept.dept_seq,
+              text: user.user_name + ' ' +user.ranks_name,
+            };
+            combinedDataList.push(userNode);
+          }
+        });
+      });
+      return combinedDataList;
+    }
+
+    // jstree 생성 함수
+    function generateTree(data) {
+      $('#reference_box').jstree({
+        'core': {
+          'data': data,
+          'themes': {
+            'icons': false // 기본 아이콘 비활성화
+          }
+        },
+        'checkbox': {
+          'tie_selection': false // 체크박스 클릭과 선택 분리
+        },
+        'plugins': ['checkbox','search'],
+    	//검색 플러그인 설정 값
+		search : {
+					'case_insensitive': true,
+					'show_only_matches': true
+		}
+      });
+      
+      
+		//search 플러그인 설정
+		var searchTimer;
+	
+		$('#referSearch_input').keyup(function() {
+			// 이전에 설정된 타이머가 있다면 클리어
+			clearTimeout(searchTimer);
+	
+			// 300 밀리초 후에 검색 수행
+			searchTimer = setTimeout(function() {
+				var v = $('#referSearch_input').val().trim();
+				$('#reference_box').jstree(true).search(v);
+			}, 300);
+		});
+	
+    }
+    
+   function printRefer() {
+        var selectedNodes = $('#reference_box').jstree('get_checked', true);
+        console.log(selectedNodes);
+        
+        var deptArray = [];
+        var userArray = [];
+        
+        selectedNodes.forEach(function(node){
+			if(node.id.includes('DEPT')){
+				deptArray.push(node);
+			}
+		});
+		
+		
+		selectedNodes.forEach(function(node){
+			var ex = true;
+			for(let i = 0; deptArray.length > i ;i++){
+				if(deptArray[i].id == node.parent){
+					ex = false;
+				}
+			}
+			if(ex && node.parent != '#'){
+				userArray.push(node);
+			}
+		});
+		
+		$('#selectReferDept').empty()
+		
+		if(deptArray.length > 0){
+			$('#selectReferDept').append('<span class="badge border-secondary border-1 text-secondary" style="font-size: large;">부서</span> <br/>');
+		}
+		
+		deptArray.forEach(function(dept) {
+		    var span = $('<button>').text(dept.text).val(dept.id).addClass('badge bg-secondary').css('border', '2px solid #9fba82');
+		    $('#selectReferDept').append('\t',span);
+		});
+		
+		
+		// userArray에 있는 사용자 객체들을 HTML 요소로 만들어 #selectReferUser 위치에 추가
+		$('#selectReferUser').empty();
+		
+		if(userArray.length > 0){
+			$('#selectReferUser').append('<span class="badge border-warning border-1 text-warning" style="font-size: large;">참조인</span> <br/>');
+		}
+		
+		userArray.forEach(function(user) {
+		    var span = $('<button>').text(user.text).val(user.id).addClass('badge bg-warning text-dark').css('border', '2px solid #9fba82');
+		    $('#selectReferUser').append('\t',span);
+		});
+		
+		$('#Refermodal').modal('hide');
+        
+    }
+    
+	//참조인 모달의 리스트 지우는 함수
+	function cleanRefer() {
+//		console.log('나오긴 하니?');
+//	    $('#reference_box').jstree("deselect_all");
+		//체크된 체크박스 취소해주는 함수 찾기 빡시네
+	    $("#reference_box").jstree(true).uncheck_all();
+	}
 
 

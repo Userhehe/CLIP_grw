@@ -175,7 +175,10 @@ public class PayBoardController {
 		log.info("내가 승인했던거 조회 : {} ",app_seq);
 		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 		String user_id = loginUser.getUser_id();
-		ApprovalVo vo =service.oneMyPaychecked(app_seq);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("app_seq", app_seq);
+		ApprovalVo vo =service.oneMyPaychecked(map);
 		return vo;
 	} 
 	

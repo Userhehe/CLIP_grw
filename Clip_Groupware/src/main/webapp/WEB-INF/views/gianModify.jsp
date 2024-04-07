@@ -30,8 +30,8 @@
 					</div>
 				</div>
 	 			</div>
-			<button class="btn btn-primary rounded-pill" id="savebutton">수정하기</button>
-			 <button class="btn btn-danger rounded-pill" type="button" onclick="location.href='./paytemplate.do'">취소하기</button>
+			<button class="btn btn-warning " id="savebutton">수정하기</button>
+			 <button class="btn btn-secondary " type="button" onclick="location.href='./paytemplate.do'">취소하기</button>
  			</form>
 		</section>
 	</main>

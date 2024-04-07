@@ -19,7 +19,7 @@
 	display: inline;
 }
 
-.select_payline_area, .select_payline_area{
+.select_payline_area, .select_payline_area, #reference_box{
 	border: solid #ECB53B 2px;
 	border-radius: 5px;
 	padding: 10px; 
@@ -33,9 +33,13 @@
 	margin-left: 10px;
 }
 
-.btn-warning, .btn-warning:hover{
-	color:#fff;
+.badge:hover{
+	cursor: default;
 }
+
+/* .btn-warning, .btn-warning:hover{ */
+/* 	color:#fff; */
+/* } */
 
 
 
@@ -114,12 +118,12 @@
 					    
 					    <hr/>
 					    <c:if test="${approvalVo.app_draft eq '임시저장'}">
-							<a id="payModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#paylinemodal">
+							<a id="payModalBtn" class="btn btn-warning col-sm-12" data-toggle="modal" data-target="#paylinemodal">
 								결재라인 지정
 			            	</a>
 					    </c:if>
 		            	<div id="selectedPayLine">
-		            		<label class="badge border-warning border-1 text-warning">결재라인</label>
+		            		<label class="badge border-warning border-1 text-warning" style="font-size: large;">결재라인</label>
 		            		<br/>
 		            		
 		            	</div>	
@@ -160,7 +164,7 @@
 					                    </div>
 					                    <div class=modal-footer>
 					                      <button type="button" class="btn btn-warning" id="applyPayLine">결재라인 지정확인</button>
-					                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
+					                      <input type="button" class="btn btn-danger" value="초기화" onclick="clean()">
 					                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
 					                    </div>
 				                    </div>
@@ -174,14 +178,42 @@
 		            	
 		            	
 		            	<!-- 참조인 지정 영역 -->
-		            	<a id="refModalBtn" class="btn btn-warning rounded-pill" data-toggle="modal" data-target="#selectedRefermodal">
-							참조인 지정
-		            	</a>
+		            	<c:if test="${approvalVo.app_draft eq '임시저장'}">
+			            	<a id="refModalBtn" class="btn btn-warning col-sm-12" data-toggle="modal" data-target="#Refermodal" onclick="openReferModal()">
+								참조인 지정
+			            	</a>
+					    </c:if>
+					    
+					    <div id="referenceList">
+							<div id="selectReferDept">
+							 <c:if test="${not empty refList}">
+							 	<span class="badge border-secondary border-1 text-secondary" style="font-size: large;">부서</span>
+							 	<br/>
+								<c:forEach items="${refList}" var="ref">
+							        <c:if test="${not empty ref.ref_team}">
+							            <button class="badge bg-secondary" style="border: 2px solid #9fba82" value="${ref.ref_team}">${ref.dept_name}</button>
+							        </c:if>
+							    </c:forEach>
+							 </c:if>
+							 
+							</div>
+							<div id="selectReferUser">
+								<c:if test="${not empty refList}">
+									<span class="badge border-warning border-1 text-warning" style="font-size: large;">참조인</span>
+									<br/>
+									<c:forEach items="${refList}" var="ref">
+								        <c:if test="${not empty ref.ref_user}">
+								            <button class="badge bg-warning text-dark" style="border: 2px solid #9fba82" value="${ref.ref_user}">${ref.user_name}</button>
+								        </c:if>
+								    </c:forEach>
+							    </c:if>
+							</div>		            		
+		            	</div>	
 		            	
 		            	
 		            	<!-- 참조인 모달 영역 -->
-						<div class="modal fade" id="selectedRefermodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
-				            	<div class="modal-dialog modal-lg">
+		            	<div class="modal fade" id="Refermodal" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
+				            	<div class="modal-dialog modal-dialog-scrollable">
 				            	
 				            		<div class="modal-content">
 						            	<div class="modal-header">
@@ -190,31 +222,23 @@
 							               
 						                </div>
 						                <div class="modal-body row">
-							                <div class="col-lg-6">
-							                	<div class="select_payline_area col-lg-12">
+							                <div>
+							                	<div>
 							                		<div id="search_box">
-														<input id="referSearch_input" type="text" placeholder="사원 검색">
+														<input id="referSearch_input" type="text" placeholder="사원/부서 검색">
 													</div>
 													<hr/>
 													
-													<div id="reference_box"></div>
+													<div id="reference_box" class="col-lg-12"></div>
 							                	</div>
 							                </div>
 							                
-							                <div class="col-lg-6">
-							                	<div class="select_payline_area col-lg-12" style="height: 100%">
-							                		<div id="pickReference_box">
-							                		<h4>지정된 참조인</h4>
-							                		<hr/>
-							                		</div>
-							                	</div>
-						                	</div>
 						                	
 						                	<hr>
 					                    </div>
 					                    <div class=modal-footer>
 					                      <button type="button" class="btn btn-warning" id="applyReference">참조인 지정확인</button>
-					                      <input type="button" class="btn btn-light" value="초기화" onclick="clean()">
+					                      <input type="button" id="cleanReferCheck" class="btn btn-danger" value="초기화">
 					                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
 					                    </div>
 				                    </div>
@@ -279,7 +303,7 @@
 					<div style="text-align: center;">
 <!-- 						<button id="sunbmitReq" class="btn btn-primary rounded-pill" data-toggle="modal" data-target="#reqPayment">미리보기/결재요청</button> -->
 <!-- 						<button type= "button" id="tempSave" class="btn btn-secondary rounded-pill">임시저장</button> -->
-						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#previewGian" onclick="gatheringInfo()">
+						<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#previewGian" onclick="gatheringInfo()">
               				미리보기/결재요청
 		              	</button>
 					</div>

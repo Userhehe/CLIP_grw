@@ -23,12 +23,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IApprovalService;
+import com.clip.gwr.model.service.IDeptService;
 import com.clip.gwr.model.service.IGianService;
 import com.clip.gwr.model.service.IPaymentlineService;
+import com.clip.gwr.model.service.IReferenceService;
 import com.clip.gwr.model.service.IReservationService;
 import com.clip.gwr.vo.ApprovalVo;
+import com.clip.gwr.vo.DeptVo;
 import com.clip.gwr.vo.GianVo;
 import com.clip.gwr.vo.PaymentlineVo;
+import com.clip.gwr.vo.ReferenceVo;
 import com.clip.gwr.vo.UserinfoVo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -52,6 +56,12 @@ public class PayController {
 	
 	@Autowired
 	private IPaymentlineService paymentlineService;
+	
+	@Autowired
+	private IDeptService deptService;
+	
+	@Autowired
+	private IReferenceService referenceService;
 
 	//결재 신청 페이지 이동
 	@GetMapping(value = "/payRegister.do")
@@ -99,9 +109,10 @@ public class PayController {
 	public String myPayInsert(@RequestBody Map<String, Object> approvalVo){
 		log.info("PayController myPayInsert 결재작성 post {}", approvalVo);
 
-		System.out.println(approvalVo.get("ApprovalVo"));
-		System.out.println((List <Map<String, String>>) approvalVo.get("PaymentlineVoList"));
+//		System.out.println(approvalVo.get("ApprovalVo"));
+//		System.out.println((List <Map<String, String>>) approvalVo.get("PaymentlineVoList"));
 	
+		//결재 정보들
 		Map<String, String> appMap = (Map<String, String>) approvalVo.get("ApprovalVo");
 		ApprovalVo reqApproval = new ApprovalVo();
 		reqApproval.setUser_id(appMap.get("user_id"));
@@ -112,7 +123,7 @@ public class PayController {
 		reqApproval.setApp_enddate(appMap.get("app_enddate"));
 		
 //		System.out.println(reqApproval);
-		
+		//결재 라인의 정보들
 		List<PaymentlineVo> payList = new ArrayList<PaymentlineVo>();
 		for (Map<String, String> obj : (List <Map<String, String>> ) approvalVo.get("PaymentlineVoList")) {
 			PaymentlineVo vo = new PaymentlineVo();
@@ -123,10 +134,29 @@ public class PayController {
 			payList.add(vo);
 		}
 		
+		
+		//참조의 정보들
+		List<ReferenceVo> refList = new ArrayList<ReferenceVo>();
+		
+		if(approvalVo.containsKey("Reference")) {
+			List <String> referenceList = (List <String>) approvalVo.get("Reference");
+		
+			for(String ref : referenceList) {
+				ReferenceVo refer = new ReferenceVo();
+				if(ref.contains("DEPT")) {
+					refer.setRef_team(ref);
+				}else {
+					refer.setRef_user(ref);
+				}
+				refList.add(refer);
+				}
+		}
+			
+		log.info("------결재정보 : {} \n------결재라인정보 : {}\n---------참조 정보 : {}",reqApproval ,payList ,refList);
+		
 //		System.out.println("지정된 결재인 : " + payList);
 
-		// 받은 json을 뜯고 서비스 돌리기
-		boolean result = approvalService.reqDynamicDateApproval(reqApproval, payList);
+		boolean result = approvalService.reqDynamicDateApproval(reqApproval, payList, refList);
 		
 		if(result) {
 			return "success";
@@ -159,7 +189,27 @@ public class PayController {
 			payList.add(vo);
 		}
 		
-		boolean result = approvalService.saveTempApproval(reqApproval, payList);
+		
+		//참조의 정보들
+		List<ReferenceVo> refList = new ArrayList<ReferenceVo>();
+		
+		if(jsonMap.containsKey("Reference")) {
+			List <String> referenceList = (List <String>) jsonMap.get("Reference");
+		
+			for(String ref : referenceList) {
+				ReferenceVo refer = new ReferenceVo();
+				if(ref.contains("DEPT")) {
+					refer.setRef_team(ref);
+				}else {
+					refer.setRef_user(ref);
+				}
+				refList.add(refer);
+				}
+		}
+		
+		
+		
+		boolean result = approvalService.saveTempApproval(reqApproval, payList, refList);
 		if(result) {
 			return "success";
 		} else {
@@ -175,13 +225,17 @@ public class PayController {
 		log.info("PayController continuePay 임시저장서류 이어 작성하기 이동 {}", app_seq);
 		ApprovalVo approvalVo = approvalService.getOneApproval(app_seq);
 		List<PaymentlineVo> lineList = paymentlineService.getApprovalPayLine(app_seq);
+		List<ReferenceVo> refList = referenceService.getReferenceAll(app_seq);
 		
 		model.addAttribute("approvalVo", approvalVo);
 		model.addAttribute("lineList", lineList);
+		model.addAttribute("refList", refList);
 		
 		return "continuePay";
 		
 	}
+	
+	
 	
 	//결재대기중인 결재 수정
 	@PostMapping(value = "/fixWating.do")
@@ -348,4 +402,18 @@ public class PayController {
 		return treeResult;
 	}
 
+	
+	@GetMapping(value = "/getParentTree.do")
+	@ResponseBody
+	public String getDeptNodes() {
+		log.info("PayController getDeptNodes jstree 부모 노드 가져오기");
+		
+		List<DeptVo> list = deptService.deptAll();
+		log.info("가져온 부서의 정보 : " + list);
+		Gson gson = new GsonBuilder().create();
+		String jsonDept = gson.toJson(list);
+		
+		return jsonDept;
+		
+	}
 }

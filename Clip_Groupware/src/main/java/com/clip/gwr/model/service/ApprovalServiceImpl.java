@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.clip.gwr.model.mapper.IApprovalDao;
 import com.clip.gwr.model.mapper.IPaymentlineDao;
+import com.clip.gwr.model.mapper.IReferenceDao;
 import com.clip.gwr.vo.ApprovalVo;
 import com.clip.gwr.vo.PaymentlineVo;
+import com.clip.gwr.vo.ReferenceVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +25,9 @@ public class ApprovalServiceImpl implements IApprovalService{
 	
 	@Autowired
 	private IPaymentlineDao PaymentlineDao;
+	
+	@Autowired
+	private IReferenceDao referenceDao;
 	
 	//내가 요청한 결재내역 전체 조회	
 	@Override
@@ -102,22 +107,43 @@ public class ApprovalServiceImpl implements IApprovalService{
 	//기안 결재요청	
 	@Transactional
 	@Override
-	public boolean reqDynamicDateApproval(ApprovalVo approvalVo, List<PaymentlineVo> list) {
-		log.info("결재 요청: {}, 결재라인 정보들 {}",approvalVo, list);
+	public boolean reqDynamicDateApproval(ApprovalVo approvalVo, List<PaymentlineVo> list, List<ReferenceVo> refList) {
+		log.info("결재 요청: {},\n 결재라인 정보들 {},\n 결재참조인 정보: {}",approvalVo, list, refList);
 		boolean isc = false;
 		int reqResult = approvalDao.reqDynamicDateApproval(approvalVo);
 		int payLineResult = PaymentlineDao.putPayLine(list);
-		return isc = (reqResult>0 && payLineResult>0) ? true:false;
+		
+		isc = (reqResult>0 && payLineResult>0) ? true:false;
+		
+		if(refList.size() > 0) {
+			int refResult = referenceDao.putReference(refList);
+			if(refResult <= 0) {
+				isc = false;
+			}
+		}
+		
+		return isc;
 	}
 
 	//기안 결재 임시저장
 	@Override
-	public boolean saveTempApproval(ApprovalVo approvalVo, List<PaymentlineVo> list) {
+	public boolean saveTempApproval(ApprovalVo approvalVo, List<PaymentlineVo> list, List<ReferenceVo> refList) {
 		boolean isc = false ; 
-		log.info("기안 결재 임시저장: {}",approvalVo);
+		log.info("임시저장 결재 요청: {},\n 결재라인 정보들 {},\n 결재참조인 정보: {}",approvalVo, list, refList);
 		int tempresult = approvalDao.saveTempApproval(approvalVo);
 		int payline = PaymentlineDao.putPayLine(list);
-		return isc = (tempresult>0 && payline>0) ? true:false;
+		isc = (tempresult>0 && payline>0) ? true:false;
+		
+		if(refList.size() > 0) {
+			int refResult = referenceDao.putReference(refList);
+			if(refResult <= 0) {
+				isc = false;
+			}
+		}
+		
+		return isc;
+		
+		
 	}
 	
 	//승인대기중인 결재 수정 
@@ -161,9 +187,9 @@ public class ApprovalServiceImpl implements IApprovalService{
 	}
 
 	@Override
-	public ApprovalVo oneMyPaychecked(String user_id) {
-		log.info("결재 단건 조회 : {}",user_id);
-		return approvalDao.oneMyPaychecked(user_id);
+	public ApprovalVo oneMyPaychecked(Map<String, Object>map) {
+		log.info("결재 단건 조회 : {}",map);
+		return approvalDao.oneMyPaychecked(map);
 	}
 
 	@Override

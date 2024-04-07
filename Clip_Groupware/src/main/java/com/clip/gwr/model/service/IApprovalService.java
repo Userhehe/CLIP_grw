@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.clip.gwr.vo.ApprovalVo;
 import com.clip.gwr.vo.PaymentlineVo;
+import com.clip.gwr.vo.ReferenceVo;
 
 public interface IApprovalService {
 
@@ -39,10 +40,10 @@ public interface IApprovalService {
 	public List<ApprovalVo> optionalApprovalList(Map<String, Object> map);
 	
 	//기안 결재요청	
-	public boolean reqDynamicDateApproval(ApprovalVo approvalVo, List<PaymentlineVo> list);
+	public boolean reqDynamicDateApproval(ApprovalVo approvalVo, List<PaymentlineVo> list, List<ReferenceVo> refList);
 	
 	//기안 결재 임시저장
-	public boolean saveTempApproval(ApprovalVo approvalVo, List<PaymentlineVo> list);
+	public boolean saveTempApproval(ApprovalVo approvalVo, List<PaymentlineVo> list, List<ReferenceVo> refList);
 	
 	//0단계 결재 수정
 	public int fixWatingApproval(ApprovalVo approvalVo);
@@ -64,7 +65,7 @@ public interface IApprovalService {
 	public ApprovalVo oneMyPaycheck(String app_seq);
 	
 	//승인했던거 단건조회
-	public ApprovalVo oneMyPaychecked(String user_id);
+	public ApprovalVo oneMyPaychecked(Map<String, Object>map);
 
 	//내가 반려했던거 단건조회
 	public ApprovalVo oneMyPayPause(String app_seq);

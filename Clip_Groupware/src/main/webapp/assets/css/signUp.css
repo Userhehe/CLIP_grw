@@ -133,6 +133,16 @@ select {
     text-decoration: none; /* 호버 시 밑줄 제거 */
 }
 
+#cardTitleCt {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+#userUpdateTitle {
+	padding: 0;
+}
+
 #mailCheck {
 	display: flex;
 	justify-content: flex-end;

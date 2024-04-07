@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,18 +23,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.clip.gwr.model.service.IAnnualService;
+import com.clip.gwr.model.service.IApprovalService;
 import com.clip.gwr.model.service.IDeptService;
 import com.clip.gwr.model.service.IFileUploadService;
 import com.clip.gwr.model.service.IPositionsService;
 import com.clip.gwr.model.service.IRanksService;
 import com.clip.gwr.model.service.ISignService;
 import com.clip.gwr.model.service.IUserService;
+import com.clip.gwr.security.CustomUserDetails;
+import com.clip.gwr.vo.ApprovalVo;
 import com.clip.gwr.vo.DeptVo;
 import com.clip.gwr.vo.FileVo;
 import com.clip.gwr.vo.PageVo;
 import com.clip.gwr.vo.PositionsVo;
 import com.clip.gwr.vo.RanksVo;
-import com.clip.gwr.vo.SignsVo;
 import com.clip.gwr.vo.UserinfoVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +68,9 @@ public class UserController {
 	
 	@Autowired
 	private ISignService signService;
+	
+	@Autowired
+	private IApprovalService approvalService;
 	
 //	@GetMapping(value = "/loginForm.do") 
 //	public String loginForm(String error, String logout, Model model) {
@@ -173,10 +181,10 @@ public class UserController {
 		map.put("user_auth", user_auth);
 		map.put("user_regdate", user_regdate);
 		try {
-			int signUp = userService.insertUserinfo(map);
+			int signUp = userService.insertUserinfo(map); // 사용자 등록
 			log.info("####signUp : " + signUp);
-//			int insertAnn = annualService.insertAnn(map);
-//			log.info("####insertAnn : " + insertAnn);
+			int insertAnn = annualService.insertAnn(map); // 연차 등록
+			log.info("####insertAnn : " + insertAnn);
 			response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script language='javascript'>");
@@ -236,9 +244,20 @@ public class UserController {
 	}
 	
 	@GetMapping(value = "/user/main.do")
-	public String userMain() {
-		log.info("#####user/main!!");
+	public String userMain(Model model) {
+//		log.info("#####user/main!!");
+//		return "user/main";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+		String user_id = userDetails.getUsername();
+		log.info("!!!!!secu_user_id : " + user_id);
+		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+		String positionsName = customUserDetails.getPositionsName();
+		log.info("!!!!positionsName : " + positionsName);
+		List<ApprovalVo> lists = approvalService.getMyPaycheck(user_id);
+		model.addAttribute("lists",lists);
 		return "user/main";
+		
 	}
 	
 	@GetMapping(value = "/admin/main.do")
