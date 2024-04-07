@@ -42,6 +42,8 @@ window.onload = function(){
 	var continuReq = document.querySelector('#continuReq');
 	continuReq.addEventListener('click',draft_application);
 	
+	
+	
 //	var fixReq = document.querySelector('#fixReq');
 //	/*반려 결재 수정하여 재요청하는 이벤트*/
 //	fixReq.addEventListener('click', fixreq);
@@ -339,12 +341,40 @@ function draft_application(){
 		paymentLine.push(pay);
 	}
 //	console.log(paymentLine);
+
+
+
+	//참조인 테이블 정보
+	let referenceArray = [];
 	
-	var jsonForm = JSON.stringify({'ApprovalVo' : approval, 'PaymentlineVoList' : paymentLine});
+	var referencesArea = document.querySelector('#referenceList');
+	var references = referencesArea.querySelectorAll('button');
 	
-//	console.log('제이슨 형태로 만들어 보자 : ',jsonForm);
+	
+	//요청 보낼 제이슨으로 만들 데이터
+	var reqData = {'ApprovalVo' : approval, 'PaymentlineVoList' : paymentLine};
+	
+	
+	if(references.length > 0){
+		references.forEach(function(data){
+			referenceArray.push(data.value);
+		});
+		reqData.Reference = referenceArray
+	}
+	
+	console.log(referenceArray);
+	
+	
+	var jsonForm = JSON.stringify(/*{'ApprovalVo' : approval,
+								 'PaymentlineVoList' : paymentLine,
+								  'Reference' : referenceArray}*/
+								  reqData);
+
+	
+	console.log('제이슨 형태로 만들어 보자 : ',jsonForm);
 //	console.log('데이터 타입은? : ',typeof jsonForm);
 //	var appro = JSON.stringify(approval); 
+
 
 	fetch('./myPayInsert.do', {
 		method : 'POST',
@@ -480,7 +510,32 @@ function saveApproval(){
 		paymentLine.push(pay);
 	}
 	
-	var jsonForm = JSON.stringify({'ApprovalVo' : approval, 'PaymentlineVoList' : paymentLine});
+	
+	//참조인 테이블 정보
+	let referenceArray = [];
+	
+	var referencesArea = document.querySelector('#referenceList');
+	var references = referencesArea.querySelectorAll('button');
+	
+	
+	//요청 보낼 제이슨으로 만들 데이터
+	var reqData = {'ApprovalVo' : approval, 'PaymentlineVoList' : paymentLine};
+	
+	
+	if(references.length > 0){
+		references.forEach(function(data){
+			referenceArray.push(data.value);
+		});
+		reqData.Reference = referenceArray
+	}
+	
+	console.log(referenceArray);
+	
+	
+	var jsonForm = JSON.stringify(/*{'ApprovalVo' : approval,
+								 'PaymentlineVoList' : paymentLine,
+								  'Reference' : referenceArray}*/
+								  reqData);
 	
 //	console.log('제이슨 형태로 만들어 보자 : ',jsonForm);
 //	console.log('데이터 타입은? : ',typeof jsonForm);

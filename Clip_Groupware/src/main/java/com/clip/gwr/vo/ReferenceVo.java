@@ -18,4 +18,8 @@ public class ReferenceVo {
 	private String app_seq ;
 	private String ref_user;
 	private String ref_team;
+	
+	private String user_name;
+	private String dept_name;
+	
 }

@@ -2,7 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.gwr.model.mapper.ReferenceDaoImpl">
 
-	
+
+	<!-- 결재를 신청할때 참조에 대한 정보가 같이 입력되는 쿼리 -->
+  	<update id="putReference" parameterType="java.util.List">
+		<foreach collection="list" item="item" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+  			<choose>
+  				<when test="item.ref_user != null">
+	  			INTO REFERENCE (APP_SEQ, REF_USER) VALUES
+				( 'APPROVAL_' || TO_CHAR(APPROVAL_SEQ.CURRVAL) , #{item.ref_user})
+  				</when>
+  				<otherwise>
+  				INTO REFERENCE (APP_SEQ, REF_TEAM) VALUES
+				( 'APPROVAL_' || TO_CHAR(APPROVAL_SEQ.CURRVAL) , #{item.ref_team})
+  				</otherwise>
+  			</choose>
+		</foreach>
+  	</update>
+  	
+  	<!-- 임시저장결재를 재 작성할때 기존에 설정한 참조인을 가져오는 쿼리-->
+	<select id="getReferenceAll" resultType="ReferenceVo" parameterType="java.lang.String">
+		SELECT 
+		    ((SELECT USER_NAME 
+		         FROM USERINFO 
+		         WHERE USER_ID = r.REF_USER)
+		         ||' '||
+		     (SELECT RANKS_NAME 
+		         FROM RANKS 
+		         WHERE RANKS_SEQ = 
+		             (SELECT RANKS_SEQ 
+		              FROM USERINFO 
+		              WHERE USER_ID = r.REF_USER)
+		        )) AS USER_NAME,
+		    (SELECT DEPT_NAME 
+		     FROM DEPT 
+		     WHERE DEPT_SEQ = r.REF_TEAM) AS DEPT_NAME,
+		     REF_USER, REF_TEAM
+		FROM 
+		    REFERENCE r
+		WHERE APP_SEQ = #{app_seq}
+	</select>
 
   
 </mapper>
