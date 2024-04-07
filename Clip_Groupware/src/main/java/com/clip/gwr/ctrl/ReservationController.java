@@ -65,6 +65,7 @@ public class ReservationController {
 			obj.put("content",vo.getRe_content());
 			obj.put("start",vo.getRe_start());
 			obj.put("end",vo.getRe_end());
+			obj.put("meroom", vo.getMe_room());
 			reArr.add(obj);
 		}
 		return reArr;

@@ -63,6 +63,22 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 .vakata-context{
  	z-index: 1060; 
 }
+/* 요일별 날짜 색상 */
+   .fc-day-sun a {
+     color: red;
+   }
+   .fc-day-sat a {
+     color: blue;
+   }
+   .fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
+     color: black;
+   }
+/*   .reser_event > *{ */
+/*         background-color: #70DB8A; */
+/*     } */
+/*  .fc-event-title{ */
+/*        color : white; */
+/*     } */
 
 </style>
 </head>
