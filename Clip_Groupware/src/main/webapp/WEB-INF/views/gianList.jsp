@@ -20,11 +20,11 @@
 		<div class="card-body">
 		<section class="section dashboard">
 			<div class="row">
-				<div style="margin-left: 560px; margin-top: 20px;">
+				<div style=" margin-top: 20px; margin-left: 56%;">
 					검색 : <input style=" width: 250px; display: unset;" id="searchInput"
 						class="form-control" type="text" placeholder="기안서명을 입력해주세요.">
-					<button class="btn btn-primary rounded-pill" id="templateSearch">검색</button>
-					<button class="btn btn-warning rounded-pill" id="resetSearch">검색 초기화</button>
+					<button class="btn btn-warning" id="templateSearch">검색</button>
+					<button class="btn btn-secondary" id="resetSearch">검색 초기화</button>
 				</div>
 				<form action="./templateDelete.do" method="post"
 					onsubmit="return chsSubmit()">
@@ -73,7 +73,7 @@
 				</form>
 			</div>
 			<a href="./gianInsert.do"><button
-					class="btn btn-primary rounded-pill">양식추가</button></a>
+					class="btn btn-warning" style="width: 100%;">양식추가</button></a>
 		</section>
 		</div>
 	</div>

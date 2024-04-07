@@ -161,9 +161,9 @@ public class ApprovalServiceImpl implements IApprovalService{
 	}
 
 	@Override
-	public ApprovalVo oneMyPaychecked(String user_id) {
-		log.info("결재 단건 조회 : {}",user_id);
-		return approvalDao.oneMyPaychecked(user_id);
+	public ApprovalVo oneMyPaychecked(Map<String, Object>map) {
+		log.info("결재 단건 조회 : {}",map);
+		return approvalDao.oneMyPaychecked(map);
 	}
 
 	@Override

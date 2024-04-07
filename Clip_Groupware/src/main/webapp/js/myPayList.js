@@ -1,3 +1,36 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // 검색 버튼 클릭 시
+    document.getElementById('templateSearch').addEventListener('click', function() {
+        searchByStatus();
+    });
+});
+
+// 선택된 옵션에 따라 결재 진행 상태와 일치하는 행을 보여주는 함수
+function searchByStatus() {
+    var selectedStatus = document.getElementById('statusSelect').value; // 선택된 옵션 값 가져오기
+    var rows = document.querySelectorAll('.table tbody tr'); // 모든 테이블 행 가져오기
+
+    rows.forEach(function(row) {
+        var statusCell = row.cells[4].textContent; // 행의 결재 진행 상태 셀의 내용 가져오기
+        var selectOption = document.getElementById('statusSelect').options; // select 박스의 옵션들 가져오기
+        var optionText = '';
+        for (var i = 0; i < selectOption.length; i++) {
+            if (selectOption[i].value === statusCell) {
+                optionText = selectOption[i].text; // 선택된 옵션 값과 일치하는 옵션의 텍스트 가져오기
+                break;
+            }
+        }
+        // 선택된 옵션과 결재 진행 상태가 일치하는 경우 해당 행을 보여줌, 아니면 숨김
+        if (selectedStatus === 'all' || selectedStatus === optionText) {
+            row.style.display = ''; // 보이기
+        } else {
+            row.style.display = 'none'; // 숨기기
+        }
+    });
+}
+
+
+
 function pdfPrint() {
 
 	// 현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환

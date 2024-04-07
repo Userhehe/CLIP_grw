@@ -171,9 +171,9 @@ public class ApprovalDaoImpl implements IApprovalDao {
 
 
 	@Override
-	public ApprovalVo oneMyPaychecked(String user_id) {
-		log.info("oneMyPaychecked 했던거 불러오기 : {} ",user_id);
-		return sqlSession.selectOne(NS+"oneMyPaychecked",user_id);
+	public ApprovalVo oneMyPaychecked(Map<String, Object>map) {
+		log.info("oneMyPaychecked 했던거 불러오기 : {} ",map);
+		return sqlSession.selectOne(NS+"oneMyPaychecked",map);
 	}
 
 

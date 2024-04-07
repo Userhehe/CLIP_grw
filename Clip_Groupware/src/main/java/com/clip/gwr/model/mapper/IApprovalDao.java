@@ -63,7 +63,7 @@ public interface IApprovalDao {
 	public ApprovalVo oneMyPaycheck(String app_seq);
 	
 	//승인했던거 단건조회
-	public ApprovalVo oneMyPaychecked(String user_id);
+	public ApprovalVo oneMyPaychecked(Map<String, Object>map);
 	
 	//내가 반려했던거 단건조회
 	public ApprovalVo oneMyPayPause(String app_seq);

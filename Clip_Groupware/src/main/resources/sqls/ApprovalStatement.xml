@@ -43,7 +43,7 @@
 		WHERE
 		    a2.USER_ID = #{user_id} AND a.APP_DRAFT != '임시저장'
 		ORDER BY
-    		a.APP_SEQ DESC 
+    		APP_CREATEDATE DESC
 	</select>
 	
 
@@ -133,6 +133,7 @@
 		JOIN PAYMENTLINE p ON p.APP_SEQ = a.APP_SEQ
 		WHERE a.APP_DRAFT IN ('결재진행','결재완료')
 		AND p.PAY_SIGN = 'Y' 
+		AND p.PAY_USER  = #{user_id}
 		AND p.APP_SEQ =  #{app_seq}
 		ORDER BY p.PAY_ASIGNDATE DESC
 	</select>
