@@ -23,8 +23,8 @@
 			<div style="margin-left: 560px; margin-top: 20px;">
 				검색 : <input style=" width: 250px; display: unset;" id="searchInput"
 					class="form-control" type="text" placeholder="양식종류를 입력해주세요.">
-				<button class="btn btn-primary rounded-pill" id="templateSearch">검색</button>
-				<button class="btn btn-warning rounded-pill" id="resetSearch">검색 초기화</button>
+				<button class="btn btn-warning " id="templateSearch">검색</button>
+				<button class="btn btn-secondary " id="resetSearch">검색 초기화</button>
 			</div>
 			<table  class="table table-hover" style="margin-top: 10px;">
 				<thead>
