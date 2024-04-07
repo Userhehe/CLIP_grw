@@ -11,6 +11,20 @@
 <title>연차 상세정보</title>
 <%@ include file="./header.jsp" %>
 <link href="./assets/css/userBoard.css" rel="stylesheet">
+<style type="text/css">
+  .card {
+            margin-top: 150px;
+        }
+
+        /* 화면을 70%로 줄이기 */
+        @media (min-width: 768px) {
+            body {
+                width: 80%;
+                margin: 0 auto;
+            }
+        }
+
+</style>
 </head>
 <body>
 	<main id="main" class="main">

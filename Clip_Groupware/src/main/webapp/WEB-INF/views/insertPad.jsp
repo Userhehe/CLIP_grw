@@ -23,9 +23,9 @@ UserinfoVo loginUserVo = (UserinfoVo)session.getAttribute("loginVo");
         <canvas id="signpad" width="800" height="500"></canvas><br>
          서명 제목 : <input type="text" name="signs_name" id="signs_name" placeholder="서명 제목을 입력하세요"><br>
         <div>
-            <button class="btn btn-primary rounded-pill" id="save">저장</button>
-            <button class="btn btn-primary rounded-pill" id="clear">새로고침</button>
-            <button class="btn btn-primary rounded-pill" id="back">뒤로가기</button>
+            <button class="btn btn-secondary rounded-pill" id="save">저장</button>
+            <button class="btn btn-secondary rounded-pill" id="clear">새로고침</button>
+            <button class="btn btn-secondary rounded-pill" id="back">뒤로가기</button>
         </div>
     </div>  
 </div>

@@ -119,8 +119,10 @@ public class LoginController {
 				
 				// 사용자가 입력한 비밀번호와 DB에서 가져온 사용자의 암호화된 비밀번호를 비교
 			    if (passwordEncoder.matches(pw, dbPw)) {
+			    	session = request.getSession();
 			        session.setAttribute("loginVo", user);
 			        session.setAttribute("fileStorename", fileStorename);
+			        session.setMaxInactiveInterval(43200);
 			        return 1;
 			    } else {
 			        return 2;

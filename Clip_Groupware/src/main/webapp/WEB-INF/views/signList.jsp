@@ -76,7 +76,7 @@
                 </table>
             </div>
             <div style="text-align: center;">
-                <button id="padnew" class="btn btn-info rounded-pill" type="button" onclick="location.href='./insertPad.do'">서명생성</button>           
+                <button id="padnew" class="btn btn-secondary rounded-pill" type="button" onclick="location.href='./insertPad.do'">서명생성</button>           
             </div>
         </div>
     </main>

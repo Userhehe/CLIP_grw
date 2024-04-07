@@ -23,6 +23,7 @@
         border-radius: 10px;
         background-color: #f9f9f9;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 200px; /* 수정된 부분 */
     }
 
     .form-container form {
@@ -60,7 +61,7 @@
     button[type="submit"] {
         background-color: #28a745;
         color: white;
-        width: auto; /* 중복검사 버튼과 같은 크기로 설정 */
+        width: auto;
     }
 
     #duplicateMessage {
@@ -71,6 +72,7 @@
     h2 {
         text-align: center;
     }
+    
 </style>
 </head>
 <body>

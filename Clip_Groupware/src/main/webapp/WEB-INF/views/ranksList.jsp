@@ -30,6 +30,11 @@
             margin-top: 10px; /* 버튼과 테이블 사이 간격 조정 */
             margin-right: 30px;
         }
+
+        /* section.dashboard의 위쪽 여백 설정 */
+        section.dashboard {
+            margin-top: 50px;
+        }
     </style>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -60,6 +65,7 @@
         <section class="section dashboard">
             <div class="row">
             </div>
+            <h2>직급 관리</h2>  <br>
             <table class="table table-striped" style="margin-top: 10px;">
                 <thead>
                     <tr>
@@ -78,7 +84,7 @@
                             <td class="ranks_name">${lists.ranks_name}</td> 
                             <td>${lists.ranks_regdate}</td>
                            <td class="action-buttons">
-						    <button class="open-modal-btn btn btn-warning  rounded-pill" data-dept-seq="${lists.ranks_seq}" data-dept-name="${lists.ranks_name}">수정</button>
+						    <button class="open-modal-btn btn btn-secondary  rounded-pill" data-dept-seq="${lists.ranks_seq}" data-dept-name="${lists.ranks_name}">수정</button>
 						    <button class="btn btn-danger rounded-pill delete-btn" data-dept-seq="${lists.ranks_seq}" data-dept-name="${lists.ranks_name}">삭제</button>
 						</td>
                         </tr>
@@ -87,7 +93,7 @@
             </table>
             <!-- 직급 추가 버튼을 오른쪽에 배치 -->
             <div class="add-rank-btn-container">
-                <a href="./insertRanks.do"><button class="btn btn-primary rounded-pill">직급 추가</button></a>
+                <a href="./insertRanks.do"><button class="btn btn-secondary ">직급 추가</button></a>
             </div>
         </section>
     </main>

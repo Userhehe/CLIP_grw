@@ -19,7 +19,7 @@
             text-align: center;
         }
         img {
-            max-width: 100%;
+            max-width: 80%; /* 이미지 최대 너비 조정 */
             height: auto;
             margin: 0 auto;
             display: block;
@@ -29,7 +29,8 @@
 <body>
     <main id="main" class="main">
         <div class="container">
-            <h2 class="text-center mt-4">서명 이미지</h2>
+         <% UserinfoVo loginUserVo = (UserinfoVo)session.getAttribute("loginVo"); %>
+            <h2 class="text-center mt-4"> 저장된 서명 이미지</h2>
             <hr>
             <div id="container">
                 <img class="img-fluid" alt="서명" src="${sVo.signs_image}">
