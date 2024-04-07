@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 });
 
- document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     var photoCheck = document.getElementById('padCheck').value;
     console.log('padCheck : ' + padCheck);
     padCheck = parseInt(padCheck);

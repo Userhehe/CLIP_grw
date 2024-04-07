@@ -33,8 +33,8 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		 */
 		if(roleNames.contains("ROLE_USER")) { 
 			log.info("!!!!!!!!!!!!!/user/main!!!!!!!!! : " + roleNames);
-//			response.sendRedirect("./user/main.do"); 
-			response.sendRedirect("./main.do");
+			response.sendRedirect("./user/main.do"); 
+//			response.sendRedirect("./main.do");
 			return; 
 		} 
 

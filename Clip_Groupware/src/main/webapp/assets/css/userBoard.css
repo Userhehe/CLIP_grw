@@ -61,6 +61,11 @@ th {
 	justify-content: flex-end;
 }
 
+.flexCenter {
+	display: flex;
+	justify-content: center;
+}
+
 #flex_center {
 	align-items: center;
 }
@@ -73,4 +78,22 @@ th {
 
 #searchBtn:hover {
 	background-color: lightgrey;
+}
+
+#card {
+	width: 65%;
+	margin-top: 9%;
+}
+
+#userCardBody {
+	text-align: center;
+}
+
+#userCard {
+	margin-top: 3%;
+	height: 744px;
+}
+
+#userCardTitle {
+	float: left;
 }

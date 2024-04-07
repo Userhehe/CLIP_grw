@@ -1,10 +1,15 @@
 
+<%@page import="com.clip.gwr.security.CustomUserDetails"%>
+<%@page import="org.springframework.security.core.userdetails.UserDetails"%>
+<%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
+<%@page import="org.springframework.security.core.Authentication"%>
 <%@page import="com.clip.gwr.vo.UserinfoVo"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>   
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ page import="com.clip.gwr.security.CustomUserDetails" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +47,20 @@
 
 <body>
 <%
-UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
+// UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
+// Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+// UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+// CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+// String user_id = userDetails.getUsername();
+// String dept_name = customUserDetails.getDeptName();
+
+// HttpSession에서 Authentication 객체 가져오기
+Authentication authentication = (Authentication) request.getUserPrincipal();
+UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//필요한 정보 가져오기
+String userRealname = customUserDetails.getUserRealname();
+String deptName = customUserDetails.getDeptName();
 %>
 
 <!-- ======= START HEADER ======= -->
@@ -83,7 +101,16 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                
                   <li class="dropdown-header">
-                     <h6>${loginVo.user_name}</h6> <span> ${loginVo.dept_name}팀 (${loginVo.ranks_name})</span>
+                  		<sec:authorize access="isAuthenticated()">
+						    <sec:authentication property="principal" var="currentUser" />
+						    <sec:authentication property="principal.additionalInfo['customUserDetails']" var="customUserDetails" />
+						    ${currentUser} ...
+						    ${customUserDetails},,,
+						    <c:set var="userId" value="${currentUser.username}" />
+						    <c:set var="userRealname" value="${customUserDetails.userRealname}" />
+						    <c:set var="deptName" value="${customUserDetails.deptName}" />
+		                     <h6>${userId}</h6> <span> ${deptName}팀 (${loginVo.ranks_name})</span>
+						</sec:authorize>
                   </li>
                   <li><hr class="dropdown-divider"></li>
 				  <li>
@@ -128,7 +155,7 @@ UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
    <aside id="sidebar" class="sidebar">
       <ul class="sidebar-nav" id="sidebar-nav">
          <li class="mainlogo">
-            <a href="./main.do" class="logo d-flex align-items-center"> <img src="assets/img/logo.png" alt=""></a>
+            <a href="./main.do" class="logo d-flex align-items-center"> <img src="../assets/img/logo.png" alt=""></a>
          </li>
 <!-- ======= START humanresource-nav ======= -->
             <li class="nav-item" style="margin-top: 200px">
