@@ -9,7 +9,7 @@ var empId = []; //참석자로 선택된 사원 배열
 
     
    //dateTimePicker 날짜-----------------------------------------
-   $("#re_start").datetimepicker({
+	$("#re_start").datetimepicker({
       format: "Y-m-d",
    });
    // 언어를 한국어로 변경
@@ -34,16 +34,20 @@ var empId = []; //참석자로 선택된 사원 배열
       $("#re_start_time").datetimepicker({
          format: "H:00:00",
       });
+  
    //input 태그 클릭시 이벤트 처리
    $("#re_start_time").datetimepicker({
       datepicker: false,
    });
-   //클릭시 창활성화
-   $("#re_start_time").datetimepicker({});
+   
+   
+   
+//   //클릭시 창활성화
+//   $("#re_start_time").datetimepicker({});
 
-   $("#re_start_time_img").click(function() {
-      $("#re_start_time").datetimepicker('show');
-   });
+//   $("#re_start_time_img").click(function() {
+//      $("#re_start_time").datetimepicker('show');
+//   });
    
    //jstree----------------------------------------------------------
    //데이터 jstree형식으로 바꿔줌
@@ -414,23 +418,23 @@ function findTreeNodeByText(text) {
 	return null;
 }
 
-// jsTree의 초기화 버튼 기능
-function clean() {
-	var jstree = $("#emp_box").jstree();
-	var allNodes = jstree.get_json(null, { flat: true });//jstree를 json 형태로 전체데이터를 가져온 것
-	$("#emp_box").html("<h4>지정된 결재인</h4><hr/>");
-	//모든 노드 표시
-	$("#payLine_box").jstree('show_all');
-	for (var i = 0; i < allNodes.length; i++) {
-		var iNode = $("#emp_box").jstree().get_node(allNodes[i]);
-		//모든 노드 enable
-		$("#emp_box").jstree('enable_node', iNode);
-	}
-
-
-
-	
-}
+//// jsTree의 초기화 버튼 기능
+//function clean() {
+//	var jstree = $("#emp_box").jstree();
+//	var allNodes = jstree.get_json(null, { flat: true });//jstree를 json 형태로 전체데이터를 가져온 것
+//	$("#emp_box").html("<h4>지정된 결재인</h4><hr/>");
+//	//모든 노드 표시
+//	$("#payLine_box").jstree('show_all');
+//	for (var i = 0; i < allNodes.length; i++) {
+//		var iNode = $("#emp_box").jstree().get_node(allNodes[i]);
+//		//모든 노드 enable
+//		$("#emp_box").jstree('enable_node', iNode);
+//	}
+//
+//
+//
+//	
+//}
 
 // 배열로 만든 id값들을 컨트롤러로 보내기
 function attconfirm(){
@@ -480,8 +484,11 @@ function selPDate() {
          data.forEach(function(item) {
             console.log(item);
          });
+         
          $("#re_start_time").datetimepicker({
-            allowTimes: data
+            allowTimes: data,
+//            format: "H:00:00",
+//         	minTime: 0,
          });
 		}else{
 			alert("회의실 예약이 불가 합니다. 다른 날짜나 회의실을 선택해 주세요")
@@ -591,12 +598,12 @@ function modifyRev(){
 //			alert("수정되었습니다. 확인해보소")
 				var result = confirm("참석자 명단을 수정하시겠습니까?");
 				if(result){
-					alert("참석자가 초기화되었습니다. (o゜▽゜)o☆");
+					alert("참석자가 초기화되었습니다.");
 					modifyAtt();
 					$("#redetail").modal("hide");
 				}else{
 					location.reload();
-					alert("예약이 수정되었습니다. (o゜▽゜)o☆");
+					alert("예약이 수정되었습니다.");
 					$("#redetail").modal("hide");
 				}
 			},

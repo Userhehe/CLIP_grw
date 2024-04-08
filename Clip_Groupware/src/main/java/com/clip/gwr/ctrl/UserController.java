@@ -400,7 +400,7 @@ public class UserController {
 	 * @param response
 	 */
 	@PostMapping(value = "/userInfoUpdateData.do")
-	public void userInfoUpdateData(HttpServletRequest request, HttpServletResponse response) {
+	public void userInfoUpdateData(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		String inputPhoneFirstnum = request.getParameter("inputPhoneFirstnum");
 		String phoneFirstnum = "";
 		if(inputPhoneFirstnum == null || inputPhoneFirstnum =="") {
@@ -457,6 +457,8 @@ public class UserController {
 		try {
 			int updateUserInfo = userService.updateUserinfo(map);
 			log.info("####updateUserInfo : " + updateUserInfo);
+			UserinfoVo user = userService.userLogin(user_id);
+			session.setAttribute("loginVo", user);
 			if(user_status == "N") {
 				response.sendRedirect("./userInfo.do");
 			}

@@ -78,7 +78,8 @@ public class ReservationController {
 		log.info("ReservationController reDetail 상세조회");
 		System.out.println("전달받은 re_seq값:" + seq);
 		ReAttendsVo atts = service.reAttList(seq);// 회의실 참석자 리스트
-		log.info("참석자 명단:{}", atts.getAttendees());
+		
+//		log.info("참석자 명단:{}", atts.getAttendees());
 		List<MeeTingRoomVo> meeTingRoomVo = service.selectMeetingRoom(); //회의실 리스트
 		model.addAttribute("meeTingRoomVo", meeTingRoomVo);
 		log.info("meeTingRoomVo", meeTingRoomVo);
@@ -104,13 +105,19 @@ public class ReservationController {
 		ReservationVo vo = service.reDetail(seq);
 		log.info("전달받은 seq의 내용 {}:" , vo);
 		log.info("전달받은 seq의 내용 {}:" , atts);
+		if(atts == null) {
+			map.put("attends", "지정된 참석자가 없습니다.");
+		}else {
+			map.put("attends", atts.getAttendees());
+		}
 		map.put("seq", vo.getRe_seq());
 		map.put("roomNum", vo.getMe_room()+"번");
 		map.put("title", vo.getRe_title());
 		map.put("content", vo.getRe_content());
 		map.put("start", vo.getRe_start());
 		map.put("end", vo.getRe_end());
-		map.put("attends", atts.getAttendees());
+		
+
 //		map.put("count", cnt);
 		log.info("선택된 seq의 상세보기 내용: {}", map);
 		return map;
@@ -146,6 +153,15 @@ public class ReservationController {
 		log.info("ReservationController possibleMeRooms 예약가능시간 : {}", possibleMeRooms);
 		List<String> possibleMeRoomTimes = new ArrayList<>();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		
+//		 // 현재 날짜와 시간 가져오기
+//        LocalDateTime currentDateTime = LocalDateTime.now();
+//        // 날짜와 시간 형식 지정
+//        DateTimeFormatter today = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        // 현재 날짜와 시간을 형식에 맞게 출력
+//        String todayTime = currentDateTime.format(today);
+//        System.out.println("현재 날짜 및 시간: " + todayTime);
+        
 		for (String possibleMeRoom : possibleMeRooms) {
 			LocalDateTime dateTime = LocalDateTime.parse(possibleMeRoom, formatter);
 			String timePart = dateTime.toLocalTime().toString();

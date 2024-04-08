@@ -57,6 +57,9 @@ public interface IDailyCheckDao {
 	
 	//출퇴근 현황 조회 
 	public String selectDailyStatus(String daily_status); 
+	
+	// 근태 체크 
+	public int chktime(String user_id);
 }
     
         

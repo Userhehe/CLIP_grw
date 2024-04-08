@@ -84,5 +84,11 @@ public class DailyCheckDaoImpl implements IDailyCheckDao {
 		return sqlSession.selectList(NS+"myDailychk",user_id);
 	}
 
+	@Override
+	public int chktime(String user_id) {
+		log.info("##### 나의 체크타임  chktime #####");
+		return sqlSession.selectOne(NS+"chktime",user_id);
+	}
+
 	
 }

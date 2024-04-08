@@ -8,9 +8,8 @@
 <%@ include file="./header.jsp" %>
 </head>
 <body>
-	<main id="main" class="main">
-		<h1>조직도 예시화면 입니다</h1>
-		<img alt="조직도 예시 화면 " src="./images/org.png" width="900px" height="500px">
-	</main>
+   <main id="main" class="main" style="display: flex; justify-content: center;">
+      <img alt="조직도 예시 화면 " src="./images/org.png" height="845px">
+   </main>
 </body>
 </html>

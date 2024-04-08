@@ -13,7 +13,7 @@ function calendar(){
       locale: 'ko',
       dayMaxEventRows: true,
       height: 1000,
-        initialView: 'timeGridWeek',
+        initialView: 'dayGridMonth',
         droppable: false,
         editable: false,
         displayEventTime: true,
@@ -94,7 +94,7 @@ function calendar(){
                         var events = [];
                               data.forEach(function(event) {
                                   var fcEvent = {
-                                      title: event.title +"(" + event.meroom + "번 회의실)",
+                                      title: (event.title.length>5)?event.title.substring(0, 5) + '...'+"(" + event.meroom + "번 회의실)" : event.title+"(" + event.meroom + "번 회의실)",
                                       start: event.start,
                                       end: event.end,
                                       seq: event.seq,
@@ -127,7 +127,7 @@ function calendar(){
                         var events = [];
                               data.forEach(function(event) {
                                   var fcEvent = {
-                                      title: event.title +"(" + event.meroom + "번 회의실)",
+                                      title: (event.title.length>5)?event.title.substring(0, 5) + '...'+"(" + event.meroom + "번 회의실)" : event.title+"(" + event.meroom + "번 회의실)",
                                       start: event.start,
                                       end: event.end,
                                       seq: event.seq,
@@ -150,7 +150,10 @@ function calendar(){
         }]
   	}); 
  	if(selectRevAll == true){
+	console.log('ssss', selectRevAllDate);
+	    calendar.changeView('dayGridMonth'); 
         calendar.render();
+        
    }else{
       calendar.changeView('dayGridMonth', selectRevAllDate);
       selectRevAll = true;

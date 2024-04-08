@@ -109,10 +109,10 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
                     <div class="modifyhidden" style="display: none;">
 	                    <div class="input-group">
 							<span class="input-group-addon"> 
-								<input type="text"	class="form-control" readonly="readonly" ondblclick="return false" id="re_start" name="re_start">
+								<input type="text"	class="form-control" readonly="readonly" ondblclick="return false" id="re_start" name="re_start" placeholder="클릭하여 날짜 선택">
 							</span> 
 							<span class="input-group-btn" style="margin-left: 20px;">
-								<button class="btn btn-secondary" type="button" onclick="selPDate()">날짜 선택 완료</button>
+								<button class="btn btn-secondary" type="button" onclick="selPDate()">선택 완료</button>
 							</span>
 						</div>
                     </div>
@@ -390,7 +390,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 										<td class="attre_seq">${vo.re_seq}</td>
 										<td>${vo.me_room}</td>
 										<td class="attre_title">${vo.re_title}</td>
-										<td>${vo.re_start }</td>
+										<td>${vo.re_start } ~ ${vo.re_end }</td>
 										<td>${vo.re_create}</td>
 									</tr>
 								</c:forEach>

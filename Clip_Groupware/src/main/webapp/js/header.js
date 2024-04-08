@@ -21,7 +21,24 @@ $(document).ready(function() {
 			}
 		});
 	});
+	chktime();
+	
 });
+function chktime(){
+	$.ajax({
+		url:'./chktime.do',
+		method: 'GET',
+		success: function(response) {
+			if(response=='1'){
+				$('#checkOutButton').css('display', 'block');
+				$('#checkInButton').css('display', 'none');
+			}else{
+				$('#checkInButton').css('display', 'block');
+				$('#checkOutButton').css('display', 'none');
+			}
+		}
+	})
+}
 
 
 
