@@ -13,7 +13,7 @@ function calendar(){
       locale: 'ko',
       dayMaxEventRows: true,
       height: 1000,
-        initialView: 'timeGridWeek',
+        initialView: 'dayGridMonth',
         droppable: false,
         editable: false,
         displayEventTime: true,
@@ -150,7 +150,10 @@ function calendar(){
         }]
   	}); 
  	if(selectRevAll == true){
+	console.log('ssss', selectRevAllDate);
+	    calendar.changeView('dayGridMonth'); 
         calendar.render();
+        
    }else{
       calendar.changeView('dayGridMonth', selectRevAllDate);
       selectRevAll = true;
