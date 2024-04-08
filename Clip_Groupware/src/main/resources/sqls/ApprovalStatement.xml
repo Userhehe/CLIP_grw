@@ -43,7 +43,7 @@
 		WHERE
 		    a2.USER_ID = #{user_id} AND a.APP_DRAFT != '임시저장'
 		ORDER BY
-    		APP_CREATEDATE DESC
+    		APP_CREATEDATE DESC, APP_SEQ DESC
 	</select>
 	
 
@@ -54,7 +54,7 @@
 			JOIN GIAN g ON a.GIAN_SEQ = g.GIAN_SEQ 
 			JOIN REFERENCE r ON a.APP_SEQ = r.APP_SEQ
 			WHERE r.REF_USER = #{user_id} AND APP_DRAFT = '결재완료'
-			ORDER BY a.APP_CREATEDATE DESC
+			ORDER BY a.APP_CREATEDATE DESC, APP_SEQ DESC
 		</select>
 	
 	<!-- 나의 결재승인을 받아야하는 결재 리스트조회 (세션에서 사원번호 사용) -->
@@ -89,7 +89,7 @@
 		    AND p.PAY_SIGN = 'N' 
 		    AND p.PAY_USER = #{user_id}
 		ORDER BY 
-		    a.APP_CREATEDATE DESC
+		    a.APP_CREATEDATE DESC, a.APP_SEQ DESC
 	</select>
 	
 	<!-- 나의 결재를 승인을 받아야하는 결재 상세보기  -->
@@ -151,7 +151,7 @@
 		WHERE a.APP_DRAFT IN ('결재진행','결재완료')
 		AND p.PAY_SIGN IN ('Y','N')
 		AND p.PAY_USER =  #{user_id}
-		ORDER BY p.PAY_ASIGNDATE DESC
+		ORDER BY APP_CREATEDATE DESC, APP_SEQ DESC
 	</select>
 	
 	<!-- 나의 결재승인을 받아야하는 결재 내가 반려한 결재 리스트 조회 -->
@@ -167,7 +167,7 @@
 		WHERE a.APP_DRAFT IN ('결재반려')
 		AND p.PAY_SIGN = 'D' 
 		AND p.PAY_USER =  #{user_id}
-		ORDER BY p.PAY_ASIGNDATE DESC
+		ORDER BY p.PAY_ASIGNDATE DESC, APP_SEQ DESC
    </select>
    
 	<!-- 결재내역 단일 상세 조회 (클릭한 결재의 결재시퀀스 사용) -->
@@ -195,7 +195,7 @@
 			WHERE USER_NAME LIKE '%' || #{name} || '%')
 	    </if>
 	    AND NOT(APP_DRAFT = '임시저장' OR APP_DRAFT = '결재취소')
-	    ORDER BY APP_CREATEDATE DESC
+	    ORDER BY APP_CREATEDATE DESC, APP_SEQ DESC
 	</select>
 
 
@@ -206,7 +206,7 @@
 		FROM APPROVAL p
 		JOIN GIAN g ON p.GIAN_SEQ = g.GIAN_SEQ
 		WHERE p.USER_ID = #{user_id} AND p.APP_DRAFT = '임시저장'
-		ORDER BY p.APP_CREATEDATE DESC
+		ORDER BY p.APP_CREATEDATE DESC, APP_SEQ DESC
 	</select>
 	
 	<!-- 임시저장된 결재 삭제 -->
