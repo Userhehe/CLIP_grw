@@ -27,12 +27,18 @@
                                 END
                             ELSE DAILY_STATUS 
                        END
-    WHERE USER_ID = 'USER_59' 
+    WHERE USER_ID = #{user_id} 
+    AND TO_DATE(DAILY_REGDATE, 'YY-MM-DD') = TO_DATE(SYSDATE, 'YY-MM-DD')
     AND TRUNC(DAILY_REGDATE) = TRUNC(SYSDATE)
     ]]>
 </update>
 
-	
+	<select id="chktime"  parameterType="java.lang.String">
+	  SELECT COUNT(*)
+	FROM DAILYCHECK d 
+	WHERE USER_ID = #{user_id}
+	AND TO_DATE(DAILY_REGDATE, 'YY-MM-DD') = TO_DATE(SYSDATE, 'YY-MM-DD') 
+	</select>
 		
 	<!-- 근태현황 조회 -->
 	<select id="selectDailyCheckList"  resultType="com.clip.gwr.vo.DailyCheckVo">
