@@ -83,6 +83,12 @@ public class DailyCheckServiceImpl implements IDailyCheckService {
 		log.info("DailyCheckServiceImpl myDailychk 출퇴근상태 조회");
 		return dao.myDailychk(user_id);
 	}
+
+	@Override
+	public int chktime(String user_id) {
+		log.info("DailyCheckServiceImpl chktime 근태버튼체크 ");
+		return dao.chktime(user_id);
+	}
 	
 	
 	

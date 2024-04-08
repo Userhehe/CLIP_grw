@@ -95,14 +95,14 @@ String fileStorename = (String)session.getAttribute("fileStorename");
 				  	</a>
 				  </li>
 				<li id="checkInButton">
-				    <a class="dropdown-item d-flex align-items-center" href="insertDailyCheckIntime.do" onclick="handleButtonClick('checkIn')">
+				    <a class="dropdown-item d-flex align-items-center" href="./insertDailyCheckIntime.do" onclick="handleButtonClick('checkIn')">
 				        <i class="bi bi-send-check"></i>
 				        <span>출근</span>
 				    </a>
 				</li>
 				
 				<li id="checkOutButton" >
-				    <a class="dropdown-item d-flex align-items-center" href="updateDailyCheckOuttime.do" onclick="handleButtonClick('checkOut')">
+				    <a class="dropdown-item d-flex align-items-center" href="./updateDailyCheckOuttime.do" onclick="handleButtonClick('checkOut')">
 				        <i class="bi bi-send-dash"></i>
 				        <span>퇴근</span>
 				    </a>
