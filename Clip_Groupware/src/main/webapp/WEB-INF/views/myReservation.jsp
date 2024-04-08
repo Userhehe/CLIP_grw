@@ -390,7 +390,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 										<td class="attre_seq">${vo.re_seq}</td>
 										<td>${vo.me_room}</td>
 										<td class="attre_title">${vo.re_title}</td>
-										<td>${vo.re_start }</td>
+										<td>${vo.re_start } ~ ${vo.re_end }</td>
 										<td>${vo.re_create}</td>
 									</tr>
 								</c:forEach>

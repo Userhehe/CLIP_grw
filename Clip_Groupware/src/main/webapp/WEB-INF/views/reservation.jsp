@@ -73,9 +73,9 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
    .fc-day-mon a, .fc-day-tue a, .fc-day-wed a, .fc-day-thu a, .fc-day-fri a {
      color: black;
    }
-/*   .reser_event > *{ */
-/*         background-color: #70DB8A; */
-/*     } */
+   .reser_event > *:hover{
+     cursor: pointer;
+     } 
 /*  .fc-event-title{ */
 /*        color : white; */
 /*     } */

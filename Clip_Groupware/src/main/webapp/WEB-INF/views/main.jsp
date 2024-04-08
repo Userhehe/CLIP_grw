@@ -22,7 +22,7 @@
 .mainSideContent {
 	border: 1px dotted gray; /* 크기 표시용 나중에 지울거 */
 	height: 710px;
-	width: 100%; /* 기본 너비 100%로 설정 */
+/* 	width: 100%; /* 기본 너비 100%로 설정 */ */
 	max-width: 500px; /* 최대 너비 500px로 설정 */
 }
 
