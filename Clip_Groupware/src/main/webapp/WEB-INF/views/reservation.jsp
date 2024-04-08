@@ -145,16 +145,16 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
                     <label for="me_room" class="col-form-label">회의실을 선택해주세요.</label>
                     <select class="form-control" name="me_room" id="me_room">
                         <c:forEach var="vo" items="${meeTingRoomVo}">
-                            <option value="${vo.me_room}">${vo.me_room}번회의실</option>
+                            <option value="${vo.me_room}">${vo.me_room}번 회의실</option>
                         </c:forEach>
                     </select>
                     <label for="re_start" class="col-form-label">예약일을 선택해주세요.</label>
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <input type="text" class="form-control" readonly="readonly" ondblclick="return false" id="re_start" name="re_start" placeholder="날짜선택">
+                            <input type="text" class="form-control mt-2" readonly="readonly" ondblclick="return false" id="re_start" name="re_start" placeholder="클릭하여 날짜 선택">
                         </span>
                         <span class="input-group-btn" style="margin-left: 20px;">
-                            <button class="btn btn-secondary" type="button" onclick="selPDate()">날짜 선택 완료</button>
+                            <button class="btn btn-secondary" type="button" onclick="selPDate()">선택 완료</button>
                         </span>
                     </div>
 
