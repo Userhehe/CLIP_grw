@@ -211,7 +211,7 @@ public class PayBoardController {
 	    String app_draft = vo.getApp_draft();
 	    String pay_num = null;
 
-	    if ("결재대기".equals(app_draft) && "1".equals(vo.getPay_num())) {
+	    if ("결재대기".equals(app_draft) || "결재진행".equals(app_draft)  && "1".equals(vo.getPay_num())) {
 	        app_draft = "결재진행";
 	        pay_num = "1";
 	    } else if ("결재진행".equals(app_draft) && "2".equals(vo.getPay_num())) {
