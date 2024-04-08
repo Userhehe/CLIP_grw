@@ -29,9 +29,11 @@
 	              	<c:forEach var='userDetailList' items="${userDetailList}" varStatus="vs">
 		                <tr>
 			                <td style="background-color: grey; color: white;">아이디</td>
-			                <td>${userDetailList.user_id}
-			                	
-			                </td>
+			                <td>${userDetailList.user_id}</td>
+		                </tr>
+		                <tr>
+			                <td style="background-color: grey; color: white;">아이디</td>
+			                <td>${userDetailList.user_name}</td>
 		                </tr>
 		                <tr>
 		                	<td style="background-color: grey; color: white;">주민등록번호</td>
@@ -66,7 +68,7 @@
 			                <td>${userDetailList.positions_name}</td>
 		                </tr>
 		                <tr>
-		                	<td style="background-color: grey; color: white;">입사일${param.user_seq}</td>
+		                	<td style="background-color: grey; color: white;">입사일</td>
 			                <td>${userDetailList.user_regdate}</td>
 		            	</tr>
 	            	</c:forEach>
