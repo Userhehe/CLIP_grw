@@ -53,8 +53,8 @@
 			FROM APPROVAL a 
 			JOIN GIAN g ON a.GIAN_SEQ = g.GIAN_SEQ 
 			JOIN REFERENCE r ON a.APP_SEQ = r.APP_SEQ
-			WHERE r.REF_USER = #{user_id} AND APP_DRAFT = '결재완료'
-			ORDER BY a.APP_CREATEDATE DESC, APP_SEQ DESC
+			WHERE r.REF_USER = #{user_id} AND APP_DRAFT = '결재완료'  OR r.REF_TEAM ='DEPT_8'
+			ORDER BY a.APP_CREATEDATE DESC
 		</select>
 	
 	<!-- 나의 결재승인을 받아야하는 결재 리스트조회 (세션에서 사원번호 사용) -->

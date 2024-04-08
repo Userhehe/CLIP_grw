@@ -218,6 +218,7 @@ public class PayBoardController {
 	        pay_num = "2";
 	    }else if ("결재진행".equals(app_draft) && "3".equals(vo.getPay_num())) {
 	        pay_num = "3";
+	        app_draft = "결재완료";  //테스트후 수정해야됨.
 	    }else if ("결재진행".equals(app_draft) && "4".equals(vo.getPay_num())) {
 	        pay_num = "4";
 	    }else if ("결재진행".equals(app_draft) && "5".equals(vo.getPay_num())) {
@@ -282,7 +283,7 @@ public class PayBoardController {
 		log.info("myReferPayList 내가 참조된 결재리스트 내역창");
 		UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 		String user_id = loginUser.getUser_id();
-		System.out.println("참조아이디:"+user_id);
+		System.out.println("본인팀 정보 =====> : "+loginUser.getDept_seq());
 		List<ApprovalVo> lists = service.selectReferApproval(user_id);
 		model.addAttribute("lists",lists);
 		System.out.println("담겨있는 리스트 : "+lists);

@@ -243,7 +243,7 @@ $(document).ready(function() {
 		
 		
 		  $("#editBtn").on("click", function() {
-			    
+			    var app_seq = $(this).attr("data-appseq");  //방금 추가함.
 			    console.log("결재코드:",app_seq);
 			    $.ajax({
 			        url: "./okPay.do?app_seq="+ app_seq,
