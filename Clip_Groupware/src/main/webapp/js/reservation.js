@@ -244,8 +244,8 @@ var empId = []; //참석자로 선택된 사원 배열
          $("#hiddenValue").val(data.seq);
          $("#deroomNum").val(data.roomNum);
          $("#me_room").val(data.roomNum);
-         $("#destart").val(data.start);
-         $("#re_start").val(data.start);
+     	 $("#destart").val(data.start);
+//       $("#re_start").val(data.start);
          $("#deend").val(data.end);
          $("#detitle").val(data.title);
          $("#re_title").val(data.title);

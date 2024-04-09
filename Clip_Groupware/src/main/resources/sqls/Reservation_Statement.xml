@@ -55,7 +55,7 @@
 			CONNECT BY TO_DATE(#{re_start}||' 09:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 &lt; TO_DATE(#{re_start}||' 18:00', 'YYYY-MM-DD HH24:MI:SS')
 			MINUS SELECT RE_START
 			FROM RESERVATION
-			WHERE ME_ROOM = #{me_room}
+			WHERE ME_ROOM = #{me_room} AND RE_DELFLAG = 'N'
 			AND RE_START BETWEEN TO_DATE(#{re_start}||' 09:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(#{re_start}||' 18:00', 'YYYY-MM-DD HH24:MI:SS')
 	</select>
 	

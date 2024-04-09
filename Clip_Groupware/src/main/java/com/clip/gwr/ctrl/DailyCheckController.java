@@ -71,46 +71,48 @@ public class DailyCheckController {
 	}
 
 	@GetMapping(value = "/insertDailyCheckIntime.do")
-	public void insertDailyCheckIntime(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException  {
+	   public void insertDailyCheckIntime(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
 
-	    String apiUrl = "https://api64.ipify.org?format=text";
-	    RestTemplate restTemplate = new RestTemplate();
+	       String apiUrl = "https://api64.ipify.org?format=text";
+	       RestTemplate restTemplate = new RestTemplate();
 
-	    String clientIp = restTemplate.getForObject(apiUrl, String.class);
+	       String clientIp = restTemplate.getForObject(apiUrl, String.class);
 
-	    log.info("#################################clientIp:" + clientIp);
+	       log.info("#################################clientIp:" + clientIp);
 
-	    List<String> allowedIpAddresses = Arrays.asList("14.36.141.71");  /*"14.36.141.71"*/
+	       List<String> allowedIpAddresses = Arrays.asList("14.36.141.71"); // 허용된 IP 주소 목록
 
-	    if (!allowedIpAddresses.contains(clientIp)) {
-	        response.sendRedirect(clientIp); 
-	    }
+	       
+	           if (!allowedIpAddresses.contains(clientIp)) {
+	               // 허용되지 않는 IP 주소인 경우
+	               response.sendRedirect("./accessError.do"); // 오류 페이지로 리다이렉션
+	               return; // 메서드 종료
+	           }
+	      
 
-	    UserinfoVo loginVo = (UserinfoVo) session.getAttribute("loginVo");
-	    String userId = loginVo != null ? loginVo.getUser_id() : null; 
+	       UserinfoVo loginVo = (UserinfoVo) session.getAttribute("loginVo");
+	       String userId = loginVo != null ? loginVo.getUser_id() : null;
 
-	    log.info("####################### user_id :" + userId);
-	    log.info("################# loginVo :" + loginVo);
+	       log.info("####################### user_id :" + userId);
+	       log.info("################# loginVo :" + loginVo);
 
-	    
-	    Map<String, Object> insertMap = new HashMap<>();
-	    insertMap.put("user_id", userId); 
-	    log.info("%%%%%%%%%%%********************** insertMap"+insertMap);
-	    
+	       Map<String, Object> insertMap = new HashMap<>();
+	       insertMap.put("user_id", userId);
+	       log.info("%%%%%%%%%%%********************** insertMap" + insertMap);
 
-	    try {
-	        int insertRows = service.insertDailyCheckIntime(insertMap);
-             log.info("%%%%%%%%%%%%$$$$$$$$$$$$$$$$$$$$$ insertRows"+insertRows);
-	        if (insertRows > 0) {
-	            response.sendRedirect("./main.do");
-	        } else {
-	        	response.sendRedirect("./accessError.do");
-	        }
-	    } catch (DataIntegrityViolationException e) {
-	        e.printStackTrace();
-	        response.sendRedirect("./accessError.do");
-	    }
-	}
+	       try {
+	           int insertRows = service.insertDailyCheckIntime(insertMap);
+	           log.info("%%%%%%%%%%%%$$$$$$$$$$$$$$$$$$$$$ insertRows" + insertRows);
+	           if (insertRows > 0) {
+	               response.sendRedirect("./main.do");
+	           } else {
+	               response.sendRedirect("./accessError.do");
+	           }
+	       } catch (DataIntegrityViolationException e) {
+	           e.printStackTrace();
+	           response.sendRedirect("./accessError.do");
+	       }
+	   }
     
 	@GetMapping(value = "/searchDailyCheckList.do")
 	public String searchDailyCheckList(Model model, HttpServletRequest request) {

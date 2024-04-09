@@ -64,6 +64,7 @@ SELECT * FROM (
 			FROM RESERVATION r LEFT JOIN ATTENDS a
 			ON r.RE_SEQ = a.RE_SEQ
 			WHERE (r.USER_ID = #{user_id} OR a.USER_ID = #{user_id})
+			AND r.RE_DELFLAG = 'N'
 			AND (TO_CHAR(r.RE_START, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM')
 			OR TO_CHAR(r.RE_END, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fullDate}, 'YYYY-MM'), 'YYYY-MM'))
 	UNION
