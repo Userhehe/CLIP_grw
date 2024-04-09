@@ -114,7 +114,7 @@ var timeLeft = 0;
 
 // 인증번호 타이머설정
 function startTimer() {
-	timeLeft = 60;
+	timeLeft = 30;
     timerInterval = setInterval(function() {
         var minutes = Math.floor(timeLeft / 60);
         var seconds = timeLeft % 60;
