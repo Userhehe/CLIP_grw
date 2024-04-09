@@ -92,7 +92,7 @@ var seq;
    
 	function startJstree(data){
 		//jstree 시작 
-		$('.emp_box').jstree({
+		$('#emp_box').jstree({
 			//jstree 사용할 플러그인 설정
 			plugins: ['search','types', 'contextmenu'], 
 			
@@ -128,17 +128,17 @@ var seq;
 							label:"참석자 추가",
 							action:function(){ //우클릭 이벤트 설정하기 
 								// 선택된 노드의 id 가져옴
-								var sel = $(".emp_box").jstree('get_selected');
+								var sel = $("#emp_box").jstree('get_selected');
 								
 								//선택된 노드 숨김
-								$(".emp_box").jstree('hide_node', sel);
+								$("#emp_box").jstree('hide_node', sel);
 								
 								//선택된 노드의 텍스트 내용을 가져옴
-								var selText = $(".emp_box").jstree().get_text(sel);
+								var selText = $("#emp_box").jstree().get_text(sel);
 								console.log('텍스트 : ',selText, '사원 아이디 : ',sel);
 								
 								//선택리스트 창의 구조 가져오기
-								var htmlCode = $(".pickatt_box").html();
+								var htmlCode = $("#pickatt_box").html();
 								
 								//직급 없애고 이름만 추출
 								var newSelText = selText.substring(0, selText.indexOf(" ")).trim();
@@ -157,9 +157,9 @@ var seq;
 								htmlCode += "<div class='apr_row'><div class='sel_apr'>" + selText 
 								+ "<span onclick='del(event)' class='bi bi-file-x-fill'></span></div><input type='hidden' name='user_id' value='"
 								+sel+"'><input type='hidden' name='emp_name' value='"+newSelText+"'><input id='chkPosi' type='hidden' name='" 
-								+ selText + "' value='" + $(".emp_box").jstree().get_node(sel).original.id + "'></div>";
+								+ selText + "' value='" + $("#emp_box").jstree().get_node(sel).original.id + "'></div>";
 								
-								$(".pickatt_box").html(htmlCode);
+								$("#pickatt_box").html(htmlCode);
 								
 
 								
@@ -174,7 +174,7 @@ var seq;
 						items.put = false;
 					}
 	
-					var chkParent = $(".emp_box").jstree().is_parent(node);
+					var chkParent = $("#emp_box").jstree().is_parent(node);
 					if (chkParent) {
 						items.put = false;
 					}
@@ -187,7 +187,7 @@ var seq;
 	
 	
 		// 트리를 처음부터 열린 상태로 보여줌
-	$('.emp_box').on('ready.jstree', function() {
+	$('#emp_box').on('ready.jstree', function() {
 		$(this).jstree('open_all');
 	});
 
@@ -195,14 +195,14 @@ var seq;
 	//search 플러그인 설정
 	var searchTimer;
 
-	$('.search_input').keyup(function() {
+	$('#search_input').keyup(function() {
 		// 이전에 설정된 타이머가 있다면 클리어
 		clearTimeout(searchTimer);
 
 		// 300 밀리초 후에 검색 수행
 		searchTimer = setTimeout(function() {
-			var v = $('.search_input').val().trim();
-			$('.emp_box').jstree(true).search(v);
+			var v = $('#search_input').val().trim();
+			$('#emp_box').jstree(true).search(v);
 		}, 300);
 	});
 	
