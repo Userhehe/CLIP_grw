@@ -1,4 +1,5 @@
 var empId = []; //참석자로 선택된 사원 배열
+var seq;
 
 
 
@@ -91,7 +92,7 @@ var empId = []; //참석자로 선택된 사원 배열
    
 	function startJstree(data){
 		//jstree 시작 
-		$('#emp_box').jstree({
+		$('.emp_box').jstree({
 			//jstree 사용할 플러그인 설정
 			plugins: ['search','types', 'contextmenu'], 
 			
@@ -127,17 +128,17 @@ var empId = []; //참석자로 선택된 사원 배열
 							label:"참석자 추가",
 							action:function(){ //우클릭 이벤트 설정하기 
 								// 선택된 노드의 id 가져옴
-								var sel = $("#emp_box").jstree('get_selected');
+								var sel = $(".emp_box").jstree('get_selected');
 								
 								//선택된 노드 숨김
-								$("#emp_box").jstree('hide_node', sel);
+								$(".emp_box").jstree('hide_node', sel);
 								
 								//선택된 노드의 텍스트 내용을 가져옴
-								var selText = $("#emp_box").jstree().get_text(sel);
+								var selText = $(".emp_box").jstree().get_text(sel);
 								console.log('텍스트 : ',selText, '사원 아이디 : ',sel);
 								
 								//선택리스트 창의 구조 가져오기
-								var htmlCode = $("#pickatt_box").html();
+								var htmlCode = $(".pickatt_box").html();
 								
 								//직급 없애고 이름만 추출
 								var newSelText = selText.substring(0, selText.indexOf(" ")).trim();
@@ -156,20 +157,15 @@ var empId = []; //참석자로 선택된 사원 배열
 								htmlCode += "<div class='apr_row'><div class='sel_apr'>" + selText 
 								+ "<span onclick='del(event)' class='bi bi-file-x-fill'></span></div><input type='hidden' name='user_id' value='"
 								+sel+"'><input type='hidden' name='emp_name' value='"+newSelText+"'><input id='chkPosi' type='hidden' name='" 
-								+ selText + "' value='" + $("#emp_box").jstree().get_node(sel).original.id + "'></div>";
+								+ selText + "' value='" + $(".emp_box").jstree().get_node(sel).original.id + "'></div>";
 								
-								$("#pickatt_box").html(htmlCode);
+								$(".pickatt_box").html(htmlCode);
 								
 
 								
 //								//선택된 노드 선택 해제하기
 //								$("#pickatt_box").jstree('deselect_node', sel);
 							
-															
-							
-								
-								
-								
 							}
 						}
 					};
@@ -178,7 +174,7 @@ var empId = []; //참석자로 선택된 사원 배열
 						items.put = false;
 					}
 	
-					var chkParent = $("#emp_box").jstree().is_parent(node);
+					var chkParent = $(".emp_box").jstree().is_parent(node);
 					if (chkParent) {
 						items.put = false;
 					}
@@ -191,7 +187,7 @@ var empId = []; //참석자로 선택된 사원 배열
 	
 	
 		// 트리를 처음부터 열린 상태로 보여줌
-	$('#emp_box').on('ready.jstree', function() {
+	$('.emp_box').on('ready.jstree', function() {
 		$(this).jstree('open_all');
 	});
 
@@ -199,14 +195,14 @@ var empId = []; //참석자로 선택된 사원 배열
 	//search 플러그인 설정
 	var searchTimer;
 
-	$('#search_input').keyup(function() {
+	$('.search_input').keyup(function() {
 		// 이전에 설정된 타이머가 있다면 클리어
 		clearTimeout(searchTimer);
 
 		// 300 밀리초 후에 검색 수행
 		searchTimer = setTimeout(function() {
-			var v = $('#search_input').val().trim();
-			$('#emp_box').jstree(true).search(v);
+			var v = $('.search_input').val().trim();
+			$('.emp_box').jstree(true).search(v);
 		}, 300);
 	});
 	
@@ -214,7 +210,7 @@ var empId = []; //참석자로 선택된 사원 배열
 	}
    
    $("#reattmodal").modal("show");
-   $("#reattmodalmodify").modal("show");
+   
    convertData();  //jstree에 값을 넣어줄 데이터들 조회하는 함수를 실행하기 위함 
    
    }
@@ -364,11 +360,11 @@ function del(event) {
 	//findTreeNodeByText function을 통해 childText와 같은 내용의 node 저장
 	var treeNode = findTreeNodeByText(childText);
 	if (treeNode) {
-		var jstree = $("#emp_box").jstree();
+		var jstree = $(".emp_box").jstree();
 		var allNodes = jstree.get_json(null, { flat: true });
 		
 		//treeNode의 아이디로 hide 됐던 노드 다시 show 해주기
-		$("#emp_box").jstree('show_node', treeNode.id);
+		$(".emp_box").jstree('show_node', treeNode.id);
 		
 		//지정된 참석자에서 제외시키기
 		var delId = treeNode.id
@@ -392,7 +388,7 @@ function del(event) {
 				var iRankIndex = rankseq.indexOf(iNodeRank);
 			
 				  if (iRankIndex >= rankIndex) {
-		            $("#emp_box").jstree('enable_node', iNode);
+		            $(".emp_box").jstree('enable_node', iNode);
 		         }
 			}
       }
@@ -403,7 +399,7 @@ function del(event) {
 // jsTree의 삭제할 노드의 원래 트리의 위치를 찾는 함수
 function findTreeNodeByText(text) {
 
-	var jstree = $("#emp_box").jstree();
+	var jstree = $(".emp_box").jstree();
 
 	//null : 첫 번째 매개변수는 가져올 노드의 ID, null을 사용하면 모든 노드를 가지고 오게 됨
 	//flat : 모든 노드가 트리 구조를 유지하면서 하나의 배열에 포함 됨
@@ -438,8 +434,10 @@ function findTreeNodeByText(text) {
 
 // 배열로 만든 id값들을 컨트롤러로 보내기
 function attconfirm(){
+	
 	var seq = $("#hiddenValue").val();
 	console.log("저장된 seq값",seq)
+	
 	var strEmpId = empId.join(',');
 	console.log("저장된 empId 문자열", strEmpId);
 	
@@ -577,9 +575,11 @@ function modifyRev(){
          alert("회의실을 선택하세요.");
       } else if (re_start == null || re_start == "") { 
          alert("예약일을 선택하세요.");
-      } else if (re_start_time == null || re_start_time == "") { 
-         alert("예약시간을 선택하세요.");
-      }  else if (re_title == null || re_title == "") { 
+      } 
+//      else if (re_start_time == null || re_start_time == "") { 
+//         alert("예약시간을 선택하세요.");
+//      }  
+      else if (re_title == null || re_title == "") { 
          alert("회의 주제를 작성해주세요.");
       } else if (re_content == null || re_content == "") { 
          alert("회의 내용을 작성해주세요.");
@@ -619,6 +619,7 @@ function modifyRev(){
 function modifyAtt(){
 	console.log("참여자 수정모달 오쁜");
 	insertAddAtt();
+	$("#reattmodalmodify").modal("show");
 }
 
 
@@ -636,7 +637,7 @@ function attmodify(){
 		data:{seq:seq,id:strEmpId},
 		dataType:"json",
 		success:function(data){
-			alert("참석자를 수정하였습니다! ヽ(✿ﾟ▽ﾟ)ノ");
+			alert("참석자를 수정하였습니다!");
 			$("#reattmodal").modal("hide");
 			location.reload();
 		},
@@ -658,3 +659,19 @@ function redetailclose(){
 function attredetailclose(){
 	$("#attredetail").modal("hide");
 }
+
+
+
+$(".attModifyBtn").click(function() {
+	var seq = $(this).closest(".re-lists").find(".re_seq").text();
+    console.log("seq", seq);
+    
+	$("#reattmodalmodifyy").modal("show");  
+});
+
+
+   
+	
+
+	
+
