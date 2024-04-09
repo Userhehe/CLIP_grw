@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +23,9 @@
             border-radius: 5px;
             padding: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 700px; /* 수정된 부분: 원하는 최대 너비로 조정 */
+            width: 80%; /* 추가: 화면 너비에 따라 가변적으로 조정 */
+            margin: auto; /* 추가: 가운데 정렬 */
         }
         h1 {
             color: #d9534f;
