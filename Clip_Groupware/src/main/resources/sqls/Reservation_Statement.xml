@@ -8,7 +8,6 @@
 			FROM RESERVATION r
 			WHERE  RE_DELFLAG = 'N' AND (TO_CHAR(RE_START, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fulldate}, 'YYYY-MM'), 'YYYY-MM')
          							OR TO_CHAR(RE_END, 'YYYY-MM') = TO_CHAR(TO_DATE(#{fulldate}, 'YYYY-MM'), 'YYYY-MM')) 
-        	 AND USER_ID = #{user_id}
 			ORDER BY RE_SEQ DESC
  	</select>
  	
@@ -55,7 +54,7 @@
 			CONNECT BY TO_DATE(#{re_start}||' 09:00', 'YYYY-MM-DD HH24:MI:SS') + (LEVEL - 1)/ 24 &lt; TO_DATE(#{re_start}||' 18:00', 'YYYY-MM-DD HH24:MI:SS')
 			MINUS SELECT RE_START
 			FROM RESERVATION
-			WHERE ME_ROOM = #{me_room} AND RE_DELFLAG = 'N'
+			WHERE ME_ROOM = #{me_room} AND RE_DELFLAG ='N'
 			AND RE_START BETWEEN TO_DATE(#{re_start}||' 09:00', 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(#{re_start}||' 18:00', 'YYYY-MM-DD HH24:MI:SS')
 	</select>
 	
@@ -133,20 +132,6 @@
 					WHERE USER_ID = #{user_id})	
 			)
 	</insert>
-<!-- 	
-	예약별 참석자 현황 조회하기(테스트중)
-	<select id="reAttLists" parameterType="java.lang.Integer" resultType="">
-		SELECT r.RE_SEQ, d.DEPT_NAME, d.DEPT_SEQ, u.USER_NAME, r2.RANKS_NAME
-			FROM RESERVATION r
-			JOIN ATTENDS a ON r.RE_SEQ = a.RE_SEQ
-			JOIN RANKS r2 ON a.RANKS_NAME = r2.RANKS_NAME
-			JOIN USERINFO u ON a.USER_ID = u.USER_ID
-			JOIN DEPT d ON d.DEPT_SEQ = u.DEPT_SEQ
-			WHERE r.RE_SEQ = #{re_seq}
-			GROUP BY r.RE_SEQ,d.DEPT_NAME, u.USER_NAME, r2.RANKS_NAME, r2.RANKS_SEQ, d.DEPT_SEQ 
-			ORDER BY d.DEPT_SEQ, r2.RANKS_SEQ
-	</select>
-	 -->
-	
+
 	
 </mapper>

@@ -279,7 +279,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 									</div>
 									<hr/>
 										<input id="search_input" type="text" placeholder="사원 검색">						
-									<div id="emp_box"></div>
+									<div class="emp_box"></div>
 			                	</div>
 			                </div>
 			                
@@ -304,6 +304,54 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
             
             </div>
             <!-- 회의 참여인원 설정 모달 끝-->
+            
+            <!-- 나의 회의실 예약현황 참석자 수정 -->
+            <div class="modal fade" id="reattmodalmodifyy" tabindex="-1" data-bs-backdrop="false" style="display: none;" aria-hidden="true">
+            
+            	<div class="modal-dialog modal-lg">
+            	
+            		<div class="modal-content">
+		            	<div class="modal-header">
+		            	 <div id="hiddenValue" style="display: none;">
+		            	 </div>
+			                <h4 class="modal-title">회의 참석자 선택</h4>
+			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			               
+		                </div>
+		                <div class="modal-body row">
+		                
+			                <div class="col-lg-6">
+			                	<div class="select_payline_area col-lg-12">
+			                		<div id="empChoice">
+										<h5>사원 선택</h5>
+									</div>
+									<hr/>
+										<input id="search_input" type="text" placeholder="사원 검색">						
+									<div id="emp_box"></div>
+			                	</div>
+			                </div>
+			                
+			                <div class="col-lg-6">
+			                	<div class="select_payline_area col-lg-12" style="height: 100%">
+			                		<div id="pickatt_box">
+			                		<h5>지정된 참석자</h5>
+			                		<hr/>
+			                		</div>
+			                	</div>
+		                	</div>
+		                	
+		                	<hr>
+	                    </div>
+	                    <div class=modal-footer>
+	                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	                      <button type="button" class="btn btn-warning" id="attconfirm" onclick="attmodifyy())">참석자 등록</button>
+	                    </div>
+                    </div>
+                    
+            	</div>
+            
+            </div>
+            <!-- 나의 회의실 예약현황 참석자 수정 끝 -->
  
  
  
@@ -355,6 +403,9 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 										<td class="re_title">${vo.re_title}</td>
 										<td class="re_start">${vo.re_start } ~ ${vo.re_end }</td>
 										<td>${vo.re_create}</td>
+<!-- 										<td> -->
+<!-- 											<button class="attModifyBtn">참석자 수정</button> -->
+<!-- 										</td> -->
 									</tr>
 								</c:forEach>
 							</tbody>
