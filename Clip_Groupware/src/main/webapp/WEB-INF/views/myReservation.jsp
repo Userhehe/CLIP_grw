@@ -327,7 +327,7 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 									</div>
 									<hr/>
 										<input id="search_input" type="text" placeholder="사원 검색">						
-									<div class="emp_box"></div>
+									<div id="emp_box"></div>
 			                	</div>
 			                </div>
 			                
@@ -393,7 +393,6 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 									<th>회의 제목</th>
 									<th>예약 시간</th>
 									<th>예약일</th>
-									<th></th>
 								</tr>
 							</thead>
 							<tbody id="templateTableBody">
@@ -404,9 +403,9 @@ ul.jstree-container-ul>li>a>i.jstree-checkbox {
 										<td class="re_title">${vo.re_title}</td>
 										<td class="re_start">${vo.re_start } ~ ${vo.re_end }</td>
 										<td>${vo.re_create}</td>
-										<td>
-											<button class="attModifyBtn">참석자 수정</button>
-										</td>
+<!-- 										<td> -->
+<!-- 											<button class="attModifyBtn">참석자 수정</button> -->
+<!-- 										</td> -->
 									</tr>
 								</c:forEach>
 							</tbody>
