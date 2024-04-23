@@ -241,7 +241,6 @@ public class ReservationController {
 		@GetMapping(value = "/reDel.do")
 		@ResponseBody
 		public int reDel(int seq) {
-			//예약이 취소되면 회의실에 참석자로 등록된 사람들도 지워져야 한다.
 			log.info("ReservationController reDel 예약을 삭제한다.");
 			log.info("삭제할 예약번호",seq);
 			int isc = service.reDel(seq);

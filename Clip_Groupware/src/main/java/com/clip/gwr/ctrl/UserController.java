@@ -93,7 +93,7 @@ public class UserController {
 	 */
 	@GetMapping(value = "/loginForm.do") 
 	public String loginForm(Model model) {
-		return "loginForm";
+		return "login/loginForm";
 	}
 	
 	/**
@@ -174,10 +174,10 @@ public class UserController {
 		map.put("user_email", user_email);
 		map.put("user_birthday", user_birthday);
 		map.put("user_phonenum", user_phonenum);
-		map.put("user_address", user_address);
+		map.put("user_address", user_address); 
 		map.put("dept_name", dept_name);
 		map.put("ranks_name", ranks_name);
-		map.put("positions_name", positions_name);
+		map.put("positions_name", positions_name); 
 		map.put("user_auth", user_auth);
 		map.put("user_regdate", user_regdate);
 		try {

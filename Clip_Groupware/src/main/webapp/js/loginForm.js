@@ -114,7 +114,7 @@ var timeLeft = 0;
 
 // 인증번호 타이머설정
 function startTimer() {
-	timeLeft = 30;
+	timeLeft = 60;
     timerInterval = setInterval(function() {
         var minutes = Math.floor(timeLeft / 60);
         var seconds = timeLeft % 60;
@@ -186,14 +186,14 @@ $(document).ready(function() {
 					window.location.href="./main.do";
 				} else if(response === 2) {
 					alert('아이디 또는 비밀번호를 확인해주세요.');
-					window.location.href="./loginForm.do";
+					window.location.href="./login/loginForm.do";
 				} else {
 					console.log('로그인 실패');
 					window.location.href="./accessError.do";
 				}
 			}, 
-			error: function(xhr, status, error) {
-				console.error('로그인 실패', xhr, status, error);
+			error: function(error) {
+				console.error('로그인 실패', error);
 				window.location.href="./accessError.do";
 			}
 		});
@@ -217,8 +217,8 @@ $(document).ready(function() {
 					alert('해당 이메일정보를 가진 아이디가 존재하지 않습니다.\n다시 확인해주세요.');
 				}
 	        },
-	        error: function(xhr, status, error) {
-	            console.error('아이디찾기요청실패', xhr, status, error);
+	        error: function(error) {
+	            console.error('아이디찾기요청실패', error);
 	        }
 	    });
 	});
@@ -245,8 +245,8 @@ $(document).ready(function() {
 					alert('입력하신 아이디에 대한 이메일이 존재하지 않습니다.');
 				}
 			},
-			error: function(xhr, status, error) {
-				console.error('인증번호발송실패', status, error)
+			error: function(error) {
+				console.error('인증번호발송실패', error)
 			}
 		});
 	});
@@ -275,8 +275,8 @@ $(document).ready(function() {
 					alert('인증번호가 일치하지 않습니다.');
 				}
 			},
-			error: function(xhr, status, error) {
-				console.error('인증번호비교실패', status, error)
+			error: function(error) {
+				console.error('인증번호비교실패', error)
 			}
 		});
 	});
@@ -301,15 +301,15 @@ $(document).ready(function() {
 		$.ajax({
 			url: './updatePasswordForm.do',
 			method: 'POST',
-			dataType: 'json',
+			dataType: 'json', 
 			data: { id:id, password:password },
 			success: function(response) {
-				console.log("비밀번호업데이트");
+				console.log("비밀번호업데이트"); 
 				alert(response.message);
-				location.href='./loginForm.do';
+				location.href='./login/loginForm.do'; 
 			},
-			error: function(xhr, status, error) {
-				console.error('비밀번호업데이트실패', xhr, status, error);
+			error: function(error) {
+				console.error('비밀번호업데이트실패', error);
 			}
 		});
 	});

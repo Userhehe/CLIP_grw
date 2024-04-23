@@ -7,7 +7,7 @@
 
 	<display-name>Clip_Groupware</display-name>
 	<welcome-file-list>
-		<welcome-file>/WEB-INF/views/loginForm.jsp</welcome-file>
+		<welcome-file>/WEB-INF/views/login/loginForm.jsp</welcome-file>
 	</welcome-file-list>
 
 	<context-param>

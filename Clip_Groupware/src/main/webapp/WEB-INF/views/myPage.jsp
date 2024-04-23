@@ -35,7 +35,8 @@ UserinfoVo loginUserVo = (UserinfoVo)session.getAttribute("loginVo");
                                     <img src="./images/userprofile/${fileStorename}" alt="profile.img">
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                                    <!-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
+                                    <img src="assets/img/default_profile.png" alt="Profile" class="rounded-circle">
                                 </c:otherwise>
                             </c:choose>                                    
                             <h2>${userDetailList.user_name}</h2>
