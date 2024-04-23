@@ -38,9 +38,14 @@ function chktime(){
 			}
 		}
 	})
+	$('#checkOutButton').click(function() {
+    $('#checkInButton').css('display', 'block');
+    $('#checkOutButton').css('display', 'none');
+});
+
 }
 
-
+"./insertDailyCheckIntime.do" 
 
 
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clip.grw.model.mapper.ChatDaoImpl">
+
+	<!-- 메시지 보내기 -->
+	<insert id="sendMessage">
+		INSERT INTO CHAT (CHAT_SEQ, CHAT_MESSAGE, CHAT_SENDER, CHAT_RECIPIENT)
+        VALUES ('CHAT_' || TO_CHAR(USER_SEQ.NEXTVAL), #{chat_message}, #{chat_sender}, #{chat_recipient})
+	</insert>
+	
+	<!-- 대화목록 불러오기 -->
+	<select id="selectAllMessage" resultType="ChatVo">
+		SELECT c.*, u1.USER_NAME AS sender_name, u2.USER_NAME AS target_name, u1.PHOTO_SEQ AS SENDER_PIC
+		FROM CHAT c 
+		JOIN USERINFO u1 ON c.CHAT_SENDER = u1.USER_ID
+		JOIN USERINFO u2 ON c.CHAT_RECIPIENT = u2.USER_ID
+		WHERE (CHAT_SENDER =  #{chat_sender} AND CHAT_RECIPIENT  = #{chat_recipient})
+		OR (CHAT_SENDER = #{chat_recipient} AND CHAT_RECIPIENT =  #{chat_sender})
+		ORDER BY c.CHAT_DATE
+	</select>
+	
+	<!-- 대화 읽음 처리 -->
+	<update id="setReadMessage">
+		UPDATE CHAT SET CHAT_CHECK = 'N'
+		WHERE CHAT_RECIPIENT  = 'USER_57'
+		 AND CHAT_SENDER  = 'USER_59'
+	</update>
+
+	<!-- 안읽은 대화 표시 -->
+	<select id="noReadList" resultType="Integer">
+		SELECT COUNT(*)
+			FROM CHAT c 
+			WHERE CH_TARGET = #{ch_target}
+			AND CH_SENDER = #{ch_sender}
+			AND CH_SET = 'Y'
+	</select>
+	
+	<!-- 유저 목록 정렬을 위한 모든유저 불러오기 -->
+	<select id="chatUserList" resultType="ChatVo">
+	SELECT CHAT_SEQ, CHAT_MESSAGE, CHAT_SENDER, sub.USER_NAME, DEPT_NAME , RANK_NAME , sub.USER_EMAIL,
+		    CHAT_RECIPIENT, CHAT_DATE, CHAT_CHECK, POSITIONS_SEQ AS SENDER_PIC , SORT
+		FROM (
+		    SELECT 
+		        CHAT_SEQ, CHAT_MESSAGE, CHAT_SENDER, USER_EMAIL,
+		        CHAT_RECIPIENT, CHAT_DATE, CHAT_CHECK, POSITIONS_SEQ, USER_NAME, c1.COCO_NAME AS DEPT_NAME , c2.COCO_NAME AS RANK_NAME,
+		        ROW_NUMBER() OVER (PARTITION BY CHAT_SENDER ORDER BY CHAT_DATE DESC) AS rn, 1 SORT
+		    FROM CHAT
+		    INNER JOIN USERINFO u  ON CHAT_SENDER = USER_ID
+		   INNER JOIN COMMON_CODE c1 ON u.DEPT_SEQ = c1.COCO_CD
+		   INNER JOIN COMMON_CODE c2 ON u.RANKS_SEQ = c2.COCO_CD
+		   WHERE CHAT_RECIPIENT =#{ch_target}
+		   OR CHAT_SENDER = #{ch_target}
+		   ) sub
+		WHERE rn = 1
+		UNION ALL
+		SELECT   CHAT_SEQ, CHAT_MESSAGE, CHAT_SENDER, USER_EMAIL, cc.COCO_NAME AS DEPT_NAME , cc2.COCO_NAME AS RANK_NAME , USER_EMAIL,
+		       CHAT_RECIPIENT, NVL(CHAT_DATE, '2020-12-12'), CHAT_CHECK, POSITIONS_SEQ, 2 SORT
+		FROM    USERINFO u 
+		INNER JOIN   COMMON_CODE cc ON u.DEPT_SEQ = cc.COCO_CD 
+		INNER JOIN   COMMON_CODE cc2 ON u.RANKS_SEQ = cc2.COCO_CD 
+		LEFT OUTER JOIN CHAT c ON u.USER_ID = c.CHAT_SENDER AND c.CHAT_RECIPIENT = #{ch_target}
+		WHERE c.CHAT_SENDER IS NULL
+		AND u.USER_ID != #{ch_target}
+		ORDER BY SORT, CHAT_DATE DESC
+	</select>
+	
+</mapper>

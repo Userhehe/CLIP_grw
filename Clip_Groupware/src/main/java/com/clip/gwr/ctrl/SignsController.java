@@ -78,31 +78,33 @@ public class SignsController {
 	@PostMapping(value = "/insertPad.do")
 	@ResponseBody
 	public void insertPad(@RequestBody String signJson, HttpSession session) {
-	    try {
-	        log.info("Signature_Upload insertPad");
-	        Gson gson = new Gson();
-	        Map<String, String> map = gson.fromJson(signJson, Map.class);
-	        String signs_name = map.get("signs_name");
-	        String signs_image = map.get("data");
+		try {
+	        log.info("Signature_Upload insertPad"); // 로그에 "Signature_Upload insertPad"를 출력합니다. 메서드가 호출되었음을 알려줍니다.
+	        Gson gson = new Gson(); // Gson 객체를 생성합니다. 이 객체는 JSON 데이터를 자바 객체로 변환하기 위해 사용됩니다.
+	        Map<String, String> map = gson.fromJson(signJson, Map.class); // 받아온 JSON 문자열을 Map 객체로 변환합니다.
+	        String signs_name = map.get("signs_name"); // 변환된 Map에서 "signs_name" 키에 해당하는 값을 가져옵니다.
+	        String signs_image = map.get("data"); // 변환된 Map에서 "data" 키에 해당하는 값을 가져옵니다.
 	        
-	        // 세션에서 사용자 정보 가져오기
+	        // 세션에서 로그인 정보를 가져옵니다.
 	        UserinfoVo loginVo = (UserinfoVo) session.getAttribute("loginVo");
+	        // 로그인한 사용자의 아이디와 이름을 변수에 저장합니다.
 	        String user_id = loginVo.getUser_id();
 	        String user_name = loginVo.getUser_name();
 
-	        // Map에 데이터 설정
+	        // 데이터베이스에 넣을 맵을 생성합니다.
 	        Map<String, Object> inMap = new HashMap<>();
+	        // 맵에 사용자 정보와 서명 정보를 넣습니다.
 	        inMap.put("user_id", user_id);
 	        inMap.put("user_name", user_name);
 	        inMap.put("signs_name", signs_name);
 	        inMap.put("signs_image", signs_image);
-	        log.info("$$$$$$$$$$$$$$$$$$$$ inMap :" + inMap);
+	        log.info("$$$$$$$$$$$$$$$$$$$$ inMap :" + inMap); // 맵의 내용을 로그에 출력합니다.
 
-	        // 서비스를 통해 데이터 저장
+	        // 데이터베이스에 서명 정보를 넣고, 그 결과를 변수에 저장합니다.
 	        int cnt = service.insertPad(inMap);
-	        log.info("Inserted rows: " + cnt);
-	    } catch (Exception e) {
-	        log.error("Error occurred while inserting sign: " + e.getMessage());
+	        log.info("Inserted rows: " + cnt); // 삽입된 행 수를 로그에 출력합니다.
+	    } catch (Exception e) { // 예외가 발생했을 경우
+	        log.error("Error occurred while inserting sign: " + e.getMessage()); // 에러 메시지를 로그에 출력합니다.
 	    }
 	}
 	

@@ -30,6 +30,7 @@
 		<typeAlias type="com.clip.gwr.vo.PaymentlineVo" alias="PaymentlineVo"/>
 		<typeAlias type="com.clip.gwr.vo.ReceiverVo" alias="ReceiverVo"/>
 		<typeAlias type="com.clip.gwr.vo.ReferenceVo" alias="ReferenceVo"/>
+		<typeAlias type="com.clip.gwr.vo.ChatVo" alias="ChatVo"/>
 		
 	</typeAliases>
 	
@@ -52,6 +53,8 @@
 		<mapper resource="sqls/Paymentline_Statement.xml"/><!-- 04/01 -->
 		<mapper resource="sqls/Receiver_Statement.xml"/>
 		<mapper resource="sqls/Reference_Statement.xml"/>
+		<mapper resource="sqls/Chat_Statement.xml"/>
+		
 		
 	</mappers>
 </configuration>
