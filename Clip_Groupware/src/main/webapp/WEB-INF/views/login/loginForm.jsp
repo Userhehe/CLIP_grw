@@ -115,7 +115,7 @@
 		<div class="links">
 			<a href="#" onclick="openIdModal()">아이디 찾기</a>
 			|&nbsp;
-			<a href="#" onclick="openPwModal()">비밀번호 재설정</a>
+			<a href="#" onclick="openPwModal()">비밀번호 재설정</a> 
 		</div>
 	</div>
 </body>

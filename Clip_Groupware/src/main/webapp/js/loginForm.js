@@ -301,7 +301,7 @@ $(document).ready(function() {
 		$.ajax({
 			url: './updatePasswordForm.do',
 			method: 'POST',
-			dataType: 'json',
+			dataType: 'json', 
 			data: { id:id, password:password },
 			success: function(response) {
 				console.log("비밀번호업데이트");

@@ -174,7 +174,7 @@ public class UserController {
 		map.put("user_email", user_email);
 		map.put("user_birthday", user_birthday);
 		map.put("user_phonenum", user_phonenum);
-		map.put("user_address", user_address);
+		map.put("user_address", user_address); 
 		map.put("dept_name", dept_name);
 		map.put("ranks_name", ranks_name);
 		map.put("positions_name", positions_name);
