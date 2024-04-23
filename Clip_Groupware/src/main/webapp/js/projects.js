@@ -21,8 +21,9 @@ $(document).ready(function() {
 
 	// 기간 검색 버튼 이벤트 발생
 	$("#periodSrchBtn").on("click", function(){
-	
+
 		var startDate = $("#prjStartDate").val();
+
 		var endDate = $("#prjEndDate").val();
 		console.log("입력한 기간 : " + startDate, endDate);
 		
