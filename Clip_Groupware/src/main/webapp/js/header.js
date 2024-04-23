@@ -17,7 +17,7 @@ $(document).ready(function() {
 			},
 			error: function(error) {
 				console.error('로그아웃 실패', error);
-				window.location.href="./accessError.do";
+				window.location.href="./accessError.do"; 
 			}
 		});
 	});

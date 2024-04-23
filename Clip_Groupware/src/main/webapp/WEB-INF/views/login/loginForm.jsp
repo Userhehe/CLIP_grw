@@ -100,7 +100,7 @@
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			<div class="input-field">
 				<input type="text" id="username" name="username" class="input-field" placeholder="아이디를 입력해주세요" required="required">
-			</div>
+			</div> 
 			<div class="input-field">
 				<input type="password" id="password" name="password" class="input-field" placeholder="비밀번호를 입력해주세요" required="required">
 			</div>

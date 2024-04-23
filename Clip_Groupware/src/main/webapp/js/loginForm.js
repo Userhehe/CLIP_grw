@@ -306,7 +306,7 @@ $(document).ready(function() {
 			success: function(response) {
 				console.log("비밀번호업데이트");
 				alert(response.message);
-				location.href='./login/loginForm.do';
+				location.href='./login/loginForm.do'; 
 			},
 			error: function(error) {
 				console.error('비밀번호업데이트실패', error);
