@@ -108,7 +108,7 @@
 			
 <!-- 			<div class="form-check" style="display: flex;"> -->
 <!-- 				<input type="checkbox" id="remember" class="form-check-input" name="remember-me">							 -->
-<!-- 				<label for="remember" class="form-check-label">자동 로그인</label> -->
+<!-- 				<label for="remember" class="form-check-label">자동 로그인</label> --> 
 <!-- 			</div> -->
 		</form>
 		

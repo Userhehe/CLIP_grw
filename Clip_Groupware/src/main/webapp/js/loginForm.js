@@ -304,7 +304,7 @@ $(document).ready(function() {
 			dataType: 'json', 
 			data: { id:id, password:password },
 			success: function(response) {
-				console.log("비밀번호업데이트");
+				console.log("비밀번호업데이트"); 
 				alert(response.message);
 				location.href='./login/loginForm.do'; 
 			},
