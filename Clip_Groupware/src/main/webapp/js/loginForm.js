@@ -186,7 +186,7 @@ $(document).ready(function() {
 					window.location.href="./main.do";
 				} else if(response === 2) {
 					alert('아이디 또는 비밀번호를 확인해주세요.');
-					window.location.href="./login/loginForm.do";
+					window.location.href="./loginForm.do";
 				} else {
 					console.log('로그인 실패');
 					window.location.href="./accessError.do";
@@ -306,7 +306,7 @@ $(document).ready(function() {
 			success: function(response) {
 				console.log("비밀번호업데이트"); 
 				alert(response.message);
-				location.href='./login/loginForm.do'; 
+				location.href='./loginForm.do'; 
 			},
 			error: function(error) {
 				console.error('비밀번호업데이트실패', error);
