@@ -74,7 +74,8 @@ String fileStorename = (String)session.getAttribute("fileStorename");
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
 			<c:choose>
                   <c:when test="${fileStorename eq null or fileStorename eq ''}">
-                     <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                     <!-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
+                     <img src="assets/img/default_profile.png" alt="Profile" class="rounded-circle">
                   </c:when>
                   <c:otherwise>
                      <img id="fileImage" src="./images/userprofile/${fileStorename}" class="rounded-circle" alt="profile.img">

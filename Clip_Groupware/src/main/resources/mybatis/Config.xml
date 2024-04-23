@@ -30,6 +30,7 @@
 		<typeAlias type="com.clip.gwr.vo.PaymentlineVo" alias="PaymentlineVo"/>
 		<typeAlias type="com.clip.gwr.vo.ReceiverVo" alias="ReceiverVo"/>
 		<typeAlias type="com.clip.gwr.vo.ReferenceVo" alias="ReferenceVo"/>
+		<typeAlias type="com.clip.gwr.vo.AlarmVo" alias="AlarmVo"/>
 		
 	</typeAliases>
 	

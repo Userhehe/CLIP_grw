@@ -47,22 +47,18 @@ public class CertnumController {
 	    if (userVo == null || userVo.getUser_email() == null) {
 	    	return 0;
 	    }
-	    String setFrom = "dongin7767@naver.com";
+	    String setFrom = "dongin7767@naver.com"; // 발신자 이메일 주소
 	    MimeMessage message = javaMailSender.createMimeMessage();
 	    
 	    Random random = new Random();
 		int ranNum = random.nextInt(900000) + 100000; // 6자리 숫자 랜덤 생성
 		
-		String email = userVo.getUser_email();
+		String email = userVo.getUser_email(); // 수신자 이메일주소 조회
 		String key = "certnum_" + id; // Redis에 저장할 키 생성
-		ValueOperations<String, Integer> valueOps = redisTemplate.opsForValue();
-        
+		
+		ValueOperations<String, Integer> valueOps = redisTemplate.opsForValue(); 
         valueOps.set(key, ranNum); // Redis에 랜덤한 값 저장
-        redisTemplate.expire(key, 30, TimeUnit.SECONDS); // 키값 30초 뒤 만료
-        
-        // 키값 만료까지 시간 체크
-        Long expireTime = redisTemplate.getExpire(key, TimeUnit.SECONDS);
-        log.info("####expireTime : " + expireTime);
+        redisTemplate.expire(key, 60, TimeUnit.SECONDS); // 키 값 1분 뒤 만료
         
 	    try {
 	        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
@@ -100,7 +96,6 @@ public class CertnumController {
 	public String updatePassword(String id, String password){
 		Map<String, Object> map = new HashMap<String, Object>();
 		password = passwordEncoder.encode(password);
-		log.info("####비밀번호 값 : " + password);
 		map.put("password", password);
 		map.put("user_id", id);
 		String key = "certnum_" + id;

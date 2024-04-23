@@ -9,20 +9,19 @@ $(document).ready(function() {
 			success: function(response) {
 				if(response == 1) {
 					alert('로그아웃 되었습니다.');
-					window.location.href = "./loginForm.do";
+					window.location.href = "./login/loginForm.do";
 				} else {
 					console.log('로그아웃 실패');
 					window.location.href = "./accessError.do";
 				}
 			},
-			error: function(xhr, status, error) {
-				console.error('로그아웃 실패', xhr, status, error);
+			error: function(error) {
+				console.error('로그아웃 실패', error);
 				window.location.href="./accessError.do";
 			}
 		});
 	});
 	chktime();
-	
 });
 function chktime(){
 	$.ajax({

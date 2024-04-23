@@ -8,7 +8,6 @@
 <title>재직증명서</title>
 <%@ include file="./header.jsp" %>
 <link href="./assets/css/certiOfImpl.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 <script type="text/javascript" src="./js/certiOfImpl.js"></script>

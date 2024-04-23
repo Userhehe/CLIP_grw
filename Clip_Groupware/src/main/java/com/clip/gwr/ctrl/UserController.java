@@ -93,7 +93,7 @@ public class UserController {
 	 */
 	@GetMapping(value = "/loginForm.do") 
 	public String loginForm(Model model) {
-		return "loginForm";
+		return "login/loginForm";
 	}
 	
 	/**
