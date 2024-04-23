@@ -61,6 +61,7 @@ public class DailyCheckController {
 		List<DailyCheckVo> lists = service.selectDailyCheckList(map);
 		List<PositionsVo> positionsList = positionsService.positionsAll();
 		List<DeptVo> deptList = deptService.deptAll();
+		
 		List<RanksVo> ranksList = ranksService.ranksAll();
 		
 		model.addAttribute("positionsList", positionsList);
@@ -71,48 +72,64 @@ public class DailyCheckController {
 	}
 
 	@GetMapping(value = "/insertDailyCheckIntime.do")
-	   public void insertDailyCheckIntime(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
+	public void insertDailyCheckIntime(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws IOException {
 
-	       String apiUrl = "https://api64.ipify.org?format=text";
-	       RestTemplate restTemplate = new RestTemplate();
+		// IP 주소를 조회하기 위한 API의 URL 정의
+		String apiUrl = "https://api64.ipify.org?format=text";
 
-	       String clientIp = restTemplate.getForObject(apiUrl, String.class);
+		// RestTemplate을 생성하여 API를 호출하기 위한 준비
+		RestTemplate restTemplate = new RestTemplate();
 
-	       log.info("#################################clientIp:" + clientIp);
+		// API를 호출하여 클라이언트의 IP 주소를 받아옴
+		String clientIp = restTemplate.getForObject(apiUrl, String.class);
 
-	       List<String> allowedIpAddresses = Arrays.asList("14.36.141.71"); // 허용된 IP 주소 목록
+		// 받아온 클라이언트 IP 주소를 로그에 출력
+		log.info("#################################clientIp:" + clientIp);
 
-	       
-	           if (!allowedIpAddresses.contains(clientIp)) {
-	               // 허용되지 않는 IP 주소인 경우
-	               response.sendRedirect("./accessError.do"); // 오류 페이지로 리다이렉션
-	               return; // 메서드 종료
-	           }
-	      
+		// 허용된 IP 주소 목록을 리스트로 정의
+		List<String> allowedIpAddresses = Arrays.asList("175.192.217.50");
 
-	       UserinfoVo loginVo = (UserinfoVo) session.getAttribute("loginVo");
-	       String userId = loginVo != null ? loginVo.getUser_id() : null;
+		// 만약 허용된 IP 주소 목록에 클라이언트 IP가 없을경우
+		if (!allowedIpAddresses.contains(clientIp)) {		    
+		    response.sendRedirect("./accessError.do");		    
+		    return;
+		}
 
-	       log.info("####################### user_id :" + userId);
-	       log.info("################# loginVo :" + loginVo);
+		// 세션에서 로그인 정보를 가져옴
+		UserinfoVo loginVo = (UserinfoVo) session.getAttribute("loginVo");
 
-	       Map<String, Object> insertMap = new HashMap<>();
-	       insertMap.put("user_id", userId);
-	       log.info("%%%%%%%%%%%********************** insertMap" + insertMap);
+		// 가져온 로그인 정보에서 사용자 아이디를 추출하여 변수에 저장
+		String userId = loginVo != null ? loginVo.getUser_id() : null;
 
-	       try {
-	           int insertRows = service.insertDailyCheckIntime(insertMap);
-	           log.info("%%%%%%%%%%%%$$$$$$$$$$$$$$$$$$$$$ insertRows" + insertRows);
-	           if (insertRows > 0) {
-	               response.sendRedirect("./main.do");
-	           } else {
-	               response.sendRedirect("./accessError.do");
-	           }
-	       } catch (DataIntegrityViolationException e) {
-	           e.printStackTrace();
-	           response.sendRedirect("./accessError.do");
-	       }
-	   }
+		// 사용자 아이디를 로그에 출력
+		log.info("####################### user_id :" + userId);
+		// 로그인 정보를 로그에 출력
+		log.info("################# loginVo :" + loginVo);
+
+		// 인서트를 위한 맵 생성
+		Map<String, Object> insertMap = new HashMap<>();
+		// 사용자 아이디를 맵에 넣음
+		insertMap.put("user_id", userId);
+		// 맵을 로그에 출력
+		log.info("%%%%%%%%%%%********************** insertMap" + insertMap);
+
+		try {
+		    // 서비스를 통해 인서트를 시도하고, 결과를 변수에 저장
+		    int insertRows = service.insertDailyCheckIntime(insertMap);
+		    // 인서트가 성공했다면
+		    if (insertRows > 0) {
+		        // 메인 페이지로 리다이렉션
+		        response.sendRedirect("./main.do");
+		    } else {
+		        // 실패했다면 오류 페이지로 리다이렉션
+		        response.sendRedirect("./accessError.do");
+		    }
+		} catch (DataIntegrityViolationException e) {
+		    // 데이터 무결성 예외가 발생하면 예외를 출력하고 오류 페이지로 리다이렉션
+		    e.printStackTrace();
+		    response.sendRedirect("./accessError.do");
+		}
+	}
     
 	@GetMapping(value = "/searchDailyCheckList.do")
 	public String searchDailyCheckList(Model model, HttpServletRequest request) {

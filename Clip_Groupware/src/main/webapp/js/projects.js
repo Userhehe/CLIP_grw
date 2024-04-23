@@ -23,6 +23,7 @@ $(document).ready(function() {
 	$("#periodSrchBtn").on("click", function(){
 	
 		var startDate = $("#prjStartDate").val();
+		
 		var endDate = $("#prjEndDate").val();
 		console.log("입력한 기간 : " + startDate, endDate);
 		

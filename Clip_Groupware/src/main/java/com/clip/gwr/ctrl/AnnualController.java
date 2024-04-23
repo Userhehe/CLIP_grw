@@ -158,21 +158,22 @@ public class AnnualController {
 	    return "annual"; // 검색 결과를 보여줄 뷰의 이름
 	}
 	
-	@Scheduled(cron = "0 0/1 0 1 * *", zone = "Asia/Seoul")
-    public void insertAnnualUp() {
-	    List<AnnualVo> userList = service.annAll();
+	@Scheduled(cron = "0 0/1 0 1 * *", zone = "Asia/Seoul") // 매월 1일 0시에 실행되도록 스케줄링합니다.
+	public void insertAnnualUp() { // 연차를 추가하는 메서드입니다.
+	    List<AnnualVo> userList = service.annAll(); // 모든 사용자의 연차 정보를 가져옵니다.
 	    
-	    for (AnnualVo user : userList) {
-	        service.insertAnnualUp(user.getUser_id());
+	    for (AnnualVo user : userList) { // 각 사용자에 대해 반복합니다.
+	        service.insertAnnualUp(user.getUser_id()); // 해당 사용자의 연차를 추가합니다.
 	    }
 	}
-	@Scheduled(cron = "0 0/1 0 1 1 *", zone = "Asia/Seoul")
-	public void resetAnnual() {
-	    Map<String, Object> map = new HashMap<>();
-	    service.resetAnn(map);
-	    service.resetAnnualUse(map);
+
+	@Scheduled(cron = "0 0/1 0 1 1 *", zone = "Asia/Seoul") // 매년 1월 1일 0시에 실행되도록 스케줄링합니다.
+	public void resetAnnual() { // 연차와 연차 사용 내역을 초기화하는 메서드입니다.
+	    Map<String, Object> map = new HashMap<>(); // 빈 맵을 생성합니다.
+	    service.resetAnn(map); // 연차를 초기화합니다.
+	    service.resetAnnualUse(map); // 연차 사용 내역을 초기화합니다.
 	}
-	
+
 	
 	
 }
