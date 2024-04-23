@@ -67,7 +67,7 @@
 				</tfoot>
 			</table>
 			<!-- 페이징 -->
-			<div style="margin-left: 450px;">
+			<div style="margin-left:85%;">
 			<nav aria-label="Page navigation example">
 		            <ul class="pagination">
 		              <li class="page-item">

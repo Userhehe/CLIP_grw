@@ -64,7 +64,7 @@
 							</c:choose>
 						</tbody>
 					</table>
-					<!-- 페이징 -->
+	<!-- 				페이징
 					<div style="margin-left: 450px;">
 					<nav aria-label="Page navigation example">
 				            <ul class="pagination">
@@ -84,7 +84,7 @@
 				            </ul>
 				          </nav>
 					</div>
-					<!-- 페이징 끝 -->
+					페이징 끝 -->
 					<!-- 모달 시작 -->
 					<div class="modal fade" id="detailModal1" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
 							<div class="modal-dialog modal-xl">
@@ -145,7 +145,7 @@
 						</c:choose>
 					</tbody>
 				</table>
-				<!-- 페이징 -->
+<!-- 				페이징
 				<div style="margin-left: 450px;">
 				<nav aria-label="Page navigation example">
 			            <ul class="pagination">
@@ -165,7 +165,7 @@
 			            </ul>
 			          </nav>
 				</div>
-				<!-- 페이징 끝 -->
+				페이징 끝 -->
 				<!-- 모달 시작 -->
 				<div class="modal fade" id="detailModal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
 						<div class="modal-dialog modal-xl">
@@ -222,7 +222,7 @@
 						</c:choose>
 					</tbody>	
 				</table>
-				<!-- 페이징 -->
+				<!-- <!-- 페이징
 				<div style="margin-left: 450px;">
 				<nav aria-label="Page navigation example">
 			            <ul class="pagination">
@@ -242,7 +242,7 @@
 			            </ul>
 			          </nav>
 				</div>
-				<!-- 페이징 끝 -->
+				페이징 끝 -->
 				<!-- 모달 시작 -->
 				<div class="modal fade" id="detailModal3" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
 						<div class="modal-dialog modal-xl">
