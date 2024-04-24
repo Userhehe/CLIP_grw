@@ -109,19 +109,25 @@ public class ApprovalServiceImpl implements IApprovalService{
 	@Override
 	public boolean reqDynamicDateApproval(ApprovalVo approvalVo, List<PaymentlineVo> list, List<ReferenceVo> refList) {
 		log.info("결재 요청: {},\n 결재라인 정보들 {},\n 결재참조인 정보: {}",approvalVo, list, refList);
+		//반환해줄 플래그 선언
 		boolean isc = false;
+		
+		//필수 입력값인 결재요청 정보와 결재라인 정보를 받아 쿼리를 실행시킨다
 		int reqResult = approvalDao.reqDynamicDateApproval(approvalVo);
 		int payLineResult = PaymentlineDao.putPayLine(list);
 		
+		//쿼리 결과가 정상적일 시 플래그 true 전환
 		isc = (reqResult>0 && payLineResult>0) ? true:false;
 		
+		// 참조인 및 참조부서의 정보가 존재할 시 쿼리 실행
 		if(refList.size() > 0) {
 			int refResult = referenceDao.putReference(refList);
+			//쿼리의 결과가 비정상적일 시 플래그 false 전환
 			if(refResult <= 0) {
 				isc = false;
 			}
 		}
-		
+		// 결과 반환
 		return isc;
 	}
 

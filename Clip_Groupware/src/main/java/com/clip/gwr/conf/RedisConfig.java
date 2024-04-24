@@ -40,7 +40,7 @@ public class RedisConfig {
         return new StringRedisSerializer();
     }
     
-    // 일반적인 값이 아닌 객체를 Redis에 저장하거나 불러올때 사용되는 Jackson2JsonRedisSerializer
+//     일반적인 값이 아닌 객체를 Redis에 저장하거나 불러올때 사용되는 Jackson2JsonRedisSerializer
     // json타입으로 변환해 직렬화시켜 저장해준다(vo 같은 객체를 저장하기 수월함)
     @SuppressWarnings("rawtypes")
     public Jackson2JsonRedisSerializer jsonRedisSerializer() {

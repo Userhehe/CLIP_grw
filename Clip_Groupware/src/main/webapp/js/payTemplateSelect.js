@@ -354,7 +354,7 @@ function draft_application(){
 	//요청 보낼 제이슨으로 만들 데이터
 	var reqData = {'ApprovalVo' : approval, 'PaymentlineVoList' : paymentLine};
 	
-	
+	//참조인 지정 정보가 존재할 경우 참조 정보도 배열에 push하여 요청을 보낼 JSON 객체에 담는다.
 	if(references.length > 0){
 		references.forEach(function(data){
 			referenceArray.push(data.value);

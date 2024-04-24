@@ -107,10 +107,11 @@ public class PayController {
 	@PostMapping(value = "/myPayInsert.do")
 	@ResponseBody
 	public String myPayInsert(@RequestBody Map<String, Object> approvalVo){
-		log.info("PayController myPayInsert 결재작성 post {}", approvalVo);
+		log.info("@@@@@@@@@결재 기안시 전달받은 JSON 형태의 전체 데이터 {}", approvalVo);
 
 //		System.out.println(approvalVo.get("ApprovalVo"));
 //		System.out.println((List <Map<String, String>>) approvalVo.get("PaymentlineVoList"));
+		
 	
 		//결재 정보들
 		Map<String, String> appMap = (Map<String, String>) approvalVo.get("ApprovalVo");
@@ -122,17 +123,18 @@ public class PayController {
 		reqApproval.setApp_strdate(appMap.get("app_strdate"));
 		reqApproval.setApp_enddate(appMap.get("app_enddate"));
 		
-//		System.out.println(reqApproval);
+		log.info("@@@@@@@@@기안서 작성 정보 :  {}", reqApproval);
+
 		//결재 라인의 정보들
 		List<PaymentlineVo> payList = new ArrayList<PaymentlineVo>();
 		for (Map<String, String> obj : (List <Map<String, String>> ) approvalVo.get("PaymentlineVoList")) {
 			PaymentlineVo vo = new PaymentlineVo();
 			vo.setPay_num(Integer.parseInt(obj.get("pay_num")));
 			vo.setPay_user(obj.get("pay_user"));
-//			System.out.println(obj.get("pay_num"));
-//			System.out.println(obj.get("pay_user"));
 			payList.add(vo);
 		}
+		
+		log.info("@@@@@@@@@ List형태의 지정한 결재라인 정보 :  {}", payList);
 		
 		
 		//참조의 정보들
@@ -151,6 +153,8 @@ public class PayController {
 				refList.add(refer);
 				}
 		}
+		
+		log.info("@@@@@@@@@참조인 및 참조부서 정보 :  {}", refList);
 			
 		log.info("------결재정보 : {} \n------결재라인정보 : {}\n---------참조 정보 : {}",reqApproval ,payList ,refList);
 		
