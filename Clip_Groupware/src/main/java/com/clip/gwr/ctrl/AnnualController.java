@@ -154,6 +154,7 @@ public class AnnualController {
 
 	    // 검색 결과를 모델에 담아서 화면으로 전달
 	    model.addAttribute("searchResult", searchResult);
+	    
 
 	    return "annual"; // 검색 결과를 보여줄 뷰의 이름
 	}
