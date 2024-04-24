@@ -14,15 +14,14 @@ $(document).ready(function() {
 					console.log('로그아웃 실패');
 					window.location.href = "./accessError.do";
 				}
-			},
-			error: function(xhr, status, error) {
-				console.error('로그아웃 실패', xhr, status, error);
+			}, 
+			error: function(error) {
+				console.error('로그아웃 실패', error);
 				window.location.href="./accessError.do";
 			}
 		});
 	});
 	chktime();
-	
 });
 function chktime(){
 	$.ajax({
@@ -38,9 +37,14 @@ function chktime(){
 			}
 		}
 	})
+	$('#checkOutButton').click(function() {
+    $('#checkInButton').css('display', 'block');
+    $('#checkOutButton').css('display', 'none');
+});
+
 }
 
-
+"./insertDailyCheckIntime.do" 
 
 
 

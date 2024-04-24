@@ -1,5 +1,4 @@
 var empId = []; //참석자로 선택된 사원 배열
-var seq;
 
 
 
@@ -166,6 +165,11 @@ var seq;
 //								//선택된 노드 선택 해제하기
 //								$("#pickatt_box").jstree('deselect_node', sel);
 							
+															
+							
+								
+								
+								
 							}
 						}
 					};
@@ -210,7 +214,7 @@ var seq;
 	}
    
    $("#reattmodal").modal("show");
-   
+   $("#reattmodalmodify").modal("show");
    convertData();  //jstree에 값을 넣어줄 데이터들 조회하는 함수를 실행하기 위함 
    
    }
@@ -360,11 +364,11 @@ function del(event) {
 	//findTreeNodeByText function을 통해 childText와 같은 내용의 node 저장
 	var treeNode = findTreeNodeByText(childText);
 	if (treeNode) {
-		var jstree = $(".emp_box").jstree();
+		var jstree = $("#emp_box").jstree();
 		var allNodes = jstree.get_json(null, { flat: true });
 		
 		//treeNode의 아이디로 hide 됐던 노드 다시 show 해주기
-		$(".emp_box").jstree('show_node', treeNode.id);
+		$("#emp_box").jstree('show_node', treeNode.id);
 		
 		//지정된 참석자에서 제외시키기
 		var delId = treeNode.id
@@ -388,7 +392,7 @@ function del(event) {
 				var iRankIndex = rankseq.indexOf(iNodeRank);
 			
 				  if (iRankIndex >= rankIndex) {
-		            $(".emp_box").jstree('enable_node', iNode);
+		            $("#emp_box").jstree('enable_node', iNode);
 		         }
 			}
       }
@@ -399,7 +403,7 @@ function del(event) {
 // jsTree의 삭제할 노드의 원래 트리의 위치를 찾는 함수
 function findTreeNodeByText(text) {
 
-	var jstree = $(".emp_box").jstree();
+	var jstree = $("#emp_box").jstree();
 
 	//null : 첫 번째 매개변수는 가져올 노드의 ID, null을 사용하면 모든 노드를 가지고 오게 됨
 	//flat : 모든 노드가 트리 구조를 유지하면서 하나의 배열에 포함 됨
@@ -434,10 +438,8 @@ function findTreeNodeByText(text) {
 
 // 배열로 만든 id값들을 컨트롤러로 보내기
 function attconfirm(){
-	
 	var seq = $("#hiddenValue").val();
 	console.log("저장된 seq값",seq)
-	
 	var strEmpId = empId.join(',');
 	console.log("저장된 empId 문자열", strEmpId);
 	
@@ -575,11 +577,9 @@ function modifyRev(){
          alert("회의실을 선택하세요.");
       } else if (re_start == null || re_start == "") { 
          alert("예약일을 선택하세요.");
-      } 
-//      else if (re_start_time == null || re_start_time == "") { 
-//         alert("예약시간을 선택하세요.");
-//      }  
-      else if (re_title == null || re_title == "") { 
+      } else if (re_start_time == null || re_start_time == "") { 
+         alert("예약시간을 선택하세요.");
+      }  else if (re_title == null || re_title == "") { 
          alert("회의 주제를 작성해주세요.");
       } else if (re_content == null || re_content == "") { 
          alert("회의 내용을 작성해주세요.");
@@ -619,7 +619,6 @@ function modifyRev(){
 function modifyAtt(){
 	console.log("참여자 수정모달 오쁜");
 	insertAddAtt();
-	$("#reattmodalmodify").modal("show");
 }
 
 
@@ -637,7 +636,7 @@ function attmodify(){
 		data:{seq:seq,id:strEmpId},
 		dataType:"json",
 		success:function(data){
-			alert("참석자를 수정하였습니다!");
+			alert("참석자를 수정하였습니다! ヽ(✿ﾟ▽ﾟ)ノ");
 			$("#reattmodal").modal("hide");
 			location.reload();
 		},
@@ -659,19 +658,3 @@ function redetailclose(){
 function attredetailclose(){
 	$("#attredetail").modal("hide");
 }
-
-
-
-$(".attModifyBtn").click(function() {
-	var seq = $(this).closest(".re-lists").find(".re_seq").text();
-    console.log("seq", seq);
-    
-	$("#reattmodalmodifyy").modal("show");  
-});
-
-
-   
-	
-
-	
-

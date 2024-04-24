@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="file:src/main/webapp/WEB-INF/spring/**/*.xml")
 @Slf4j
-public class fileUploadJUnitTest {
+public class FileUploadJUnitTest {
 	
 	@Autowired
 	private ApplicationContext context;

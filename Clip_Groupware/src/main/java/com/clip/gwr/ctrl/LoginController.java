@@ -122,8 +122,7 @@ public class LoginController {
 			    	session = request.getSession();
 			        session.setAttribute("loginVo", user);
 			        session.setAttribute("fileStorename", fileStorename);
-			        session.setMaxInactiveInterval(43200); // 세션시간 12시간으로 설정
-//			        session.setMaxInactiveInterval(10); // 세션시간 12시간으로 설정
+			        session.setMaxInactiveInterval(3600); // 세션시간 1시간으로 설정
 			        return 1;
 			    } else {
 			        return 2;
