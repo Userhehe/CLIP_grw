@@ -49,7 +49,8 @@ public class AccessFilter implements Filter {
 //        HttpSession session = req.getSession(false); // 세션이 없을 경우 null 반환
 //
 //        if (session == null || session.getAttribute("loginVo") == null) {
-//            httpResponse.sendRedirect("./loginForm.do");
+////            httpResponse.sendRedirect("./Clip_Groupware/loginForm.do");
+//            httpResponse.sendRedirect("/Clip_Groupware/loginForm.do");
 //        } else {
 //        	log.info("Client 요청주소 \n\t  {}",url + queryString);
 //            chain.doFilter(request, response);

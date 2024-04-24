@@ -20,7 +20,6 @@ public class LoginCheckInterceptor implements AsyncHandlerInterceptor {
 		public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 				throws Exception {
 			log.info("####인터셉터 시작 로그인 Session 확인 존재 /true, 없으면 false 로그인화면 호출");
-			
 //			UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
 //			log.info("$$$$loginUser : " + loginUser);
 //			if (isUserAlreadyLoggedIn(loginUser)) {
