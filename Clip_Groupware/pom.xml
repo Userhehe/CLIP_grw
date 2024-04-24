@@ -246,6 +246,13 @@
 		<artifactId>lettuce-core</artifactId>
 		<version>6.1.8.RELEASE</version>
 	</dependency>
+	<!-- 실시간 알림을 위한 Spring-WebSocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		
 
   </dependencies>
   <build>
