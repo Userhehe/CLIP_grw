@@ -19,7 +19,7 @@
 	<main id="main" class="main">
 		<div class="container" style="background-color: #F2F2F2; width: 70vh;">
 			<div class="card-body w65vh">
-				<h5 class="card-title font20">회원정보 등록</h5>
+				<h5 class="card-title font20">사용자정보 등록</h5>
 				<form action="./signUp.do" method="post">
 					<div class="row mb-3">
 						<label for="inputText" class="col-sm-2 col-form-label font12">성명</label>
@@ -126,7 +126,7 @@
 					<br />
 					<div class="row mb-3">
 						<div>
-							<button type="submit" class="btn btn-secondary button">사원정보등록</button>
+							<button type="submit" class="btn btn-secondary button">사용자정보등록</button>
 						</div>
 					</div>
 				</form>
