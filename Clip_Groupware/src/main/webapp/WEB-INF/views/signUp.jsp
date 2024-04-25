@@ -8,7 +8,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>회원정보등록</title>
+<title>사용자정보등록</title>
 <%@ include file="./header.jsp"%>
 <link href="./assets/css/signUp.css" rel="stylesheet">
 <script type="text/javascript" src="./js/signUp.js"></script>
@@ -19,7 +19,7 @@
 		<div class="container" style="margin: 0;">
 			<div class="card-body w661_5px">
 				<div id="cardTitleCt">
-					<h5 id="userUpdateTitle" class="card-title font20">회원정보 등록</h5>
+					<h5 id="userUpdateTitle" class="card-title font20">사용자정보 등록</h5>
 					<div class="fc_red font12">&nbsp;&nbsp;* 값은 필수값입니다</div>
 				</div>
 				<form action="./signUp.do" method="post">
@@ -185,7 +185,7 @@
 					<div class="row mb-3">
 						<div class="flex_end">
 							<button class="btn btn-secondary" onclick="window.location.href='./userInfo.do'">목록</button>&nbsp;
-							<button type="submit" id="userInfoInsertBtn" class="btn btn-secondary">사원정보등록</button>
+							<button type="submit" id="userInfoInsertBtn" class="btn btn-secondary">사용자정보등록</button>
 						</div>
 					</div>
 				</form>

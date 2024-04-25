@@ -37,7 +37,7 @@ public class LoginController {
 	@Autowired
 	private PasswordEncoder passwordEncoder; 
 	
-//	@PostMapping(value = "/loginForms.do")
+//	@PostMapping(value = "/loginForm.do")
 //	public String loginSession(HttpSession session,
 //			HttpServletResponse response, HttpServletRequest request, Model model) throws IOException {
 //		String id = request.getParameter("username");

@@ -17,7 +17,7 @@
 	<main id="main" class="main">
 		<div id="userCard" class="card">
 			<div class="card-body">
-		        <h5 class="card-title">사원 목록</h5>
+		        <h5 class="card-title">사용자 목록</h5>
 		        
 		        <!-- Table with hoverable rows -->
 		        <form action="./searchUserList.do" id="searchUserList" class="form-inline" method="GET">
@@ -260,7 +260,7 @@
 			        </ul>
 			    </nav>
 			</div>
-			<button class="btn btn-secondary right_button" onclick="window.location.href='./signUp.do'">사원등록</button>
+			<button class="btn btn-secondary right_button" onclick="window.location.href='./signUp.do'">사용자 등록</button>
 		</div>
     </main>
 </body>

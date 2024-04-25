@@ -20,7 +20,7 @@
 		<div class="container" style="margin: 0;">
 			<div class="card-body w661_5px">
 				<div id="cardTitleCt">
-					<h5 id="userUpdateTitle" class="card-title font20">회원정보 수정</h5>
+					<h5 id="userUpdateTitle" class="card-title font20">사용자정보 수정</h5>
 					<div class="fc_red font12">&nbsp;&nbsp;* 값은 필수값입니다</div>
 				</div>
 				<form action="./userInfoUpdateData.do" method="post">
@@ -228,7 +228,7 @@
 						<div class="row mb-3">
 							<div class="flex_end">
 								<button type="button" class="btn btn-secondary" onclick="window.location.href='./userInfo.do'">목록</button>&nbsp;
-								<button type="submit" id="userInfoUpdateBtn" class="btn btn-secondary">사원정보수정</button>
+								<button type="submit" id="userInfoUpdateBtn" class="btn btn-secondary">사용자정보수정</button>
 							</div>
 						</div>
 					</c:forEach>
