@@ -22,19 +22,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	@Autowired
 	private IUserService service;
 	
-	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-	private Map<String, WebSocketSession> userSessionMap = new HashMap<String, WebSocketSession>();
+	private List<WebSocketSession> sessions = new ArrayList<>();
 	
-	public void sendMessageToClients(String message) {
-		for (WebSocketSession clientSession : sessionList) {
-			if (clientSession.isOpen()) {
-				try {
-					clientSession.sendMessage(new TextMessage(message));
-					log.info(message);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+	
 }
