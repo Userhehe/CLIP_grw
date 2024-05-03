@@ -55,6 +55,7 @@
 		<mapper resource="sqls/Receiver_Statement.xml"/>
 		<mapper resource="sqls/Reference_Statement.xml"/>
 		<mapper resource="sqls/Chat_Statement.xml"/>
+		<mapper resource="sqls/Alarm_Statement.xml"/>
 		
 	</mappers>
 </configuration>
