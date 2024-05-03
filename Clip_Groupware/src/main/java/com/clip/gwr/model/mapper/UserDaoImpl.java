@@ -177,7 +177,7 @@ public class UserDaoImpl implements IUserDao {
 	 * 알람 
 	 */
 	@Override
-	public List<UserinfoVo> selectAllUser() {
+	public List<String> selectAllUser() {
 		log.info("##### 전체 유저 아이디, 이름 조회 selectAllUser #####");
 		return sqlSession.selectList(NS+"selectAllUser");
 	}

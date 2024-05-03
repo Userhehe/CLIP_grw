@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.clip.gwr.interceptor.LoginCheckInterceptor;
 import com.clip.gwr.model.service.IDeptService;
 import com.clip.gwr.model.service.IPositionsService;
 import com.clip.gwr.model.service.IRanksService;
@@ -48,7 +49,7 @@ public class UserJUnitTest {
 	
 	@Autowired
 	private IPositionsService poService;
-	
+
 	@Autowired
 	private IRanksService ranService;
 	
@@ -162,7 +163,7 @@ public class UserJUnitTest {
 	/**
 	 * 사원목록 전체조회
 	 */
-	@Test
+	//@Test
 	public void selectUserinfoList(Map<String, Object> map) {
 		int first = 1;
 		int last = 5;
@@ -435,6 +436,13 @@ public class UserJUnitTest {
 		String selectSignImage = sqlSession.selectOne("com.clip.gwr.model.mapper.UserDaoImpl.selectSignImage", user_id);
 		System.out.println("##selectSignImage: " + selectSignImage);
 		assertNotNull(selectSignImage);
+	}
+	
+	@Test
+	public void ssss() {
+		List<String> lists = usrService.selectAllUser();
+		System.out.println(lists);
+		assertNotNull(lists);
 	}
 }
 

@@ -175,7 +175,7 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 	@Override
-	public List<UserinfoVo> selectAllUser() {
+	public List<String> selectAllUser() {
 		log.info("UserServiceImpl selectAllUser ");
 		return dao.selectAllUser();
 	}

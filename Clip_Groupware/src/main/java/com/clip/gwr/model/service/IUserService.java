@@ -124,5 +124,5 @@ public interface IUserService {
 	 */
 	public int selectSearchUserInfoListCnt(Map<String, Object> map);
 	
-	public List<UserinfoVo> selectAllUser();
+	public List<String> selectAllUser();
 }

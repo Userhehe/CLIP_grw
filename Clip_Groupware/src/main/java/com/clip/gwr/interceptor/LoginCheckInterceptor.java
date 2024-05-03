@@ -15,30 +15,26 @@ import com.clip.gwr.vo.UserinfoVo;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoginCheckInterceptor implements AsyncHandlerInterceptor {
-		@Autowired
-	    private HttpSession session;
 	
-		@Override
-		public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-				throws Exception {
-			log.info("####인터셉터 시작 로그인 Session 확인 존재 /true, 없으면 false 로그인화면 호출");
-			UserinfoVo loginUser = (UserinfoVo)session.getAttribute("loginVo");
-			log.info("####loginUser : " + loginUser);
-			
-			if(loginUser == null) {
-//				log.info("####로그인 정보가 없습니다.");
-//				response.sendRedirect("/Clip_Groupware/loginForm.do");
-				response.setContentType("text/html; charset=UTF-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script language='javascript'>");
-				out.println("alert('로그인 정보가 없습니다');");
-				out.println("location.href = '/Clip_Groupware/loginForm.do';");
-				out.println("</script>");
-				out.flush();
-				return false;
-			}
-			return true;
-		}
+	@Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        log.info("####인터셉터 시작 로그인 Session 확인 존재 /true, 없으면 false 로그인화면 호출");
+        UserinfoVo loginUser = (UserinfoVo) request.getSession().getAttribute("loginVo");
+        log.info("####loginUser : " + loginUser);
+        
+        if (loginUser == null) {
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script language='javascript'>");
+            out.println("alert('로그인 정보가 없습니다');");
+            out.println("location.href = '/Clip_Groupware/loginForm.do';");
+            out.println("</script>");
+            out.flush();
+            return false;
+        }
+        return true;
+    }
 		
 //		@Override
 //		public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,

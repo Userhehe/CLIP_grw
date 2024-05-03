@@ -242,8 +242,8 @@
 	</select>
 	
 	<!-- 알람용 쿼리 -->
-	<select id="selectAllUser" resultType="com.clip.gwr.vo.UserinfoVo">
-		SELECT USER_ID, USER_NAME 
+	<select id="selectAllUser" resultType="java.lang.String">
+		SELECT USER_ID 
 			FROM USERINFO
 			WHERE USER_STATUS = 'Y'
 	</select>
