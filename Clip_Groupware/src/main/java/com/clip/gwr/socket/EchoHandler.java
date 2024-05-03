@@ -18,11 +18,17 @@ import lombok.extern.slf4j.Slf4j;
 @Component(value = "clipWs.do")
 @Slf4j
 public class EchoHandler extends TextWebSocketHandler {
-	
+
 	@Autowired
 	private IUserService service;
 	
+	//로그인 되어있는 유저 웹소켓 정보 
 	private List<WebSocketSession> sessions = new ArrayList<>();
-	
-	
+
+	@Override
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+		sessions.add(session);
+		log.info("웹소켓 session : {}",session);
+		log.info("웹소켓 sessions : {}",sessions);
+	}
 }
