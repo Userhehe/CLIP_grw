@@ -173,4 +173,12 @@ public class UserServiceImpl implements IUserService {
 		log.info("UserServiceImpl selectSearchUserInfoListCnt 사용자 검색 결과 수 카운트");
 		return dao.selectSearchUserInfoListCnt(map);
 	}
+	
+	@Override
+	public List<UserinfoVo> selectAllUser() {
+		log.info("UserServiceImpl selectAllUser ");
+		return dao.selectAllUser();
+	}
+	
+	
 }

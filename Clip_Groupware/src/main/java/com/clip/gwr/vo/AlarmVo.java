@@ -14,12 +14,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlarmVo {
-	private String alarm_seq;
+	private String alarm_seq  ;
+	private String alarm_type ;
 	private String alarm_title;
-	private String alarm_sender;
-	private String alarm_recipient;
-	private String alarm_check;
-	private String alarm_key;
-	private String alarm_set;
-	private String alarm_date;
+	private String alarm_time ;
+	private String alarm_receiver;
+	private String alarm_flag    ;
 }

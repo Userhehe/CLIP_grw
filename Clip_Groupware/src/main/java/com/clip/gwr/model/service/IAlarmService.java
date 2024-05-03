@@ -10,5 +10,5 @@ public interface IAlarmService {
 	 * 공지사항 알람
 	 * @return
 	 */
-	public List<AlarmVo> selectAlarmNotice();
+	public List<AlarmVo> selectAlarmNotice(String user_id);
 }

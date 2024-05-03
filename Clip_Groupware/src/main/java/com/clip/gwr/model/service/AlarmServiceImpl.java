@@ -21,9 +21,9 @@ public class AlarmServiceImpl implements IAlarmService {
 	 * 공지사항 알람
 	 */
 	@Override
-	public List<AlarmVo> selectAlarmNotice() {
+	public List<AlarmVo> selectAlarmNotice(String user_id) {
 		log.info("AlarmServiceImpl selectAlarmNotice 공지사항 알람");
-		return dao.selectAlarmNotice();
+		return dao.selectAlarmNotice(user_id);
 	}
 	
 }

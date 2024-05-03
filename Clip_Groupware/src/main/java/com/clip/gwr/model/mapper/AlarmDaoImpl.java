@@ -21,9 +21,9 @@ public class AlarmDaoImpl implements IAlarmDao {
 	 * 공지사항 알람
 	 */
 	@Override
-	public List<AlarmVo> selectAlarmNotice() {
+	public List<AlarmVo> selectAlarmNotice(String user_id) {
 		log.info("#### 공지사항 알람 alarmNotice ####");
-		return sqlSession.selectList(NS + "selectAlarmNotice");
+		return sqlSession.selectList(NS + "selectAlarmNotice",user_id);
 	}
 
 }
