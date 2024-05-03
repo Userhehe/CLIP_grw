@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.gwr.model.mapper.AlarmDaoImpl">
- 	<select id="selectAlarmNotice" resultType="AlarmVo">
- 		SELECT a.* , u.USER_ID  
-			FROM ALARM a JOIN USERINFO u 
-			ON a.ALARM_SENDER = u.USER_ID 
-			WHERE ALARM_DATE >= CURRENT_TIMESTAMP - INTERVAL '1' DAY  
-			AND ALARM_CHECK = 1
-			ORDER BY ALARM_DATE DESC
+
+ 	<select id="selectAlarmNotice" parameterType="java.lang.String" resultType="AlarmVo">
+ 		SELECT at1.ALARM_SEQ, at1.ALARM_TYPE, at1.ALARM_TITLE, at1.ALARM_TIME, at2.ALARM_RECEIVER, at2.ALARM_FLAG 
+			FROM ALARM at1 LEFT JOIN ALARM_TARGET at2
+			ON at1.ALARM_SEQ = at2.ALARM_SEQ
+			WHERE at2.ALARM_RECEIVER = #{user_id}
  	</select>
 </mapper>

@@ -172,5 +172,13 @@ public class UserDaoImpl implements IUserDao {
 		log.info("##### 사용자 검색 결과 수 카운트 selectSearchUserInfoListCnt #####");
 		return sqlSession.selectOne(NS + "selectSearchUserInfoListCnt", map);
 	}
-
+	
+	/*
+	 * 알람 
+	 */
+	@Override
+	public List<UserinfoVo> selectAllUser() {
+		log.info("##### 전체 유저 아이디, 이름 조회 selectAllUser #####");
+		return sqlSession.selectList(NS+"selectAllUser");
+	}
 }
