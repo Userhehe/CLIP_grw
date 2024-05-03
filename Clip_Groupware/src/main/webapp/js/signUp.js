@@ -79,8 +79,8 @@ $(document).ready(function(){
 					$('#emailInsertBtn').prop('disabled',false);
 				}
 			},
-			error: function(xhr, status, error) {
-				console.error('이메일중복체크실패', xhr, status, error);
+			error: function(error) {
+				console.error('이메일중복체크실패', error);
 			}
 		});
 	});

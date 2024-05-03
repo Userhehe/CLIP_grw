@@ -66,32 +66,74 @@
 					<div class="form-control" id="dtEnd"></div>
 					</div>
 				</div>
-
 				<div class="modal-footer">
 					<div class="btn-group" role="group aria-label="Basic outlined example" id="dtButtons">
 					</div>
-					
 				</div>
-
 			</div>
 		</div>
 	</div>
 	<!--memodetail modal (상세모달) 끝 -->
 <!-- ======= 모달 구간 끝 ======= -->
-
-
-
 	<main id="main" class="main">
 		<section class="section dashboard">
 			<div class="row">
 				<!-- ======= row 시작 ======= -->
-
 				<div class="col-lg-6">
 					<div class="row">
-
 						<!-- ======= 위에 건들지 마세요. ======= -->
-						
-										<div class="col-12">
+						<div class="col-12">
+							<div class="card recent-sales overflow-auto">
+								<div class="card-body">
+									<h5 class="card-title">
+										<a href="./nctBoard.do">알람목록 <span>| Alarm</span></a>
+										<a href="./webSocketTest.do">웹소켓이동</a>
+									</h5>
+									<!-- <div class="mainSideContent"> -->
+									<div class="mainContent">
+										<table class="table table-hover" style="margin-top: 10px;">
+											<thead>
+												<tr>
+													<th>제목</th>
+													<th>내용</th>
+													<th>시간</th>
+												</tr>
+											</thead>
+											<tbody id="alarmTableBody">
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="card recent-sales overflow-auto">
+								<div class="card-body">
+									<h5 class="card-title">
+										<a href="./schedule.do">나의일정 <span>| schedule</span></a>
+									</h5>
+									<div class="mainContent">
+										<table class="table table-hover" style="margin-top: 10px;">
+											<thead>
+												<tr>
+													<th>제목</th>
+													<th>시작일시</th>
+													<th>종료일시</th>
+												</tr>
+											</thead>
+											<tbody id="scheduleTableBody">
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- ======= 위로 일정, 공지 ## 아래로 전자, 프젝 ======= -->
+				<div class="col-lg-6">
+					<div class="col-12">
 							<div class="card recent-sales overflow-auto">
 								<div class="card-body">
 									<h5 class="card-title">
@@ -130,80 +172,32 @@
 									</div>
 								</div>
 							</div>
-						</div>		
-						
+						</div>	
+					
 					<div class="col-12">
-							<div class="card recent-sales overflow-auto">
-								<div class="card-body">
-									<h5 class="card-title">
-										<a href="./schedule.do">나의일정 <span>| schedule</span></a>
-									</h5>
-									<div class="mainContent">
-										<table class="table table-hover" style="margin-top: 10px;">
-											<thead>
-												<tr>
-													<th>제목</th>
-													<th>시작일시</th>
-													<th>종료일시</th>
-												</tr>
-											</thead>
-											<tbody id="scheduleTableBody">
-											</tbody>
-										</table>
-									</div>
+						<div class="card recent-sales overflow-auto">
+							<div class="card-body">
+								<h5 class="card-title">
+									<a href="./nctBoard.do">공지사항 <span>| Notice</span></a>
+								</h5>
+								<!-- <div class="mainSideContent"> -->
+								<div class="mainContent">
+									<table class="table table-hover" style="margin-top: 10px;">
+										<thead>
+											<tr>
+												<th>제목</th>
+												<th>시작일시</th>
+												<th>종료일시</th>
+											</tr>
+										</thead>
+										<tbody id="ntcScheduleTableBody">
+										</tbody>
+									</table>
 								</div>
 							</div>
 						</div>
-					<!-- <div class="row">
-						======= 위에 건들지 마세요. =======
-						</div>						
-						
-						
-						
-						
-						
-						
-						
-	
-
-						<!-- ======= 아래 건들지 마세요. ======= -->
 					</div>
 				</div>
-
-				<!-- ======= 위로 일정, 공지 ## 아래로 전자, 프젝 ======= -->
-				<div class="col-lg-6">
-						<!-- ======= 위에 건들지 마세요. ======= -->
-
-
-
-
-						<div class="col-12">
-							<div class="card recent-sales overflow-auto">
-								<div class="card-body">
-									<h5 class="card-title">
-										<a href="./nctBoard.do">공지사항 <span>| Notice</span></a>
-									</h5>
-									<div class="mainSideContent">
-										<table class="table table-hover" style="margin-top: 10px;">
-											<thead>
-												<tr>
-													<th>제목</th>
-													<th>시작일시</th>
-													<th>종료일시</th>
-												</tr>
-											</thead>
-											<tbody id="ntcScheduleTableBody">
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-
-
-						<!-- ======= 아래 건들지 마세요. ======= -->
-				</div>
-
 				<!-- ======= row 끝 ======= -->
 			</div>
 		</section>
