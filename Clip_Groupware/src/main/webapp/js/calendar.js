@@ -2,7 +2,6 @@ var selectScheduleAll = true;
 var selectScheduleAllDate = "";
 ////화면 로드시 걸어주는 이벤트들 ------------------------------------------------
 $(document).ready(function() {
-	
 	//화면 로드시 체크박스 상태 확인 하는 기능------------------------------------------------
 	function updateType() {
         var type = [];
@@ -394,6 +393,7 @@ function calendarModal(day){
 					selectScheduleAll = false;
 					var type = updateTypeModal();
         			calendar(type);
+        			ntcAlarm();
 				}
 			});
 		}
