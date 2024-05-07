@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.clip.gwr.model.mapper.AlarmDaoImpl">
+	<!-- 알람 등록 -->
+	<insert id="AddAlarm">
+		INSERT INTO ALARM
+		(ALARM_SEQ, ALARM_TYPE, ALARM_TIME)
+		VALUES(TO_CHAR(ALARM_SEQ.NEXTVAL), 'NTC', LOCALTIMESTAMP)
+	</insert>
+	
+	<!-- 알람 대상 등록 -->
+	<insert id="AddAlarmTarget" parameterType="java.lang.String">
+		INSERT INTO CLIP.ALARM_TARGET
+		(ALARM_SEQ, ALARM_RECEIVER)
+		VALUES(ALARM_SEQ.CURRVAL, #{user_id})
+	</insert>
 
  	<select id="selectAlarmNotice" parameterType="java.lang.String" resultType="AlarmVo">
- 		SELECT at1.ALARM_SEQ, at1.ALARM_TYPE, at1.ALARM_TITLE, at1.ALARM_TIME, at2.ALARM_RECEIVER, at2.ALARM_FLAG 
+ 		SELECT at1.ALARM_SEQ, at1.ALARM_TYPE, at1.ALARM_TIME, at2.ALARM_RECEIVER, at2.ALARM_FLAG 
 			FROM ALARM at1 LEFT JOIN ALARM_TARGET at2
 			ON at1.ALARM_SEQ = at2.ALARM_SEQ
 			WHERE at2.ALARM_RECEIVER = #{user_id}
+			AND at2.ALARM_FLAG ='N'
  	</select>
 </mapper>

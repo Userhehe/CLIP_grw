@@ -25,52 +25,69 @@ import lombok.extern.slf4j.Slf4j;
 //@RequestMapping("/clipWs.do")
 @Slf4j
 public class EchoHandler extends TextWebSocketHandler {
-	
+
 	@Autowired
 	private IAlarmService alarmService;
-	
-	//로그인 되어있는 유저 웹소켓 정보 
+
+	// 로그인 되어있는 유저 웹소켓 정보
 	private List<WebSocketSession> sessions = new ArrayList<>();
-	
-	//js에서 websocket on일때 실행 메서드
+
+	// js에서 websocket on일때 실행 메서드
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessions.add(session);
-		log.info("웹소켓 session : {}",session);
-		log.info("웹소켓 sessions : {}",sessions);
-		
+		log.info("웹소켓 session : {}", session);
+		log.info("웹소켓 sessions : {}", sessions);
+
 	}
-	
-	//알림 보내는 역할
+
+	// 알림 보내는 역할
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String fullMsg = message.getPayload();
-		log.info("$$$$fullMsg : "+fullMsg);
-		
-		Map<String, Object> map = session.getAttributes();
-		UserinfoVo login_user = (UserinfoVo)map.get("loginVo");
-		String user_id = login_user.getUser_id();
-		log.info("$$$$$$$$$$$$ : "+user_id);
-		
-//		List<AlarmVo> alarms = alarmService.selectAlarmNotice(user_id);
-//		for(AlarmVo alarm : alarms) {
-//			String title = alarm.getAlarm_title();
-//			String type = alarm.getAlarm_type();
-//			String flag = alarm.getAlarm_flag();
-//			TextMessage sendMsg = new TextMessage(title+","+type+","+flag);
-//			log.info("$$$$$$$$$$$$sendMsg : "+sendMsg);
-//			session.sendMessage(sendMsg);
-//		}
-		
-		
-		TextMessage sendMsg = new TextMessage("ckckckckck");
-		session.sendMessage(sendMsg);
+		log.info("$$$$fullMsg : " + fullMsg);
+
+		for (WebSocketSession wsSession : sessions) {
+
+			Map<String, Object> map = wsSession.getAttributes();
+			UserinfoVo wsLogin_user = (UserinfoVo) map.get("loginVo");
+			String wsUser_id = wsLogin_user.getUser_id();
+
+			List<AlarmVo> alarms = alarmService.selectAlarmNotice(wsUser_id);
+
+			int approval = 0;
+			int notice = 0;
+
+			for (AlarmVo alarm : alarms) {
+				String type = alarm.getAlarm_type();
+				String flag = alarm.getAlarm_flag();
+				if (type.equals("NTC") && flag.equals("N")) {
+					notice++;
+				} else if (type.equals("APP") && flag.equals("N")){
+					approval++;
+				}
+			}
+			
+			if (notice > 0) {
+				TextMessage sendMsg = new TextMessage("NTC");
+				log.info("$$$$$$$$$$$$sendMsg : " + sendMsg);
+				wsSession.sendMessage(sendMsg);
+			}
+			
+//			if (approval > 0) {
+//				TextMessage sendMsg = new TextMessage("APP");
+//				log.info("$$$$$$$$$$$$sendMsg : " + sendMsg);
+//				wsSession.sendMessage(sendMsg);
+//			}
+			
+		}
+
 	}
-	
+
 	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {//연결 해제
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {// 연결 해제
 		log.info("Socket 끊음");
-		//웹 소켓이 종료될 때마다 리스트에서 뺀다.
+		// 웹 소켓이 종료될 때마다 리스트에서 뺀다.
 		sessions.remove(session);
 	}
 }
