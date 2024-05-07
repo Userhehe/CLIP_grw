@@ -45,17 +45,26 @@ public class EchoHandler extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String fullMsg = message.getPayload();
-		log.info(fullMsg);
-		String user_id = (String)session.getAttributes().get("user_id");
-		List<AlarmVo> alarms = alarmService.selectAlarmNotice(user_id);
-		for(AlarmVo alarm : alarms) {
-			String title = alarm.getAlarm_title();
-			String type = alarm.getAlarm_type();
-			String flag = alarm.getAlarm_flag();
-			TextMessage sendMsg = new TextMessage(title+","+type+","+flag);
-			session.sendMessage(sendMsg);
-		}
+		log.info("$$$$fullMsg : "+fullMsg);
 		
+		Map<String, Object> map = session.getAttributes();
+		UserinfoVo login_user = (UserinfoVo)map.get("loginVo");
+		String user_id = login_user.getUser_id();
+		log.info("$$$$$$$$$$$$ : "+user_id);
+		
+//		List<AlarmVo> alarms = alarmService.selectAlarmNotice(user_id);
+//		for(AlarmVo alarm : alarms) {
+//			String title = alarm.getAlarm_title();
+//			String type = alarm.getAlarm_type();
+//			String flag = alarm.getAlarm_flag();
+//			TextMessage sendMsg = new TextMessage(title+","+type+","+flag);
+//			log.info("$$$$$$$$$$$$sendMsg : "+sendMsg);
+//			session.sendMessage(sendMsg);
+//		}
+		
+		
+		TextMessage sendMsg = new TextMessage("ckckckckck");
+		session.sendMessage(sendMsg);
 	}
 	
 	@Override
