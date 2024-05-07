@@ -42,13 +42,16 @@
    
    <tx:annotation-driven transaction-manager="transactionManager"/>
    
-<!--    <bean id="echoHandler" class="com.clip.gwr.socket.EchoHandler"/> -->
    
-<!--    <websocket:handlers> -->
-<!--       <websocket:mapping handler="echoHandler" path="/clipWs.do"/> -->
-<!--       <websocket:handshake-interceptors> -->
-<!--          <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/> -->
-<!--       </websocket:handshake-interceptors> -->
-<!--       <websocket:sockjs/> -->
-<!--    </websocket:handlers> -->
+
+   <!-- 웹소켓 -->
+<bean id="echoHandler" class="com.clip.gwr.socket.EchoHandler" />        
+<websocket:handlers>
+    <websocket:mapping handler="echoHandler" path="/clipWs.do"/>
+    <websocket:handshake-interceptors>
+        <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+    </websocket:handshake-interceptors>
+<!--     <websocket:sockjs /> -->
+</websocket:handlers>   
+
 </beans>

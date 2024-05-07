@@ -37,7 +37,8 @@
 <link href="assets/img/favicon.png" rel="icon">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script type="text/javascript" src="./js/header.js"></script>
-<!-- <script type="text/javascript" src="./js/calendar.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script type="text/javascript" src="./js/app.js"></script>
 
 </head>
 
