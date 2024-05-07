@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.clip.gwr.model.service.IAlarmService;
 import com.clip.gwr.model.service.IMemoService;
 import com.clip.gwr.model.service.IReservationService;
+import com.clip.gwr.model.service.IUserService;
 import com.clip.gwr.vo.MemoVo;
 import com.clip.gwr.vo.NtcVo;
 import com.clip.gwr.vo.PageVo;
@@ -36,6 +38,10 @@ public class ScheduleController {
 	private IMemoService memoservice;
 	@Autowired
 	private IReservationService reservice;
+	@Autowired
+	private IUserService userService;
+	@Autowired
+	private IAlarmService alarmService;
 	
 	
 	
@@ -174,6 +180,19 @@ public class ScheduleController {
 		}
 		log.info("전사 내용 {} : " , map);
 		int isc = memoservice.ntcScheduleInsert(map);
+		
+		//알람에 대한 내용
+		if(isc > 0) {
+			int iscAlarm = alarmService.AddAlarm();
+			
+			if(iscAlarm > 0) {
+				List<String> ids = userService.selectAllUser();
+				for(String user_id : ids) {
+					alarmService.AddAlarmTarget(user_id);
+				}
+			}
+		}
+		
 		return isc;
 	}
 	
