@@ -1,25 +1,13 @@
-//package com.clip.gwr.ctrl;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import com.clip.gwr.model.service.IAlarmService;
-//
-//import lombok.extern.slf4j.Slf4j;
-//
-////@RestController
-//@Controller
-//@Slf4j
-//public class AlarmController {
-//	
-//	@Autowired
-//	private IAlarmService service;
-//	
-//	@GetMapping(value="/webSocketTest.do")
-//	public String webSocketTest() {
-//		log.info("타긴하니?");
-//		return "webSocketTest";
-//	}
-//}
+package com.clip.gwr.ctrl;
+
+
+import org.springframework.web.bind.annotation.RestController;
+
+
+import lombok.extern.slf4j.Slf4j;
+
+@RestController
+@Slf4j
+public class AlarmController{
+	
+}
