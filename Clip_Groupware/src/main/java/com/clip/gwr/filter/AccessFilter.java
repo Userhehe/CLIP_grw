@@ -56,34 +56,5 @@ public class AccessFilter implements Filter {
 //            chain.doFilter(request, response);
 //        }
 //	}
-	
-//	@Override
-//    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-//            throws IOException, ServletException {
-//        HttpServletRequest httpRequest = (HttpServletRequest) request;
-//        String url = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
-//
-//        // 특정 URL을 제외하고 싶은 경우
-//        if (!url.equals("/loginForm.jsp")) {
-//        	HttpServletRequest req = (HttpServletRequest)request;
-//    		url = StringUtils.defaultIfEmpty(req.getRequestURL().toString(), "URL 없음");
-//    		String queryString = StringUtils.defaultIfEmpty(req.getQueryString(), "");
-//    		
-//    		HttpServletResponse httpResponse = (HttpServletResponse) response;
-//
-//            HttpSession session = req.getSession(false); // 세션이 없을 경우 null 반환
-//
-//            if (session == null || session.getAttribute("loginVo") == null) {
-//                httpResponse.sendRedirect("./loginForm.do");
-//            } else {
-//            	log.info("Client 요청주소 \n\t  {}",url + queryString);
-//                chain.doFilter(request, response);
-//            }
-//            chain.doFilter(request, response);
-//        } else {
-//            // 제외할 URL인 경우 필터를 통과시킴
-//            chain.doFilter(request, response);
-//        }
-//    }
 
 }

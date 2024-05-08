@@ -105,11 +105,6 @@
 				<input type="password" id="password" name="password" class="input-field" placeholder="비밀번호를 입력해주세요" required="required">
 			</div>
 			<input type="submit" id="login_btn" class="button" value="Login"/>
-			
-<!-- 			<div class="form-check" style="display: flex;"> -->
-<!-- 				<input type="checkbox" id="remember" class="form-check-input" name="remember-me">							 -->
-<!-- 				<label for="remember" class="form-check-label">자동 로그인</label> --> 
-<!-- 			</div> -->
 		</form>
 		
 		<div class="links">

@@ -52,23 +52,23 @@ String fileStorename = (String)session.getAttribute("fileStorename");
    <header id="header" class="header fixed-top d-flex align-items-center">
       <nav class="header-nav ms-auto">
          <ul class="d-flex align-items-center">
-<!-- ======= START ALERT ======= 
+<!-- ======= START ALERT ======= -->
             <li class="nav-item dropdown"><a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-warning badge-number">4</span></a>
+            <span class="badge bg-warning badge-number alarmCnt"></span></a>
                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                  <li class="dropdown-header">읽지않은 4개의 알림이 있습니다
-                  <a href="#"><span class="badge rounded-pill bg-warning p-2 ms-2">View all</span></a>
-                  </li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li class="notification-item"><i
-                     class="bi bi-info-circle text-primary"></i>
-                     <div><h4>알림창 쓸사람 쓰세요</h4>  -<p>예시로 안지웠음</p></div>
-                  </li>
-                  <li><hr class="dropdown-divider"></li>      
+                  <li class="dropdown-header">읽지않은 <span class="alarmCnt">0</span>개의 알림이 있습니다
+                  <a href="./main.do"><span class="badge rounded-pill bg-warning p-2 ms-2">알림확인</span></a>
+<!--                   </li> -->
+<!--                   <li><hr class="dropdown-divider"></li> -->
+<!--                   <li class="notification-item"><i -->
+<!--                      class="bi bi-info-circle text-primary"></i> -->
+<!--                      <div><h4>알림창 쓸사람 쓰세요</h4>  -<p>예시로 안지웠음</p></div> -->
+<!--                   </li> -->
+<!--                   <li><hr class="dropdown-divider"></li>       -->
                </ul>
             </li>
- ======= END ALERT ======= -->
+<!-- ======= END ALERT ======= -->
 
 <!-- ======= START MYPAGE ======= -->
             <li class="nav-item dropdown pe-3">
