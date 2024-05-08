@@ -36,22 +36,22 @@ public class LoginCheckInterceptor implements AsyncHandlerInterceptor {
         return true;
     }
 		
-//		@Override
-//		public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-//				ModelAndView modelAndView) throws Exception {
-//			log.info("####인터셉터 종료");
-//			AsyncHandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-//		}
-//		@Override
-//		public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-//				throws Exception {
-//			log.info("####인터셉터 View 렌더링이 끝난 직후 ");
-//			AsyncHandlerInterceptor.super.afterCompletion(request, response, handler, ex);
-//		}
-//		@Override
-//		public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler)
-//				throws Exception {
-//			log.info("####비동기(ResponseBody)식 호출되었을때 호출");
-//			AsyncHandlerInterceptor.super.afterConcurrentHandlingStarted(request, response, handler);
-//		}
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
+		log.info("####인터셉터 종료");
+		AsyncHandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+	}
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+			throws Exception {
+		log.info("####인터셉터 View 렌더링이 끝난 직후 ");
+		AsyncHandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+	}
+	@Override
+	public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		log.info("####비동기(ResponseBody)식 호출되었을때 호출");
+		AsyncHandlerInterceptor.super.afterConcurrentHandlingStarted(request, response, handler);
+	}
 }

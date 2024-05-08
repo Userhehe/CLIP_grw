@@ -19,4 +19,12 @@ public class ErrorController {
 		model.addAttribute("msg","accessError"); 
 		return "accessError"; 
 	} 
+	
+	@GetMapping("/allError.do") 
+	public String Error(Authentication auth, Model model) { 
+		log.info("권한없음 : {}", auth); 
+		 
+		model.addAttribute("msg","allError"); 
+		return "allError";
+	}
 }

@@ -96,7 +96,7 @@ public class FileController {
 	            log.info("----업로드 성공");
 	            response.sendRedirect("./myPage.do");
 	        } else {
-	            response.sendRedirect("./accessError.do");
+	            response.sendRedirect("./allError.do");
 	        }
 	    } catch (IOException e) {
 	        log.info("----업로드 실패");
@@ -166,7 +166,7 @@ public class FileController {
 	            log.info("----수정 성공");
 	            response.sendRedirect("./myPage.do");
 	        } else {
-	            response.sendRedirect("./accessError.do");
+	            response.sendRedirect("./allError.do");
 	        }
 	    } catch (IOException e) {
 	        log.info("----수정 실패");
@@ -211,7 +211,7 @@ public class FileController {
 	        response.sendRedirect("./myPage.do");
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        response.sendRedirect("./accessError.do");
+	        response.sendRedirect("./allError.do");
 	    }
 	}
 }

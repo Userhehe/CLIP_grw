@@ -106,6 +106,9 @@ public class LoginController {
 	    log.info("####pw: " + pw);
 	    
 		try {
+			if(service.userLogin(id) == null) {
+				return 2;
+			}
 			UserinfoVo user = service.userLogin(id);
 			String user_id = user.getUser_id();
 			String fileStorename = fileUploadService.selectPhotoName(user_id);
@@ -145,9 +148,4 @@ public class LoginController {
 		session.invalidate();
 		return 1;
 	}
-//	
-//	@GetMapping(value = "/adminMain.do")
-//	public String adminMain() {
-//		return "adminMain";
-//	}
 }

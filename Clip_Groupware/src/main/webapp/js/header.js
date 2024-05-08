@@ -12,12 +12,12 @@ $(document).ready(function() {
 					window.location.href = "./loginForm.do";
 				} else {
 					console.log('로그아웃 실패');
-					window.location.href = "./accessError.do";
+					window.location.href = "./allError.do";
 				}
 			}, 
 			error: function(error) {
 				console.error('로그아웃 실패', error);
-				window.location.href="./accessError.do";
+				window.location.href="./allError.do";
 			}
 		});
 	});

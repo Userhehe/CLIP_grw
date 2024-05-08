@@ -87,7 +87,6 @@
 								<div class="card-body">
 									<h5 class="card-title">
 										<a href="./nctBoard.do">알람목록 <span>| Alarm</span></a>
-										<a href="./webSocketTest.do">웹소켓이동</a>
 									</h5>
 									<!-- <div class="mainSideContent"> -->
 									<div class="mainContent">
@@ -100,6 +99,10 @@
 												</tr>
 											</thead>
 											<tbody id="alarmTableBody">
+												<c:forEach var="al" items="${alarmList}" varStatus="vs">
+													<tr>
+													</tr>
+												</c:forEach>
 											</tbody>
 										</table>
 									</div>

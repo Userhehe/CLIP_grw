@@ -16,7 +16,40 @@ var webSocket = null;
 // 메시지를 수신했을 때 실행되는 함수
 webSocket.onmessage = function(event) {
 	console.log("서버로부터 메시지를 수신했습니다: " + event.data);
-	// 서버로부터 받은 메시지를 처리할 수 있습니다.
+	
+	// 현재시간 가져오기
+	var currentDate = new Date();
+	var currentYear = currentDate.getFullYear(); // 현재 연도
+	var currentMonth = currentDate.getMonth() + 1; // 현재 월
+	var currentDay = currentDate.getDate(); // 현재 일
+	var currentHour = currentDate.getHours(); // 현재 시간(시)
+	var currentMinute = currentDate.getMinutes(); // 현재 시간(분)
+	var currentSecond = currentDate.getSeconds(); // 현재 시간(초)
+	if(currentMonth < 10) {
+		currentMonth = 0 + "" + currentMonth;
+	}
+	if(currentDay < 10) {
+		currentDay = 0 + "" + currentDay;
+	}
+	var date = currentYear + "년-" + currentMonth + "월-" + currentDay + "일 " + currentHour + ":" + currentMinute + ":" + currentSecond;
+							
+	var ul = document.querySelector('.notifications');
+	var html = "";
+	html += '  <li><hr class="dropdown-divider"></li>';
+	html += '  <li class="notification-item">';
+	html += '   <i class="bi bi-exclamation-circle text-warning"></i>';
+	html += '     <div><h4>알림</h4><p> 새로운 공지사항이 등록되었습니다. </p> [' +  date + ']</div>';
+	html += '  </li>';
+  	html += '<li><hr class="dropdown-divider"></li>';
+  	ul.innerHTML += html;
+  	var span = document.querySelectorAll('.alarmCnt');
+  	for(let i=0; i<span.length; i++) {
+	  	if(span[i].innerHTML == "" || span[i].innerHTML == 0) {
+		  	span[i].innerHTML = 1;
+		} else {
+			span[i].innerHTML = parseInt(span[i].innerHTML) + 1;
+		}
+	}
 };
 // 연결이 닫혔을 때 실행되는 함수
 webSocket.onclose = function(event) {
@@ -33,6 +66,7 @@ webSocket.onerror = function(event) {
 // 메시지를 서버로 전송하는 함수
 function sendMessage(message) {
 	webSocket.send(message);
+	console.log("##message : ", message);
 }
 
 //}
@@ -41,7 +75,7 @@ function ntcAlarm(){
 			type:"get",
 			url:"./ntcAlarm.do",
 		    success:function(data){
-				sendMessage("message comming");
+				sendMessage("새로운 공지사항이 추가되었습니다");
 			}
 		});	
 }
